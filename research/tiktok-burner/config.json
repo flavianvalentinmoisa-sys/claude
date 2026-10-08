@@ -53,6 +53,15 @@
     "min_markup": 2.5
   },
 
+  "ad_library": {
+    "enabled": true,
+    "tiktok_days": 90,
+    "meta_country": "ALL",
+    "meta_scrolls": 3,
+    "saturated_meta_ads": 3000,
+    "recheck_days": 7
+  },
+
   "claude": {
     "model": "claude-opus-5-5",
     "effort": "medium"

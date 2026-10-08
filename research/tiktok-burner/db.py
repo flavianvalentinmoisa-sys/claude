@@ -29,6 +29,11 @@ CREATE TABLE IF NOT EXISTS comments (
     intent_count INTEGER,
     fetched_at INTEGER
 );
+CREATE TABLE IF NOT EXISTS ad_checks (
+    video_id TEXT PRIMARY KEY,
+    result TEXT,
+    checked_at INTEGER
+);
 CREATE TABLE IF NOT EXISTS analyses (
     video_id TEXT PRIMARY KEY,
     result TEXT,
@@ -126,4 +131,11 @@ def save_analysis(conn, video_id: str, result: dict, score: float, verdict: str)
     conn.execute(
         "INSERT OR REPLACE INTO analyses VALUES (?,?,?,?,?)",
         (video_id, json.dumps(result, ensure_ascii=False), score, verdict, int(time.time())),
+    )
+
+
+def save_ad_check(conn, video_id: str, result: dict) -> None:
+    conn.execute(
+        "INSERT OR REPLACE INTO ad_checks VALUES (?,?,?)",
+        (video_id, json.dumps(result, ensure_ascii=False), int(time.time())),
     )

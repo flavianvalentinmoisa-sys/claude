@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 import db
+from adlibrary import meta_url, tiktok_url
 
 REPORTS_DIR = db.DATA_DIR / "reports"
 VERDICT_ORDER = {"WINNER": 0, "TEST": 1, "SKIP": 2}
@@ -39,19 +40,42 @@ def build(conn, include_skip: bool = False) -> Path:
         w = csv.writer(f)
         w.writerow(["verdict", "score", "product", "problem", "cogs_min", "cogs_max", "retail",
                     "wow", "perceived_value", "problem_score", "virality", "views", "shares", "saves",
-                    "intent_comments", "tiktok_url", "aliexpress_url", "hook", "red_flags", "reasoning"])
+                    "intent_comments", "ads_score", "meta_active_ads", "meta_longest_days", "tiktok_ads",
+                    "tiktok_longest_days", "tiktok_url", "aliexpress_url", "meta_library_url", "tiktok_library_url", "hook", "red_flags", "reasoning"])
         for d in rows:
             p = d["result"]
             w.writerow([d["verdict"], d["score"], p["product_name"], p["problem_solved"], p["cogs_min_usd"],
                         p["cogs_max_usd"], p["retail_price_usd"], p["wow_score"], p["perceived_value_score"],
                         p["problem_score"], p["virality"], d["views"], d["shares"], d["saves"],
-                        p["intent_comments"], _tt(d), _ali(p), p["ad_hook_idea"], "; ".join(p["red_flags"]),
+                        p["intent_comments"], *_ads_cols(p), _tt(d), _ali(p), meta_url(_kw(p)), tiktok_url(_kw(p)), p["ad_hook_idea"], "; ".join(p["red_flags"]),
                         p["reasoning"]])
 
     cards = "\n".join(_card(d) for d in rows) or "<p class=empty>Niciun produs încă. Rulează <code>python burner.py run</code>.</p>"
     html_path = REPORTS_DIR / f"{stamp}.html"
     html_path.write_text(PAGE.format(date=stamp, count=len(rows), cards=cards), encoding="utf-8")
     return html_path
+
+
+def _kw(p) -> str:
+    return p.get("ad_search_keyword") or p["product_name"]
+
+
+def _ads_cols(p) -> list:
+    a = p.get("ads")
+    if not a:
+        return ["", "", "", "", ""]
+    return [a["score"], a["meta"]["active_ads"], a["meta"]["longest_days"], a["tiktok"]["ads"], a["tiktok"]["longest_days"]]
+
+
+def _ads_line(p) -> str:
+    a = p.get("ads")
+    if not a:
+        return '<p class="meta">Ad Library: neverificat încă</p>'
+    m, t = a["meta"], a["tiktok"]
+    sat = f' · <b class="warn">{html.escape(p["saturation"])}</b>' if p.get("saturation") else ""
+    return (f'<p class="ads">📢 Ads <b>{a["score"]}</b>/10 · Meta: {m["active_ads"]} active, cea mai veche {m["longest_days"]}z, '
+            f'{m["running_30d_plus"]} rulează 30z+ · TikTok: {t["ads"]} reclame, {t["advertisers"]} advertiseri, '
+            f'max {t["longest_days"]}z{sat}</p>')
 
 
 def _tt(d) -> str:
@@ -83,10 +107,11 @@ def _card(d) -> str:
       <span>Viral <b>{p['virality']}</b></span>
     </div>
     <p class="meta">{_fmt(d['views'])} views · {_fmt(d['shares'])} share · {_fmt(d['saves'])} save · {p['intent_comments']} „link?”</p>
+    {_ads_line(p)}
     <p class="hook">🎬 {e(p['ad_hook_idea'])}</p>
     <p class="why">{e(p['reasoning'])}</p>
     {f'<ul class="flags">{flags}</ul>' if flags else ''}
-    <div class="links"><a href="{_tt(d)}" target="_blank">TikTok</a><a href="{_ali(p)}" target="_blank">AliExpress</a></div>
+    <div class="links"><a href="{_tt(d)}" target="_blank">TikTok</a><a href="{_ali(p)}" target="_blank">AliExpress</a><a href="{e(meta_url(_kw(p)))}" target="_blank">Meta Ads</a><a href="{e(tiktok_url(_kw(p)))}" target="_blank">TikTok Ads</a></div>
   </div>
 </article>"""
 
@@ -106,7 +131,8 @@ main{{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap
 .winner .badge{{background:var(--win)}} .test .badge{{background:var(--test)}} .score{{font-size:22px;font-weight:700}}
 h2{{font-size:17px;margin:6px 0}} .problem,.hook{{margin:6px 0}} .why,.meta{{color:var(--mute);font-size:13px}}
 .nums{{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px}} .flags{{color:#c0392b;font-size:13px;padding-left:18px;margin:6px 0}}
-.links{{display:flex;gap:10px;margin-top:8px}} .links a{{color:var(--ink);font-weight:600}} .empty{{padding:16px}}
+.ads{{font-size:13px;margin:6px 0}} .warn{{color:#c0392b}}
+.links{{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}} .links a{{color:var(--ink);font-weight:600}} .empty{{padding:16px}}
 </style></head><body>
 <header><h1>Radar produse TikTok — {date}</h1><p>{count} produse · sortate după verdict și scor</p></header>
 <main>{cards}</main></body></html>"""

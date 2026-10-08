@@ -4,11 +4,13 @@
     python burner.py train      # doar antrenează For You (rulează zilnic primele 3-5 zile)
     python burner.py run        # tot: FYP + search + hashtag-uri + comentarii + analiză Claude + raport
     python burner.py analyze    # doar analiza pe ce e deja în DB
+    python burner.py validate   # verifică WINNER/TEST în TikTok Ad Library + Meta Ad Library
     python burner.py report     # doar regenerează raportul
 """
 import argparse
 import json
 import sys
+import time
 from pathlib import Path
 
 import db
@@ -65,6 +67,39 @@ def cmd_analyze(cfg):
     analyze(cfg, todo, conn)
 
 
+def cmd_validate(cfg, args):
+    from adlibrary import AdLibrary, ads_score, saturation_flag
+    from analyze import ProductVerdict, final_score
+    from collector import Burner
+
+    cutoff = int(time.time()) - cfg["ad_library"]["recheck_days"] * 86400
+    with Burner(cfg, headless=args.headless) as b:
+        rows = b.conn.execute(
+            """SELECT a.video_id, a.result FROM analyses a LEFT JOIN ad_checks c ON c.video_id=a.video_id
+               WHERE a.verdict IN ('WINNER','TEST') AND (c.checked_at IS NULL OR c.checked_at < ?)""",
+            (cutoff,),
+        ).fetchall()
+        print(f"▶ Verific {len(rows)} produse în Ad Library (TikTok + Meta)...")
+        lib = AdLibrary(b.ctx, cfg)
+        for r in rows:
+            result = json.loads(r["result"])
+            result.setdefault("ad_search_keyword", "")
+            p = ProductVerdict.model_validate(result)
+            keyword = p.ad_search_keyword or p.product_name
+            check = lib.check(keyword)
+            ascore = ads_score(check["tiktok"], check["meta"])
+            check["score"] = ascore
+            score, verdict, gates = final_score(cfg, p, result["virality"], ascore)
+            flag = saturation_flag(check["tiktok"], check["meta"], cfg)
+            result.update(ads=check, failed_gates=gates, saturation=flag)
+            db.save_ad_check(b.conn, r["video_id"], check)
+            db.save_analysis(b.conn, r["video_id"], result, score, verdict)
+            b.conn.commit()
+            m, t = check["meta"], check["tiktok"]
+            print(f"  {verdict:6} {score:4.1f}  {p.product_name}: Meta {m['active_ads']} active / {m['longest_days']}z, "
+                  f"TikTok {t['ads']} reclame / {t['longest_days']}z{'  ⚠ ' + flag if flag else ''}")
+
+
 def cmd_report(include_skip=False):
     path = report.build(db.connect(), include_skip)
     print(f"✓ Raport: {path}\n  CSV:    {path.with_suffix('.csv')}")
@@ -72,7 +107,7 @@ def cmd_report(include_skip=False):
 
 def main():
     ap = argparse.ArgumentParser(description="TikTok burner product research")
-    ap.add_argument("cmd", choices=["login", "train", "run", "collect", "analyze", "report"])
+    ap.add_argument("cmd", choices=["login", "train", "run", "collect", "analyze", "validate", "report"])
     ap.add_argument("--minutes", type=float, help="minute de scroll pe For You (suprascrie config)")
     ap.add_argument("--headless", action="store_true", help="fără fereastră (nerecomandat, TikTok blochează mai des)")
     ap.add_argument("--all", action="store_true", help="include și SKIP în raport")
@@ -85,7 +120,9 @@ def main():
         cmd_collect(cfg, args, train_only=True)
     if args.cmd in ("analyze", "run"):
         cmd_analyze(cfg)
-    if args.cmd in ("report", "run", "analyze"):
+    if args.cmd == "validate" or (args.cmd == "run" and cfg["ad_library"]["enabled"]):
+        cmd_validate(cfg, args)
+    if args.cmd in ("report", "run", "analyze", "validate"):
         cmd_report(args.all)
 
 

@@ -24,6 +24,7 @@ class ProductVerdict(BaseModel):
     cogs_max_usd: float = Field(description="Estimated unit cost, high end")
     retail_price_usd: float = Field(description="Realistic retail price buyers would pay after seeing the ad")
     aliexpress_query: str = Field(description="Best English search query to find it on AliExpress")
+    ad_search_keyword: str = Field(description="2-4 word English phrase advertisers of this product use in ad copy, for Ad Library search")
     target_audience: str
     ad_hook_idea: str = Field(description="One-line hook for the first 3 seconds of an ad")
     red_flags: list[str] = Field(description="Saturation, IP/brand, fragile, sizing, batteries/liquids, regulated, returns...")
@@ -90,8 +91,9 @@ def judge(client: anthropic.Anthropic, cfg: dict, v: dict, comments: list[str], 
     return resp.parsed_output
 
 
-def final_score(cfg: dict, p: ProductVerdict, viral: float) -> tuple[float, str, list[str]]:
-    """Combine Claude's judgment with hard gates. Returns (score 0-10, verdict, failed gates)."""
+def final_score(cfg: dict, p: ProductVerdict, viral: float, ads: float | None = None) -> tuple[float, str, list[str]]:
+    """Combine Claude's judgment with hard gates. Returns (score 0-10, verdict, failed gates).
+    `ads` is the 0-10 Ad Library validation score, once the product has been checked there."""
     crit = cfg["criteria"]
     gates = []
     if not p.is_physical_product:
@@ -101,7 +103,12 @@ def final_score(cfg: dict, p: ProductVerdict, viral: float) -> tuple[float, str,
         gates.append(f"COGS ~${cogs_mid:.0f} în afara ${crit['cogs_min_usd']}-{crit['cogs_max_usd']}")
     if p.retail_price_usd < crit["min_markup"] * max(p.cogs_max_usd, 0.01):
         gates.append(f"markup sub {crit['min_markup']}x")
-    score = round(0.30 * p.problem_score + 0.25 * p.wow_score + 0.25 * p.perceived_value_score + 0.20 * viral, 2)
+    if ads is None:
+        score = 0.30 * p.problem_score + 0.25 * p.wow_score + 0.25 * p.perceived_value_score + 0.20 * viral
+    else:
+        score = (0.25 * p.problem_score + 0.20 * p.wow_score + 0.20 * p.perceived_value_score
+                 + 0.15 * viral + 0.20 * ads)
+    score = round(score, 2)
     verdict = p.verdict
     if gates:
         verdict = "SKIP"
