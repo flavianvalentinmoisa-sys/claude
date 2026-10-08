@@ -28,6 +28,7 @@ FONT_FILE = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 W, H, FPS = 1080, 1920, 30
 WORDS_PER_CHUNK = 3
 TAIL = 0.6  # secunde de imagine dupa ce se termina vocea
+SILENT_BOUNDS = [(0, 4), (4, 8), (8, 15), (15, 20)]  # timpii din script.md
 
 
 def run(cmd):
@@ -102,14 +103,17 @@ def build_ass(bounds, path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--vo", required=True)
+    ap.add_argument("--vo", help="voiceover; fara el se folosesc timpii din script, fara voce")
     ap.add_argument("--clips", nargs=len(SENTENCES), required=True)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
-    vo_len = duration(args.vo)
-    bounds = sentence_bounds(args.vo, vo_len)
-    bounds[-1] = (bounds[-1][0], vo_len + TAIL)
+    if args.vo:
+        vo_len = duration(args.vo)
+        bounds = sentence_bounds(args.vo, vo_len)
+        bounds[-1] = (bounds[-1][0], vo_len + TAIL)
+    else:
+        bounds = list(SILENT_BOUNDS)
     total = bounds[-1][1]
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -148,9 +152,12 @@ def main():
             f"box=1:boxcolor=0xFFE500:boxborderw=30:x=(w-tw)/2:y=h*0.42:"
             f"enable='gte(t,{cta_start:.2f})'"
         )
-        run(["ffmpeg", "-y", "-i", str(broll), "-i", args.vo,
+        audio_in = (["-i", args.vo] if args.vo else
+                    ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo"])
+        afilter = "loudnorm=I=-14:TP=-1.5:LRA=11,apad" if args.vo else "anull"
+        run(["ffmpeg", "-y", "-i", str(broll), *audio_in,
              "-filter_complex",
-             f"[0:v]{vf}[v];[1:a]loudnorm=I=-14:TP=-1.5:LRA=11,apad[a]",
+             f"[0:v]{vf}[v];[1:a]{afilter}[a]",
              "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
              "-c:v", "libx264", "-profile:v", "high", "-preset", "slow", "-crf", "19",
              "-pix_fmt", "yuv420p", "-r", str(FPS),
