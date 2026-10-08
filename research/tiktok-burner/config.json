@@ -1,0 +1,67 @@
+{
+  "_comment": "Setari pentru burner. Modifica liber, apoi ruleaza: python burner.py run",
+
+  "fyp_minutes": 12,
+  "search_scrolls": 6,
+  "comments_top_n": 25,
+  "analyze_top_n": 40,
+
+  "search_keywords": [
+    "tiktok made me buy it",
+    "amazon finds",
+    "problem solved gadget",
+    "life hack product",
+    "kitchen gadget",
+    "car gadget",
+    "cleaning hack product",
+    "back pain relief",
+    "pet hair remover",
+    "must have gadget 2026",
+    "game changer product",
+    "this fixed my"
+  ],
+
+  "hashtags": [
+    "tiktokmademebuyit",
+    "amazonfinds",
+    "problemsolved",
+    "gadgets",
+    "musthaves",
+    "lifehacks",
+    "tiktokshopfinds",
+    "homegadgets"
+  ],
+
+  "product_signals": [
+    "tiktokmademebuyit", "amazonfind", "amazon find", "tiktokshop", "gadget",
+    "must have", "musthave", "game changer", "life hack", "lifehack", "hack",
+    "link in bio", "found this", "problem", "solved", "fixed my", "obsessed",
+    "worth it", "i need", "where to buy", "product", "review", "unboxing",
+    "satisfying", "before and after", "finally", "invention", "genius"
+  ],
+
+  "prefilter": {
+    "min_views": 50000,
+    "max_age_days": 120,
+    "min_share_rate": 0.002,
+    "min_save_rate": 0.003
+  },
+
+  "criteria": {
+    "cogs_min_usd": 5,
+    "cogs_max_usd": 20,
+    "min_markup": 2.5
+  },
+
+  "claude": {
+    "model": "claude-opus-5-5",
+    "effort": "medium"
+  },
+
+  "human_pacing": {
+    "skip_seconds": [1.2, 3.5],
+    "watch_product_seconds": [8, 18],
+    "like_probability": 0.6,
+    "favorite_probability": 0.35
+  }
+}
