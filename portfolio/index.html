@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mira Kovač Monograph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap">
+<style>
+/* Layout: a printed monograph. Running head + folio, contents page, plates set as two-page spreads with a fold, chapter openers. One accent: riso fluorescent pink, used as overprint. */
+:root{
+  --paper:#F2F2EF;      /* cool uncoated stock */
+  --ink:#0D0D0F;        /* rich black */
+  --pink:#FF48B0;       /* riso fluorescent pink */
+  --blue:#0078BF;       /* riso blue, trail only */
+  --grey:#7E7F88;       /* cool-biased neutral */
+  --hair:rgba(13,13,15,.16);
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --serif:"Newsreader","Iowan Old Style",Georgia,serif;
+  --didone:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --mono:"Martian Mono","SFMono-Regular",Menlo,Consolas,monospace;
+  --gutter:clamp(16px,4vw,56px);
+  --head:44px;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:var(--head)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{max-width:100%}
+a{color:inherit}
+::selection{background:var(--pink);color:var(--ink)}
+:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+[hidden]{display:none!important}
+
+.mono{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-variation-settings:"wdth" 87.5;line-height:1.5}
+.wrap{padding-inline:var(--gutter);max-width:1560px;margin-inline:auto}
+
+/* ---------- Running head ---------- */
+.runhead{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);background:var(--paper);border-bottom:1px solid var(--ink)}
+.runhead .wrap{height:var(--head);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.runhead a{text-decoration:none}
+.runhead .rh-section{text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42vw}
+.runhead .rh-folio{text-align:right;font-variant-numeric:tabular-nums}
+.runhead .rh-folio b{color:var(--ink);background:var(--pink);padding:1px 5px;font-weight:600}
+@media (max-width:560px){.runhead .rh-title span{display:none}}
+
+/* ---------- Crop marks ---------- */
+.crop{position:absolute;width:18px;height:18px;pointer-events:none}
+.crop::before,.crop::after{content:"";position:absolute;background:var(--ink)}
+.crop::before{width:18px;height:1px}
+.crop::after{width:1px;height:18px}
+.crop.tl{top:10px;left:10px}.crop.tl::before{top:0;left:-8px}.crop.tl::after{left:0;top:-8px}
+.crop.tr{top:10px;right:10px}.crop.tr::before{top:0;right:-8px}.crop.tr::after{right:0;top:-8px}
+.crop.bl{bottom:10px;left:10px}.crop.bl::before{bottom:0;left:-8px}.crop.bl::after{left:0;bottom:-8px}
+.crop.br{bottom:10px;right:10px}.crop.br::before{bottom:0;right:-8px}.crop.br::after{right:0;bottom:-8px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding-top:calc(var(--head) + env(safe-area-inset-top,0px) + clamp(28px,5vw,64px));padding-bottom:clamp(40px,6vw,88px);overflow-x:clip}
+.hero-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding-bottom:clamp(16px,2vw,28px);border-bottom:1px solid var(--ink)}
+.hero-name{position:relative;--name-size:clamp(5rem,21vw,24rem);margin:clamp(12px,2vw,24px) 0 0}
+.name-layer{display:block;font-family:var(--display);font-size:var(--name-size);line-height:.8;text-transform:uppercase;letter-spacing:-.02em;font-variation-settings:"wdth" 112,"wght" 900;white-space:nowrap}
+.name-layer.overprint{position:absolute;inset:0;color:var(--pink);mix-blend-mode:multiply;transform:translate(.012em,.01em);pointer-events:none;animation:misreg 1.8s cubic-bezier(.2,.7,.1,1) both}
+.name-layer.ink{position:relative;color:var(--ink);mix-blend-mode:multiply}
+.name-row{display:flex;align-items:flex-end;gap:clamp(16px,3vw,48px)}
+.name-row .line{display:block}
+.name-layer > .line{margin-top:.13em}
+.k{display:inline-block;font-variation-settings:inherit;animation:kin 1.5s cubic-bezier(.2,.75,.15,1) both;animation-delay:calc(var(--i) * 70ms + 120ms);transition:font-variation-settings .35s ease-out}
+@keyframes kin{
+  0%{font-variation-settings:"wdth" 62,"wght" 100;transform:translateY(.1em) scaleY(.9)}
+  55%{font-variation-settings:"wdth" 125,"wght" 900;transform:none}
+  100%{font-variation-settings:"wdth" 112,"wght" 900;transform:none}
+}
+@keyframes misreg{0%{transform:translate(.09em,-.05em)}70%{transform:translate(-.01em,.02em)}100%{transform:translate(.012em,.01em)}}
+.hero-aside{display:block;font-weight:400;flex:1;min-width:0;max-width:34ch;padding-bottom:1.6em;white-space:normal;text-transform:none;letter-spacing:0;font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,1.6vw,1.45rem);line-height:1.3;font-variation-settings:"opsz" 36;text-wrap:balance}
+.hero-foot{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);margin-top:clamp(28px,4vw,56px);padding-top:clamp(16px,2vw,24px);border-top:1px solid var(--ink)}
+.thesis{font-family:var(--display);font-variation-settings:"wdth" 82,"wght" 640;font-size:clamp(1.6rem,3.2vw,3rem);line-height:1;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.thesis em{font-family:var(--didone);font-style:italic;font-weight:500;letter-spacing:0}
+.contents h2{margin:0 0 10px}
+.contents ol{list-style:none;margin:0;padding:0;font-family:var(--display);font-variation-settings:"wdth" 100,"wght" 480}
+.contents li a{display:grid;grid-template-columns:3.2em 1fr auto;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px solid var(--hair);text-decoration:none}
+.contents li a:hover .c-title{background:var(--pink)}
+.contents .c-no{font-family:var(--mono);font-size:.68rem;color:var(--grey)}
+.contents .c-pg{font-family:var(--mono);font-size:.7rem;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.name-row{display:block}.hero-aside{max-width:none;padding:14px 0 0}.hero-foot{grid-template-columns:1fr}}
+
+/* ---------- Chapter openers ---------- */
+.chapter{position:relative;border-top:1px solid var(--ink);padding-block:clamp(48px,8vw,120px) clamp(24px,4vw,48px)}
+.chapter-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,30ch);gap:clamp(16px,4vw,64px);align-items:end}
+.chapter h2{font-family:var(--display);font-size:clamp(3.6rem,13vw,13rem);line-height:.82;letter-spacing:-.03em;font-variation-settings:"wdth" 70,"wght" 900;text-transform:uppercase;margin:.12em 0 0;text-wrap:balance}
+.chapter p{margin:0;font-style:italic;font-size:1.1rem;line-height:1.4}
+@media (max-width:760px){.chapter-row{grid-template-columns:1fr}}
+
+/* ---------- Spreads ---------- */
+.spread{position:relative;overflow-x:clip;border-top:1px solid var(--ink);padding-block:clamp(56px,9vw,128px)}
+.spread-inner{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);will-change:transform,opacity}
+.spread-inner::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:56px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(13,13,15,.05) 46%,rgba(13,13,15,.14) 50%,rgba(13,13,15,.05) 54%,transparent);pointer-events:none}
+.page{min-width:0;padding-inline:0 clamp(24px,4vw,64px)}
+.page+.page{padding-inline:clamp(24px,4vw,64px) 0}
+.plate-no{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--ink);padding-bottom:8px}
+.spread h3{font-family:var(--display);font-size:clamp(3.4rem,9.4vw,9.6rem);line-height:.84;letter-spacing:-.025em;font-variation-settings:"wdth" 72,"wght" 900;text-transform:uppercase;margin:.18em 0 .22em;text-wrap:balance;overflow-wrap:anywhere}
+.deck{font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,1.8vw,1.6rem);line-height:1.25;font-variation-settings:"opsz" 48;margin:0 0 1.2em;max-width:30ch;text-wrap:balance}
+.copy{max-width:62ch}
+.copy p{margin:0 0 1em;hyphens:auto}
+.copy p:first-child::first-letter{float:left;font-family:var(--didone);font-weight:800;font-size:5.1em;line-height:.8;margin:.06em .08em 0 0;font-variation-settings:"opsz" 96}
+.copy blockquote{margin:1.4em 0;padding:0;font-family:var(--display);font-variation-settings:"wdth" 80,"wght" 700;font-size:1.6rem;line-height:1.05;letter-spacing:-.01em}
+.copy blockquote cite{display:block;margin-top:8px;font-style:normal}
+.credits{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:1.6em 0 0;padding-top:12px;border-top:1px solid var(--ink)}
+.credits dt{color:var(--grey)}
+.credits dd{margin:0;font-family:var(--serif);font-size:.95rem}
+.fig{margin:0}
+.fig svg{display:block;width:100%;height:auto;background:var(--ink)}
+.fig figcaption{display:flex;justify-content:space-between;gap:12px;padding-top:8px}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:clamp(14px,2vw,24px);margin-top:clamp(18px,2.4vw,32px);align-items:start}
+.logo-box{border:1px solid var(--ink);background:var(--paper)}
+.logo-box svg{display:block;width:100%;height:auto;aspect-ratio:1}
+.logo-box .mono{border-top:1px solid var(--ink);padding:6px 8px}
+@media (max-width:980px){.pair{grid-template-columns:1fr}.logo-box{max-width:320px}}
+@media (max-width:860px){
+  .spread-inner{grid-template-columns:1fr}
+  .spread-inner::before{display:none}
+  .page,.page+.page{padding-inline:0}
+  .page+.page{margin-top:32px}
+}
+
+/* Logo construction animations: armed only when JS sees the logo off-screen, so the resting state is always the finished mark. */
+.logo svg *{transform-box:view-box;transform-origin:50% 50%}
+.logo .guide{fill:none;stroke:var(--pink);stroke-width:1;stroke-dasharray:3 3;opacity:0}
+.logo.play .guide{animation:guide 2.4s ease both}
+@keyframes guide{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
+.logo.arm .draw{stroke-dasharray:1;stroke-dashoffset:1}
+.logo.play .draw{stroke-dasharray:1;animation:draw 1.3s cubic-bezier(.6,0,.2,1) both;animation-delay:calc(var(--d,0) * 1ms)}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.logo.arm .pop{opacity:0}
+.logo.play .pop{animation:pop .6s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(var(--d,0) * 1ms)}
+@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+.logo.arm .spin{opacity:0}
+.logo.play .spin{animation:spin 1.6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d,0) * 1ms)}
+@keyframes spin{from{opacity:0;transform:rotate(-200deg) scale(.55)}to{opacity:1;transform:none}}
+.logo.play .spin-r{animation:spinr 2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes spinr{from{transform:rotate(120deg)}to{transform:none}}
+.logo .blade{transform:rotate(var(--a))}
+.logo.arm .blade{transform:rotate(calc(var(--a) + 58deg));opacity:0}
+.logo.play .blade{animation:blade 1.4s cubic-bezier(.25,.9,.2,1) both;animation-delay:calc(var(--d,0) * 1ms)}
+@keyframes blade{from{transform:rotate(calc(var(--a) + 58deg));opacity:0}30%{opacity:1}to{transform:rotate(var(--a));opacity:1}}
+.logo.arm .block{opacity:0}
+.logo.play .block{animation:block .55s cubic-bezier(.3,1.3,.5,1) both;animation-delay:calc(var(--d,0) * 1ms)}
+@keyframes block{from{opacity:0;transform:translateY(-38px)}to{opacity:1;transform:none}}
+.logo.arm .reveal{clip-path:inset(100% 0 0 0)}
+.logo.play .reveal{animation:reveal 1.1s cubic-bezier(.7,0,.2,1) both;animation-delay:calc(var(--d,0) * 1ms)}
+@keyframes reveal{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* ---------- Film-strip palettes ---------- */
+.film{position:relative;user-select:none;-webkit-user-select:none}
+.film-view{position:relative;overflow:hidden;background:var(--ink);cursor:grab;touch-action:pan-y;height:150px}
+.film-view:active{cursor:grabbing}
+.film-track{position:absolute;top:0;left:0;height:100%;display:flex;will-change:transform}
+.film-view::before,.film-view::after{content:"";position:absolute;left:0;right:0;height:14px;z-index:2;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 7px,var(--paper) 7px 17px,transparent 17px 24px);background-clip:content-box;padding-block:3px;opacity:.88}
+.film-view::before{top:2px}
+.film-view::after{bottom:2px}
+.frame{flex:0 0 112px;height:100%;padding:24px 6px;position:relative}
+.frame i{display:block;height:100%;background:var(--c);border-radius:3px}
+.frame b{position:absolute;bottom:23px;left:10px;font:500 9px/1 var(--mono);color:var(--paper);mix-blend-mode:difference;letter-spacing:.06em}
+.film-gate{position:absolute;top:18px;bottom:18px;left:50%;width:112px;transform:translateX(-50%);border:2px solid var(--pink);border-radius:4px;z-index:3;pointer-events:none;box-shadow:0 0 0 999px rgba(13,13,15,.32)}
+.film-edge{position:absolute;left:0;right:0;z-index:2;color:var(--pink);font:9px/1 var(--mono);letter-spacing:.2em;white-space:nowrap;pointer-events:none;top:6px;padding-left:8px;opacity:0}
+.film-readout{display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:baseline;padding:8px 0 0;font-variant-numeric:tabular-nums}
+.film-readout .r-name{font-family:var(--display);font-variation-settings:"wdth" 85,"wght" 700;font-size:1.05rem;text-transform:none;letter-spacing:0}
+.film-readout .r-swatch{width:14px;height:14px;background:var(--c,#000);border:1px solid var(--ink)}
+.film-readout .r-values{grid-column:1/-1;color:var(--grey)}
+.film-hint{color:var(--grey);margin-top:2px}
+
+/* ---------- Specimens light table ---------- */
+.table-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-bottom:12px}
+.btn{font:inherit;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-variation-settings:"wdth" 87.5;background:var(--paper);color:var(--ink);border:1px solid var(--ink);padding:9px 12px;cursor:pointer;border-radius:0}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:var(--pink);color:var(--ink)}
+.lighttable{position:relative;height:clamp(620px,78vh,820px);border:1px solid var(--ink);overflow:hidden;background-color:var(--paper);background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);background-size:32px 32px;background-position:-1px -1px;touch-action:pan-y}
+.spec{position:absolute;left:0;top:0;width:min(360px,80vw);background:var(--paper);border:1px solid var(--ink);box-shadow:6px 6px 0 var(--ink);touch-action:none;cursor:grab;transform-origin:50% 50%}
+.spec:active{cursor:grabbing}
+.spec:focus-visible{outline-offset:6px}
+.spec-top{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid var(--ink)}
+.spec-glyph{font-size:176px;line-height:1;padding:12px 12px 0;white-space:nowrap;overflow:hidden}
+.spec-name{padding:0 12px;font-family:var(--display);font-variation-settings:"wdth" 90,"wght" 750;font-size:1.5rem;line-height:1.05}
+.spec-sample{padding:8px 12px 12px;font-size:1.25rem;line-height:1.2}
+.spec-meta{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;padding:8px 12px;border-top:1px solid var(--hair)}
+.spec-meta span:nth-child(odd){color:var(--grey)}
+.spec-foot{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-top:1px solid var(--ink)}
+.spec-status{color:var(--grey);min-height:1em}
+@media (max-width:899px){.lighttable{height:960px}}
+.table-note{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:10px;color:var(--grey)}
+
+/* ---------- Lectures ---------- */
+.talks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,4vw,56px) clamp(20px,3vw,40px)}
+.talk:first-child{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.talk h3{font-family:var(--display);font-variation-settings:"wdth" 78,"wght" 850;font-size:clamp(1.8rem,3.4vw,3.2rem);line-height:.92;letter-spacing:-.015em;margin:10px 0 12px;text-transform:uppercase;text-wrap:balance}
+.talk p{margin:0 0 .8em;max-width:56ch}
+.talk-meta{display:flex;flex-wrap:wrap;gap:4px 16px;border-top:1px solid var(--ink);padding-top:8px}
+.player{position:relative;background:var(--ink);border:1px solid var(--ink)}
+.player canvas,.player video{display:block;width:100%;aspect-ratio:16/9;height:auto;background:var(--ink)}
+.player-big{position:absolute;inset:0 0 44px 0;display:grid;place-items:center;background:none;border:0;cursor:pointer;color:var(--paper)}
+.player-big span{display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:var(--pink);color:var(--ink);font:700 1.4rem/1 var(--display)}
+.player-bar{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;height:44px;padding:0 12px;background:var(--ink);color:var(--paper)}
+.player-bar button{background:none;border:1px solid var(--paper);color:var(--paper);width:30px;height:26px;cursor:pointer;font:600 .7rem/1 var(--mono)}
+.player-bar input[type=range]{width:100%;accent-color:var(--pink);min-width:0}
+.player-bar .tc{font-variant-numeric:tabular-nums;color:var(--paper)}
+.captions{min-height:3.1em;padding:10px 0 0;font-style:italic;font-size:1.05rem;line-height:1.35;border-bottom:1px solid var(--hair)}
+@media (max-width:860px){.talks{grid-template-columns:1fr}.talk:first-child{grid-template-columns:1fr}}
+
+/* ---------- Contact ---------- */
+.contact{border-top:1px solid var(--ink);padding-block:clamp(56px,9vw,128px) clamp(28px,4vw,48px);position:relative}
+.contact h2{font-family:var(--display);font-size:clamp(3.4rem,12vw,12.5rem);line-height:.82;letter-spacing:-.03em;font-variation-settings:"wdth" 64,"wght" 900;text-transform:uppercase;margin:0;text-wrap:balance}
+.contact h2 em{font-family:var(--didone);font-style:italic;font-weight:500;text-transform:none;letter-spacing:-.02em}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin:clamp(24px,4vw,48px) 0;padding-block:18px;border-block:1px solid var(--ink)}
+.mail-addr{font-family:var(--didone);font-style:italic;font-size:clamp(1.6rem,5vw,4rem);line-height:1;user-select:all;overflow-wrap:anywhere;min-width:0}
+.avail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,40px)}
+.avail div{border-top:1px solid var(--ink);padding-top:8px;min-width:0}
+.avail p{margin:6px 0 0}
+.state{display:inline-block;padding:1px 6px;border:1px solid var(--ink);margin-top:6px}
+.state.open{background:var(--pink)}
+@media (max-width:760px){.avail{grid-template-columns:1fr}}
+.colophon{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:24px;margin-top:clamp(48px,7vw,96px);padding-top:12px;border-top:1px solid var(--ink);color:var(--grey);font-size:.92rem}
+.colophon p{margin:0;max-width:70ch}
+@media (max-width:760px){.colophon{grid-template-columns:1fr}}
+
+/* ---------- Riso trail ---------- */
+#riso{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60;mix-blend-mode:multiply}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .k,.name-layer.overprint{animation:none}
+  #riso{display:none}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<header class="runhead">
+  <div class="wrap mono">
+    <a class="rh-title" href="#top">Mira Kovač <span>/ Monograph, Vol. II</span></a>
+    <span class="rh-section" id="rh-section">Frontispiece</span>
+    <span class="rh-folio">p. <b id="rh-folio">001</b></span>
+  </div>
+</header>
+
+<canvas id="riso" aria-hidden="true"></canvas>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero wrap" data-head="Frontispiece" aria-label="Mira Kovač">
+  <div class="hero-top mono">
+    <span>Brand &amp; type design</span>
+    <span>Rotterdam, since 2011</span>
+    <span>Selected work 2019–2026</span>
+  </div>
+
+  <h1 class="hero-name" aria-label="Mira Kovač">
+    <span class="name-layer overprint" aria-hidden="true">
+      <span class="name-row"><span class="line" data-word="MIRA"></span><span class="hero-aside" style="visibility:hidden">Identities, packaging, posters and typefaces for clients who would rather be remembered than liked.</span></span>
+      <span class="line" data-word="KOVAČ"></span>
+    </span>
+    <span class="name-layer ink" aria-hidden="true">
+      <span class="name-row"><span class="line" data-word="MIRA"></span><span class="hero-aside">Identities, packaging, posters and typefaces for clients who would rather be remembered than liked.</span></span>
+      <span class="line" data-word="KOVAČ"></span>
+    </span>
+  </h1>
+
+  <div class="hero-foot">
+    <p class="thesis">A logo is a promise kept small. A typeface is an <em>argument</em> set in lead. This book is the evidence.</p>
+    <nav class="contents" aria-label="Contents">
+      <h2 class="mono">Contents</h2>
+      <ol>
+        <li><a href="#haven"><span class="c-no">Pl. I</span><span class="c-title">Haven Line</span><span class="c-pg" data-page-of="haven">p. 004</span></a></li>
+        <li><a href="#oxbow"><span class="c-no">Pl. II</span><span class="c-title">Oxbow Mineral Water</span><span class="c-pg" data-page-of="oxbow">p. 006</span></a></li>
+        <li><a href="#kino"><span class="c-no">Pl. III</span><span class="c-title">Kino Lumen 26</span><span class="c-pg" data-page-of="kino">p. 008</span></a></li>
+        <li><a href="#nordhavn"><span class="c-no">Pl. IV</span><span class="c-title">Nordhavn Library</span><span class="c-pg" data-page-of="nordhavn">p. 010</span></a></li>
+        <li><a href="#ferro"><span class="c-no">Pl. V</span><span class="c-title">Ferro Didone</span><span class="c-pg" data-page-of="ferro">p. 012</span></a></li>
+        <li><a href="#specimens"><span class="c-no">II</span><span class="c-title">Type Specimens</span><span class="c-pg" data-page-of="specimens">p. 014</span></a></li>
+        <li><a href="#lectures"><span class="c-no">III</span><span class="c-title">Lectures &amp; Talks</span><span class="c-pg" data-page-of="lectures">p. 016</span></a></li>
+        <li><a href="#contact"><span class="c-no">IV</span><span class="c-title">Contact</span><span class="c-pg" data-page-of="contact">p. 018</span></a></li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<!-- ================= CHAPTER I ================= -->
+<section class="chapter wrap" data-head="I. Plates" aria-labelledby="ch1">
+  <span class="mono">Chapter I · Five plates</span>
+  <div class="chapter-row">
+    <h2 id="ch1">Plates</h2>
+    <p>Logo systems, packaging, posters and a typeface. Each project is set as a spread: the argument on the left, the evidence on the right.</p>
+  </div>
+</section>
+
+<!-- Plate I -->
+<article class="spread wrap" id="haven" data-head="Plate I · Haven Line">
+  <div class="spread-inner">
+    <div class="page">
+      <div class="plate-no mono"><span>Plate I</span><span>Logo system</span><span>2025</span></div>
+      <h3>Haven Line</h3>
+      <p class="deck">A ferry company that had forgotten it sails at dawn. We gave it the sunrise back.</p>
+      <div class="copy">
+        <p>Haven Line runs two crossings a day between Rotterdam and Harwich. Its old mark was a compass rose, which is what every shipping firm on the North Sea draws when it cannot think of anything else. The brief asked for "trust". We argued for something more specific: the 07:15 departure, when the sun clears the cranes at Maasvlakte and the whole deck turns orange.</p>
+        <p>The mark is a porthole cut by three swells. It holds at 9&nbsp;mm on a boarding pass and at 14&nbsp;metres on a hull. The waves are drawn on an 8-unit grid so they can be extended into patterns for tickets, life-jacket lockers and the timetable, where each crossing gets its own wave count.</p>
+        <blockquote>“Trust is a word you put in a brief when you have not been to the harbour yet.”<cite class="mono">From the pitch deck, slide 4</cite></blockquote>
+      </div>
+      <dl class="credits mono">
+        <dt>Client</dt><dd>Haven Line B.V., Rotterdam</dd>
+        <dt>Scope</dt><dd>Mark, wordmark, livery, ticketing, signage</dd>
+        <dt>With</dt><dd>Studio Pier (wayfinding), Ruben Aalders (motion)</dd>
+        <dt>Applied</dt><dd>2 vessels, 3 terminals, 410,000 passes a year</dd>
+      </dl>
+    </div>
+    <div class="page">
+      <figure class="fig">
+        <svg viewBox="0 0 600 460" role="img" aria-label="Haven Line poster: orange half-sun over navy sea with white wave lines and the wordmark">
+          <rect width="600" height="460" fill="#14233C"/>
+          <defs><clipPath id="hv-c"><circle cx="300" cy="190" r="140"/></clipPath></defs>
+          <path d="M160 190 A140 140 0 0 1 440 190 Z" fill="#F2542D"/>
+          <g clip-path="url(#hv-c)" fill="none" stroke="#F1EFE9" stroke-width="12" stroke-linecap="round">
+            <path d="M150 222 q37.5 -22 75 0 t75 0 t75 0 t75 0 t75 0"/>
+            <path d="M150 262 q37.5 -22 75 0 t75 0 t75 0 t75 0 t75 0"/>
+            <path d="M150 302 q37.5 -22 75 0 t75 0 t75 0 t75 0 t75 0"/>
+          </g>
+          <circle cx="300" cy="190" r="140" fill="none" stroke="#F1EFE9" stroke-width="3"/>
+          <text x="40" y="400" fill="#F1EFE9" font-family="Archivo, sans-serif" font-size="74" style="font-variation-settings:'wdth' 70,'wght' 900" letter-spacing="-1">HAVEN LINE</text>
+          <text x="40" y="432" fill="#F5C518" font-family="Martian Mono, monospace" font-size="12" letter-spacing="2">ROTTERDAM ⇄ HARWICH · DEP 07:15 · ARR 13:00</text>
+          <text x="560" y="40" text-anchor="end" fill="#9AA7B0" font-family="Martian Mono, monospace" font-size="10" letter-spacing="2">CROSSING 01 / 02</text>
+        </svg>
+        <figcaption class="mono"><span>Fig. 1.1 — Departure poster, A0</span><span>Pantone 2189 C / 172 C</span></figcaption>
+      </figure>
+      <div class="pair">
+        <figure class="fig logo-box logo" aria-label="Haven Line mark construction">
+          <svg viewBox="0 0 200 200" role="img" aria-label="Haven Line mark">
+            <defs><clipPath id="hv-l"><circle cx="100" cy="100" r="70"/></clipPath></defs>
+            <circle class="guide" cx="100" cy="100" r="86"/>
+            <line class="guide" x1="10" y1="100" x2="190" y2="100"/>
+            <line class="guide" x1="100" y1="10" x2="100" y2="190"/>
+            <circle class="guide" cx="100" cy="100" r="35"/>
+            <path class="pop" style="--d:900" d="M30 100 A70 70 0 0 1 170 100 Z" fill="#F2542D"/>
+            <g clip-path="url(#hv-l)" fill="none" stroke="#0D0D0F" stroke-width="8" stroke-linecap="round">
+              <path class="draw" style="--d:500" pathLength="1" d="M24 118 q19 -12 38 0 t38 0 t38 0 t38 0"/>
+              <path class="draw" style="--d:650" pathLength="1" d="M24 140 q19 -12 38 0 t38 0 t38 0 t38 0"/>
+              <path class="draw" style="--d:800" pathLength="1" d="M24 162 q19 -12 38 0 t38 0 t38 0 t38 0"/>
+            </g>
+            <circle class="draw" pathLength="1" cx="100" cy="100" r="70" fill="none" stroke="#0D0D0F" stroke-width="6"/>
+          </svg>
+          <figcaption class="mono">Fig. 1.2 — Mark, 8-unit construction</figcaption>
+        </figure>
+        <div class="film" data-palette='[{"n":"Harbour Navy","h":"#14233C","c":"C100 M82 Y38 K52"},{"n":"Dawn Orange","h":"#F2542D","c":"C0 M80 Y85 K0"},{"n":"Hull White","h":"#F1EFE9","c":"C3 M3 Y6 K0"},{"n":"Buoy Yellow","h":"#F5C518","c":"C2 M21 Y100 K0"},{"n":"North Sea Fog","h":"#9AA7B0","c":"C40 M24 Y22 K8"},{"n":"Deck Teal","h":"#1F6F6B","c":"C86 M34 Y58 K18"}]'></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- Plate II -->
+<article class="spread wrap" id="oxbow" data-head="Plate II · Oxbow Mineral Water">
+  <div class="spread-inner">
+    <div class="page">
+      <div class="plate-no mono"><span>Plate II</span><span>Packaging</span><span>2024</span></div>
+      <h3>Oxbow Mineral Water</h3>
+      <p class="deck">Water has no flavour, so we sold the river's shape instead.</p>
+      <div class="copy">
+        <p>Oxbow is bottled from a spring under a cut-off meander of the Maas. Mineral-water shelves are an arms race of mountains and glaciers, and none of them are in Limburg. We dropped the landscape and kept the geometry: a single U, the path the river took before it changed its mind.</p>
+        <p>Each variety gets the same mark in a different turn, so the shelf reads as a sequence. Labels are printed in two spot colours on uncoated stock that wrinkles slightly when wet. We kept that. The mineral analysis, normally hidden in 5-point type, is set large on the back as the main typographic event, because 42&nbsp;mg/L of calcium is the only honest claim on the bottle.</p>
+      </div>
+      <dl class="credits mono">
+        <dt>Client</dt><dd>Oxbow Bron, Roermond</dd>
+        <dt>Scope</dt><dd>Naming support, mark, label system, cases</dd>
+        <dt>Printer</dt><dd>Drukkerij Maasland, 2 spot + blind deboss</dd>
+        <dt>Award</dt><dd>Dutch Design Awards, shortlist 2024</dd>
+      </dl>
+    </div>
+    <div class="page">
+      <figure class="fig">
+        <svg viewBox="0 0 600 460" role="img" aria-label="Three Oxbow bottles with green, blue and clay labels">
+          <rect width="600" height="460" fill="#DCDDD6"/>
+          <defs><g id="ox-bottle">
+            <path d="M-34 420 V190 q0 -34 22 -52 V78 h24 v60 q22 18 22 52 V420 q0 10 -10 10 h-48 q-10 0 -10 -10 Z" fill="#EEF0EC" stroke="#0D0D0F" stroke-width="2"/>
+            <rect x="-14" y="62" width="28" height="18" fill="#0D0D0F"/>
+          </g></defs>
+          <g transform="translate(150 0)"><use href="#ox-bottle" x="0"/>
+            <rect x="-34" y="230" width="68" height="150" fill="#2F5D50"/>
+            <path d="M-16 262 C-16 300 16 300 16 262" fill="none" stroke="#EEF0EC" stroke-width="6"/>
+            <text x="0" y="330" text-anchor="middle" fill="#EEF0EC" font-family="Archivo, sans-serif" font-size="17" style="font-variation-settings:'wdth' 70,'wght' 900">OXBOW</text>
+            <text x="0" y="350" text-anchor="middle" fill="#EEF0EC" font-family="Martian Mono, monospace" font-size="7" letter-spacing="1">STILL 750 ML</text>
+          </g>
+          <g transform="translate(300 0)"><use href="#ox-bottle" x="0"/>
+            <rect x="-34" y="230" width="68" height="150" fill="#3A4E7A"/>
+            <path d="M-16 262 C-16 300 16 300 16 262" fill="none" stroke="#EEF0EC" stroke-width="6" transform="rotate(90 0 275)"/>
+            <text x="0" y="330" text-anchor="middle" fill="#EEF0EC" font-family="Archivo, sans-serif" font-size="17" style="font-variation-settings:'wdth' 70,'wght' 900">OXBOW</text>
+            <text x="0" y="350" text-anchor="middle" fill="#EEF0EC" font-family="Martian Mono, monospace" font-size="7" letter-spacing="1">BRUIS 750 ML</text>
+          </g>
+          <g transform="translate(450 0)"><use href="#ox-bottle" x="0"/>
+            <rect x="-34" y="230" width="68" height="150" fill="#B5654A"/>
+            <path d="M-16 262 C-16 300 16 300 16 262" fill="none" stroke="#EEF0EC" stroke-width="6" transform="rotate(180 0 275)"/>
+            <text x="0" y="330" text-anchor="middle" fill="#EEF0EC" font-family="Archivo, sans-serif" font-size="17" style="font-variation-settings:'wdth' 70,'wght' 900">OXBOW</text>
+            <text x="0" y="350" text-anchor="middle" fill="#EEF0EC" font-family="Martian Mono, monospace" font-size="7" letter-spacing="1">MINERAAL</text>
+          </g>
+          <text x="24" y="36" fill="#0D0D0F" font-family="Martian Mono, monospace" font-size="10" letter-spacing="2">Ca 42 · Mg 9.1 · HCO₃ 168 · Na 6.4 mg/L</text>
+        </svg>
+        <figcaption class="mono"><span>Fig. 2.1 — Still, Bruis, Mineraal</span><span>One mark, three turns</span></figcaption>
+      </figure>
+      <div class="pair">
+        <figure class="fig logo-box logo" aria-label="Oxbow mark construction">
+          <svg viewBox="0 0 200 200" role="img" aria-label="Oxbow mark">
+            <circle class="guide" cx="100" cy="100" r="50"/>
+            <line class="guide" x1="50" y1="20" x2="50" y2="180"/>
+            <line class="guide" x1="150" y1="20" x2="150" y2="180"/>
+            <g class="spin-r ticks" data-ticks="36" data-r1="82" data-r2="90"></g>
+            <g class="spin" style="--d:200">
+              <circle cx="100" cy="100" r="74" fill="none" stroke="#0D0D0F" stroke-width="3"/>
+              <path d="M62 62 C62 156 138 156 138 62" fill="none" stroke="#2F5D50" stroke-width="18" stroke-linecap="butt"/>
+              <circle cx="100" cy="84" r="9" fill="#0D0D0F"/>
+            </g>
+          </svg>
+          <figcaption class="mono">Fig. 2.2 — Mark, rotational set</figcaption>
+        </figure>
+        <div class="film" data-palette='[{"n":"River Green","h":"#2F5D50","c":"C80 M35 Y70 K30"},{"n":"Slate Bruis","h":"#3A4E7A","c":"C85 M65 Y20 K15"},{"n":"Maas Clay","h":"#B5654A","c":"C15 M68 Y72 K8"},{"n":"Limestone","h":"#DCDDD6","c":"C12 M8 Y12 K0"},{"n":"Bottle Glass","h":"#EEF0EC","c":"C5 M2 Y5 K0"},{"n":"Spring Black","h":"#0D0D0F","c":"C70 M60 Y55 K90"}]'></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- Plate III -->
+<article class="spread wrap" id="kino" data-head="Plate III · Kino Lumen 26">
+  <div class="spread-inner">
+    <div class="page">
+      <div class="plate-no mono"><span>Plate III</span><span>Posters</span><span>2026</span></div>
+      <h3>Kino Lumen 26</h3>
+      <p class="deck">A film festival poster should look like it was printed in a hurry the night before opening. These were.</p>
+      <div class="copy">
+        <p>Kino Lumen is a ten-day festival of first features in Ghent. For its 26th edition we made one mark, an aperture of six blades, and let it close a little further on each poster in the series, from wide open on the announcement to nearly shut on the closing-night bill.</p>
+        <p>All twelve posters were printed on a two-drum risograph in fluorescent pink and black, 600 copies each. The misregistration is real and it is different on every sheet. Several sponsors asked us to "fix the blur". We put their logos in the black drum and left the pink alone.</p>
+        <blockquote>“If the poster is perfect, people assume the films are too. Better to promise them something alive.”<cite class="mono">Letter to the festival board</cite></blockquote>
+      </div>
+      <dl class="credits mono">
+        <dt>Client</dt><dd>Kino Lumen vzw, Ghent</dd>
+        <dt>Scope</dt><dd>Edition mark, 12 posters, trailer titles</dd>
+        <dt>Print</dt><dd>Riso MZ, Fluo Pink + Black, 90 gsm Munken</dd>
+        <dt>Run</dt><dd>7,200 sheets, numbered by hand</dd>
+      </dl>
+    </div>
+    <div class="page">
+      <figure class="fig">
+        <svg viewBox="0 0 600 460" role="img" aria-label="Three risograph posters for Kino Lumen 26">
+          <rect width="600" height="460" fill="#ECEBE7"/>
+          <g transform="translate(24 60)">
+            <rect width="172" height="250" fill="#F7F6F2" stroke="#0D0D0F"/>
+            <g transform="translate(86 104)" class="kino-ap" data-open="0.95" data-fill="#FF48B0"></g>
+            <text x="12" y="218" font-family="Archivo, sans-serif" font-size="24" style="font-variation-settings:'wdth' 64,'wght' 900" fill="#0D0D0F">KINO LUMEN</text>
+            <text x="12" y="236" font-family="Martian Mono, monospace" font-size="6.5" fill="#0D0D0F" letter-spacing="1">GENT · 06—15 NOV 2026</text>
+          </g>
+          <g transform="translate(214 60)">
+            <rect width="172" height="250" fill="#FF48B0"/>
+            <text x="86" y="176" text-anchor="middle" font-family="Archivo, sans-serif" font-size="190" style="font-variation-settings:'wdth' 62,'wght' 900;mix-blend-mode:multiply" fill="#0D0D0F" letter-spacing="-6">26</text>
+            <text x="91" y="180" text-anchor="middle" font-family="Archivo, sans-serif" font-size="190" style="font-variation-settings:'wdth' 62,'wght' 100" fill="none" stroke="#F7F6F2" stroke-width="1" letter-spacing="-6">26</text>
+            <text x="12" y="236" font-family="Martian Mono, monospace" font-size="6.5" fill="#0D0D0F" letter-spacing="1">FIRST FEATURES ONLY</text>
+          </g>
+          <g transform="translate(404 60)">
+            <rect width="172" height="250" fill="#0D0D0F"/>
+            <g transform="translate(86 104)" class="kino-ap" data-open="0.25" data-fill="#FF48B0"></g>
+            <text x="12" y="210" font-family="Bodoni Moda, serif" font-style="italic" font-size="22" fill="#F7F6F2">Closing night</text>
+            <text x="12" y="236" font-family="Martian Mono, monospace" font-size="6.5" fill="#FF48B0" letter-spacing="1">15.11 · 21:30 · SPHINX ZAAL 1</text>
+          </g>
+          <text x="24" y="356" font-family="Martian Mono, monospace" font-size="10" fill="#0D0D0F" letter-spacing="2">POSTER 01 · 06 · 12 — APERTURE f/1.4 → f/22</text>
+          <line x1="24" y1="372" x2="576" y2="372" stroke="#0D0D0F"/>
+        </svg>
+        <figcaption class="mono"><span>Fig. 3.1 — Announcement, programme, closing night</span><span>Riso, 2 drums</span></figcaption>
+      </figure>
+      <div class="pair">
+        <figure class="fig logo-box logo" aria-label="Kino Lumen aperture construction">
+          <svg viewBox="0 0 200 200" role="img" aria-label="Kino Lumen aperture mark">
+            <circle class="guide" cx="100" cy="100" r="88"/>
+            <polygon class="guide" points="100,28 162,64 162,136 100,172 38,136 38,64"/>
+            <g class="blades"></g>
+            <circle class="pop" style="--d:1100" cx="100" cy="100" r="74" fill="none" stroke="#0D0D0F" stroke-width="3"/>
+          </svg>
+          <figcaption class="mono">Fig. 3.2 — Six blades, 60° each</figcaption>
+        </figure>
+        <div class="film" data-palette='[{"n":"Fluo Pink","h":"#FF48B0","c":"Riso 0.3 / Pantone 806 U"},{"n":"Riso Black","h":"#0D0D0F","c":"Riso 0.1 / Process Black U"},{"n":"Overprint","h":"#3A1029","c":"Pink × Black, multiply"},{"n":"Munken White","h":"#F7F6F2","c":"Uncoated, 90 gsm"},{"n":"Screen Pink 30%","h":"#FFC4E3","c":"Riso Pink, 53 lpi"}]'></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- Plate IV -->
+<article class="spread wrap" id="nordhavn" data-head="Plate IV · Nordhavn Library">
+  <div class="spread-inner">
+    <div class="page">
+      <div class="plate-no mono"><span>Plate IV</span><span>Logo system · Wayfinding</span><span>2023</span></div>
+      <h3>Nordhavn Library</h3>
+      <p class="deck">Thirteen squares, one letter, and a building where nobody gets lost.</p>
+      <div class="copy">
+        <p>Copenhagen's newest branch library sits in a converted grain silo with nine floors and no right angles anywhere in its plan. The architects had solved everything except how anyone would find the toilets. Our answer was to build the identity out of the same module as the signage: a 28&nbsp;mm square.</p>
+        <p>The N is thirteen of those squares. So is every pictogram, every floor numeral and the arrow set. Children's floors use the module at double size. Staff can compose new signs from a kit of magnetic squares without calling us, which we consider the best possible outcome for a wayfinding project.</p>
+      </div>
+      <dl class="credits mono">
+        <dt>Client</dt><dd>Københavns Biblioteker</dd>
+        <dt>Scope</dt><dd>Mark, modular pictograms, signage kit, digital</dd>
+        <dt>With</dt><dd>Holm Arkitekter, Søren Vinther (fabrication)</dd>
+        <dt>Signs</dt><dd>1,140 placed, 212 composed by staff since opening</dd>
+      </dl>
+    </div>
+    <div class="page">
+      <figure class="fig">
+        <svg viewBox="0 0 600 460" role="img" aria-label="Nordhavn Library floor sign with modular N and directions">
+          <rect width="600" height="460" fill="#1E3B2F"/>
+          <g class="nmod" data-x="40" data-y="40" data-u="22" data-fill="#F2F2EF"></g>
+          <text x="560" y="150" text-anchor="end" fill="#F2F2EF" font-family="Archivo, sans-serif" font-size="150" style="font-variation-settings:'wdth' 62,'wght' 900">3</text>
+          <line x1="40" y1="200" x2="560" y2="200" stroke="#F2F2EF" stroke-width="2"/>
+          <g fill="#F2F2EF" font-family="Archivo, sans-serif" font-size="34" style="font-variation-settings:'wdth' 85,'wght' 700">
+            <text x="40" y="256">Kort &amp; Atlas</text><text x="560" y="256" text-anchor="end">→</text>
+            <text x="40" y="312">Lydbibliotek</text><text x="560" y="312" text-anchor="end">←</text>
+            <text x="40" y="368">Café · Toiletter</text><text x="560" y="368" text-anchor="end">↑</text>
+          </g>
+          <text x="40" y="424" fill="#C9D6A3" font-family="Martian Mono, monospace" font-size="11" letter-spacing="2">MODULE 28 MM · SIGN 3.04 · SILO LEVEL 3 OF 9</text>
+        </svg>
+        <figcaption class="mono"><span>Fig. 4.1 — Floor directory, level 3</span><span>Enamel on steel</span></figcaption>
+      </figure>
+      <div class="pair">
+        <figure class="fig logo-box logo" aria-label="Nordhavn N construction">
+          <svg viewBox="0 0 200 200" role="img" aria-label="Nordhavn modular N">
+            <g class="guide-grid"></g>
+            <g class="nmod" data-x="30" data-y="30" data-u="28" data-fill="#0D0D0F" data-anim="1"></g>
+          </svg>
+          <figcaption class="mono">Fig. 4.2 — N, 13 modules on 5 × 5</figcaption>
+        </figure>
+        <div class="film" data-palette='[{"n":"Silo Green","h":"#1E3B2F","c":"RAL 6009 / C80 M40 Y75 K55"},{"n":"Enamel White","h":"#F2F2EF","c":"RAL 9016"},{"n":"Lichen","h":"#C9D6A3","c":"C22 M5 Y45 K0"},{"n":"Children Red","h":"#D9472B","c":"RAL 3020"},{"n":"Concrete","h":"#A7A8A2","c":"C30 M22 Y26 K4"},{"n":"Grain","h":"#E3C27A","c":"C8 M22 Y60 K0"}]'></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- Plate V -->
+<article class="spread wrap" id="ferro" data-head="Plate V · Ferro Didone">
+  <div class="spread-inner">
+    <div class="page">
+      <div class="plate-no mono"><span>Plate V</span><span>Type design</span><span>2021–2026</span></div>
+      <h3>Ferro Didone</h3>
+      <p class="deck">A Didone built for screens that refuses to apologise for its hairlines.</p>
+      <div class="copy">
+        <p>Most digital Didones are fashion-magazine cover faces that fall apart below 24 points, or text faces with the contrast sanded off. Ferro is both, held together by an optical-size axis from 6 to 96. At display sizes the hairline is a twelfth of the stem. At caption sizes it thickens until the letters survive a cheap phone screen in daylight.</p>
+        <p>Five years, 1,240 glyphs per style, Latin Extended and Cyrillic, with a set of ink-trap alternates for newsprint. The name comes from the iron type cases at the printing museum in Rijeka, where the first sketches were made on the back of a broadside.</p>
+        <blockquote>“Contrast is not decoration. It is the typeface telling you where to look.”</blockquote>
+      </div>
+      <dl class="credits mono">
+        <dt>Foundry</dt><dd>Kovač Type, self-published</dd>
+        <dt>Styles</dt><dd>16, opsz 6–96, wght 400–900</dd>
+        <dt>Scripts</dt><dd>Latin Ext., Cyrillic, Greek in progress</dd>
+        <dt>Used by</dt><dd>Novi List (masthead), Kino Lumen (titles)</dd>
+      </dl>
+    </div>
+    <div class="page">
+      <figure class="fig">
+        <svg viewBox="0 0 600 460" role="img" aria-label="Ferro Didone R with stem and hairline measurements">
+          <rect width="600" height="460" fill="#F7F6F2"/>
+          <g stroke="#FF48B0" stroke-width="1" fill="none">
+            <line x1="0" y1="360" x2="600" y2="360"/><line x1="0" y1="96" x2="600" y2="96"/><line x1="0" y1="190" x2="600" y2="190" stroke-dasharray="4 4"/>
+          </g>
+          <g font-family="Martian Mono, monospace" font-size="9" fill="#FF48B0" letter-spacing="1">
+            <text x="10" y="354">BASELINE 0</text><text x="10" y="90">CAP 700</text><text x="10" y="184">X 468</text>
+          </g>
+          <text x="210" y="360" text-anchor="middle" font-family="Bodoni Moda, serif" font-size="370" style="font-variation-settings:'opsz' 96" font-weight="800" fill="#0D0D0F">R</text>
+          <text x="440" y="360" text-anchor="middle" font-family="Bodoni Moda, serif" font-style="italic" font-size="300" style="font-variation-settings:'opsz' 96" font-weight="500" fill="#0D0D0F">g</text>
+          <g stroke="#0D0D0F" stroke-width="1">
+            <line x1="122" y1="410" x2="178" y2="410"/><line x1="122" y1="402" x2="122" y2="418"/><line x1="178" y1="402" x2="178" y2="418"/>
+          </g>
+          <g font-family="Martian Mono, monospace" font-size="10" fill="#0D0D0F" letter-spacing="1">
+            <text x="150" y="438" text-anchor="middle">STEM 112 U</text>
+            <text x="590" y="438" text-anchor="end">HAIRLINE 9 U · CONTRAST 1 : 12.4 · OPSZ 96</text>
+          </g>
+        </svg>
+        <figcaption class="mono"><span>Fig. 5.1 — R and g, opsz 96</span><span>1,000 UPM</span></figcaption>
+      </figure>
+      <div class="pair">
+        <figure class="fig logo-box logo" aria-label="Ferro Didone monogram construction">
+          <svg viewBox="0 0 200 200" role="img" aria-label="Ferro monogram Ff">
+            <line class="draw" style="--d:0" pathLength="1" x1="10" y1="160" x2="190" y2="160" stroke="#FF48B0" stroke-width="1"/>
+            <line class="draw" style="--d:150" pathLength="1" x1="10" y1="62" x2="190" y2="62" stroke="#FF48B0" stroke-width="1"/>
+            <line class="draw" style="--d:300" pathLength="1" x1="10" y1="104" x2="190" y2="104" stroke="#FF48B0" stroke-width="1" stroke-dasharray="1"/>
+            <circle class="guide" cx="72" cy="111" r="49"/>
+            <text class="reveal" style="--d:600" x="100" y="160" text-anchor="middle" font-family="Bodoni Moda, serif" font-size="136" font-weight="800" fill="#0D0D0F">Ff</text>
+          </svg>
+          <figcaption class="mono">Fig. 5.2 — Monogram on the metric lines</figcaption>
+        </figure>
+        <div class="film" data-palette='[{"n":"Iron Black","h":"#0D0D0F","c":"Text, 100% K"},{"n":"Broadside","h":"#F7F6F2","c":"Specimen stock"},{"n":"Proof Pink","h":"#FF48B0","c":"Metrics and guides"},{"n":"Rijeka Rust","h":"#9C4A2F","c":"Cover, Pantone 7591 C"},{"n":"Galley Grey","h":"#C8C7C1","c":"Tint plates"}]'></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ================= SPECIMENS ================= -->
+<section class="chapter wrap" id="specimens" data-head="II. Type Specimens" aria-labelledby="ch2">
+  <span class="mono">Chapter II · Kovač Type</span>
+  <div class="chapter-row">
+    <h2 id="ch2">Specimens</h2>
+    <p>Three families from the foundry. Pull them around the light table, pinch to resize, and take a specimen PDF home.</p>
+  </div>
+</section>
+<section class="wrap" data-head="II. Type Specimens" aria-label="Specimen light table">
+  <div class="table-head">
+    <span class="mono">Light table · 3 sheets</span>
+    <button class="btn" type="button" id="table-reset">Re-stack sheets</button>
+  </div>
+  <div class="lighttable" id="lighttable">
+    <article class="spec" tabindex="0" data-spec="grotesk" aria-label="Kovač Grotesk specimen. Drag to move; plus and minus keys resize.">
+      <div class="spec-top mono"><span>Sheet A</span><span>Sans · Variable</span></div>
+      <div class="spec-glyph" style="font-family:var(--display);font-variation-settings:'wdth' 66,'wght' 900">Rg<span style="font-variation-settings:'wdth' 125,'wght' 200">a</span></div>
+      <div class="spec-name">Kovač Grotesk</div>
+      <div class="spec-sample" style="font-family:var(--display);font-variation-settings:'wdth' 85,'wght' 500">Harbour light at a quarter past seven.</div>
+      <div class="spec-meta mono"><span>Width</span><span>62–125</span><span>Weight</span><span>100–900</span><span>Styles</span><span>18 + variable</span></div>
+      <div class="spec-foot"><span class="spec-status mono" aria-live="polite"></span><button class="btn solid" type="button" data-pdf="grotesk">Specimen PDF ↓</button></div>
+    </article>
+    <article class="spec" tabindex="0" data-spec="didone" aria-label="Ferro Didone specimen. Drag to move; plus and minus keys resize.">
+      <div class="spec-top mono"><span>Sheet B</span><span>Serif · Didone</span></div>
+      <div class="spec-glyph" style="font-family:var(--didone);font-weight:800;font-variation-settings:'opsz' 96">Æ<i style="font-weight:500">g</i></div>
+      <div class="spec-name">Ferro Didone</div>
+      <div class="spec-sample" style="font-family:var(--didone);font-variation-settings:'opsz' 18">Contrast tells you where to look.</div>
+      <div class="spec-meta mono"><span>Optical</span><span>6–96</span><span>Weight</span><span>400–900</span><span>Styles</span><span>16</span></div>
+      <div class="spec-foot"><span class="spec-status mono" aria-live="polite"></span><button class="btn solid" type="button" data-pdf="didone">Specimen PDF ↓</button></div>
+    </article>
+    <article class="spec" tabindex="0" data-spec="mono" aria-label="Lagune Mono specimen. Drag to move; plus and minus keys resize.">
+      <div class="spec-top mono"><span>Sheet C</span><span>Mono · Variable</span></div>
+      <div class="spec-glyph" style="font-family:var(--mono);font-size:132px;font-variation-settings:'wdth' 112.5,'wght' 750">{0}</div>
+      <div class="spec-name">Lagune Mono</div>
+      <div class="spec-sample" style="font-family:var(--mono);font-size:.95rem;font-variation-settings:'wdth' 87.5,'wght' 400">DEP 07:15 → ARR 13:00 / 0Oo 1Il</div>
+      <div class="spec-meta mono"><span>Width</span><span>75–112.5</span><span>Weight</span><span>100–800</span><span>Styles</span><span>10 + variable</span></div>
+      <div class="spec-foot"><span class="spec-status mono" aria-live="polite"></span><button class="btn solid" type="button" data-pdf="mono">Specimen PDF ↓</button></div>
+    </article>
+  </div>
+  <div class="table-note mono"><span>Drag to move · pinch or ctrl + scroll to resize · focus a sheet and use arrows, + and −</span><span>PDFs are set live from the fonts on this page</span></div>
+</section>
+
+<!-- ================= LECTURES ================= -->
+<section class="chapter wrap" id="lectures" data-head="III. Lectures &amp; Talks" aria-labelledby="ch3">
+  <span class="mono">Chapter III · Recorded</span>
+  <div class="chapter-row">
+    <h2 id="ch3">Lectures</h2>
+    <p>Three talks from the last two years. The opinions have not softened since.</p>
+  </div>
+</section>
+<section class="wrap" data-head="III. Lectures &amp; Talks" aria-label="Talks">
+  <div class="talks">
+    <article class="talk">
+      <div class="player" data-talk="0"></div>
+      <div>
+        <div class="talk-meta mono"><span>Typographic Assembly, Lisbon</span><span>Sept 2025</span><span>38 min</span></div>
+        <h3>Against the Neutral Typeface</h3>
+        <p>Why "neutral" is the most loaded word in a type brief, how Swiss modernism exported a regional taste as a universal one, and what a brand gives up when it chooses a face nobody can object to.</p>
+        <div class="captions" aria-live="polite" data-captions="0"></div>
+      </div>
+    </article>
+    <article class="talk">
+      <div class="player" data-talk="1"></div>
+      <div class="talk-meta mono"><span>Brand Forum, Copenhagen</span><span>Mar 2025</span><span>26 min</span></div>
+      <h3>A Logo Is a Promise Kept Small</h3>
+      <p>On the Nordhavn module and why the best identity systems are the ones clients can extend without phoning the designer.</p>
+      <div class="captions" aria-live="polite" data-captions="1"></div>
+    </article>
+    <article class="talk">
+      <div class="player" data-talk="2"></div>
+      <div class="talk-meta mono"><span>Print Matters Week, Antwerp</span><span>Nov 2024</span><span>31 min</span></div>
+      <h3>Riso, Error and the Honest Print</h3>
+      <p>Misregistration as a design decision. The Kino Lumen posters, sheet by sheet, and the sponsor meeting that nearly ended them.</p>
+      <div class="captions" aria-live="polite" data-captions="2"></div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact wrap" id="contact" data-head="IV. Contact" aria-labelledby="ch4">
+  <span class="mono">Chapter IV · Commissions</span>
+  <h2 id="ch4" style="margin-top:.15em">Write to <em>the</em> studio.</h2>
+  <div class="mail">
+    <span class="mail-addr" id="mail-addr">studio@mirakovac.nl</span>
+    <button class="btn solid" type="button" id="copy-mail">Copy address</button>
+    <span class="mono" id="copy-state" aria-live="polite"></span>
+  </div>
+  <div class="avail mono">
+    <div><span>Identity systems</span><p><span class="state open">Open</span> from Jan 2027</p></div>
+    <div><span>Type commissions</span><p><span class="state">Waitlist</span> about 9 months</p></div>
+    <div><span>Lectures &amp; workshops</span><p><span class="state">Two a year</span> 2027 dates open</p></div>
+  </div>
+  <p style="max-width:58ch;margin-top:28px">Send a paragraph about the problem, not the deliverables. If you already know what the logo should look like, we are probably the wrong studio. Studio address: Van Nelleweg 1, Rotterdam, visits by appointment.</p>
+  <footer class="colophon">
+    <p>Colophon. Set in Kovač Grotesk, Ferro Didone and Lagune Mono, shown here through their nearest open-source relatives: Archivo, Bodoni Moda and Martian Mono, with Newsreader for text. No paper was harmed; the riso dots under your cursor are drawn at 53 lpi.</p>
+    <p class="mono">© 2026 Mira Kovač Studio<br>Monograph, Vol. II · Edition of one</p>
+  </footer>
+</section>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const finePointer = matchMedia("(pointer: fine)").matches;
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const SVGNS = "http://www.w3.org/2000/svg";
+function svgEl(tag, attrs){ const e=document.createElementNS(SVGNS, tag); for(const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+
+/* ---------- Crop marks ---------- */
+$$(".hero, .spread, .chapter, .contact").forEach(s=>{
+  ["tl","tr","bl","br"].forEach(p=>{ const i=document.createElement("i"); i.className="crop "+p; i.setAttribute("aria-hidden","true"); s.appendChild(i); });
+});
+
+/* ---------- Hero: split letters, fit, kinetic proximity ---------- */
+$$(".hero-name .line[data-word]").forEach(line=>{
+  const word=line.dataset.word;
+  const start = word==="MIRA" ? 0 : 4;
+  [...word].forEach((ch,i)=>{ const s=document.createElement("span"); s.className="k"; s.textContent=ch; s.style.setProperty("--i", start+i); s.dataset.k=start+i; line.appendChild(s); });
+});
+const heroName = $(".hero-name");
+function fitHero(){
+  const W = heroName.clientWidth;
+  const probe = document.createElement("span");
+  probe.textContent = "KOVAČ";
+  probe.style.cssText = "position:absolute;left:0;top:0;visibility:hidden;white-space:nowrap;font-family:var(--display);font-size:100px;text-transform:uppercase;letter-spacing:-.02em;font-variation-settings:'wdth' 112,'wght' 900";
+  heroName.appendChild(probe);
+  const w = probe.getBoundingClientRect().width; probe.remove();
+  if (w>0) heroName.style.setProperty("--name-size", Math.min(100*W/w*0.96, 420)+"px");
+}
+fitHero();
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(fitHero);
+addEventListener("resize", fitHero);
+
+if (!reduce && finePointer){
+  const letters = $$(".hero-name .k");
+  const hero = $(".hero");
+  let px=null, raf=0;
+  function apply(){
+    raf=0;
+    const ink = $$(".name-layer.ink .k");
+    ink.forEach(el=>{
+      const k=el.dataset.k;
+      let w="900";
+      if (px){ const r=el.getBoundingClientRect(); const d=Math.hypot(px.x-(r.left+r.width/2), px.y-(r.top+r.height/2)); const t=clamp(1-d/(r.height*1.6),0,1); w=String(Math.round(260+640*t)); }
+      $$('.hero-name .k[data-k="'+k+'"]').forEach(x=>{ x.style.fontVariationSettings = px ? `"wdth" 112,"wght" ${w}` : ""; });
+    });
+  }
+  // only start once the load animation has finished
+  setTimeout(()=>{
+    hero.addEventListener("pointermove", e=>{ px={x:e.clientX,y:e.clientY}; if(!raf) raf=requestAnimationFrame(apply); });
+    hero.addEventListener("pointerleave", ()=>{ px=null; if(!raf) raf=requestAnimationFrame(apply); });
+    letters.forEach(l=>l.style.animation="none");
+  }, 2400);
+}
+
+/* ---------- Riso dot trail ---------- */
+(function(){
+  const cv=$("#riso"); if(reduce || !finePointer){ cv.remove(); return; }
+  const ctx=cv.getContext("2d"); const G=8; let dots=[], last=null, running=false, dpr=1;
+  const seen=new Map();
+  function size(){ dpr=Math.min(devicePixelRatio||1,2); cv.width=innerWidth*dpr; cv.height=innerHeight*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  size(); addEventListener("resize", size);
+  function add(x,y){
+    const gx=Math.round(x/G)*G, gy=Math.round(y/G)*G, key=gx+","+gy;
+    const ex=seen.get(key); if(ex && ex.life>0.6) return;
+    const d={x:gx,y:gy,life:1,r:1+Math.random()*2.4,c:Math.random()<0.62?0:1,key};
+    dots.push(d); seen.set(key,d);
+    if(dots.length>520){ const o=dots.shift(); if(seen.get(o.key)===o) seen.delete(o.key); }
+  }
+  addEventListener("pointermove", e=>{
+    if(e.pointerType!=="mouse") return;
+    const p={x:e.clientX,y:e.clientY};
+    if(last){ const dx=p.x-last.x, dy=p.y-last.y, n=Math.min(40,Math.floor(Math.hypot(dx,dy)/5)); for(let i=1;i<=n;i++) add(last.x+dx*i/n+(Math.random()-.5)*10, last.y+dy*i/n+(Math.random()-.5)*10); }
+    add(p.x,p.y); last=p;
+    if(!running){ running=true; requestAnimationFrame(loop); }
+  }, {passive:true});
+  document.addEventListener("pointerleave", ()=>{ last=null; });
+  function loop(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    for(let i=dots.length-1;i>=0;i--){
+      const d=dots[i]; d.life-=0.014;
+      if(d.life<=0){ dots.splice(i,1); if(seen.get(d.key)===d) seen.delete(d.key); continue; }
+      const a=d.life*0.36;
+      ctx.fillStyle = d.c ? `rgba(0,120,191,${a})` : `rgba(255,72,176,${a})`;
+      const ox = d.c ? 2.5 : 0, oy = d.c ? 1.5 : 0;   // the blue drum is always a little off
+      ctx.beginPath(); ctx.arc(d.x+ox, d.y+oy, d.r*(0.6+0.4*d.life), 0, Math.PI*2); ctx.fill();
+    }
+    if(dots.length) requestAnimationFrame(loop); else running=false;
+  }
+})();
+
+/* ---------- Running head + folios ---------- */
+const rhSection=$("#rh-section"), rhFolio=$("#rh-folio");
+const pad = n => String(n).padStart(3,"0");
+function pageOf(el){ return Math.floor((el.getBoundingClientRect().top + scrollY) / innerHeight) + 1; }
+function fillContents(){ $$("[data-page-of]").forEach(s=>{ const t=document.getElementById(s.dataset.pageOf); if(t) s.textContent="p. "+pad(pageOf(t)); }); }
+const headed = $$("[data-head]");
+function updateHead(){
+  rhFolio.textContent = pad(Math.floor(scrollY/innerHeight)+1);
+  let cur = headed[0];
+  for(const s of headed){ if(s.getBoundingClientRect().top < innerHeight*0.4) cur=s; }
+  if(rhSection.textContent!==cur.dataset.head) rhSection.textContent=cur.dataset.head;
+}
+
+/* ---------- Spreads: cross-fade with a slight horizontal slide ---------- */
+const spreads = $$(".spread-inner");
+function updateSpreads(){
+  if(reduce) return;
+  const vh=innerHeight, vw=innerWidth, span=vh*0.55;
+  spreads.forEach(el=>{
+    const r=el.parentElement.getBoundingClientRect();
+    const enter=clamp((vh-r.top)/span,0,1), exit=clamp(r.bottom/span,0,1);
+    const ease=t=>t*t*(3-2*t);
+    const e=ease(enter), x=ease(exit);
+    const op=Math.min(e,x);
+    const shift=(1-e)*0.06*vw - (1-x)*0.06*vw;
+    el.style.opacity = (0.06+0.94*op).toFixed(3);
+    el.style.transform = `translate3d(${shift.toFixed(1)}px,0,0)`;
+  });
+}
+let ticking=false;
+function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(()=>{ ticking=false; updateHead(); updateSpreads(); }); }
+addEventListener("scroll", onScroll, {passive:true});
+addEventListener("resize", ()=>{ fillContents(); onScroll(); });
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(()=>{ fillContents(); onScroll(); });
+fillContents(); updateHead(); updateSpreads();
+
+/* ---------- Generated logo geometry ---------- */
+$$("g.ticks").forEach(g=>{
+  const n=+g.dataset.ticks, r1=+g.dataset.r1, r2=+g.dataset.r2;
+  for(let i=0;i<n;i++){ const a=i/n*Math.PI*2, long=i%3===0;
+    g.appendChild(svgEl("line",{x1:100+Math.cos(a)*r1,y1:100+Math.sin(a)*r1,x2:100+Math.cos(a)*(long?r2+4:r2),y2:100+Math.sin(a)*(long?r2+4:r2),stroke:"#0D0D0F","stroke-width":long?2:1})); }
+});
+$$("g.blades").forEach(g=>{
+  for(let i=0;i<6;i++){
+    const b=svgEl("path",{d:"M100 100 L100 28 L162 64 Z",fill:i%2?"#0D0D0F":"#FF48B0",stroke:"#F2F2EF","stroke-width":"2.5","stroke-linejoin":"round",class:"blade"});
+    b.style.setProperty("--a",(i*60)+"deg"); b.style.setProperty("--d",i*110); g.appendChild(b);
+  }
+  const hole=svgEl("circle",{cx:100,cy:100,r:15,fill:"#F2F2EF",class:"pop"}); hole.style.setProperty("--d",900); g.appendChild(hole);
+});
+$$("g.kino-ap").forEach(g=>{
+  const open=+g.dataset.open, R=62;
+  for(let i=0;i<6;i++){
+    const a0=(i*60-90)*Math.PI/180, a1=((i+1)*60-90)*Math.PI/180;
+    const inner=R*open*0.55;
+    const p=`M${Math.cos(a0)*inner} ${Math.sin(a0)*inner} L${Math.cos(a0)*R} ${Math.sin(a0)*R} L${Math.cos(a1)*R} ${Math.sin(a1)*R} Z`;
+    g.appendChild(svgEl("path",{d:p,fill:i%2?g.dataset.fill:"#0D0D0F",style:"mix-blend-mode:multiply"}));
+  }
+  g.appendChild(svgEl("circle",{r:R+6,fill:"none",stroke:"#0D0D0F","stroke-width":1.5}));
+});
+const N_CELLS=[[0,0],[0,1],[0,2],[0,3],[0,4],[1,1],[2,2],[3,3],[4,0],[4,1],[4,2],[4,3],[4,4]];
+$$("g.nmod").forEach(g=>{
+  const x=+g.dataset.x, y=+g.dataset.y, u=+g.dataset.u;
+  N_CELLS.forEach(([c,r],i)=>{
+    const rect=svgEl("rect",{x:x+c*u+1,y:y+r*u+1,width:u-2,height:u-2,fill:g.dataset.fill});
+    if(g.dataset.anim){ rect.setAttribute("class","block"); rect.style.setProperty("--d", i*70); }
+    g.appendChild(rect);
+  });
+});
+$$("g.guide-grid").forEach(g=>{
+  for(let i=0;i<=5;i++){ g.appendChild(svgEl("line",{x1:30+i*28,y1:30,x2:30+i*28,y2:170,class:"guide"})); g.appendChild(svgEl("line",{x1:30,y1:30+i*28,x2:170,y2:30+i*28,class:"guide"})); }
+});
+
+/* ---------- Logos animate on entering view ---------- */
+if(!reduce && "IntersectionObserver" in window){
+  const logos=$$(".logo");
+  logos.forEach(l=>{ const r=l.getBoundingClientRect(); if(r.top>innerHeight || r.bottom<0) l.classList.add("arm"); });
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      const l=en.target;
+      if(en.isIntersecting && en.intersectionRatio>=0.45){
+        l.classList.remove("play"); void l.getBoundingClientRect(); l.classList.add("play"); l.classList.remove("arm");
+      } else if(!en.isIntersecting){
+        l.classList.remove("play"); l.classList.add("arm");
+      }
+    });
+  },{threshold:[0,0.45]});
+  logos.forEach(l=>io.observe(l));
+}
+
+/* ---------- Film-strip palettes ---------- */
+$$(".film").forEach((film, fi)=>{
+  const data=JSON.parse(film.dataset.palette);
+  const FW=112;
+  film.innerHTML = `<div class="film-view" tabindex="0" role="slider" aria-label="Colour palette, ${data.length} swatches. Drag or use arrow keys." aria-valuemin="1" aria-valuemax="${data.length}"><div class="film-edge">${"KV-"+String(fi+1).padStart(2,"0")+" ▸ ".repeat(1)}${data.map((_,i)=>(i+1)+"A ▸ ").join("").repeat(4)}</div><div class="film-track">${data.map((f,i)=>`<div class="frame" style="--c:${f.h}" data-i="${i}"><i></i><b>${String(i+1).padStart(2,"0")}A</b></div>`).join("")}</div><div class="film-gate"></div></div>
+  <div class="film-readout mono"><span class="r-swatch"></span><span class="r-name"></span><span class="r-idx"></span><span class="r-values"></span></div>
+  <div class="film-hint mono">Drag the strip to scrub</div>`;
+  const view=$(".film-view",film), track=$(".film-track",film), edge=$(".film-edge",film);
+  const sw=$(".r-swatch",film), nm=$(".r-name",film), ix=$(".r-idx",film), vals=$(".r-values",film);
+  let x=0, v=0, target=null, cur=-1, dragging=false, lastX=0, downX=0, lastT=0, anim=0, wheelT=0;
+  const center=()=>view.clientWidth/2 - FW/2;
+  const xFor=i=>center()-i*FW;
+  const indexAt=()=>clamp(Math.round((center()-x)/FW),0,data.length-1);
+  function render(){
+    track.style.transform=`translate3d(${x.toFixed(2)}px,0,0)`;
+    const blur=Math.min(Math.abs(v)*0.12,5);
+    track.style.filter = blur>0.3 ? `blur(${blur.toFixed(1)}px)` : "";
+    edge.style.opacity = Math.min(Math.abs(v)*0.08,0.9);
+    edge.style.transform = `translateX(${(x*1.0)%240}px)`;
+    const i=indexAt();
+    if(i!==cur){ cur=i; const f=data[i]; sw.style.setProperty("--c",f.h); nm.textContent=f.n; ix.textContent=`Frame ${String(i+1).padStart(2,"0")} / ${String(data.length).padStart(2,"0")}`; vals.textContent=`${f.h.toUpperCase()} · ${f.c}`; view.setAttribute("aria-valuenow",i+1); view.setAttribute("aria-valuetext",`${f.n}, ${f.h}`); }
+  }
+  function step(){
+    anim=0;
+    if(dragging) return;
+    if(target===null){ // inertia, then choose a frame
+      x+=v; v*=0.92;
+      const minX=xFor(data.length-1), maxX=xFor(0);
+      if(x>maxX){ x+= (maxX-x)*0.3; v*=0.5; } if(x<minX){ x+=(minX-x)*0.3; v*=0.5; }
+      if(Math.abs(v)<0.6){ target=indexAt(); }
+    } else {
+      const tx=xFor(target); const dx=tx-x; v=dx*0.18; x+=v;
+      if(Math.abs(dx)<0.3){ x=tx; v=0; render(); return; }
+    }
+    render(); anim=requestAnimationFrame(step);
+  }
+  const kick=()=>{ if(!anim) anim=requestAnimationFrame(step); };
+  view.addEventListener("pointerdown",e=>{ dragging=true; target=null; v=0; lastX=downX=e.clientX; lastT=performance.now(); view.setPointerCapture(e.pointerId); cancelAnimationFrame(anim); anim=0; });
+  view.addEventListener("pointermove",e=>{ if(!dragging) return; const now=performance.now(), dx=e.clientX-lastX; x+=dx; v=dx/Math.max(1,(now-lastT))*16; lastX=e.clientX; lastT=now; render(); });
+  const end=e=>{ if(!dragging) return; dragging=false; if(Math.abs(v)<0.5){ const fr=e.target.closest&&e.target.closest(".frame"); if(fr && Math.abs(e.clientX-downX)<4){ target=+fr.dataset.i; } } kick(); };
+  view.addEventListener("pointerup",end); view.addEventListener("pointercancel",end);
+  view.addEventListener("wheel",e=>{ if(Math.abs(e.deltaX)<=Math.abs(e.deltaY)) return; e.preventDefault(); target=null; x-=e.deltaX; v=-e.deltaX*0.4; render(); clearTimeout(wheelT); wheelT=setTimeout(kick,90); },{passive:false});
+  view.addEventListener("keydown",e=>{ if(e.key==="ArrowRight"||e.key==="ArrowLeft"){ e.preventDefault(); target=clamp(indexAt()+(e.key==="ArrowRight"?1:-1),0,data.length-1); kick(); } });
+  x=xFor(Math.min(1,data.length-1)); render();
+  addEventListener("resize",()=>{ x=xFor(indexAt()); render(); });
+});
+
+/* ---------- Light table: drag + pinch ---------- */
+(function(){
+  const table=$("#lighttable"); const cards=$$(".spec",table); let z=10;
+  const st=new Map();
+  function layout(){
+    const W=table.clientWidth, H=table.clientHeight;
+    cards.forEach((c,i)=>{
+      const cw=c.offsetWidth, ch=c.offsetHeight; let x,y,r;
+      if(W>=900){ x=24+i*(W-cw-48)/2; y=[40,110,60][i]; r=[-4,3,-1.5][i]; }
+      else { x=clamp((W-cw)/2+[-14,12,-6][i],8,Math.max(8,W-cw-8)); y=16+i*(H-ch-32)/2; r=[-3,2.5,-1.5][i]; }
+      st.set(c,{x,y,s:W>=900?1:0.86,r}); c.style.zIndex=i+1; apply(c);
+    });
+  }
+  function apply(c){ const s=st.get(c); c.style.transform=`translate(${s.x}px,${s.y}px) rotate(${s.r}deg) scale(${s.s})`; }
+  function bound(c){ const s=st.get(c), W=table.clientWidth, H=table.clientHeight; s.x=clamp(s.x,-c.offsetWidth*0.6,W-c.offsetWidth*0.4); s.y=clamp(s.y,-c.offsetHeight*0.6,H-60); s.s=clamp(s.s,0.45,2.4); }
+  cards.forEach(c=>{
+    const pts=new Map(); let start=null;
+    const snap=()=>{ const s=st.get(c), p=[...pts.values()]; start={x:s.x,y:s.y,s:s.s,p0:p[0]?{...p[0]}:null};
+      if(p.length>=2){ start.dist=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y); start.mid={x:(p[0].x+p[1].x)/2,y:(p[0].y+p[1].y)/2}; } };
+    c.addEventListener("pointerdown",e=>{ if(e.target.closest("button")) return; c.setPointerCapture(e.pointerId); pts.set(e.pointerId,{x:e.clientX,y:e.clientY}); c.style.zIndex=++z; snap(); });
+    c.addEventListener("pointermove",e=>{ if(!pts.has(e.pointerId)) return; pts.set(e.pointerId,{x:e.clientX,y:e.clientY}); const s=st.get(c), p=[...pts.values()];
+      if(p.length===1 && start.p0){ s.x=start.x+p[0].x-start.p0.x; s.y=start.y+p[0].y-start.p0.y; }
+      else if(p.length>=2){ const d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y), m={x:(p[0].x+p[1].x)/2,y:(p[0].y+p[1].y)/2}; s.s=start.s*d/Math.max(start.dist,1); s.x=start.x+m.x-start.mid.x; s.y=start.y+m.y-start.mid.y; }
+      bound(c); apply(c); });
+    const up=e=>{ pts.delete(e.pointerId); snap(); };
+    c.addEventListener("pointerup",up); c.addEventListener("pointercancel",up);
+    c.addEventListener("wheel",e=>{ if(!e.ctrlKey && !e.metaKey) return; e.preventDefault(); const s=st.get(c); s.s*=Math.exp(-e.deltaY*0.01); bound(c); apply(c); },{passive:false});
+    c.addEventListener("keydown",e=>{ if(e.target!==c) return; const s=st.get(c), k=e.key, m=e.shiftKey?40:12; let hit=true;
+      if(k==="ArrowLeft") s.x-=m; else if(k==="ArrowRight") s.x+=m; else if(k==="ArrowUp") s.y-=m; else if(k==="ArrowDown") s.y+=m; else if(k==="+"||k==="=") s.s*=1.1; else if(k==="-"||k==="_") s.s/=1.1; else hit=false;
+      if(hit){ e.preventDefault(); c.style.zIndex=++z; bound(c); apply(c); } });
+    c.addEventListener("focus",()=>{ c.style.zIndex=++z; });
+  });
+  $("#table-reset").addEventListener("click",layout);
+  layout();
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(layout);
+  let rw=table.clientWidth; addEventListener("resize",()=>{ if(table.clientWidth!==rw){ rw=table.clientWidth; layout(); } });
+})();
+
+/* ---------- Specimen PDFs, set live on canvas ---------- */
+const downloadsP = (window.claude && typeof window.claude.use==="function") ? window.claude.use("downloads").catch(()=>null) : Promise.resolve(null);
+const SPECS={
+  grotesk:{name:"Kovač Grotesk", file:"Kovac-Grotesk-Specimen.pdf", family:"Archivo", w:[900,700,500,300], glyphs:"Rga", stretch:["ultra-condensed","condensed","normal","expanded"], sample:"Harbour light at a quarter past seven. Two crossings a day, Rotterdam to Harwich, and the deck turns orange at dawn.", meta:"Sans · width 62–125 · weight 100–900 · 18 styles + variable"},
+  didone:{name:"Ferro Didone", file:"Ferro-Didone-Specimen.pdf", family:"Bodoni Moda", w:[800,700,500,400], glyphs:"Ægé", sample:"Contrast is not decoration. It is the typeface telling you where to look. At display sizes the hairline is a twelfth of the stem.", meta:"Didone · optical size 6–96 · weight 400–900 · 16 styles"},
+  mono:{name:"Lagune Mono", file:"Lagune-Mono-Specimen.pdf", family:"Martian Mono", w:[700,500,400,200], glyphs:"{0}", sample:"DEP 07:15 → ARR 13:00. 0Oo 1Il 5S 8B. Every figure the same width, every timetable column straight.", meta:"Monospace · width 75–112.5 · weight 100–800 · 10 styles + variable"}
+};
+function wrapText(ctx, text, x, y, maxW, lh){
+  const words=text.split(" "); let line="";
+  for(const w of words){ const t=line?line+" "+w:w; if(ctx.measureText(t).width>maxW && line){ ctx.fillText(line,x,y); y+=lh; line=w; } else line=t; }
+  if(line){ ctx.fillText(line,x,y); y+=lh; } return y;
+}
+async function renderSpecimen(key){
+  const S=SPECS[key], W=1240, H=1754, M=96, pages=[];
+  await Promise.all(S.w.map(w=>document.fonts?document.fonts.load(`${w} 100px "${S.family}"`):null));
+  const mk=()=>{ const c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d"); x.fillStyle="#F2F2EF"; x.fillRect(0,0,W,H); x.fillStyle="#0D0D0F"; x.textBaseline="alphabetic"; return [c,x]; };
+  const head=(x,n)=>{ x.font=`500 18px "Martian Mono", monospace`; x.fillText("KOVAČ TYPE — "+S.name.toUpperCase()+" — SPECIMEN 2026",M,M); x.textAlign="right"; x.fillText(String(n).padStart(2,"0")+" / 03",W-M,M); x.textAlign="left"; x.fillRect(M,M+18,W-2*M,2); };
+  // 1. Cover
+  let [c,x]=mk(); head(x,1);
+  x.font=`${S.w[0]} 620px "${S.family}"`; let gs=620; while(x.measureText(S.glyphs).width>W-2*M && gs>200){ gs-=20; x.font=`${S.w[0]} ${gs}px "${S.family}"`; }
+  x.fillText(S.glyphs,M-10,M+80+gs*0.78);
+  x.fillStyle="#FF48B0"; x.fillRect(M,H-560,W-2*M,8); x.fillStyle="#0D0D0F";
+  x.font=`${S.w[0]} 128px "${S.family}"`; x.fillText(S.name,M,H-420);
+  x.font=`400 22px "Martian Mono", monospace`; wrapText(x,S.meta.toUpperCase(),M,H-360,W-2*M,34);
+  x.font=`400 22px "Martian Mono", monospace`; x.fillText("MIRA KOVAČ · ROTTERDAM · STUDIO@MIRAKOVAC.NL",M,H-M);
+  pages.push(c);
+  // 2. Character set + waterfall
+  [c,x]=mk(); head(x,2);
+  x.font=`500 18px "Martian Mono", monospace`; x.fillText("CHARACTER SET",M,M+80);
+  x.font=`${S.w[2]} 64px "${S.family}"`;
+  let y=M+170; ["ABCDEFGHIJKLM","NOPQRSTUVWXYZ","abcdefghijklm","nopqrstuvwxyz","0123456789 &?!","ÆØÅ ČĆŠŽĐ ß € @"].forEach(l=>{ y=wrapText(x,l,M,y,W-2*M,86); });
+  x.fillRect(M,y,W-2*M,2); y+=70;
+  x.font=`500 18px "Martian Mono", monospace`; x.fillText("WATERFALL",M,y); y+=30;
+  [96,72,48,32,22,16,12].forEach((sz,i)=>{ x.font=`500 16px "Martian Mono", monospace`; x.fillText(sz+" PT",M,y+sz); x.font=`${S.w[i%4]} ${sz}px "${S.family}"`;
+    let t=S.sample; while(x.measureText(t).width>W-2*M-120 && t.length>4) t=t.slice(0,-2); x.fillText(t,M+120,y+sz); y+=sz*1.45+14; });
+  pages.push(c);
+  // 3. Text setting
+  [c,x]=mk(); head(x,3);
+  x.font=`500 18px "Martian Mono", monospace`; x.fillText("TEXT SETTING · WEIGHTS",M,M+80);
+  y=M+150;
+  S.w.forEach(w=>{ x.font=`${w} 54px "${S.family}"`; x.fillText(S.name+" "+w,M,y); y+=78; });
+  y+=30; x.fillRect(M,y,W-2*M,2); y+=60;
+  x.font=`${S.w[3]===200?400:S.w[3]} 30px "${S.family}"`;
+  const para=S.sample+" "+"A typeface is an argument set in lead. This one argues for clarity at small sizes and character at large ones, and it was drawn over five winters in Rotterdam and Rijeka. Every glyph is spaced by eye and checked in print before it ships.";
+  const colW=(W-2*M-60)/2;
+  wrapText(x,para,M,y,colW,44);
+  x.font=`${S.w[1]} 30px "${S.family}"`; wrapText(x,para.split(". ").reverse().join(". "),M+colW+60,y,colW,44);
+  x.font=`400 18px "Martian Mono", monospace`; x.fillText("SET LIVE FROM THE PORTFOLIO PAGE · PREVIEW FONTS: "+S.family.toUpperCase(),M,H-M);
+  pages.push(c);
+  return pages;
+}
+async function offerFile(blob, filename){
+  const dl=await downloadsP;
+  if(dl){ try{ await dl.save({filename, data:blob}); return "Saved"; } catch(err){ if(err && err.code==="declined") return "Download declined"; if(err && err.code==="rate_limited") return "Busy, try again"; } }
+  const url=URL.createObjectURL(blob), a=document.createElement("a"); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),4000);
+  return "PDF ready";
+}
+$$("[data-pdf]").forEach(btn=>{
+  btn.addEventListener("click", async()=>{
+    const key=btn.dataset.pdf, status=btn.parentElement.querySelector(".spec-status");
+    if(!window.jspdf){ status.textContent="PDF library didn't load"; return; }
+    btn.disabled=true; status.textContent="Setting type…";
+    try{
+      const pages=await renderSpecimen(key);
+      const pdf=new window.jspdf.jsPDF({unit:"pt",format:"a4",compress:true});
+      pages.forEach((p,i)=>{ if(i) pdf.addPage(); pdf.addImage(p.toDataURL("image/jpeg",0.9),"JPEG",0,0,595.28,841.89); });
+      pdf.setProperties({title:SPECS[key].name+" Specimen",author:"Mira Kovač"});
+      status.textContent = await offerFile(pdf.output("blob"), SPECS[key].file);
+    } catch(e){ status.textContent="Couldn't build the PDF"; }
+    btn.disabled=false;
+  });
+});
+
+/* ---------- Lecture players ---------- */
+const TALKS=[
+  {title:"Against the Neutral Typeface", who:"Mira Kovač · Lisbon 2025", dur:72, slides:[
+    {k:"title", t:"Against the Neutral Typeface", cap:"Good morning. I want to start with a word that appears in almost every type brief I receive."},
+    {k:"big", t:"“Neutral”", cap:"Neutral. Clients ask for it as if it were a setting on a dishwasher."},
+    {k:"serif", t:"Helvetica was never neutral. It was Swiss.", cap:"Helvetica was never neutral. It was Swiss, and it was 1957, and it was selling a very specific idea of order."},
+    {k:"glyph", t:"R", cap:"Every letter makes decisions. The leg of this R is a decision. The weight of the bowl is a decision."},
+    {k:"big", t:"Every typeface argues.", cap:"Every typeface argues for something. The only question is whether you chose the argument."},
+    {k:"serif", t:"Pick the argument you can defend.", cap:"So pick the argument you can defend in a room full of people who disagree with you."}]},
+  {title:"A Logo Is a Promise Kept Small", who:"Mira Kovač · Copenhagen 2025", dur:54, slides:[
+    {k:"title", t:"A Logo Is a Promise Kept Small", cap:"This is a talk about thirteen squares."},
+    {k:"grid", t:"28 mm", cap:"Twenty-eight millimetres. That is the module. Everything in the Nordhavn library is built from it."},
+    {k:"big", t:"212 signs we never drew.", cap:"Since opening, staff have composed two hundred and twelve signs without us. That is the number I am proudest of."},
+    {k:"serif", t:"Design the kit, not the sign.", cap:"Design the kit, not the sign. The client will outlive your contract."}]},
+  {title:"Riso, Error and the Honest Print", who:"Mira Kovač · Antwerp 2024", dur:60, slides:[
+    {k:"title", t:"Riso, Error and the Honest Print", cap:"I brought some posters that a sponsor once asked me to fix."},
+    {k:"riso", t:"BLUR", cap:"They called it blur. The printer calls it misregistration. I call it proof that a human pulled the sheet."},
+    {k:"big", t:"7,200 sheets. 7,200 versions.", cap:"Seven thousand two hundred sheets, and no two are aligned the same way."},
+    {k:"serif", t:"Perfect promises nothing.", cap:"A perfect poster promises perfect films. Nobody believes that. Promise them something alive instead."}]}
+];
+function fmt(s){ s=Math.max(0,Math.floor(s)); return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); }
+$$(".player").forEach(el=>{
+  const T=TALKS[+el.dataset.talk], cap=$('[data-captions="'+el.dataset.talk+'"]');
+  if(el.dataset.src){ // swap in a real recording: <div class="player" data-src="talk.mp4">
+    el.innerHTML=`<video controls preload="metadata" src="${el.dataset.src}"></video>`; return;
+  }
+  el.innerHTML=`<canvas aria-label="${T.title}, recorded excerpt"></canvas>
+    <button class="player-big" type="button" aria-label="Play ${T.title}"><span>▶</span></button>
+    <div class="player-bar mono"><button type="button" class="pp" aria-label="Play">▶</button>
+    <input type="range" min="0" max="${T.dur*10}" value="0" step="1" aria-label="Seek" id="seek-${el.dataset.talk}">
+    <span class="tc">00:00 / ${fmt(T.dur)}</span></div>`;
+  const cv=$("canvas",el), ctx=cv.getContext("2d"), big=$(".player-big",el), pp=$(".pp",el), seek=$("input",el), tc=$(".tc",el);
+  let t=0, playing=false, lastNow=0, raf=0, capIdx=-1;
+  const per=T.dur/T.slides.length;
+  function size(){ const w=cv.clientWidth||640, d=Math.min(devicePixelRatio||1,2); cv.width=w*d; cv.height=w*9/16*d; draw(); }
+  function draw(){
+    const W=cv.width, H=cv.height, i=Math.min(T.slides.length-1,Math.floor(t/per)), s=T.slides[i], lt=(t-i*per)/per;
+    const inT=(reduce||(!playing&&t===0))?1:Math.min(1,lt*4), eo=1-Math.pow(1-inT,3);
+    const dark = i%2===0;
+    const fg = dark?"#F2F2EF":"#0D0D0F", bg=dark?"#0D0D0F":"#F2F2EF";
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    ctx.save(); ctx.globalAlpha=eo; ctx.translate((1-eo)*W*0.05,0);
+    ctx.fillStyle=fg; ctx.textBaseline="alphabetic";
+    const pad=W*0.07;
+    function fitFont(txt, weight, fam, maxSize, maxW){ let sz=maxSize; ctx.font=`${weight} ${sz}px ${fam}`; while(ctx.measureText(txt).width>maxW && sz>10){ sz*=0.94; ctx.font=`${weight} ${sz}px ${fam}`; } return sz; }
+    if(s.k==="title"){ ctx.font=`500 ${W*0.018}px "Martian Mono", monospace`; ctx.fillText("LECTURE · "+T.who.toUpperCase(),pad,H*0.2);
+      const words=s.t.split(" "); let y=H*0.42; let line=""; const lines=[]; words.forEach(w=>{ const tst=line?line+" "+w:w; ctx.font=`900 ${W*0.085}px Archivo, sans-serif`; if(ctx.measureText(tst).width>W-2*pad && line){ lines.push(line); line=w; } else line=tst; }); lines.push(line);
+      ctx.font=`900 ${W*0.085}px Archivo, sans-serif`; lines.forEach(l=>{ ctx.fillText(l.toUpperCase(),pad,y); y+=W*0.08; }); }
+    else if(s.k==="big"){ const sz=fitFont(s.t,"900","Archivo, sans-serif",W*0.16,W-2*pad); ctx.fillText(s.t,pad,H*0.5+sz*0.35); }
+    else if(s.k==="serif"){ ctx.font=`italic 500 ${W*0.062}px "Bodoni Moda", serif`; let y=H*0.42; const words=s.t.split(" "); let line=""; words.forEach(w=>{ const tst=line?line+" "+w:w; if(ctx.measureText(tst).width>W-2*pad && line){ ctx.fillText(line,pad,y); y+=W*0.072; line=w; } else line=tst; }); ctx.fillText(line,pad,y); }
+    else if(s.k==="glyph"){ ctx.font=`800 ${H*0.9}px "Bodoni Moda", serif`; ctx.textAlign="center"; ctx.fillText(s.t,W/2,H*0.86); ctx.textAlign="left"; ctx.strokeStyle="#FF48B0"; ctx.lineWidth=Math.max(1,W/900); [0.86,0.2].forEach(f=>{ ctx.beginPath(); ctx.moveTo(0,H*f); ctx.lineTo(W,H*f); ctx.stroke(); }); }
+    else if(s.k==="grid"){ const u=H*0.12, ox=W*0.1, oy=H*0.2; ctx.fillStyle=fg; N_CELLS.forEach(([c,r],j)=>{ if(j/N_CELLS.length<=lt*2.2) ctx.fillRect(ox+c*u+2,oy+r*u+2,u-4,u-4); }); ctx.font=`900 ${W*0.12}px Archivo, sans-serif`; ctx.fillText(s.t,W*0.52,H*0.6); }
+    else if(s.k==="riso"){ const sz=fitFont(s.t,"900","Archivo, sans-serif",W*0.3,W-2*pad); ctx.globalCompositeOperation="multiply"; const off=W*0.012*Math.sin(t*2); ctx.fillStyle="#FF48B0"; ctx.fillText(s.t,pad+off,H*0.5+sz*0.35-off); ctx.fillStyle="#0D0D0F"; ctx.fillText(s.t,pad,H*0.5+sz*0.35); ctx.globalCompositeOperation="source-over"; }
+    ctx.restore();
+    ctx.fillStyle = dark?"rgba(242,242,239,.55)":"rgba(13,13,15,.55)"; ctx.font=`500 ${Math.max(9,W*0.013)}px "Martian Mono", monospace`;
+    ctx.fillText(T.who.toUpperCase(),pad,H-pad*0.5); ctx.textAlign="right"; ctx.fillText(fmt(t)+" · EXCERPT",W-pad,H-pad*0.5); ctx.textAlign="left";
+    ctx.fillStyle="#FF48B0"; ctx.fillRect(0,H-Math.max(3,H*0.008),W*(t/T.dur),Math.max(3,H*0.008));
+    if(i!==capIdx){ capIdx=i; cap && (cap.textContent=s.cap); }
+    seek.value=Math.round(t*10); tc.textContent=fmt(t)+" / "+fmt(T.dur);
+  }
+  function tick(now){ if(!playing) return; t+= (now-lastNow)/1000; lastNow=now; if(t>=T.dur){ t=T.dur; setPlay(false); } draw(); if(playing) raf=requestAnimationFrame(tick); }
+  function setPlay(p){ playing=p; pp.textContent=p?"❚❚":"▶"; pp.setAttribute("aria-label",p?"Pause":"Play"); big.hidden=p; if(p){ if(t>=T.dur) t=0; lastNow=performance.now(); raf=requestAnimationFrame(tick); } else cancelAnimationFrame(raf); }
+  big.addEventListener("click",()=>setPlay(true)); pp.addEventListener("click",()=>setPlay(!playing));
+  cv.addEventListener("click",()=>{ if(playing) setPlay(false); });
+  seek.addEventListener("input",()=>{ t=seek.value/10; draw(); });
+  size(); (document.fonts?document.fonts.ready:Promise.resolve()).then(size); addEventListener("resize",size);
+});
+
+/* ---------- Copy email ---------- */
+$("#copy-mail").addEventListener("click",()=>{
+  const addr=$("#mail-addr").textContent, state=$("#copy-state");
+  const fallback=()=>{ const r=document.createRange(); r.selectNodeContents($("#mail-addr")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); state.textContent="Selected, press ⌘C / Ctrl+C"; };
+  try{ navigator.clipboard.writeText(addr).then(()=>{ state.textContent="Copied"; },fallback); } catch(e){ fallback(); }
+});
+})();
+</script>
+</body>
+</html>
