@@ -1513,3 +1513,58 @@ fieldset.product-form__input--pill input[type='radio']:checked + label {
 fieldset.product-form__input--pill input[type='radio']:not(.disabled):not(:checked) + label:hover {
   border-color: rgb(var(--color-accent));
 }
+
+/* ---------- Stil „produs premium” (galerie rotunjită, titlu mare, carduri moi) ---------- */
+
+.product__media-wrapper .product__media-item .product-media-container,
+.product__media-wrapper .product__media-item .product__media {
+  border-radius: var(--media-radius, 24px);
+  overflow: hidden;
+}
+
+.product__media-wrapper .product-media-container {
+  background: rgb(var(--color-background));
+  box-shadow: 0 18px 40px -30px rgba(var(--color-shadow), 0.55);
+}
+
+.product__info-container .product__title h1,
+.product__info-container .product__title .h1 {
+  font-weight: var(--font-heading-weight);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.c-qb {
+  --c-qb-radius: 20px;
+}
+
+.c-qb__option.is-selected {
+  box-shadow: 0 0 0 3px rgba(var(--color-accent), 0.18), 0 14px 30px -18px rgba(var(--color-accent), 0.6);
+}
+
+.c-benefits {
+  gap: 0.8rem;
+}
+
+.c-benefits > li {
+  padding: 0.9rem 1.2rem;
+  border-radius: 1.4rem;
+  background: rgba(var(--color-accent), 0.08);
+}
+
+.product-form__submit.button,
+.product-form__submit {
+  min-height: 5.6rem;
+  font-size: 1.7rem;
+  font-weight: 800;
+  box-shadow: 0 12px 26px -14px rgba(var(--color-button), 0.9);
+}
+
+@media screen and (min-width: 990px) {
+  .product__info-container {
+    padding: 2.4rem 2.8rem;
+    border-radius: calc(var(--text-boxes-radius, 24px) + 4px);
+    background: rgb(var(--color-background));
+    box-shadow: 0 1px 0 rgba(var(--color-foreground), 0.04), 0 24px 60px -40px rgba(var(--color-shadow), 0.45);
+  }
+}

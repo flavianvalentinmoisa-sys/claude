@@ -17,7 +17,8 @@ def chk(where, defs, vals):
             or (t == 'checkbox' and not isinstance(v, bool)) \
             or (t == 'color' and v and not re.fullmatch(r'#[0-9A-Fa-f]{6}', v)) \
             or (t == 'richtext' and v and not v.startswith(('<p', '<h', '<ul', '<ol'))) \
-            or (t == 'color_scheme' and v not in schemes)
+            or (t == 'color_scheme' and v not in schemes) \
+            or (t == 'url' and v and not re.match(r'(/|https?://|shopify://|mailto:|tel:)', v))
         if bad: print(where, k, repr(v), t); n += 1
     return n
 def sec_check(where, sec):

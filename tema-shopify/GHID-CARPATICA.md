@@ -6,7 +6,7 @@ selector de limbă sau de țară.
 
 ## 1. Instalare
 
-1. Descarcă `carpatica-1.2.1.zip` (din acest folder).
+1. Descarcă `carpatica-1.3.0.zip` (din acest folder).
 2. Shopify Admin → **Magazin online → Teme → Adaugă temă → Încarcă fișier zip**.
 3. Apasă **Personalizează** pentru a o configura, apoi **Publică**.
 
@@ -38,7 +38,14 @@ Setări temă → Culori conversie: **Accent** (salvie) colorează varianta sele
 **Accent 2** (teracotă) colorează eticheta „CEL MAI ALES”, abțibildurile și cuvintele scrise cursiv în titluri.
 **Culoare titluri și meniu** (salvie) se aplică titlurilor mari și meniului doar pe fundaluri deschise.
 
-## 2c. Adaptarea la orice produs
+## 2c. Pagina de produs (șablonul implicit)
+
+Ordinea implicită, inspirată de paginile de produs premium: produs cu oferte → bandă cu beneficii →
+„De ce îl iubesc clienții” → „Ce conține” (cu poza produsului) → Fără/Cu [produs] → Rezultate animate →
+Noi vs. alții → Cum se folosește → Recenzii cu poze → Garanție → Întrebări frecvente → Produse similare.
+Butoanele sunt rotunde, colțurile moi, iar titlurile folosesc Nunito îngroșat (Setări temă → Tipografie).
+
+## 2d. Adaptarea la orice produs
 
 - Șablonul **Produs implicit** se aplică automat tuturor produselor: titlul, pozele, prețul, variantele și
   recenziile se schimbă singure.

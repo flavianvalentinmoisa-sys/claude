@@ -168,48 +168,6 @@
         "padding_bottom": 28
       }
     },
-    "icon_bar": {
-      "type": "c-icon-bar",
-      "settings": {
-        "color_scheme": "scheme-2"
-      },
-      "blocks": {
-        "item_0": {
-          "type": "item",
-          "settings": {}
-        },
-        "item_1": {
-          "type": "item",
-          "settings": {
-            "icon": "cash",
-            "title": "Plata ramburs",
-            "text": "Plătești la curier"
-          }
-        },
-        "item_2": {
-          "type": "item",
-          "settings": {
-            "icon": "return",
-            "title": "Retur 30 de zile",
-            "text": "Gratuit, fără întrebări"
-          }
-        },
-        "item_3": {
-          "type": "item",
-          "settings": {
-            "icon": "shield",
-            "title": "Garanție 2 ani",
-            "text": "Pentru toate produsele"
-          }
-        }
-      },
-      "block_order": [
-        "item_0",
-        "item_1",
-        "item_2",
-        "item_3"
-      ]
-    },
     "compare": {
       "type": "c-comparison-table",
       "settings": {
@@ -257,16 +215,17 @@
     "problem_solution": {
       "type": "c-problem-solution",
       "settings": {
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "good_color_scheme": "scheme-3"
       }
     },
     "steps": {
       "type": "c-steps",
       "settings": {
-        "color_scheme": "scheme-2",
-        "card_color_scheme": "scheme-1",
-        "button_label_1": ""
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-2",
+        "button_label_1": "",
+        "subheading": "Cum se folosește"
       },
       "blocks": {
         "step_0": {
@@ -317,8 +276,8 @@
             "title": "Livrare super rapidă",
             "text": "<p>Comandat luni, primit marți. Ambalaj impecabil și exact ca în descriere.</p>",
             "name": "Mihai T.",
-            "location": "București",
-            "date": "acum o săptămână"
+            "review_time": "acum o săptămână",
+            "city": "București"
           }
         },
         "review_2": {
@@ -327,9 +286,9 @@
             "title": "Merită fiecare leu",
             "text": "<p>Eram sceptică, dar după două săptămâni văd diferența. Am comandat și pentru sora mea.</p>",
             "name": "Ioana P.",
-            "location": "Iași",
-            "date": "acum 2 săptămâni",
-            "rating": 5
+            "rating": 5,
+            "review_time": "acum 2 săptămâni",
+            "city": "Iași"
           }
         },
         "review_3": {
@@ -338,9 +297,9 @@
             "title": "Foarte mulțumit",
             "text": "<p>Calitate bună, comunicare rapidă. Plata la livrare m-a convins să încerc.</p>",
             "name": "Radu S.",
-            "location": "Timișoara",
-            "date": "acum 3 săptămâni",
-            "rating": 4
+            "rating": 4,
+            "review_time": "acum 3 săptămâni",
+            "city": "Timișoara"
           }
         },
         "review_4": {
@@ -349,8 +308,8 @@
             "title": "Recomand cu încredere",
             "text": "<p>Al doilea produs luat de aici, la fel de bun ca primul.</p>",
             "name": "Elena D.",
-            "location": "Brașov",
-            "date": "acum o lună"
+            "review_time": "acum o lună",
+            "city": "Brașov"
           }
         },
         "review_5": {
@@ -359,8 +318,8 @@
             "title": "Peste așteptări",
             "text": "<p>Arată și mai bine în realitate. Mulțumesc!</p>",
             "name": "Cristina V.",
-            "location": "Constanța",
-            "date": "acum o lună"
+            "review_time": "acum o lună",
+            "city": "Constanța"
           }
         }
       },
@@ -377,8 +336,8 @@
       "type": "c-guarantee",
       "settings": {
         "button_label_1": "",
-        "color_scheme": "scheme-1",
-        "box_color_scheme": "scheme-2"
+        "color_scheme": "scheme-2",
+        "box_color_scheme": "scheme-1"
       },
       "blocks": {
         "point_0": {
@@ -405,17 +364,234 @@
         "point_1",
         "point_2"
       ]
+    },
+    "benefits_band": {
+      "type": "c-ticker",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": {
+        "t_0": {
+          "type": "text",
+          "settings": {
+            "text": "100% natural",
+            "icon_emoji": "🌿"
+          }
+        },
+        "t_1": {
+          "type": "text",
+          "settings": {
+            "text": "Livrare în 24–48h",
+            "icon_emoji": "🚚"
+          }
+        },
+        "t_2": {
+          "type": "text",
+          "settings": {
+            "text": "Plata ramburs",
+            "icon_emoji": "💵"
+          }
+        },
+        "t_3": {
+          "type": "text",
+          "settings": {
+            "text": "Retur gratuit 30 de zile",
+            "icon_emoji": "↩️"
+          }
+        }
+      },
+      "block_order": [
+        "t_0",
+        "t_1",
+        "t_2",
+        "t_3"
+      ]
+    },
+    "why": {
+      "type": "c-benefit-cards",
+      "settings": {
+        "subheading": "De ce să alegi",
+        "heading": "De ce îl iubesc <em>clienții</em>",
+        "color_scheme": "scheme-1",
+        "style": "soft",
+        "columns_desktop": 3
+      },
+      "blocks": {
+        "c_0": {
+          "type": "card",
+          "settings": {
+            "background": "#E6EBDF",
+            "emoji": "🌿",
+            "title": "Ingrediente curate",
+            "text": "<p>Fără aditivi inutili. Doar ce funcționează, în dozele corecte.</p>"
+          }
+        },
+        "c_1": {
+          "type": "card",
+          "settings": {
+            "background": "#F6E1D8",
+            "emoji": "⚡",
+            "title": "Efect simțit rapid",
+            "text": "<p>Majoritatea clienților simt diferența în primele 7 zile.</p>"
+          }
+        },
+        "c_2": {
+          "type": "card",
+          "settings": {
+            "background": "#F3EADD",
+            "emoji": "🤍",
+            "title": "Ușor de folosit",
+            "text": "<p>Se integrează în rutina ta zilnică în mai puțin de un minut.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c_0",
+        "c_1",
+        "c_2"
+      ]
+    },
+    "inside": {
+      "type": "c-media-text",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "media_style": "blob",
+        "sticker": "NOU",
+        "use_product_image": true
+      },
+      "blocks": {
+        "m_0": {
+          "type": "subheading",
+          "settings": {
+            "text": "Ce conține"
+          }
+        },
+        "m_1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Tot ce ai nevoie, într-un <em>singur</em> produs",
+            "heading_size": "h2"
+          }
+        },
+        "m_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>[produs] combină ingredientele de care ai nevoie zilnic, fără să mai cumperi zece produse separate.</p>"
+          }
+        },
+        "m_3": {
+          "type": "checklist",
+          "settings": {
+            "items": "Formulă testată și sigură\nFără zahăr adăugat\nPotrivit pentru toată familia"
+          }
+        },
+        "m_4": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Comandă acum"
+          }
+        }
+      },
+      "block_order": [
+        "m_0",
+        "m_1",
+        "m_2",
+        "m_3",
+        "m_4"
+      ]
+    },
+    "results": {
+      "type": "c-results",
+      "settings": {
+        "subheading": "Rezultate reale",
+        "heading": "Rezultate pe care le <em>simți</em>",
+        "style": "cards",
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "r_0": {
+          "type": "result",
+          "settings": {}
+        },
+        "r_1": {
+          "type": "result",
+          "settings": {
+            "percent": 89,
+            "emoji": "💆",
+            "text": "au simțit mai multă energie în prima lună"
+          }
+        },
+        "r_2": {
+          "type": "result",
+          "settings": {
+            "percent": 97,
+            "emoji": "💚",
+            "text": "l-ar recomanda unui prieten"
+          }
+        }
+      },
+      "block_order": [
+        "r_0",
+        "r_1",
+        "r_2"
+      ]
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "settings": {
+        "caption": "",
+        "heading": "Întrebări frecvente",
+        "color_scheme": "scheme-2",
+        "container_color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "q_0": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Cât durează livrarea?",
+            "icon": "truck",
+            "row_content": "<p>Comenzile plasate până la ora 14:00 pleacă în aceeași zi. Livrarea prin curier durează 24–48 de ore lucrătoare.</p>"
+          }
+        },
+        "q_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Pot plăti la livrare (ramburs)?",
+            "icon": "price_tag",
+            "row_content": "<p>Da. Plătești curierului când primești coletul.</p>"
+          }
+        },
+        "q_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ce fac dacă nu sunt mulțumit?",
+            "icon": "return",
+            "row_content": "<p>Ai 30 de zile să returnezi [produs] și îți dăm banii înapoi.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_0",
+        "q_1",
+        "q_2"
+      ]
     }
   },
   "order": [
     "main",
-    "icon_bar",
+    "benefits_band",
+    "why",
+    "inside",
     "problem_solution",
+    "results",
+    "compare",
     "steps",
     "photo_reviews",
-    "compare",
     "guarantee",
-    "disclosures",
-    "related-products"
+    "faq",
+    "related-products",
+    "disclosures"
   ]
 }

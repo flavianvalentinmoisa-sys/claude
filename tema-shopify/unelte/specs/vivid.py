@@ -13,11 +13,11 @@ write_schema(P + "c-photo-reviews.liquid", section_schema("Recenzii cu poze", [
     text("rating_value", "Nota medie", "4.9"),
     text("rating_count", "Text număr recenzii", "din 2.143 de recenzii verificate"),
     chk("show_bars", "Bare pe stele", True),
-    rng("bar_5", "5 stele", 0, 100, 1, 89, "%"),
-    rng("bar_4", "4 stele", 0, 100, 1, 8, "%"),
-    rng("bar_3", "3 stele", 0, 100, 1, 2, "%"),
-    rng("bar_2", "2 stele", 0, 100, 1, 1, "%"),
-    rng("bar_1", "1 stea", 0, 100, 1, 0, "%"),
+    num("bar_5", "Procent 5 stele", 89),
+    num("bar_4", "Procent 4 stele", 8),
+    num("bar_3", "Procent 3 stele", 2),
+    num("bar_2", "Procent 2 stele", 1),
+    num("bar_1", "Procent 1 stea", 0),
     text("summary_button_label", "Text buton"),
     url("summary_button_link", "Link buton"),
     hdr("Recenzii"),
@@ -39,11 +39,11 @@ write_schema(P + "c-photo-reviews.liquid", section_schema("Recenzii cu poze", [
     text("title", "Titlu", "Exact ce căutam!"),
     rich("text", "Text", "<p>Am primit coletul în 2 zile, calitatea e peste așteptări. Recomand cu drag!</p>"),
     text("name", "Nume", "Andreea M."),
-    text("location", "Oraș", "Cluj-Napoca"),
-    text("date", "Dată", "acum 3 zile"),
+    text("city", "Oraș", "Cluj-Napoca"),
+    text("review_time", "Când", "acum 3 zile"),
     image("avatar", "Poză profil"),
     chk("verified", "Cumpărător verificat", True),
-    product("product", "Produs recenzat"),
+    text("product_name", "Produs recenzat (opțional)", info="Ex: [produs] – pe pagina produsului devine numele lui."),
 ])], [{"name": "Recenzii cu poze", "blocks": [{"type": "review"}] * 4}]))
 
 # ---------- Recenzii video ----------
@@ -61,7 +61,8 @@ write_schema(P + "c-video-reviews.liquid", section_schema("Recenzii video", [
     text("text", "Text scurt", "Cel mai bun produs cumpărat anul ăsta!"),
     text("name", "Nume", "Ioana P."),
     chk("verified", "Cumpărător verificat", True),
-    product("product", "Produs"),
+    text("product_name", "Produs (opțional)", info="Ex: [produs] – pe pagina produsului devine numele lui."),
+    text("product_price", "Preț afișat (opțional)", info="Ex: 149 lei"),
 ])], [{"name": "Recenzii video", "blocks": [{"type": "video_review"}] * 4}]))
 
 # ---------- Pași ----------

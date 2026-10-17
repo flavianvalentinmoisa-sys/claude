@@ -33,16 +33,13 @@
                 {%- render 'c-stars', rating: b.rating, size: 14 -%}
                 {%- if b.text != blank -%}<p class="c-vreview__text">{{ b.text | replace: '[produs]', c_product_name | escape }}</p>{%- endif -%}
                 <p class="c-vreview__name">{{ b.name | escape }}{% if b.verified %} {% render 'c-icon', name: 'check_circle', size: 14 %}{% endif %}</p>
-                {%- if b.product != blank -%}
-                  <a href="{{ b.product.url }}" class="c-vreview__product">
-                    {%- if b.product.featured_image != blank -%}
-                      {{ b.product.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', alt: b.product.title, width: 34, height: 34 }}
-                    {%- endif -%}
+                {%- if b.product_name != blank -%}
+                  <span class="c-vreview__product">
                     <span>
-                      <span class="c-vreview__product-title">{{ b.product.title | escape }}</span>
-                      <span class="c-vreview__product-price">{{ b.product.price | money }}</span>
+                      <span class="c-vreview__product-title">{{ b.product_name | replace: '[produs]', c_product_name | escape }}</span>
+                      {%- if b.product_price != blank -%}<span class="c-vreview__product-price">{{ b.product_price | escape }}</span>{%- endif -%}
                     </span>
-                  </a>
+                  </span>
                 {%- endif -%}
               </figcaption>
             </figure>
@@ -252,9 +249,16 @@
           "default": true
         },
         {
-          "type": "product",
-          "id": "product",
-          "label": "Produs"
+          "type": "text",
+          "id": "product_name",
+          "label": "Produs (opțional)",
+          "info": "Ex: [produs] – pe pagina produsului devine numele lui."
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Preț afișat (opțional)",
+          "info": "Ex: 149 lei"
         }
       ]
     }

@@ -383,8 +383,8 @@
             "title": "Livrare super rapidă",
             "text": "<p>Comandat luni, primit marți. Ambalaj impecabil și exact ca în descriere.</p>",
             "name": "Mihai T.",
-            "location": "București",
-            "date": "acum o săptămână"
+            "review_time": "acum o săptămână",
+            "city": "București"
           }
         },
         "review_2": {
@@ -393,9 +393,9 @@
             "title": "Merită fiecare leu",
             "text": "<p>Eram sceptică, dar după două săptămâni văd diferența. Am comandat și pentru sora mea.</p>",
             "name": "Ioana P.",
-            "location": "Iași",
-            "date": "acum 2 săptămâni",
-            "rating": 5
+            "rating": 5,
+            "review_time": "acum 2 săptămâni",
+            "city": "Iași"
           }
         },
         "review_3": {
@@ -404,9 +404,9 @@
             "title": "Foarte mulțumit",
             "text": "<p>Calitate bună, comunicare rapidă. Plata la livrare m-a convins să încerc.</p>",
             "name": "Radu S.",
-            "location": "Timișoara",
-            "date": "acum 3 săptămâni",
-            "rating": 4
+            "rating": 4,
+            "review_time": "acum 3 săptămâni",
+            "city": "Timișoara"
           }
         },
         "review_4": {
@@ -415,8 +415,8 @@
             "title": "Recomand cu încredere",
             "text": "<p>Al doilea produs luat de aici, la fel de bun ca primul.</p>",
             "name": "Elena D.",
-            "location": "Brașov",
-            "date": "acum o lună"
+            "review_time": "acum o lună",
+            "city": "Brașov"
           }
         },
         "review_5": {
@@ -425,8 +425,8 @@
             "title": "Peste așteptări",
             "text": "<p>Arată și mai bine în realitate. Mulțumesc!</p>",
             "name": "Cristina V.",
-            "location": "Constanța",
-            "date": "acum o lună"
+            "review_time": "acum o lună",
+            "city": "Constanța"
           }
         }
       },
