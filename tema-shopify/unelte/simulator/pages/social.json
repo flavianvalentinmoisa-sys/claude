@@ -1,0 +1,260 @@
+{
+ "sections": {
+  "c_testimonials": {
+   "type": "c-testimonials",
+   "settings": {},
+   "blocks": {
+    "c-testimonials-b0": {
+     "type": "testimonial",
+     "settings": {}
+    },
+    "c-testimonials-b1": {
+     "type": "testimonial",
+     "settings": {
+      "author": "Radu M.",
+      "location": "București",
+      "text": "<p>Livrare rapidă, plata la curier, produs exact ca în descriere. Recomand!</p>"
+     }
+    },
+    "c-testimonials-b2": {
+     "type": "testimonial",
+     "settings": {
+      "author": "Ioana P.",
+      "location": "Iași",
+      "text": "<p>Calitate foarte bună la prețul ăsta. Am primit și un cadou mic în colet, drăguț gest.</p>"
+     }
+    }
+   },
+   "block_order": [
+    "c-testimonials-b0",
+    "c-testimonials-b1",
+    "c-testimonials-b2"
+   ]
+  },
+  "c_facebook_reviews": {
+   "type": "c-facebook-reviews",
+   "settings": {},
+   "blocks": {
+    "c-facebook-reviews-b0": {
+     "type": "comment",
+     "settings": {}
+    },
+    "c-facebook-reviews-b1": {
+     "type": "comment",
+     "settings": {
+      "name": "Andrei Ionescu",
+      "text": "<p>A doua comandă de la voi, la fel de mulțumit. Recomand cu încredere!</p>",
+      "likes": 12,
+      "time": "5 z"
+     }
+    },
+    "c-facebook-reviews-b2": {
+     "type": "comment",
+     "settings": {
+      "name": "Cristina D.",
+      "text": "<p>Calitate peste așteptări, iar curierul a sunat înainte. Super!</p>",
+      "likes": 31,
+      "time": "1 săpt."
+     }
+    }
+   },
+   "block_order": [
+    "c-facebook-reviews-b0",
+    "c-facebook-reviews-b1",
+    "c-facebook-reviews-b2"
+   ]
+  },
+  "c_review_wall": {
+   "type": "c-review-wall",
+   "settings": {},
+   "blocks": {
+    "c-review-wall-b0": {
+     "type": "review",
+     "settings": {}
+    },
+    "c-review-wall-b1": {
+     "type": "review",
+     "settings": {
+      "author": "Alina G.",
+      "title": "Recomand 100%",
+      "text": "<p>Am avut o întrebare și am primit răspuns imediat. Produsul e superb.</p>",
+      "date": "acum o săptămână"
+     }
+    },
+    "c-review-wall-b2": {
+     "type": "review",
+     "settings": {
+      "author": "Mihai T.",
+      "title": "Raport calitate-preț excelent",
+      "text": "<p>Mi-a depășit așteptările. Ambalaj frumos și livrare rapidă.</p>",
+      "date": "acum 2 săptămâni"
+     }
+    }
+   },
+   "block_order": [
+    "c-review-wall-b0",
+    "c-review-wall-b1",
+    "c-review-wall-b2"
+   ]
+  },
+  "c_insta_stories": {
+   "type": "c-insta-stories",
+   "settings": {},
+   "blocks": {
+    "c-insta-stories-b0": {
+     "type": "story",
+     "settings": {
+      "label": "Noutăți"
+     }
+    },
+    "c-insta-stories-b1": {
+     "type": "story",
+     "settings": {
+      "label": "Recenzii"
+     }
+    },
+    "c-insta-stories-b2": {
+     "type": "story",
+     "settings": {
+      "label": "Cum se folosește"
+     }
+    },
+    "c-insta-stories-b3": {
+     "type": "story",
+     "settings": {
+      "label": "Oferte"
+     }
+    }
+   },
+   "block_order": [
+    "c-insta-stories-b0",
+    "c-insta-stories-b1",
+    "c-insta-stories-b2",
+    "c-insta-stories-b3"
+   ]
+  },
+  "c_before_after": {
+   "type": "c-before-after",
+   "settings": {},
+   "blocks": {},
+   "block_order": []
+  },
+  "c_results": {
+   "type": "c-results",
+   "settings": {},
+   "blocks": {
+    "c-results-b0": {
+     "type": "result",
+     "settings": {}
+    },
+    "c-results-b1": {
+     "type": "result",
+     "settings": {
+      "percent": 89,
+      "text": "au scăpat de durerile de gât"
+     }
+    },
+    "c-results-b2": {
+     "type": "result",
+     "settings": {
+      "percent": 97,
+      "text": "ar recomanda produsul unui prieten"
+     }
+    }
+   },
+   "block_order": [
+    "c-results-b0",
+    "c-results-b1",
+    "c-results-b2"
+   ]
+  },
+  "c_comparison_table": {
+   "type": "c-comparison-table",
+   "settings": {},
+   "blocks": {
+    "c-comparison-table-b0": {
+     "type": "row",
+     "settings": {}
+    },
+    "c-comparison-table-b1": {
+     "type": "row",
+     "settings": {
+      "feature": "Plata ramburs la curier",
+      "comp_1": "partial"
+     }
+    },
+    "c-comparison-table-b2": {
+     "type": "row",
+     "settings": {
+      "feature": "Retur gratuit 30 de zile"
+     }
+    },
+    "c-comparison-table-b3": {
+     "type": "row",
+     "settings": {
+      "feature": "Garanție 2 ani"
+     }
+    },
+    "c-comparison-table-b4": {
+     "type": "row",
+     "settings": {
+      "feature": "Suport clienți în română"
+     }
+    }
+   },
+   "block_order": [
+    "c-comparison-table-b0",
+    "c-comparison-table-b1",
+    "c-comparison-table-b2",
+    "c-comparison-table-b3",
+    "c-comparison-table-b4"
+   ]
+  },
+  "c_logo_list": {
+   "type": "c-logo-list",
+   "settings": {},
+   "blocks": {
+    "c-logo-list-b0": {
+     "type": "logo",
+     "settings": {
+      "name": "Logo 1"
+     }
+    },
+    "c-logo-list-b1": {
+     "type": "logo",
+     "settings": {
+      "name": "Logo 2"
+     }
+    },
+    "c-logo-list-b2": {
+     "type": "logo",
+     "settings": {
+      "name": "Logo 3"
+     }
+    },
+    "c-logo-list-b3": {
+     "type": "logo",
+     "settings": {
+      "name": "Logo 4"
+     }
+    }
+   },
+   "block_order": [
+    "c-logo-list-b0",
+    "c-logo-list-b1",
+    "c-logo-list-b2",
+    "c-logo-list-b3"
+   ]
+  }
+ },
+ "order": [
+  "c_testimonials",
+  "c_facebook_reviews",
+  "c_review_wall",
+  "c_insta_stories",
+  "c_before_after",
+  "c_results",
+  "c_comparison_table",
+  "c_logo_list"
+ ]
+}

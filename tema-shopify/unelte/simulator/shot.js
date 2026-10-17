@@ -1,0 +1,20 @@
+const { chromium } = require('playwright');
+(async () => {
+  const [,, pathname, out, w, h, full] = process.argv;
+  const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+  const p = await b.newPage({ viewport: { width: +w || 1280, height: +h || 900 } });
+  const logs = [];
+  await p.route(/^https?:\/\/(?!localhost).*/, (r) => r.abort());
+  await p.route('https://cdn.shopify.com/storefront/standard-events.js', (r) => r.fulfill({ contentType: 'application/javascript', headers: { 'Access-Control-Allow-Origin': '*' }, body: require('fs').readFileSync(__dirname + '/standard-events.js', 'utf8') }));
+  await p.addInitScript(() => { window.Shopify = { designMode: false, currency: { active: 'RON', rate: '1.0' } }; });
+  p.on('response', (r) => r.status() >= 400 && logs.push('HTTP ' + r.status() + ' ' + r.url()));
+  p.on('console', (m) => (m.type() === 'error' || m.type() === 'warning') && logs.push(m.type() + ': ' + m.text()));
+  p.on('pageerror', (e) => logs.push('pageerror: ' + e.message));
+  p.on('requestfailed', (r) => logs.push('reqfail: ' + r.url()));
+  await p.goto('http://localhost:4567' + pathname, { waitUntil: 'networkidle' });
+  await p.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); } window.scrollTo(0, 0); });
+  await p.waitForTimeout(1600);
+  await p.screenshot({ path: out, fullPage: full !== 'no' });
+  console.log(logs.join('\n') || 'fără erori în consolă');
+  await b.close();
+})();

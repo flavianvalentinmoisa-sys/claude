@@ -18,18 +18,31 @@
       "blocks": {
         "subtotal": {
           "type": "subtotal",
-          "settings": {
-          }
+          "settings": {}
         },
         "buttons": {
           "type": "buttons",
-          "settings": {
-          }
+          "settings": {}
+        },
+        "progress": {
+          "type": "progress_bar",
+          "settings": {}
+        },
+        "discount": {
+          "type": "discount_field",
+          "settings": {}
+        },
+        "payments": {
+          "type": "payment_badges",
+          "settings": {}
         }
       },
       "block_order": [
+        "progress",
+        "discount",
         "subtotal",
-        "buttons"
+        "buttons",
+        "payments"
       ]
     }
   },

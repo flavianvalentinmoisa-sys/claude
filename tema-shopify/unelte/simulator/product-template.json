@@ -1,0 +1,297 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "text": "<strong>4.8</strong> (2.341 recenzii)",
+            "link_to": "#recenzii"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h2",
+            "show_tag_badges": true
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_savings": "amount",
+            "price_size": "medium"
+          }
+        },
+        "avatars": {
+          "type": "review_avatars",
+          "settings": {
+            "text": "Peste <strong>10.000</strong> de clienți mulțumiți",
+            "show_stars": false
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_breaks": {
+          "type": "quantity_breaks",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "urgency": {
+          "type": "urgency",
+          "settings": {
+            "only_low_stock": true,
+            "threshold": 10
+          }
+        },
+        "eta": {
+          "type": "estimated_shipping",
+          "settings": {}
+        },
+        "benefits": {
+          "type": "emoji_benefits",
+          "settings": {}
+        },
+        "guarantee": {
+          "type": "text_with_icon",
+          "settings": {}
+        },
+        "payments": {
+          "type": "payment_badges",
+          "settings": {
+            "alignment": "center",
+            "text": "Plată 100% sigură"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Livrare și plată",
+            "icon": "truck",
+            "content": "<p>Livrare prin curier în 24–48 de ore lucrătoare. Plata ramburs, la primirea coletului, sau online cu cardul.</p>"
+          }
+        },
+        "returns": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Retur și garanție",
+            "icon": "return",
+            "content": "<p>Ai 30 de zile pentru retur gratuit. Toate produsele au garanție 2 ani.</p>"
+          }
+        },
+        "sticky": {
+          "type": "sticky_atc",
+          "settings": {
+            "rating": 4.8,
+            "rating_text": "<strong>4.8</strong> (2.341)"
+          }
+        }
+      },
+      "block_order": [
+        "rating",
+        "title",
+        "price",
+        "avatars",
+        "variant_picker",
+        "quantity_breaks",
+        "quantity_selector",
+        "buy_buttons",
+        "urgency",
+        "eta",
+        "benefits",
+        "guarantee",
+        "payments",
+        "description",
+        "shipping",
+        "returns",
+        "sticky"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Ți-ar putea plăcea și",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "icon_bar": {
+      "type": "c-icon-bar",
+      "settings": {},
+      "blocks": {
+        "item_0": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "cash",
+            "title": "Plata ramburs",
+            "text": "Plătești la curier"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "return",
+            "title": "Retur 30 de zile",
+            "text": "Gratuit, fără întrebări"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Garanție 2 ani",
+            "text": "Pentru toate produsele"
+          }
+        }
+      },
+      "block_order": [
+        "item_0",
+        "item_1",
+        "item_2",
+        "item_3"
+      ]
+    },
+    "compare": {
+      "type": "c-comparison-table",
+      "settings": {},
+      "blocks": {
+        "row_0": {
+          "type": "row",
+          "settings": {}
+        },
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature": "Plata ramburs la curier",
+            "comp_1": "partial"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature": "Retur gratuit 30 de zile"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature": "Garanție 2 ani"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "feature": "Suport clienți în română"
+          }
+        }
+      },
+      "block_order": [
+        "row_0",
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4"
+      ]
+    },
+    "reviews": {
+      "type": "c-review-wall",
+      "settings": {
+        "anchor": "recenzii"
+      },
+      "blocks": {
+        "review_0": {
+          "type": "review",
+          "settings": {}
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "author": "Alina G.",
+            "title": "Recomand 100%",
+            "text": "<p>Am avut o întrebare și am primit răspuns imediat. Produsul e superb.</p>",
+            "date": "acum o săptămână"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "author": "Mihai T.",
+            "title": "Raport calitate-preț excelent",
+            "text": "<p>Mi-a depășit așteptările. Ambalaj frumos și livrare rapidă.</p>",
+            "date": "acum 2 săptămâni"
+          }
+        }
+      },
+      "block_order": [
+        "review_0",
+        "review_1",
+        "review_2"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "icon_bar",
+    "compare",
+    "reviews",
+    "disclosures",
+    "related-products"
+  ]
+}

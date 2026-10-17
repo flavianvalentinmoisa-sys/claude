@@ -4,12 +4,42 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "blocks": {},
-      "block_order": [],
+      "blocks": {
+        "menu": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Magazin",
+            "menu": "footer"
+          }
+        },
+        "info": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Informații",
+            "menu": "main-menu"
+          }
+        },
+        "contact": {
+          "type": "contact",
+          "settings": {}
+        },
+        "anpc": {
+          "type": "anpc",
+          "settings": {
+            "heading": "Protecția consumatorilor"
+          }
+        }
+      },
+      "block_order": [
+        "menu",
+        "info",
+        "contact",
+        "anpc"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
+        "newsletter_heading": "Abonează-te la noutăți",
         "enable_follow_on_shop": true,
         "show_social": true,
         "enable_country_selector": true,
