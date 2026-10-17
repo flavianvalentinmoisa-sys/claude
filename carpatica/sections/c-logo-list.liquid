@@ -1,0 +1,261 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-logos-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="{% unless s.full_width %}page-width{% endunless %}">
+    {%- render 'c-section-header', section: section -%}
+    {%- capture logos -%}
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="c-logos__item" {{ block.shopify_attributes }}>
+          {%- if b.link != blank -%}<a href="{{ b.link }}" target="_blank" rel="noopener">{%- endif -%}
+          {%- if b.image != blank -%}
+            {{ b.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '200px', alt: b.image.alt | default: '' }}
+          {%- else -%}
+            <span class="c-logos__placeholder">{{ b.name | default: 'Logo' | escape }}</span>
+          {%- endif -%}
+          {%- if b.link != blank -%}</a>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    {%- endcapture -%}
+    <div class="c-logos c-logos--{{ s.layout }}{% if s.grayscale %} c-logos--gray{% endif %}" style="--c-logo-height: {{ s.logo_height }}px; --c-marquee-speed: {{ s.speed }}s;">
+      {%- if s.layout == 'marquee' -%}
+        <div class="c-logos__track">
+          <ul class="c-logos__list" role="list">{{ logos }}</ul>
+          <ul class="c-logos__list" role="list" aria-hidden="true">{{ logos }}</ul>
+        </div>
+      {%- else -%}
+        <ul class="c-logos__list" role="list">{{ logos }}</ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Apărut în (logo-uri)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Au scris despre noi",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h4"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Rând fix"
+        },
+        {
+          "value": "marquee",
+          "label": "Bandă derulantă"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Înălțime logo",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "default": 36,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "Logo-uri alb-negru",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Viteză bandă",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "default": 30,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Lățime completă",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nume (dacă nu ai logo)",
+          "default": "Logo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apărut în (logo-uri)",
+      "blocks": [
+        {
+          "type": "logo",
+          "settings": {
+            "name": "Logo 1"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "name": "Logo 2"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "name": "Logo 3"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "name": "Logo 4"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

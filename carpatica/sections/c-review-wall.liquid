@@ -1,0 +1,334 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+{%- liquid
+  assign star_style = 'stars'
+  if s.star_style == 'trustpilot'
+    assign star_style = 'trustpilot'
+  endif
+-%}
+<div class="c-rwall color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    {%- if s.show_summary -%}
+      <div class="c-rwall__summary">
+        <span class="c-rwall__score">{{ s.summary_label | escape }}</span>
+        {%- render 'c-stars', rating: s.summary_rating, size: 26, style: star_style -%}
+        <span class="c-rwall__based">{{ s.summary_text }}</span>
+      </div>
+    {%- endif -%}
+    {%- capture cards -%}
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="{% if s.layout == 'slider' %}c-slider__slide{% else %}c-rwall__item{% endif %}" {{ block.shopify_attributes }}>
+          <article class="c-rcard color-{{ s.card_color_scheme }}">
+            <div class="c-rcard__top">
+              {%- render 'c-stars', rating: b.rating, size: 18, style: star_style -%}
+              {%- if b.date != blank -%}<span class="c-rcard__date">{{ b.date | escape }}</span>{%- endif -%}
+            </div>
+            {%- if b.title != blank -%}<p class="c-rcard__title">{{ b.title }}</p>{%- endif -%}
+            <div class="c-rcard__text rte">{{ b.text }}</div>
+            <p class="c-rcard__author">
+              <strong>{{ b.author | escape }}</strong>
+              {%- if s.show_verified -%}<span class="c-rcard__verified c-text-savings">{% render 'c-icon', name: 'check_circle', size: 14 %}{{ 'carpatica.product.verified_buyer' | t }}</span>{%- endif -%}
+            </p>
+          </article>
+        </li>
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if s.layout == 'slider' -%}
+      <c-slider class="c-slider__peek" data-autoplay="{% if s.autoplay %}6{% endif %}" style="--c-per-view: {{ s.columns_desktop }}; --c-per-view-mobile: 1; --c-slider-gap: 1.6rem;">
+        <ul class="c-slider__track" role="list">{{ cards }}</ul>
+        {%- render 'c-slider-controls' -%}
+      </c-slider>
+    {%- else -%}
+      <ul class="c-rwall__grid" role="list" style="--c-cols: {{ s.columns_desktop }};">{{ cards }}</ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Recenzii verificate",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Peste <em>2.000</em> de recenzii de 5 stele",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_summary",
+      "label": "Afișează rezumatul notei",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "summary_label",
+      "label": "Calificativ",
+      "default": "Excelent"
+    },
+    {
+      "type": "range",
+      "id": "summary_rating",
+      "label": "Notă medie",
+      "min": 3,
+      "max": 5,
+      "step": 0.1,
+      "default": 4.8
+    },
+    {
+      "type": "inline_richtext",
+      "id": "summary_text",
+      "label": "Text rezumat",
+      "default": "Bazat pe <strong>2.341</strong> recenzii"
+    },
+    {
+      "type": "select",
+      "id": "star_style",
+      "label": "Stil stele",
+      "options": [
+        {
+          "value": "trustpilot",
+          "label": "Pătrate verzi (stil Trustpilot)"
+        },
+        {
+          "value": "stars",
+          "label": "Stele clasice"
+        }
+      ],
+      "default": "trustpilot"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Slider"
+        },
+        {
+          "value": "grid",
+          "label": "Grilă"
+        }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Coloane pe desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Derulare automată",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_verified",
+      "label": "„Cumpărător verificat”",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Schemă de culori card",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Recenzie",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Notă",
+          "min": 1,
+          "max": 5,
+          "step": 0.5,
+          "default": 5
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Titlu",
+          "default": "Exact ce căutam"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Comandă simplă, livrare în două zile, produs de calitate. Voi mai comanda.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Nume",
+          "default": "Daniel S."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Dată",
+          "default": "acum 3 zile"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recenzii verificate",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Alina G.",
+            "title": "Recomand 100%",
+            "text": "<p>Am avut o întrebare și am primit răspuns imediat. Produsul e superb.</p>",
+            "date": "acum o săptămână"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Mihai T.",
+            "title": "Raport calitate-preț excelent",
+            "text": "<p>Mi-a depășit așteptările. Ambalaj frumos și livrare rapidă.</p>",
+            "date": "acum 2 săptămâni"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

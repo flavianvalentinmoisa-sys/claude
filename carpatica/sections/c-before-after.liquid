@@ -1,0 +1,274 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-sections.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-ba-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width c-ba-layout c-ba-layout--{{ s.layout }}">
+    <div class="c-ba-layout__text">
+      {%- render 'c-section-header', section: section -%}
+      {%- if s.button_label != blank -%}
+        <div class="c-align-{{ s.header_alignment }}"><a href="{{ s.button_link | default: '#' }}" class="button">{{ s.button_label | escape }}</a></div>
+      {%- endif -%}
+    </div>
+    <comparison-slider class="c-ba" style="--c-ba-pos: {{ s.start_position }}%; --c-ba-radius: {{ s.radius }}px; --c-ba-ratio: {{ s.aspect_ratio }};">
+      <div class="c-ba__img c-ba__img--after">
+        {%- if s.image_after != blank -%}
+          {{ s.image_after | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw' }}
+        {%- else -%}
+          {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        {%- if s.label_after != blank -%}<span class="c-ba__label c-ba__label--after">{{ s.label_after | escape }}</span>{%- endif -%}
+      </div>
+      <div class="c-ba__img c-ba__img--before">
+        {%- if s.image_before != blank -%}
+          {{ s.image_before | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw' }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        {%- if s.label_before != blank -%}<span class="c-ba__label c-ba__label--before">{{ s.label_before | escape }}</span>{%- endif -%}
+      </div>
+      <input type="range" class="c-ba__range" min="0" max="100" value="{{ s.start_position }}" aria-label="{{ s.label_before | escape }} / {{ s.label_after | escape }}">
+      <span class="c-ba__handle" aria-hidden="true">
+        <span class="c-ba__knob">{% render 'c-icon', name: 'arrow_right', size: 14 %}{% render 'c-icon', name: 'arrow_right', size: 14 %}</span>
+      </span>
+    </comparison-slider>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Înainte și după",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Rezultate reale"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Vezi <em>diferența</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Trage de bara din mijloc pentru a compara.</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Text buton"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link buton"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "image-right",
+          "label": "Text stânga, imagine dreapta"
+        },
+        {
+          "value": "image-left",
+          "label": "Imagine stânga, text dreapta"
+        },
+        {
+          "value": "stacked",
+          "label": "Text deasupra"
+        }
+      ],
+      "default": "image-right"
+    },
+    {
+      "type": "header",
+      "content": "Imagini"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_before",
+      "label": "Imagine înainte"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_after",
+      "label": "Imagine după"
+    },
+    {
+      "type": "text",
+      "id": "label_before",
+      "label": "Etichetă înainte",
+      "default": "Înainte"
+    },
+    {
+      "type": "text",
+      "id": "label_after",
+      "label": "Etichetă după",
+      "default": "După"
+    },
+    {
+      "type": "range",
+      "id": "start_position",
+      "label": "Poziție inițială",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Proporție",
+      "options": [
+        {
+          "value": "1",
+          "label": "Pătrat"
+        },
+        {
+          "value": "4 / 5",
+          "label": "Portret"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Peisaj"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Lat"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Rotunjire colțuri",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Înainte și după"
+    }
+  ]
+}
+{% endschema %}

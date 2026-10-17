@@ -1,0 +1,328 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-sections.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-stories-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <insta-stories class="c-stories" data-duration="{{ s.story_duration }}" style="--c-story-size: {{ s.thumb_size }}px;">
+      <ul class="c-stories__thumbs c-align-{{ s.thumbs_alignment }}" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          <li {{ block.shopify_attributes }}>
+            <button type="button" class="c-stories__thumb" data-story-index="{{ forloop.index0 }}" aria-label="{{ b.label | escape }}">
+              <span class="c-stories__ring">
+                <span class="c-stories__avatar">
+                  {%- if b.thumbnail != blank -%}
+                    {{ b.thumbnail | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 200', sizes: '90px', alt: '' }}
+                  {%- elsif b.image != blank -%}
+                    {{ b.image | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 200', sizes: '90px', alt: '' }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </span>
+              </span>
+              {%- if b.label != blank -%}<span class="c-stories__label">{{ b.label | escape }}</span>{%- endif -%}
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="c-stories__viewer" hidden role="dialog" aria-modal="true" aria-label="{{ section.settings.heading | strip_html | escape }}">
+        <div class="c-stories__backdrop" data-story-close></div>
+        <div class="c-stories__frame">
+          <div class="c-stories__progress">
+            {%- for block in section.blocks -%}<span class="c-stories__bar"><span></span></span>{%- endfor -%}
+          </div>
+          <div class="c-stories__header">
+            {%- if s.account_avatar != blank -%}
+              <span class="c-stories__account-avatar">{{ s.account_avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: '' }}</span>
+            {%- endif -%}
+            <span class="c-stories__account">{{ s.account_name | escape }}</span>
+            <button type="button" class="c-stories__close" data-story-close aria-label="{{ 'accessibility.close' | t }}">{% render 'c-icon', name: 'close', size: 22 %}</button>
+          </div>
+          {%- for block in section.blocks -%}
+            {%- assign b = block.settings -%}
+            <div class="c-stories__slide" data-story-slide hidden>
+              {%- if b.video != blank -%}
+                {{ b.video | video_tag: muted: true, playsinline: true, preload: 'none', class: 'c-stories__media', image_size: '720x' }}
+              {%- elsif b.image != blank -%}
+                {{ b.image | image_url: width: 1080 | image_tag: loading: 'lazy', widths: '540, 720, 1080', sizes: '(min-width: 750px) 420px, 100vw', class: 'c-stories__media' }}
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg c-stories__media' }}
+              {%- endif -%}
+              {%- if b.caption != blank or b.button_label != blank -%}
+                <div class="c-stories__caption">
+                  {%- if b.caption != blank -%}<div class="rte">{{ b.caption }}</div>{%- endif -%}
+                  {%- if b.button_label != blank -%}
+                    <a href="{{ b.button_link | default: b.product.url | default: '#' }}" class="button c-stories__button">{{ b.button_label | escape }}</a>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+          <button type="button" class="c-stories__nav c-stories__nav--prev" data-story-prev aria-label="{{ 'carpatica.general.previous' | t }}"></button>
+          <button type="button" class="c-stories__nav c-stories__nav--next" data-story-next aria-label="{{ 'carpatica.general.next' | t }}"></button>
+        </div>
+      </div>
+    </insta-stories>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Instagram stories",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Urmărește-ne pe <em>Instagram</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "account_name",
+      "label": "Nume cont",
+      "default": "@magazinul.meu"
+    },
+    {
+      "type": "image_picker",
+      "id": "account_avatar",
+      "label": "Poză cont"
+    },
+    {
+      "type": "range",
+      "id": "thumb_size",
+      "label": "Mărime cercuri",
+      "min": 56,
+      "max": 120,
+      "step": 4,
+      "default": 84,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "thumbs_alignment",
+      "label": "Aliniere cercuri",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "story_duration",
+      "label": "Durată story (imagini)",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Story",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etichetă",
+          "default": "Noutăți"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Imagine cerc"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine story (9:16)"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Sau video story"
+        },
+        {
+          "type": "richtext",
+          "id": "caption",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Text buton"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link buton"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Sau produs (link)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram stories",
+      "blocks": [
+        {
+          "type": "story",
+          "settings": {
+            "label": "Noutăți"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Recenzii"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Cum se folosește"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "label": "Oferte"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

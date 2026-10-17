@@ -1,0 +1,317 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+{%- liquid
+  assign competitors = 1
+  if s.competitor_2 != blank
+    assign competitors = 2
+  endif
+-%}
+<div class="c-compare-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <div class="c-compare-wrap" style="--c-compare-accent: var(--color-{{ s.accent }});">
+      <table class="c-compare c-compare--{{ competitors }}">
+        <thead>
+          <tr>
+            <th scope="col" class="c-compare__feature-head">{{ s.feature_label | escape }}</th>
+            <th scope="col" class="c-compare__us">
+              {%- if s.logo != blank -%}
+                {{ s.logo | image_url: width: 240 | image_tag: loading: 'lazy', alt: s.brand_name, class: 'c-compare__logo' }}
+              {%- else -%}
+                {{ s.brand_name | escape }}
+              {%- endif -%}
+            </th>
+            <th scope="col">{{ s.competitor_1 | escape }}</th>
+            {%- if competitors == 2 -%}<th scope="col">{{ s.competitor_2 | escape }}</th>{%- endif -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            {%- assign b = block.settings -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row" class="c-compare__feature">{{ b.feature }}</th>
+              {%- for i in (0..competitors) -%}
+                {%- liquid
+                  case i
+                    when 0
+                      assign val = b.us
+                    when 1
+                      assign val = b.comp_1
+                    else
+                      assign val = b.comp_2
+                  endcase
+                -%}
+                <td class="{% if i == 0 %}c-compare__us{% endif %}">
+                  {%- case val -%}
+                    {%- when 'yes' -%}<span class="c-compare__yes" aria-label="Da">{% render 'c-icon', name: 'check', size: 18 %}</span>
+                    {%- when 'no' -%}<span class="c-compare__no" aria-label="Nu">{% render 'c-icon', name: 'close', size: 16 %}</span>
+                    {%- when 'partial' -%}<span class="c-compare__partial" aria-label="Parțial">~</span>
+                    {%- else -%}{{ val }}
+                  {%- endcase -%}
+                </td>
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+    {%- if s.button_label != blank -%}
+      <div class="c-align-center c-compare__cta"><a href="{{ s.button_link | default: '#' }}" class="button">{{ s.button_label | escape }}</a></div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tabel comparativ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "De ce să ne <em>alegi</em> pe noi?",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "feature_label",
+      "label": "Titlu coloană caracteristici",
+      "default": "Caracteristici"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Numele tău",
+      "default": "Noi"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Sau logo"
+    },
+    {
+      "type": "text",
+      "id": "competitor_1",
+      "label": "Concurent 1",
+      "default": "Alții"
+    },
+    {
+      "type": "text",
+      "id": "competitor_2",
+      "label": "Concurent 2 (opțional)"
+    },
+    {
+      "type": "select",
+      "id": "accent",
+      "label": "Culoare coloana ta",
+      "options": [
+        {
+          "value": "accent",
+          "label": "Accent"
+        },
+        {
+          "value": "savings",
+          "label": "Verde"
+        }
+      ],
+      "default": "accent"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Text buton",
+      "default": "Comandă acum"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link buton"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Rând",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "feature",
+          "label": "Caracteristică",
+          "default": "Livrare în 24–48 de ore"
+        },
+        {
+          "type": "text",
+          "id": "us",
+          "label": "Valoare noi",
+          "default": "yes",
+          "info": "yes = bifă, no = x, partial = ~ sau orice text."
+        },
+        {
+          "type": "text",
+          "id": "comp_1",
+          "label": "Valoare concurent 1",
+          "default": "no"
+        },
+        {
+          "type": "text",
+          "id": "comp_2",
+          "label": "Valoare concurent 2",
+          "default": "no"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabel comparativ",
+      "blocks": [
+        {
+          "type": "row"
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Plata ramburs la curier",
+            "comp_1": "partial"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Retur gratuit 30 de zile"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Garanție 2 ani"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Suport clienți în română"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

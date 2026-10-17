@@ -1,0 +1,295 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-fb color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <ul class="c-fb__list c-fb__list--{{ s.layout }}" role="list" style="--c-cols: {{ s.columns_desktop }};">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="c-fb__item" {{ block.shopify_attributes }}>
+          <article class="c-fb__comment">
+            <span class="c-fb__avatar">
+              {%- if b.avatar != blank -%}
+                {{ b.avatar | image_url: width: 96 | image_tag: loading: 'lazy', widths: '48, 96', sizes: '40px', alt: b.name }}
+              {%- else -%}
+                <span class="c-fb__initial">{{ b.name | slice: 0 }}</span>
+              {%- endif -%}
+            </span>
+            <div class="c-fb__content">
+              <div class="c-fb__bubble">
+                <p class="c-fb__name">{{ b.name | escape }}</p>
+                <div class="c-fb__text">{{ b.text }}</div>
+                {%- if b.likes > 0 -%}
+                  <span class="c-fb__reactions">
+                    {%- if b.reaction_like -%}<span class="c-fb__reaction c-fb__reaction--like" aria-hidden="true"><svg viewBox="0 0 16 16"><path fill="#fff" d="M4 7h2v6H4zM7 13V7.4L9.2 3c.9 0 1.5.8 1.3 1.6L10 7h3c.7 0 1.2.7 1 1.4l-1.2 3.8c-.2.5-.6.8-1.1.8z"/></svg></span>{%- endif -%}
+                    {%- if b.reaction_love -%}<span class="c-fb__reaction c-fb__reaction--love" aria-hidden="true"><svg viewBox="0 0 16 16"><path fill="#fff" d="M8 13.2S3 10.2 3 6.6A2.6 2.6 0 018 5.5a2.6 2.6 0 015 1.1c0 3.6-5 6.6-5 6.6z"/></svg></span>{%- endif -%}
+                    <span class="c-fb__count">{{ b.likes }}</span>
+                  </span>
+                {%- endif -%}
+              </div>
+              {%- if b.image != blank -%}
+                <div class="c-fb__image">{{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600', sizes: '300px' }}</div>
+              {%- endif -%}
+              <p class="c-fb__actions">
+                <span>{{ s.like_label | escape }}</span>
+                <span>{{ s.reply_label | escape }}</span>
+                {%- if b.time != blank -%}<span class="c-fb__time">{{ b.time | escape }}</span>{%- endif -%}
+              </p>
+            </div>
+          </article>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Comentarii Facebook",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Ce spun oamenii pe <em>Facebook</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "list",
+          "label": "Listă"
+        },
+        {
+          "value": "masonry",
+          "label": "Coloane"
+        }
+      ],
+      "default": "masonry"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Coloane pe desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "like_label",
+      "label": "Text „Apreciază”",
+      "default": "Apreciază"
+    },
+    {
+      "type": "text",
+      "id": "reply_label",
+      "label": "Text „Răspunde”",
+      "default": "Răspunde"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comment",
+      "name": "Comentariu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nume",
+          "default": "Maria Popescu"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Poză profil"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Comentariu",
+          "default": "<p>Am primit-o ieri și deja simt diferența. Mulțumesc pentru livrarea atât de rapidă! 😍</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine atașată"
+        },
+        {
+          "type": "number",
+          "id": "likes",
+          "label": "Număr reacții",
+          "default": 24
+        },
+        {
+          "type": "checkbox",
+          "id": "reaction_like",
+          "label": "Reacție „Like”",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "reaction_love",
+          "label": "Reacție „Love”",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Timp",
+          "default": "2 z"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comentarii Facebook",
+      "blocks": [
+        {
+          "type": "comment"
+        },
+        {
+          "type": "comment",
+          "settings": {
+            "name": "Andrei Ionescu",
+            "text": "<p>A doua comandă de la voi, la fel de mulțumit. Recomand cu încredere!</p>",
+            "likes": 12,
+            "time": "5 z"
+          }
+        },
+        {
+          "type": "comment",
+          "settings": {
+            "name": "Cristina D.",
+            "text": "<p>Calitate peste așteptări, iar curierul a sunat înainte. Super!</p>",
+            "likes": 31,
+            "time": "1 săpt."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

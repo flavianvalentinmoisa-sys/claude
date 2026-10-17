@@ -1,0 +1,14 @@
+{% comment %}
+  Săgeți + puncte pentru <c-slider>. Parametri: show_arrows (implicit true), show_dots (implicit true)
+{% endcomment %}
+<div class="c-slider__controls">
+  {%- unless show_arrows == false -%}
+    <button type="button" class="c-slider__arrow c-slider__arrow--prev" data-slider-prev aria-label="{{ 'carpatica.general.previous' | t }}">{{- 'icon-arrow.svg' | inline_asset_content -}}</button>
+  {%- endunless -%}
+  {%- unless show_dots == false -%}
+    <ol class="c-slider__dots"></ol>
+  {%- endunless -%}
+  {%- unless show_arrows == false -%}
+    <button type="button" class="c-slider__arrow c-slider__arrow--next" data-slider-next aria-label="{{ 'carpatica.general.next' | t }}">{{- 'icon-arrow.svg' | inline_asset_content -}}</button>
+  {%- endunless -%}
+</div>

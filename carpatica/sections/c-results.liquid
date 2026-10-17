@@ -1,0 +1,285 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-sections.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-results-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width c-results-layout{% if s.image != blank %} c-results-layout--image c-results-layout--{{ s.image_position }}{% endif %}">
+    {%- if s.image != blank -%}
+      <div class="c-results__image">
+        {{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw' }}
+      </div>
+    {%- endif -%}
+    <div class="c-results__content">
+      {%- render 'c-section-header', section: section -%}
+      <c-count-up class="c-results c-results--{{ s.style }}" style="--c-result-color: var(--color-{{ s.accent }});">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          <div class="c-result" {{ block.shopify_attributes }} style="--c-value: {{ b.percent }};">
+            {%- if s.style == 'circles' -%}
+              <span class="c-result__circle">
+                <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15.9" class="c-result__track"/><circle cx="18" cy="18" r="15.9" class="c-result__arc" pathLength="100"/></svg>
+                <span class="c-result__number"><span data-count-to="{{ b.percent }}">{{ b.percent }}</span>{{ b.suffix }}</span>
+              </span>
+              <span class="c-result__text">{{ b.text }}</span>
+            {%- else -%}
+              <div class="c-result__row">
+                <span class="c-result__number"><span data-count-to="{{ b.percent }}">{{ b.percent }}</span>{{ b.suffix }}</span>
+                <span class="c-result__text">{{ b.text }}</span>
+              </div>
+              <span class="c-result__bar"><span></span></span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </c-count-up>
+      {%- if s.footnote != blank -%}<p class="c-results__footnote">{{ s.footnote }}</p>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rezultate",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Studiu pe 500 de clienți"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Rezultate <em>dovedite</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Stil",
+      "options": [
+        {
+          "value": "bars",
+          "label": "Bare"
+        },
+        {
+          "value": "circles",
+          "label": "Cercuri"
+        }
+      ],
+      "default": "bars"
+    },
+    {
+      "type": "select",
+      "id": "accent",
+      "label": "Culoare",
+      "options": [
+        {
+          "value": "accent",
+          "label": "Accent"
+        },
+        {
+          "value": "savings",
+          "label": "Economii (verde)"
+        },
+        {
+          "value": "urgency",
+          "label": "Urgență (roșu)"
+        }
+      ],
+      "default": "accent"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagine"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Poziție imagine",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "footnote",
+      "label": "Notă de subsol",
+      "default": "*Rezultate raportate de clienți după 30 de zile de utilizare."
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result",
+      "name": "Rezultat",
+      "settings": [
+        {
+          "type": "range",
+          "id": "percent",
+          "label": "Valoare",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 94
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Sufix",
+          "default": "%"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "au dormit mai bine încă din prima săptămână"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rezultate",
+      "blocks": [
+        {
+          "type": "result"
+        },
+        {
+          "type": "result",
+          "settings": {
+            "percent": 89,
+            "text": "au scăpat de durerile de gât"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "percent": 97,
+            "text": "ar recomanda produsul unui prieten"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

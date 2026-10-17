@@ -79,32 +79,6 @@
   justify-content: center;
 }
 
-.c-stars--trustpilot .c-stars__icons {
-  gap: 0.2rem;
-}
-
-.c-tp-star {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--c-star-size, 2rem);
-  height: var(--c-star-size, 2rem);
-  background: #00b67a;
-}
-
-.c-tp-star--empty {
-  background: #dcdce6;
-}
-
-.c-tp-star--half {
-  background: linear-gradient(90deg, #00b67a 50%, #dcdce6 50%);
-}
-
-.c-tp-star svg {
-  width: 80%;
-  height: 80%;
-}
-
 /* ---------- Reduceri la cantitate ---------- */
 
 .c-qb__heading {

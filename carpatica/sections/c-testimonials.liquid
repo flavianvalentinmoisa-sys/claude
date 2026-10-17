@@ -1,0 +1,369 @@
+{{ 'section-c-social.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-testimonials color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    {%- capture cards -%}
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="{% if s.layout == 'slider' %}c-slider__slide{% else %}c-testimonials__item{% endif %}" {{ block.shopify_attributes }}>
+          <figure class="c-tcard c-tcard--{{ s.card_style }} color-{{ s.card_color_scheme }}">
+            {%- if b.image != blank -%}
+              <div class="c-tcard__media">
+                {{- b.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 400px, 90vw' -}}
+              </div>
+            {%- endif -%}
+            <div class="c-tcard__body">
+              {%- if s.show_quote_icon -%}
+                <svg class="c-tcard__quote" viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 24V14.4C0 6.6 4.3 1.8 12.4 0l1.4 3.4C9.6 4.6 7.4 7.3 7 11h5.4v13H0zm18.2 0V14.4C18.2 6.6 22.5 1.8 30.6 0L32 3.4c-4.2 1.2-6.4 3.9-6.8 7.6h5.4v13H18.2z"/></svg>
+              {%- endif -%}
+              {%- if b.rating > 0 -%}{%- render 'c-stars', rating: b.rating, size: 16 -%}{%- endif -%}
+              {%- if b.title != blank -%}<p class="c-tcard__title h4">{{ b.title }}</p>{%- endif -%}
+              <blockquote class="c-tcard__text rte">{{ b.text }}</blockquote>
+              <figcaption class="c-tcard__author">
+                {%- if b.avatar != blank -%}
+                  <span class="c-tcard__avatar">{{ b.avatar | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60, 120', sizes: '48px', alt: b.author }}</span>
+                {%- endif -%}
+                <span class="c-tcard__meta">
+                  <span class="c-tcard__name">
+                    {{ b.author | escape }}
+                    {%- if s.show_verified -%}<span class="c-tcard__verified" title="{{ 'carpatica.product.verified_buyer' | t | escape }}">{% render 'c-icon', name: 'check_circle', size: 15 %}</span>{%- endif -%}
+                  </span>
+                  {%- if b.location != blank -%}<span class="c-tcard__location">{{ b.location | escape }}</span>{%- endif -%}
+                </span>
+              </figcaption>
+              {%- if b.product != blank -%}
+                <a href="{{ b.product.url }}" class="c-tcard__product link">
+                  {%- if b.product.featured_media -%}{{ b.product.featured_media | image_url: width: 80 | image_tag: loading: 'lazy', alt: '', width: 40 }}{%- endif -%}
+                  <span>{{ b.product.title | escape }}</span>
+                </a>
+              {%- endif -%}
+            </div>
+          </figure>
+        </li>
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if s.layout == 'slider' -%}
+      <c-slider
+        class="c-slider__peek{% if s.arrows_overlay %} c-slider__arrows-overlay{% endif %}"
+        data-autoplay="{% if s.autoplay %}{{ s.autoplay_speed }}{% endif %}"
+        style="--c-per-view: {{ s.columns_desktop }}; --c-per-view-mobile: 1; --c-slider-gap: 2rem;"
+      >
+        <ul class="c-slider__track" role="list">{{ cards }}</ul>
+        {%- render 'c-slider-controls', show_dots: s.show_dots -%}
+      </c-slider>
+    {%- else -%}
+      <ul class="c-testimonials__grid" role="list" style="--c-cols: {{ s.columns_desktop }};">{{ cards }}</ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimoniale",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Recenzii"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Ce spun <em>clienții</em> noștri",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Slider"
+        },
+        {
+          "value": "grid",
+          "label": "Grilă"
+        }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Coloane pe desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Stil card",
+      "options": [
+        {
+          "value": "bordered",
+          "label": "Cu bordură"
+        },
+        {
+          "value": "shadow",
+          "label": "Cu umbră"
+        },
+        {
+          "value": "plain",
+          "label": "Simplu"
+        }
+      ],
+      "default": "shadow"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Schemă de culori card",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quote_icon",
+      "label": "Afișează ghilimele",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_verified",
+      "label": "Bifă de client verificat",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Derulare automată",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Schimbă la fiecare",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Puncte paginare",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows_overlay",
+      "label": "Săgeți peste carduri",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Notă",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 5,
+          "info": "0 = fără stele"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Titlu"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Am cumpărat pentru mine și apoi încă una pentru soț. Dormim amândoi mult mai bine, fără dureri de gât dimineața.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Nume",
+          "default": "Elena V."
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Oraș / detalii",
+          "default": "Cluj-Napoca"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Poză autor"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine card (opțional)"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produs cumpărat (opțional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimoniale",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "author": "Radu M.",
+            "location": "București",
+            "text": "<p>Livrare rapidă, plata la curier, produs exact ca în descriere. Recomand!</p>"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "author": "Ioana P.",
+            "location": "Iași",
+            "text": "<p>Calitate foarte bună la prețul ăsta. Am primit și un cadou mic în colet, drăguț gest.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
