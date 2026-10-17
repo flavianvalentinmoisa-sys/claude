@@ -20,7 +20,7 @@
       endif
     -%}
     <div class="c-pb-stars c-block-spacing c-align-{{ bs.alignment }}" style="{{ spacing }}" {{ block.shopify_attributes }}>
-      {%- if bs.link_to != blank -%}<a href="{{ bs.link_to }}" class="c-pb-stars__link"{% if bs.link_to contains '#' %} data-scroll-to="{{ bs.link_to }}"{% endif %}>{%- endif -%}
+      {%- if bs.link_to != blank -%}<a href="{{ bs.link_to | escape }}" class="c-pb-stars__link"{% if bs.link_to contains '#' %} data-scroll-to="{{ bs.link_to | escape }}"{% endif %}>{%- endif -%}
       {%- render 'c-stars', rating: rating, text: text, size: bs.star_size, color: bs.star_color, style: star_style -%}
       {%- if bs.link_to != blank -%}</a>{%- endif -%}
     </div>
