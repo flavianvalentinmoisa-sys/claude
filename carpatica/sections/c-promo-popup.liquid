@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {%- assign s = section.settings -%}
 {%- if s.enabled -%}
   {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
@@ -37,9 +38,9 @@
                 <button type="button" class="button button--full-width" data-modal-close>{{ s.success_button | escape }}</button>
               </div>
             {%- else -%}
-              {%- if s.subheading != blank -%}<p class="c-subheading">{{ s.subheading | escape }}</p>{%- endif -%}
-              {%- if s.heading != blank -%}<p class="c-heading h1 c-promo__heading">{{ s.heading }}</p>{%- endif -%}
-              {%- if s.text != blank -%}<div class="rte c-promo__text">{{ s.text }}</div>{%- endif -%}
+              {%- if s.subheading != blank -%}<p class="c-subheading">{{ s.subheading | replace: '[produs]', c_product_name | escape }}</p>{%- endif -%}
+              {%- if s.heading != blank -%}<p class="c-heading h1 c-promo__heading">{{ s.heading | replace: '[produs]', c_product_name }}</p>{%- endif -%}
+              {%- if s.text != blank -%}<div class="rte c-promo__text">{{ s.text | replace: '[produs]', c_product_name }}</div>{%- endif -%}
               {%- if s.show_timer -%}
                 <countdown-timer class="c-promo__timer c-timer" data-mode="evergreen" data-duration="{{ s.timer_minutes | times: 60 }}" data-key="promo-{{ section.id }}">
                   <span class="c-promo__timer-unit"><span data-unit="h">00</span><small>ore</small></span>

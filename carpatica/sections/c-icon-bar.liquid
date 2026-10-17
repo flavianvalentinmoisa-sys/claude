@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
@@ -7,15 +8,15 @@
     <li class="c-iconbar__item" {{ block.shopify_attributes }}>
       <span class="c-iconbar__icon">{%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, image: b.icon_image, size: s.icon_size -%}</span>
       <span class="c-iconbar__body">
-        <span class="c-iconbar__title">{{ b.title }}</span>
-        {%- if b.text != blank -%}<span class="c-iconbar__text">{{ b.text }}</span>{%- endif -%}
+        <span class="c-iconbar__title">{{ b.title | replace: '[produs]', c_product_name }}</span>
+        {%- if b.text != blank -%}<span class="c-iconbar__text">{{ b.text | replace: '[produs]', c_product_name }}</span>{%- endif -%}
       </span>
     </li>
   {%- endfor -%}
 {%- endcapture -%}
 <div class="c-iconbar-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <div class="c-iconbar c-iconbar--{{ s.layout }} c-iconbar--{{ s.item_layout }}{% if s.dividers %} c-iconbar--dividers{% endif %}{% if s.mobile_layout == 'marquee' %} c-iconbar--mobile-marquee{% else %} c-iconbar--mobile-grid{% endif %}" style="--c-cols: {{ section.blocks.size | at_most: 6 }}; --c-icon-color: {{ s.icon_color }}; --c-marquee-speed: {{ s.speed }}s;">
       <div class="c-iconbar__track">
         <ul class="c-iconbar__list" role="list">{{ items }}</ul>
@@ -40,7 +41,7 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Titlu",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

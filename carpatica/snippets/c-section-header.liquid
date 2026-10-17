@@ -1,18 +1,19 @@
 {% comment %}
   Antet standard de secțiune Carpatica: supratitlu, titlu (cu evidențiere prin italic), text.
-  Parametri: section (folosește section.settings.subheading/heading/heading_size/text/header_alignment)
+  Parametri: section, product (opțional – înlocuiește [produs] în texte); folosește section.settings.subheading/heading/heading_size/text/header_alignment)
 {% endcomment %}
 {%- assign s = section.settings -%}
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {%- if s.subheading != blank or s.heading != blank or s.text != blank -%}
   <div class="c-section-header c-align-{{ s.header_alignment | default: 'center' }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     {%- if s.subheading != blank -%}
-      <p class="c-subheading">{{ s.subheading | escape }}</p>
+      <p class="c-subheading">{{ s.subheading | replace: '[produs]', c_product_name | escape }}</p>
     {%- endif -%}
     {%- if s.heading != blank -%}
-      <h2 class="c-heading {{ s.heading_size | default: 'h2' }}"{% if s.highlight_color != blank %} style="--c-highlight: {{ s.highlight_color }};"{% endif %}>{{ s.heading }}</h2>
+      <h2 class="c-heading {{ s.heading_size | default: 'h2' }}"{% if s.highlight_color != blank %} style="--c-highlight: {{ s.highlight_color }};"{% endif %}>{{ s.heading | replace: '[produs]', c_product_name }}</h2>
     {%- endif -%}
     {%- if s.text != blank -%}
-      <div class="c-text rte">{{ s.text }}</div>
+      <div class="c-text rte">{{ s.text | replace: '[produs]', c_product_name }}</div>
     {%- endif -%}
   </div>
 {%- endif -%}

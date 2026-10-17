@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
 {%- render 'c-section-style', section: section -%}
@@ -9,7 +10,7 @@
         <span class="c-music__cover">{%- if s.cover.src contains '.gif' or s.cover.src contains '.GIF' -%}{%- render 'c-gif', image: s.cover, alt: '', loading: 'lazy' -%}{%- else -%}{{ s.cover | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 240', sizes: '96px', alt: '' }}{%- endif -%}</span>
       {%- endif -%}
       <span class="c-music__info">
-        <span class="c-music__title">{{ s.title | escape }}</span>
+        <span class="c-music__title">{{ s.title | replace: '[produs]', c_product_name | escape }}</span>
         {%- if s.artist != blank -%}<span class="c-music__artist">{{ s.artist | escape }}</span>{%- endif -%}
         <span class="c-music__progress"><span data-music-progress></span></span>
       </span>

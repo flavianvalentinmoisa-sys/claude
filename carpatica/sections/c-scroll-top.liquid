@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {%- assign s = section.settings -%}
 {%- if s.enabled -%}
   {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
@@ -7,7 +8,7 @@
     data-after="{{ s.display_after }}"
     style="--c-offset-x: {{ s.offset_x }}px; --c-offset-y: {{ s.offset_y }}px;"
   >
-    <button type="button" aria-label="{{ s.label | escape }}">
+    <button type="button" aria-label="{{ s.label | replace: '[produs]', c_product_name | escape }}">
       <span class="svg-wrapper">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
     </button>
   </scroll-top>

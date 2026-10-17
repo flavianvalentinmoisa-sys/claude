@@ -1,7 +1,7 @@
 # Verifică tipurile și valorile tuturor setărilor din șabloane, grupuri și settings_data (secțiuni statice).
 import json, re, glob, sys
 root = sys.argv[1] if len(sys.argv) > 1 else '.'
-schemes = list(json.load(open(f'{root}/config/settings_data.json'))['presets']['Carpatica']['color_schemes'])
+schemes = list(json.load(open(f'{root}/config/settings_data.json'))['presets']['Default']['color_schemes'])
 def schema(t):
     s = open(f'{root}/sections/{t}.liquid').read()
     m = re.search(r'{%-?\s*schema\s*-?%}(.*?){%-?\s*endschema', s, re.S)
@@ -33,7 +33,7 @@ def sec_check(where, sec):
         if lim and sum(1 for x in blocks.values() if x['type'] == b['type']) > lim: print(where, b['type'], 'peste limită'); n += 1
     return n
 n = 0
-for sid, sec in json.load(open(f'{root}/config/settings_data.json'))['presets']['Carpatica'].get('sections', {}).items():
+for sid, sec in json.load(open(f'{root}/config/settings_data.json'))['presets']['Default'].get('sections', {}).items():
     n += sec_check('settings_data:' + sid, sec)
 for p in sorted(glob.glob(f'{root}/templates/*.json') + glob.glob(f'{root}/sections/*-group.json')):
     d = json.loads(re.sub(r'^/\*.*?\*/', '', open(p).read(), flags=re.S))

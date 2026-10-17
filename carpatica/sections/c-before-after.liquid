@@ -5,7 +5,7 @@
 <div class="c-ba-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width c-ba-layout c-ba-layout--{{ s.layout }}">
     <div class="c-ba-layout__text">
-      {%- render 'c-section-header', section: section -%}
+      {%- render 'c-section-header', section: section, product: product -%}
       {%- if s.button_label != blank -%}
         <div class="c-align-{{ s.header_alignment }}"><a href="{{ s.button_link | default: '#' }}" class="button">{{ s.button_label | escape }}</a></div>
       {%- endif -%}
@@ -52,7 +52,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Vezi <em>diferența</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

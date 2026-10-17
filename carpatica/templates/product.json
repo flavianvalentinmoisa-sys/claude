@@ -157,7 +157,7 @@
         "heading_size": "h2",
         "products_to_show": 4,
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
@@ -170,7 +170,9 @@
     },
     "icon_bar": {
       "type": "c-icon-bar",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-2"
+      },
       "blocks": {
         "item_0": {
           "type": "item",
@@ -210,7 +212,9 @@
     },
     "compare": {
       "type": "c-comparison-table",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-2"
+      },
       "blocks": {
         "row_0": {
           "type": "row",
@@ -252,13 +256,16 @@
     },
     "problem_solution": {
       "type": "c-problem-solution",
-      "settings": {}
+      "settings": {
+        "color_scheme": "scheme-1",
+        "good_color_scheme": "scheme-3"
+      }
     },
     "steps": {
       "type": "c-steps",
       "settings": {
-        "color_scheme": "scheme-1",
-        "card_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "card_color_scheme": "scheme-1",
         "button_label_1": ""
       },
       "blocks": {
@@ -266,7 +273,7 @@
           "type": "step",
           "settings": {
             "title": "Comanzi în 30 de secunde",
-            "accent": "#2B59FF"
+            "accent": "#6B7F5E"
           }
         },
         "step_1": {
@@ -274,7 +281,7 @@
           "settings": {
             "title": "Primești în 24–48h",
             "text": "<p>Curierul îți aduce coletul direct la ușă.</p>",
-            "accent": "#FF5A1F"
+            "accent": "#C8664A"
           }
         },
         "step_2": {
@@ -282,7 +289,7 @@
           "settings": {
             "title": "Te bucuri de rezultat",
             "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>",
-            "accent": "#0F9D63"
+            "accent": "#55684A"
           }
         }
       },
@@ -295,7 +302,9 @@
     "photo_reviews": {
       "type": "c-photo-reviews",
       "settings": {
-        "anchor": "recenzii"
+        "anchor": "recenzii",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-5"
       },
       "blocks": {
         "review_0": {
@@ -367,7 +376,9 @@
     "guarantee": {
       "type": "c-guarantee",
       "settings": {
-        "button_label_1": ""
+        "button_label_1": "",
+        "color_scheme": "scheme-1",
+        "box_color_scheme": "scheme-2"
       },
       "blocks": {
         "point_0": {

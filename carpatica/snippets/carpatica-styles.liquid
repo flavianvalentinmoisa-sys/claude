@@ -120,6 +120,8 @@
 
     --color-accent: {{ settings.color_accent.red }}, {{ settings.color_accent.green }}, {{ settings.color_accent.blue }};
     --color-accent-text: {{ settings.color_accent_text.red }}, {{ settings.color_accent_text.green }}, {{ settings.color_accent_text.blue }};
+    --color-accent-2: {{ settings.color_accent_2.red }}, {{ settings.color_accent_2.green }}, {{ settings.color_accent_2.blue }};
+    --color-accent-2-text: {{ settings.color_accent_2_text.red }}, {{ settings.color_accent_2_text.green }}, {{ settings.color_accent_2_text.blue }};
     --color-savings: {{ settings.color_savings.red }}, {{ settings.color_savings.green }}, {{ settings.color_savings.blue }};
     --color-urgency: {{ settings.color_urgency.red }}, {{ settings.color_urgency.green }}, {{ settings.color_urgency.blue }};
     --color-stars: {{ settings.color_stars.red }}, {{ settings.color_stars.green }}, {{ settings.color_stars.blue }};
@@ -145,7 +147,31 @@
     {%- assign accent_bg_diff = scheme.settings.background | color_difference: settings.color_accent -%}
     .color-{{ scheme.id }} {
       --c-highlight: {% if bg_brightness < 110 %}{{ accent_light }}{% elsif accent_bg_diff < 150 %}{{ scheme.settings.text }}{% else %}{{ settings.color_accent }}{% endif %};
-      --c-em-gradient: {% if bg_brightness < 110 or accent_bg_diff < 150 %}linear-gradient(100deg, #ffd23f 10%, #ff9f1c 90%){% else %}linear-gradient(100deg, {{ settings.color_accent }} 10%, #7c3aed 55%, #e0217a 95%){% endif %};
+      {%- liquid
+        if bg_brightness < 110 or accent_bg_diff < 150
+          assign em_fill = scheme.settings.text
+        else
+          case settings.heading_em_style
+            when 'accent'
+              assign em_fill = settings.color_accent
+            when 'gradient'
+              assign em_fill = 'linear-gradient(100deg, ' | append: settings.color_accent | append: ' 10%, ' | append: settings.color_accent_2 | append: ' 90%)'
+            else
+              assign em_fill = settings.color_accent_2
+          endcase
+        endif
+        assign em_fill = em_fill | append: ''
+        unless em_fill contains 'gradient'
+          assign em_fill = 'linear-gradient(' | append: em_fill | append: ', ' | append: em_fill | append: ')'
+        endunless
+      -%}
+      --c-em-gradient: {{ em_fill }};
+      {%- if settings.headings_colored and bg_brightness >= 180 %}
+        {%- assign heading_bg_diff = scheme.settings.background | color_difference: settings.color_headings -%}
+        {%- if heading_bg_diff > 150 %}
+          --c-heading-color: {{ settings.color_headings }};
+        {%- endif %}
+      {%- endif %}
     }
   {%- endfor %}
 

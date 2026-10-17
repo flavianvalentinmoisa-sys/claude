@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
@@ -33,11 +34,11 @@
           <div class="page-width c-hero-slide__content c-hero-slide__content--{{ b.position }}">
             <div class="c-hero-slide__box c-align-{{ b.alignment }}{% if b.boxed %} c-hero-slide__box--boxed{% endif %}">
               {%- if b.rating_text != blank -%}{%- render 'c-stars', rating: 5, text: b.rating_text, size: 16 -%}{%- endif -%}
-              {%- if b.subheading != blank -%}<p class="c-subheading">{{ b.subheading | escape }}</p>{%- endif -%}
+              {%- if b.subheading != blank -%}<p class="c-subheading">{{ b.subheading | replace: '[produs]', c_product_name | escape }}</p>{%- endif -%}
               {%- if b.heading != blank -%}
-                {%- if forloop.first -%}<h1 class="c-heading {{ b.heading_size }}">{{ b.heading }}</h1>{%- else -%}<h2 class="c-heading {{ b.heading_size }}">{{ b.heading }}</h2>{%- endif -%}
+                {%- if forloop.first -%}<h1 class="c-heading {{ b.heading_size }}">{{ b.heading | replace: '[produs]', c_product_name }}</h1>{%- else -%}<h2 class="c-heading {{ b.heading_size }}">{{ b.heading | replace: '[produs]', c_product_name }}</h2>{%- endif -%}
               {%- endif -%}
-              {%- if b.text != blank -%}<div class="rte c-hero-slide__text">{{ b.text }}</div>{%- endif -%}
+              {%- if b.text != blank -%}<div class="rte c-hero-slide__text">{{ b.text | replace: '[produs]', c_product_name }}</div>{%- endif -%}
               {%- render 'c-buttons', s: b -%}
             </div>
           </div>

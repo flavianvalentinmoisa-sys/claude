@@ -1,21 +1,28 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
 {%- render 'c-section-style', section: section -%}
-{%- assign s = section.settings -%}
+{%- liquid
+  assign s = section.settings
+  assign mt_image = s.image
+  if mt_image == blank and s.video == blank and s.use_product_image and product != blank
+    assign mt_image = product.featured_media.preview_image
+  endif
+-%}
 <div class="c-mt-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
     <div class="c-mt c-mt--{{ s.media_position }} c-mt--{{ s.media_style }}" style="--c-media-width: {{ s.media_width }}%;">
       <div class="c-mt__media{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
         <div class="c-mt__frame">
-          {%- if s.image != blank or s.video != blank -%}
-            {%- render 'c-media', image: s.image, video: s.video, width: 1400, widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw', eager: s.above_fold -%}
+          {%- if mt_image != blank or s.video != blank -%}
+            {%- render 'c-media', image: mt_image, video: s.video, width: 1400, widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw', eager: s.above_fold -%}
           {%- elsif s.gif_url != blank -%}
             <img src="{{ s.gif_url | escape }}" alt="" loading="{% if s.above_fold %}eager{% else %}lazy{% endif %}" decoding="async" width="800" height="800">
           {%- else -%}
             {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
         </div>
-        {%- if s.sticker != blank -%}<span class="c-mt__sticker">{{ s.sticker | escape }}</span>{%- endif -%}
+        {%- if s.sticker != blank -%}<span class="c-mt__sticker">{{ s.sticker | replace: '[produs]', c_product_name | escape }}</span>{%- endif -%}
       </div>
       <div class="c-mt__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {%- for block in section.blocks -%}
@@ -24,21 +31,21 @@
             {%- when 'rating' -%}
               <div class="c-mt__rating" {{ block.shopify_attributes }}>
                 {%- render 'c-stars', rating: b.rating, size: 18 -%}
-                <span>{{ b.text }}</span>
+                <span>{{ b.text | replace: '[produs]', c_product_name }}</span>
               </div>
             {%- when 'subheading' -%}
-              <p class="c-subheading" {{ block.shopify_attributes }}>{{ b.text | escape }}</p>
+              <p class="c-subheading" {{ block.shopify_attributes }}>{{ b.text | replace: '[produs]', c_product_name | escape }}</p>
             {%- when 'heading' -%}
-              <h2 class="c-heading {{ b.heading_size }}" {{ block.shopify_attributes }}>{{ b.heading }}</h2>
+              <h2 class="c-heading {{ b.heading_size }}" {{ block.shopify_attributes }}>{{ b.heading | replace: '[produs]', c_product_name }}</h2>
             {%- when 'text' -%}
-              <div class="c-text rte" {{ block.shopify_attributes }}>{{ b.text }}</div>
+              <div class="c-text rte" {{ block.shopify_attributes }}>{{ b.text | replace: '[produs]', c_product_name }}</div>
             {%- when 'checklist' -%}
               <ul class="c-mt__checks" role="list" {{ block.shopify_attributes }}>
                 {%- assign lines = b.items | newline_to_br | split: '<br />' -%}
                 {%- for line in lines -%}
                   {%- assign line = line | strip -%}
                   {%- if line != blank -%}
-                    <li>{% render 'c-icon', name: 'check', size: 16 %}<span>{{ line }}</span></li>
+                    <li>{% render 'c-icon', name: 'check', size: 16 %}<span>{{ line | replace: '[produs]', c_product_name }}</span></li>
                   {%- endif -%}
                 {%- endfor -%}
               </ul>
@@ -76,6 +83,12 @@
       "id": "gif_url",
       "label": "Sau link GIF extern",
       "info": "Ex: un link direct .gif de pe Giphy. Folosit doar dacă nu ai imagine/video."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_product_image",
+      "label": "Pe pagina de produs, folosește poza produsului dacă nu alegi alta",
+      "default": true
     },
     {
       "type": "select",

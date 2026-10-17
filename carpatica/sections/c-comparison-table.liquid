@@ -9,7 +9,7 @@
 -%}
 <div class="c-compare-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <div class="c-compare-wrap" style="--c-compare-accent: var(--color-{{ s.accent }});">
       <table class="c-compare c-compare--{{ competitors }}">
         <thead>
@@ -78,7 +78,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "De ce să ne <em>alegi</em> pe noi?",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

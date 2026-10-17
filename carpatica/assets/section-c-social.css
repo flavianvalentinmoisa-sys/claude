@@ -858,7 +858,7 @@ c-count-up:not(:defined) .c-result {
 
 .c-results--fill-gradient .c-result__fill,
 .c-results--fill-striped .c-result__fill {
-  background: linear-gradient(90deg, color-mix(in srgb, var(--c-color) 55%, #7c3aed), var(--c-color) 55%, color-mix(in srgb, var(--c-color) 70%, #22d3ee));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c-color) 70%, #fff), var(--c-color) 60%, color-mix(in srgb, var(--c-color) 80%, #000));
   box-shadow: 0 0 18px -2px color-mix(in srgb, var(--c-color) 65%, transparent);
 }
 

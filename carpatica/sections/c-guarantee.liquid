@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
@@ -10,24 +11,24 @@
         {%- else -%}
           <svg class="c-guar__ring{% if s.rotate %} c-guar__ring--spin{% endif %}" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
             <defs><path id="GuarCircle-{{ section.id }}" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
-            <text textLength="486" lengthAdjust="spacing"><textPath href="#GuarCircle-{{ section.id }}" startOffset="0" textLength="486" lengthAdjust="spacing">{{ s.ring_text | escape }} • {{ s.ring_text | escape }} •</textPath></text>
+            <text textLength="486" lengthAdjust="spacing"><textPath href="#GuarCircle-{{ section.id }}" startOffset="0" textLength="486" lengthAdjust="spacing">{{ s.ring_text | replace: '[produs]', c_product_name | escape }} • {{ s.ring_text | replace: '[produs]', c_product_name | escape }} •</textPath></text>
           </svg>
           <span class="c-guar__days">
             <strong>{{ s.seal_number | escape }}</strong>
-            <span>{{ s.seal_label | escape }}</span>
+            <span>{{ s.seal_label | replace: '[produs]', c_product_name | escape }}</span>
           </span>
         {%- endif -%}
       </div>
       <div class="c-guar__content">
-        {%- if s.subheading != blank -%}<p class="c-subheading">{{ s.subheading | escape }}</p>{%- endif -%}
-        {%- if s.heading != blank -%}<h2 class="c-heading {{ s.heading_size }}">{{ s.heading }}</h2>{%- endif -%}
-        {%- if s.text != blank -%}<div class="c-text rte">{{ s.text }}</div>{%- endif -%}
+        {%- if s.subheading != blank -%}<p class="c-subheading">{{ s.subheading | replace: '[produs]', c_product_name | escape }}</p>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="c-heading {{ s.heading_size }}">{{ s.heading | replace: '[produs]', c_product_name }}</h2>{%- endif -%}
+        {%- if s.text != blank -%}<div class="c-text rte">{{ s.text | replace: '[produs]', c_product_name }}</div>{%- endif -%}
         {%- if section.blocks.size > 0 -%}
           <ul class="c-guar__points" role="list">
             {%- for block in section.blocks -%}
               <li {{ block.shopify_attributes }}>
                 {%- render 'c-icon', name: block.settings.icon, emoji: block.settings.icon_emoji, image: block.settings.icon_image, size: 22 -%}
-                <span>{{ block.settings.text }}</span>
+                <span>{{ block.settings.text | replace: '[produs]', c_product_name }}</span>
               </li>
             {%- endfor -%}
           </ul>

@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Carpatica",
-    "theme_version": "1.1.2",
+    "theme_version": "1.2.0",
     "theme_author": "Carpatica",
     "theme_documentation_url": "https://help.shopify.com/ro/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/ro"
@@ -111,38 +111,84 @@
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Accent (selecție, bife, progres)",
-        "default": "#2B59FF"
+        "label": "Accent (selecție, bife, chenare, progres)",
+        "default": "#6B7F5E"
       },
       {
         "type": "color",
         "id": "color_accent_text",
         "label": "Text pe accent",
+        "default": "#FBF6EE"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_2",
+        "label": "Accent 2 (comandă și oferte)",
+        "default": "#C8664A",
+        "info": "Etichete „Cel mai ales”, abțibilduri, evidențieri. Butoanele de comandă iau culoarea din schema de culori."
+      },
+      {
+        "type": "color",
+        "id": "color_accent_2_text",
+        "label": "Text pe accent 2",
         "default": "#FFFFFF"
+      },
+      {
+        "type": "checkbox",
+        "id": "headings_colored",
+        "label": "Titluri colorate pe fundaluri deschise",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "color_headings",
+        "label": "Culoare titluri și meniu",
+        "default": "#6B7F5E",
+        "info": "Se aplică titlurilor mari și meniului doar pe fundaluri deschise; pe cele închise titlurile rămân în culoarea textului."
+      },
+      {
+        "type": "select",
+        "id": "heading_em_style",
+        "label": "Cuvinte evidențiate în titluri (cursiv)",
+        "default": "accent_2",
+        "options": [
+          {
+            "value": "accent_2",
+            "label": "Culoarea accent 2"
+          },
+          {
+            "value": "accent",
+            "label": "Culoarea accent"
+          },
+          {
+            "value": "gradient",
+            "label": "Gradient accent → accent 2"
+          }
+        ]
       },
       {
         "type": "color",
         "id": "color_savings",
         "label": "Economii și reduceri",
-        "default": "#0F9D63"
+        "default": "#4F6B3E"
       },
       {
         "type": "color",
         "id": "color_urgency",
         "label": "Urgență și stoc limitat",
-        "default": "#F0285A"
+        "default": "#B5462B"
       },
       {
         "type": "color",
         "id": "color_stars",
         "label": "Stele rating",
-        "default": "#FFB800"
+        "default": "#D99A2B"
       },
       {
         "type": "color",
         "id": "color_highlight_bg",
         "label": "Fundal evidențiere",
-        "default": "#EEF2FF",
+        "default": "#EEF0E6",
         "info": "Fundalul opțiunii selectate, al ofertelor și al casetelor de informații."
       }
     ]
@@ -1912,13 +1958,13 @@
         "type": "color",
         "id": "scrollbar_thumb",
         "label": "Culoare indicator",
-        "default": "#2B59FF"
+        "default": "#6B7F5E"
       },
       {
         "type": "color",
         "id": "scrollbar_track",
         "label": "Culoare fundal",
-        "default": "#F1F5F9"
+        "default": "#F3EADD"
       },
       {
         "type": "range",

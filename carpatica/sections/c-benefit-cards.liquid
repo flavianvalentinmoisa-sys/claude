@@ -1,10 +1,11 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
 <div class="c-bcards-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <ul
       class="c-bcards c-bcards--{{ s.style }}{% if s.mobile_slider %} c-bcards--mobile-slider{% endif %}"
       role="list"
@@ -15,9 +16,6 @@
         <li
           class="c-bcard{% if b.link != blank %} c-bcard--link{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           style="--c-card-bg: {{ b.background }}; --c-card-text: {{ b.text_color }};{% if settings.animations_reveal_on_scroll %} --animation-order: {{ forloop.index }};{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-          {% endif %}
           {{ block.shopify_attributes }}
         >
           {%- if b.image != blank or b.video != blank -%}
@@ -29,9 +27,9 @@
           {%- elsif b.icon != 'none' -%}
             <span class="c-bcard__icon">{% render 'c-icon', name: b.icon, size: 30 %}</span>
           {%- endif -%}
-          {%- if b.stat != blank -%}<p class="c-bcard__stat">{{ b.stat | escape }}</p>{%- endif -%}
-          {%- if b.title != blank -%}<h3 class="c-bcard__title h4">{{ b.title }}</h3>{%- endif -%}
-          {%- if b.text != blank -%}<div class="c-bcard__text rte">{{ b.text }}</div>{%- endif -%}
+          {%- if b.stat != blank -%}<p class="c-bcard__stat">{{ b.stat | replace: '[produs]', c_product_name | escape }}</p>{%- endif -%}
+          {%- if b.title != blank -%}<h3 class="c-bcard__title h4">{{ b.title | replace: '[produs]', c_product_name }}</h3>{%- endif -%}
+          {%- if b.text != blank -%}<div class="c-bcard__text rte">{{ b.text | replace: '[produs]', c_product_name }}</div>{%- endif -%}
           {%- if b.link != blank -%}
             <a href="{{ b.link }}" class="c-bcard__cta">
               {{- b.link_label | default: '→' | escape }} {% render 'c-icon', name: 'arrow_right', size: 16 -%}
@@ -61,7 +59,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Beneficii pe care le <em>simți</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",
@@ -281,13 +279,13 @@
           "type": "color",
           "id": "background",
           "label": "Culoare fundal",
-          "default": "#FFE8D6"
+          "default": "#F6E1D8"
         },
         {
           "type": "color",
           "id": "text_color",
           "label": "Culoare text",
-          "default": "#0B1020"
+          "default": "#000000"
         },
         {
           "type": "image_picker",
@@ -582,7 +580,7 @@
         {
           "type": "card",
           "settings": {
-            "background": "#FFE8D6",
+            "background": "#F6E1D8",
             "emoji": "⚡",
             "title": "Efect rapid"
           }
@@ -590,7 +588,7 @@
         {
           "type": "card",
           "settings": {
-            "background": "#DDF7EA",
+            "background": "#E6EBDF",
             "emoji": "🌿",
             "title": "100% natural",
             "text": "<p>Ingrediente curate, fără aditivi inutili.</p>"
@@ -599,7 +597,7 @@
         {
           "type": "card",
           "settings": {
-            "background": "#E3E9FF",
+            "background": "#F3EADD",
             "emoji": "🛡️",
             "title": "Garanție 30 de zile",
             "text": "<p>Nu-ți place? Îți dăm banii înapoi.</p>"

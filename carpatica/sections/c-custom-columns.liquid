@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 {{ 'carpatica-product.css' | asset_url | stylesheet_tag }}
 {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
@@ -6,7 +7,7 @@
 {%- assign s = section.settings -%}
 <div class="c-columns-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <div class="c-columns c-columns--valign-{{ s.vertical_alignment }}{% if s.mobile_reverse %} c-columns--mobile-reverse{% endif %}" style="--c-cols: {{ s.columns }}; --c-col-gap: {{ s.gap }}px;">
       {%- for col in (1..s.columns) -%}
         <div class="c-columns__col{% if s.boxed_columns %} c-columns__col--boxed color-{{ s.box_color_scheme }}{% endif %}">
@@ -18,10 +19,10 @@
             <div class="c-col-block c-col-block--{{ block.type }} c-align-{{ b.alignment | default: 'left' }}" style="--c-mt: {{ b.margin_top | default: 0 }}px; --c-mb: {{ b.margin_bottom | default: 16 }}px;" {{ block.shopify_attributes }}>
               {%- case block.type -%}
                 {%- when 'heading' -%}
-                  {%- if b.subheading != blank -%}<p class="c-subheading">{{ b.subheading | escape }}</p>{%- endif -%}
-                  <h2 class="c-heading {{ b.heading_size }}">{{ b.heading }}</h2>
+                  {%- if b.subheading != blank -%}<p class="c-subheading">{{ b.subheading | replace: '[produs]', c_product_name | escape }}</p>{%- endif -%}
+                  <h2 class="c-heading {{ b.heading_size }}">{{ b.heading | replace: '[produs]', c_product_name }}</h2>
                 {%- when 'richtext' -%}
-                  <div class="rte">{{ b.text }}</div>
+                  <div class="rte">{{ b.text | replace: '[produs]', c_product_name }}</div>
                 {%- when 'rating_stars' -%}
                   {%- render 'c-stars', rating: b.rating, text: b.text, size: 18 -%}
                 {%- when 'buttons' -%}
@@ -41,7 +42,7 @@
                 {%- when 'text_with_icon' -%}
                   <div class="c-twi{% if b.boxed %} c-twi--boxed{% endif %}">
                     {%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, image: b.icon_image, size: b.icon_size -%}
-                    <div class="c-twi__text rte">{{ b.text }}</div>
+                    <div class="c-twi__text rte">{{ b.text | replace: '[produs]', c_product_name }}</div>
                   </div>
                 {%- when 'image' -%}
                   {%- if b.image != blank -%}
@@ -67,11 +68,11 @@
                       <summary>
                         <div class="summary__title">
                           {%- render 'c-icon', name: b.icon, size: 20 -%}
-                          <h3 class="h4 accordion__title">{{ b.heading | escape }}</h3>
+                          <h3 class="h4 accordion__title">{{ b.heading | replace: '[produs]', c_product_name | escape }}</h3>
                         </div>
                         {{- 'icon-caret.svg' | inline_asset_content -}}
                       </summary>
-                      <div class="accordion__content rte">{{ b.content }}</div>
+                      <div class="accordion__content rte">{{ b.content | replace: '[produs]', c_product_name }}</div>
                     </details>
                   </div>
                 {%- when 'payment_badges' -%}
@@ -116,7 +117,7 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Titlu",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

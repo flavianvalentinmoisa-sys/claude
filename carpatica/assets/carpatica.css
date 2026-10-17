@@ -88,18 +88,29 @@ h2,
 /* Cuvinte evidențiate în titluri: scrie textul cursiv sau îngroșat în editor */
 :is(h1, h2, .h0, .h1, .h2, .hxl, .hxxl) em {
   font-style: normal;
-  background: var(--c-em-gradient, linear-gradient(100deg, rgb(var(--color-accent)) 10%, #7c3aed 55%, #e0217a 95%));
+  background: var(--c-em-gradient, linear-gradient(rgb(var(--color-accent-2)), rgb(var(--color-accent-2))));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   padding-right: 0.04em;
+  -webkit-text-fill-color: transparent;
 }
 
 :is(h1, h2, .h0, .h1, .h2, .hxl, .hxxl) strong {
-  background: linear-gradient(transparent 62%, rgba(255, 210, 63, 0.75) 62%, rgba(255, 210, 63, 0.75) 92%, transparent 92%);
+  background: linear-gradient(transparent 62%, rgba(var(--color-accent-2), 0.28) 62%, rgba(var(--color-accent-2), 0.28) 92%, transparent 92%);
   padding: 0 0.08em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+}
+
+/* Titluri mari și meniu în culoarea aleasă (doar pe fundaluri deschise, setat per schemă) */
+:is(h1, h2, .h0, .h1, .h2, .hxl, .hxxl, .c-heading) {
+  color: var(--c-heading-color, rgb(var(--color-foreground)));
+}
+
+.header__inline-menu :is(.header__menu-item, summary.header__menu-item),
+.menu-drawer__menu-item {
+  color: var(--c-heading-color, rgb(var(--color-foreground)));
 }
 
 /* ---------- Butoane vii ---------- */

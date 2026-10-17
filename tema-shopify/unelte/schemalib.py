@@ -169,7 +169,7 @@ def padding(top=36, bottom=36):
 def heading_block(sub="", heading="", text_default="", size="h2", align="center", with_text=True):
     out = [
         text("subheading", "Supratitlu", sub or None),
-        inline("heading", "Titlu", heading or None, "Scrie un cuvânt cu italic ca să primească culoarea de accent."),
+        inline("heading", "Titlu", heading or None, "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."),
         sel("heading_size", "Mărime titlu", HEADING_SIZES, size),
     ]
     if with_text:

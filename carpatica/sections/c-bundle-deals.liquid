@@ -7,7 +7,7 @@
 {%- assign pct = s.discount_percent | plus: 0 -%}
 <div class="c-deals-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <bundle-deals class="c-deals" data-percent="{{ pct }}">
       <ul class="c-deals__products" role="list">
         {%- for block in section.blocks -%}
@@ -71,7 +71,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Cumpără setul și <em>economisești</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

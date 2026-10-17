@@ -1,9 +1,10 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
 <div class="c-media-slider color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="{% unless s.full_width %}page-width{% endunless %}">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <c-slider
       class="c-slider__peek{% if s.arrows_overlay %} c-slider__arrows-overlay{% endif %}"
       data-autoplay="{% if s.autoplay %}{{ s.autoplay_speed }}{% endif %}"
@@ -26,7 +27,7 @@
                 {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg c-media-slide__el' }}
               {%- endif -%}
             </div>
-            {%- if b.caption != blank -%}<p class="c-media-slide__caption">{{ b.caption }}</p>{%- endif -%}
+            {%- if b.caption != blank -%}<p class="c-media-slide__caption">{{ b.caption | replace: '[produs]', c_product_name }}</p>{%- endif -%}
           </li>
         {%- endfor -%}
       </ul>
@@ -51,7 +52,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Văzut în <em>acțiune</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

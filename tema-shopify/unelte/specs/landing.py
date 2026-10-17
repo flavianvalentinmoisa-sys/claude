@@ -299,7 +299,7 @@ write_schema(P + "c-section-group.liquid", section_schema("Grup de secțiuni", [
 write_schema(P + "c-section-divider.liquid", section_schema("Separator decorativ", [
     sel("shape", "Formă", [("wave", "Val"), ("curve", "Curbă"), ("tilt", "Înclinat"), ("zigzag", "Zigzag"), ("triangle", "Triunghi"), ("mountains", "Munți"), ("line", "Linie")], "wave"),
     color("top_color", "Culoare sus (secțiunea de deasupra)", "#FFFFFF"),
-    color("bottom_color", "Culoare jos (secțiunea de dedesubt)", "#F1F5F9"),
+    color("bottom_color", "Culoare jos (secțiunea de dedesubt)", "#F3EADD"),
     rng("height", "Înălțime", 20, 160, 4, 60, "px"),
     chk("flip_x", "Oglindește orizontal", False),
     chk("flip_y", "Oglindește vertical", False),

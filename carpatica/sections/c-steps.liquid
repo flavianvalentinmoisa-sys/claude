@@ -1,19 +1,17 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
 <div class="c-steps-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <ol class="c-steps c-steps--{{ s.layout }}{% if s.show_line %} c-steps--line{% endif %}" role="list" style="--c-cols: {{ section.blocks.size | at_most: 4 }};">
       {%- for block in section.blocks -%}
         {%- assign b = block.settings -%}
         <li
           class="c-step color-{{ s.card_color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           style="--c-step-color: {{ b.accent | default: settings.color_accent }};{% if settings.animations_reveal_on_scroll %} --animation-order: {{ forloop.index }};{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-          {% endif %}
           {{ block.shopify_attributes }}
         >
           {%- if b.image != blank or b.video != blank -%}
@@ -26,9 +24,9 @@
               {%- if b.emoji != blank -%}{{ b.emoji }}{%- else -%}{{ forloop.index }}{%- endif -%}
             </span>
             <div>
-              {%- if s.show_step_label -%}<p class="c-step__label">{{ s.step_label | escape }} {{ forloop.index }}</p>{%- endif -%}
-              {%- if b.title != blank -%}<h3 class="c-step__title h4">{{ b.title }}</h3>{%- endif -%}
-              {%- if b.text != blank -%}<div class="c-step__text rte">{{ b.text }}</div>{%- endif -%}
+              {%- if s.show_step_label -%}<p class="c-step__label">{{ s.step_label | replace: '[produs]', c_product_name | escape }} {{ forloop.index }}</p>{%- endif -%}
+              {%- if b.title != blank -%}<h3 class="c-step__title h4">{{ b.title | replace: '[produs]', c_product_name }}</h3>{%- endif -%}
+              {%- if b.text != blank -%}<div class="c-step__text rte">{{ b.text | replace: '[produs]', c_product_name }}</div>{%- endif -%}
             </div>
           </div>
         </li>
@@ -55,7 +53,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Cum <em>funcționează</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",
@@ -323,7 +321,7 @@
           "type": "step",
           "settings": {
             "title": "Comanzi în 30 de secunde",
-            "accent": "#2B59FF"
+            "accent": "#6B7F5E"
           }
         },
         {
@@ -331,7 +329,7 @@
           "settings": {
             "title": "Primești în 24–48h",
             "text": "<p>Curierul îți aduce coletul direct la ușă.</p>",
-            "accent": "#FF5A1F"
+            "accent": "#C8664A"
           }
         },
         {
@@ -339,7 +337,7 @@
           "settings": {
             "title": "Te bucuri de rezultat",
             "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>",
-            "accent": "#0F9D63"
+            "accent": "#55684A"
           }
         }
       ]

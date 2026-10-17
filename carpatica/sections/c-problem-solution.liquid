@@ -1,10 +1,17 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
 {%- render 'c-section-style', section: section -%}
-{%- assign s = section.settings -%}
+{%- liquid
+  assign s = section.settings
+  assign good_image = s.good_image
+  if good_image == blank and s.good_video == blank and s.use_product_image and product != blank
+    assign good_image = product.featured_media.preview_image
+  endif
+-%}
 <div class="c-ps-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <div class="c-ps">
       <div class="c-ps__col c-ps__col--bad{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {%- if s.bad_image != blank or s.bad_video != blank -%}
@@ -12,32 +19,32 @@
             {%- render 'c-media', image: s.bad_image, video: s.bad_video, width: 900, widths: '400, 700, 900', sizes: '(min-width: 750px) 45vw, 90vw', alt: s.bad_title -%}
           </div>
         {%- endif -%}
-        <p class="c-ps__title h4">{{ s.bad_title }}</p>
+        <p class="c-ps__title h4">{{ s.bad_title | replace: '[produs]', c_product_name }}</p>
         <ul class="c-ps__list" role="list">
           {%- assign lines = s.bad_list | newline_to_br | split: '<br />' -%}
           {%- for line in lines -%}
             {%- assign line = line | strip -%}
             {%- if line != blank -%}
-              <li><span class="c-ps__mark" aria-hidden="true">✕</span>{{ line }}</li>
+              <li><span class="c-ps__mark" aria-hidden="true">✕</span>{{ line | replace: '[produs]', c_product_name }}</li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
       </div>
-      <span class="c-ps__vs" aria-hidden="true">{{ s.vs_text | escape }}</span>
-      <div class="c-ps__col c-ps__col--good color-{{ s.good_color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"{% if settings.animations_reveal_on_scroll %} data-cascade style="--animation-order: 2;"{% endif %}>
-        {%- if s.good_badge != blank -%}<span class="c-ps__badge">{{ s.good_badge | escape }}</span>{%- endif -%}
-        {%- if s.good_image != blank or s.good_video != blank -%}
+      <span class="c-ps__vs" aria-hidden="true">{{ s.vs_text | replace: '[produs]', c_product_name | escape }}</span>
+      <div class="c-ps__col c-ps__col--good color-{{ s.good_color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"{% if settings.animations_reveal_on_scroll %} style="--animation-order: 2;"{% endif %}>
+        {%- if s.good_badge != blank -%}<span class="c-ps__badge">{{ s.good_badge | replace: '[produs]', c_product_name | escape }}</span>{%- endif -%}
+        {%- if good_image != blank or s.good_video != blank -%}
           <div class="c-ps__media">
-            {%- render 'c-media', image: s.good_image, video: s.good_video, width: 900, widths: '400, 700, 900', sizes: '(min-width: 750px) 45vw, 90vw', alt: s.good_title -%}
+            {%- render 'c-media', image: good_image, video: s.good_video, width: 900, widths: '400, 700, 900', sizes: '(min-width: 750px) 45vw, 90vw', alt: s.good_title -%}
           </div>
         {%- endif -%}
-        <p class="c-ps__title h4">{{ s.good_title }}</p>
+        <p class="c-ps__title h4">{{ s.good_title | replace: '[produs]', c_product_name }}</p>
         <ul class="c-ps__list" role="list">
           {%- assign lines = s.good_list | newline_to_br | split: '<br />' -%}
           {%- for line in lines -%}
             {%- assign line = line | strip -%}
             {%- if line != blank -%}
-              <li><span class="c-ps__mark" aria-hidden="true">✓</span>{{ line }}</li>
+              <li><span class="c-ps__mark" aria-hidden="true">✓</span>{{ line | replace: '[produs]', c_product_name }}</li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
@@ -64,7 +71,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Fără noi vs. <em>cu noi</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",
@@ -145,7 +152,7 @@
       "type": "inline_richtext",
       "id": "bad_title",
       "label": "Titlu",
-      "default": "Fără produsul nostru"
+      "default": "Fără [produs]"
     },
     {
       "type": "textarea",
@@ -176,10 +183,16 @@
       "info": "Video fără sunet, în buclă, ca un GIF (mai ușor decât un GIF). Are prioritate față de imagine."
     },
     {
+      "type": "checkbox",
+      "id": "use_product_image",
+      "label": "Pe pagina de produs, folosește poza produsului dacă nu alegi alta",
+      "default": true
+    },
+    {
       "type": "inline_richtext",
       "id": "good_title",
       "label": "Titlu",
-      "default": "Cu produsul nostru"
+      "default": "Cu [produs]"
     },
     {
       "type": "textarea",

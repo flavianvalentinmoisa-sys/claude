@@ -1,9 +1,10 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-social.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
 <div class="c-fb color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <ul class="c-fb__list c-fb__list--{{ s.layout }}" role="list" style="--c-cols: {{ s.columns_desktop }};">
       {%- for block in section.blocks -%}
         {%- assign b = block.settings -%}
@@ -19,7 +20,7 @@
             <div class="c-fb__content">
               <div class="c-fb__bubble">
                 <p class="c-fb__name">{{ b.name | escape }}</p>
-                <div class="c-fb__text">{{ b.text }}</div>
+                <div class="c-fb__text">{{ b.text | replace: '[produs]', c_product_name }}</div>
                 {%- if b.likes > 0 -%}
                   <span class="c-fb__reactions">
                     {%- if b.reaction_like -%}<span class="c-fb__reaction c-fb__reaction--like" aria-hidden="true"><svg viewBox="0 0 16 16"><path fill="#fff" d="M4 7h2v6H4zM7 13V7.4L9.2 3c.9 0 1.5.8 1.3 1.6L10 7h3c.7 0 1.2.7 1 1.4l-1.2 3.8c-.2.5-.6.8-1.1.8z"/></svg></span>{%- endif -%}
@@ -60,7 +61,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Ce spun oamenii pe <em>Facebook</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

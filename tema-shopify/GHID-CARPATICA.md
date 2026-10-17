@@ -6,7 +6,7 @@ selector de limbă sau de țară.
 
 ## 1. Instalare
 
-1. Descarcă `carpatica-1.1.2.zip` (din acest folder).
+1. Descarcă `carpatica-1.2.0.zip` (din acest folder).
 2. Shopify Admin → **Magazin online → Teme → Adaugă temă → Încarcă fișier zip**.
 3. Apasă **Personalizează** pentru a o configura, apoi **Publică**.
 
@@ -15,12 +15,41 @@ selector de limbă sau de țară.
 | Unde | Ce faci |
 |---|---|
 | Setări temă → Logo | Încarci logo-ul și favicon-ul |
-| Setări temă → Culori / Culori conversie | Paleta vie: albastru electric, galben, portocaliu, mentă, roz (7 scheme) |
+| Setări temă → Culori | Stilul implicit „Default”: crem `#FBF6EE`, verde salvie `#6B7F5E`, teracotă `#C8664A`, text negru (vezi mai jos) |
 | Setări temă → Tipografie → Combinație fonturi | Energic (implicit), Prietenos, Modern sau Clasic – toate cu ș, ț, ă, â, î |
 | Setări temă → Coș | Tip coș: Panou lateral (implicit) |
 | Secțiunea **Coș lateral** (între Antet și secțiunile paginii) | Bară livrare gratuită, upsell, cadou, cod reducere, termeni |
 | Subsol → blocul **Badge-uri ANPC** | Obligatoriu în România: pictograma SAL cu link la ANPC |
 | Elemente plutitoare | Buton „sus”, pop-up promoțional, muzică |
+
+## 2b. Paleta implicită (stilul „Default”)
+
+| Schemă | Fundal | Folosită pentru |
+|---|---|---|
+| Schema 1 | Crem `#FBF6EE` | Fundalul paginii; butoane de comandă teracotă, butoane contur salvie |
+| Schema 2 | Crem închis `#F3EADD` | Secțiunile alternate și cardurile de produs |
+| Schema 3 | Salvie `#6B7F5E` | Benzi cu titluri mari (hero, bandă derulantă, coloana „Cu produsul”) |
+| Schema 4 | Teracotă `#C8664A` | Banda finală (abonare) |
+| Schema 5 | Alb | Cardurile de recenzii |
+| Schema 6 | Salvie închis `#55684A` | Bara de anunțuri și subsolul – text mic, contrast 5,6:1 (salvie normal ar fi 4,05:1) |
+| Schema 7 | Teracotă | Eticheta de reducere |
+
+Setări temă → Culori conversie: **Accent** (salvie) colorează varianta selectată, bifele, chenarele și progresul;
+**Accent 2** (teracotă) colorează eticheta „CEL MAI ALES”, abțibildurile și cuvintele scrise cursiv în titluri.
+**Culoare titluri și meniu** (salvie) se aplică titlurilor mari și meniului doar pe fundaluri deschise.
+
+## 2c. Adaptarea la orice produs
+
+- Șablonul **Produs implicit** se aplică automat tuturor produselor: titlul, pozele, prețul, variantele și
+  recenziile se schimbă singure.
+- Scrie **[produs]** în orice titlu sau text al secțiunilor Carpatica: pe pagina produsului devine numele lui
+  (ex. „Fără [produs]” → „Fără Pernă cervicală…”). Pe alte pagini apare „produsul nostru”.
+- Media cu text, Problemă vs soluție și Ingrediente folosesc automat **poza produsului** dacă nu alegi alta
+  (opțiunea „folosește poza produsului” se poate dezactiva).
+- Text diferit pentru fiecare produs: lângă orice câmp din editor apasă iconița **Conectează sursa dinamică**
+  și alege un metacâmp al produsului (Setări → Date personalizate → Produse → Adaugă definiție).
+- Pagină complet diferită pentru un produs: în editor, la Produse → **Creează șablon**, pornești de la cel
+  implicit, îl modifici și apoi, în Admin → Produse → produsul → **Șablon tema**, îl alegi.
 
 ## 3. Reducerile trebuie create și în Shopify
 
@@ -76,8 +105,9 @@ Stele rating, Stele Trustpilot, Buton adaugă în coș și Text cu iconiță. Pe
 
 ## 7. Titluri colorate
 
-În orice titlu, un cuvânt scris *cursiv* primește un gradient colorat, iar unul **îngroșat** primește o
-subliniere galbenă de tip marker. Pe fundalurile închise gradientul devine automat galben-portocaliu.
+În orice titlu, un cuvânt scris *cursiv* primește culoarea Accent 2 (teracotă; poți alege și accent sau
+gradient), iar unul **îngroșat** primește o subliniere discretă de tip marker. Pe fundalurile închise
+cuvântul rămâne în culoarea textului, ca să se citească.
 
 ## 8. Viteză și SEO
 

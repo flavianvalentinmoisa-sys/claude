@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
@@ -8,13 +9,13 @@
       {%- case block.type -%}
         {%- when 'text' -%}
           {%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, size: s.icon_size -%}
-          <span class="c-ticker__text">{{ b.text }}</span>
+          <span class="c-ticker__text">{{ b.text | replace: '[produs]', c_product_name }}</span>
         {%- when 'image' -%}
           {%- if b.image != blank -%}{%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, alt: b.image.alt, loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '200px', alt: b.image.alt | default: '' }}{%- endif -%}{%- endif -%}
         {%- when 'review' -%}
           <span class="c-ticker__review color-{{ s.card_color_scheme }}">
             {%- render 'c-stars', rating: b.rating, size: 14 -%}
-            <span class="c-ticker__review-text">„{{ b.text }}”</span>
+            <span class="c-ticker__review-text">„{{ b.text | replace: '[produs]', c_product_name }}”</span>
             <span class="c-ticker__review-author">– {{ b.author | escape }}</span>
           </span>
       {%- endcase -%}
@@ -23,7 +24,7 @@
   {%- endfor -%}
 {%- endcapture -%}
 <div class="c-ticker-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
-  {%- if s.heading != blank -%}<div class="page-width">{%- render 'c-section-header', section: section -%}</div>{%- endif -%}
+  {%- if s.heading != blank -%}<div class="page-width">{%- render 'c-section-header', section: section, product: product -%}</div>{%- endif -%}
   <div
     class="c-ticker c-ticker--{{ s.direction }}{% if s.pause_on_hover %} c-ticker--pause{% endif %}"
     style="--c-marquee-speed: {{ s.speed }}s; --c-ticker-size: {{ s.text_size }}px; --c-ticker-gap: {{ s.gap }}px; --c-ticker-image: {{ s.image_height }}px;{% if s.rotate != 0 %} transform: rotate({{ s.rotate }}deg);{% endif %}"
@@ -51,7 +52,7 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Titlu",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

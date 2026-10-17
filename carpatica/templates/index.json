@@ -2,7 +2,9 @@
   "sections": {
     "hero": {
       "type": "c-parallax-hero",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-3"
+      },
       "blocks": {
         "content_0": {
           "type": "content",
@@ -15,7 +17,9 @@
     },
     "icon_bar": {
       "type": "c-icon-bar",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-2"
+      },
       "blocks": {
         "item_0": {
           "type": "item",
@@ -83,7 +87,9 @@
     },
     "ticker": {
       "type": "c-ticker",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-3"
+      },
       "blocks": {
         "text_0": {
           "type": "text",
@@ -117,7 +123,9 @@
     },
     "compare": {
       "type": "c-comparison-table",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-1"
+      },
       "blocks": {
         "row_0": {
           "type": "row",
@@ -241,7 +249,7 @@
         "email_form"
       ],
       "settings": {
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-4",
         "full_width": true,
         "padding_top": 48,
         "padding_bottom": 56
@@ -249,12 +257,14 @@
     },
     "benefit_cards": {
       "type": "c-benefit-cards",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-2"
+      },
       "blocks": {
         "card_0": {
           "type": "card",
           "settings": {
-            "background": "#FFE8D6",
+            "background": "#F6E1D8",
             "emoji": "⚡",
             "title": "Efect rapid"
           }
@@ -262,7 +272,7 @@
         "card_1": {
           "type": "card",
           "settings": {
-            "background": "#DDF7EA",
+            "background": "#E6EBDF",
             "emoji": "🌿",
             "title": "100% natural",
             "text": "<p>Ingrediente curate, fără aditivi inutili.</p>"
@@ -271,7 +281,7 @@
         "card_2": {
           "type": "card",
           "settings": {
-            "background": "#E3E9FF",
+            "background": "#F3EADD",
             "emoji": "🛡️",
             "title": "Garanție 30 de zile",
             "text": "<p>Nu-ți place? Îți dăm banii înapoi.</p>"
@@ -287,7 +297,7 @@
     "media_text": {
       "type": "c-media-text",
       "settings": {
-        "color_scheme": "scheme-5"
+        "color_scheme": "scheme-1"
       },
       "blocks": {
         "rating_0": {
@@ -321,13 +331,16 @@
     },
     "steps": {
       "type": "c-steps",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-2",
+        "card_color_scheme": "scheme-1"
+      },
       "blocks": {
         "step_0": {
           "type": "step",
           "settings": {
             "title": "Comanzi în 30 de secunde",
-            "accent": "#2B59FF"
+            "accent": "#6B7F5E"
           }
         },
         "step_1": {
@@ -335,7 +348,7 @@
           "settings": {
             "title": "Primești în 24–48h",
             "text": "<p>Curierul îți aduce coletul direct la ușă.</p>",
-            "accent": "#FF5A1F"
+            "accent": "#C8664A"
           }
         },
         "step_2": {
@@ -343,7 +356,7 @@
           "settings": {
             "title": "Te bucuri de rezultat",
             "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>",
-            "accent": "#0F9D63"
+            "accent": "#55684A"
           }
         }
       },
@@ -355,7 +368,10 @@
     },
     "photo_reviews": {
       "type": "c-photo-reviews",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-5"
+      },
       "blocks": {
         "review_0": {
           "type": "review",
@@ -426,7 +442,8 @@
     "review_marquee": {
       "type": "c-review-marquee",
       "settings": {
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-2",
+        "card_color_scheme": "scheme-1"
       },
       "blocks": {
         "review_0": {
@@ -480,7 +497,10 @@
     },
     "guarantee": {
       "type": "c-guarantee",
-      "settings": {},
+      "settings": {
+        "color_scheme": "scheme-2",
+        "box_color_scheme": "scheme-1"
+      },
       "blocks": {
         "point_0": {
           "type": "point",

@@ -1,9 +1,10 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
 <div class="c-contact-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width page-width--narrow">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     {%- form 'contact', id: 'ContactForm', class: 'c-contact' -%}
       {%- if form.posted_successfully? -%}
         <p class="c-contact__success c-text-savings" tabindex="-1" autofocus>{% render 'c-icon', name: 'check_circle', size: 20 %}{%- if s.success_message != blank -%}{{ s.success_message }}{%- else -%}{{ 'templates.contact.form.post_success' | t }}{%- endif -%}</p>
@@ -21,13 +22,13 @@
             {%- case b.type -%}
               {%- when 'textarea' -%}
                 <div class="field">
-                  <textarea rows="{{ b.rows }}" id="{{ field_id }}" class="text-area field__input" name="{{ field_name }}" placeholder="{{ b.label | escape }}"{% if b.required %} required{% endif %}></textarea>
-                  <label class="form__label field__label" for="{{ field_id }}">{{ b.label | escape }}{% if b.required %} *{% endif %}</label>
+                  <textarea rows="{{ b.rows }}" id="{{ field_id }}" class="text-area field__input" name="{{ field_name }}" placeholder="{{ b.label | replace: '[produs]', c_product_name | escape }}"{% if b.required %} required{% endif %}></textarea>
+                  <label class="form__label field__label" for="{{ field_id }}">{{ b.label | replace: '[produs]', c_product_name | escape }}{% if b.required %} *{% endif %}</label>
                 </div>
               {%- when 'select' -%}
                 <div class="select">
                   <select id="{{ field_id }}" class="select__select" name="{{ field_name }}"{% if b.required %} required{% endif %}>
-                    <option value="" selected disabled>{{ b.label | escape }}{% if b.required %} *{% endif %}</option>
+                    <option value="" selected disabled>{{ b.label | replace: '[produs]', c_product_name | escape }}{% if b.required %} *{% endif %}</option>
                     {%- assign opts = b.options | split: ',' -%}
                     {%- for o in opts -%}{%- assign oo = o | strip -%}<option value="{{ oo | escape }}">{{ oo | escape }}</option>{%- endfor -%}
                   </select>
@@ -35,8 +36,8 @@
                 </div>
               {%- else -%}
                 <div class="field">
-                  <input id="{{ field_id }}" type="{{ b.type }}" class="field__input" name="{{ field_name }}" placeholder="{{ b.label | escape }}"{% if b.required %} required{% endif %}{% if b.type == 'email' %} autocomplete="email" spellcheck="false" autocapitalize="off"{% elsif b.type == 'tel' %} autocomplete="tel" pattern="[0-9\-\+\s]*"{% endif %}>
-                  <label class="field__label" for="{{ field_id }}">{{ b.label | escape }}{% if b.required %} *{% endif %}</label>
+                  <input id="{{ field_id }}" type="{{ b.type }}" class="field__input" name="{{ field_name }}" placeholder="{{ b.label | replace: '[produs]', c_product_name | escape }}"{% if b.required %} required{% endif %}{% if b.type == 'email' %} autocomplete="email" spellcheck="false" autocapitalize="off"{% elsif b.type == 'tel' %} autocomplete="tel" pattern="[0-9\-\+\s]*"{% endif %}>
+                  <label class="field__label" for="{{ field_id }}">{{ b.label | replace: '[produs]', c_product_name | escape }}{% if b.required %} *{% endif %}</label>
                 </div>
             {%- endcase -%}
           </div>
@@ -70,7 +71,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Contactează-ne",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

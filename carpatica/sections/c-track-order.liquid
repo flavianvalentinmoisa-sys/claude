@@ -4,7 +4,7 @@
 {%- assign s = section.settings -%}
 <div class="c-track-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width page-width--narrow">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <track-order class="c-track" data-url="{{ s.tracking_url | escape }}">
       <form class="c-track__form" novalidate>
         {%- if s.show_courier -%}
@@ -47,7 +47,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Unde este <em>coletul</em> meu?",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

@@ -82,9 +82,9 @@ write_schema(P + "c-steps.liquid", section_schema("Cum funcționează (pași)", 
     inline("title", "Titlu", "Comanzi online"),
     rich("text", "Text", "<p>Alegi produsul și plătești ramburs, la curier.</p>"),
 ])], [{"name": "Cum funcționează (pași)", "blocks": [
-    {"type": "step", "settings": {"title": "Comanzi în 30 de secunde", "accent": "#2B59FF"}},
-    {"type": "step", "settings": {"title": "Primești în 24–48h", "text": "<p>Curierul îți aduce coletul direct la ușă.</p>", "accent": "#FF5A1F"}},
-    {"type": "step", "settings": {"title": "Te bucuri de rezultat", "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>", "accent": "#0F9D63"}},
+    {"type": "step", "settings": {"title": "Comanzi în 30 de secunde", "accent": "#6B7F5E"}},
+    {"type": "step", "settings": {"title": "Primești în 24–48h", "text": "<p>Curierul îți aduce coletul direct la ușă.</p>", "accent": "#C8664A"}},
+    {"type": "step", "settings": {"title": "Te bucuri de rezultat", "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>", "accent": "#55684A"}},
 ]}]))
 
 # ---------- Carduri beneficii ----------
@@ -96,8 +96,8 @@ write_schema(P + "c-benefit-cards.liquid", section_schema("Carduri colorate", [
     *buttons(None),
     *common_end("scheme-1"),
 ], [block("card", "Card", [
-    color("background", "Culoare fundal", "#FFE8D6"),
-    color("text_color", "Culoare text", "#0B1020"),
+    color("background", "Culoare fundal", "#F6E1D8"),
+    color("text_color", "Culoare text", "#000000"),
     image("image", "Imagine sau GIF", GIF_INFO),
     video("video", "Sau video", VIDEO_INFO),
     sel("media_style", "Formă imagine", [("cover", "Imagine mare"), ("icon", "Mică (iconiță)")], "icon"),
@@ -109,9 +109,9 @@ write_schema(P + "c-benefit-cards.liquid", section_schema("Carduri colorate", [
     url("link", "Link"),
     text("link_label", "Text link", "Află mai multe"),
 ])], [{"name": "Carduri colorate", "blocks": [
-    {"type": "card", "settings": {"background": "#FFE8D6", "emoji": "⚡", "title": "Efect rapid"}},
-    {"type": "card", "settings": {"background": "#DDF7EA", "emoji": "🌿", "title": "100% natural", "text": "<p>Ingrediente curate, fără aditivi inutili.</p>"}},
-    {"type": "card", "settings": {"background": "#E3E9FF", "emoji": "🛡️", "title": "Garanție 30 de zile", "text": "<p>Nu-ți place? Îți dăm banii înapoi.</p>"}},
+    {"type": "card", "settings": {"background": "#F6E1D8", "emoji": "⚡", "title": "Efect rapid"}},
+    {"type": "card", "settings": {"background": "#E6EBDF", "emoji": "🌿", "title": "100% natural", "text": "<p>Ingrediente curate, fără aditivi inutili.</p>"}},
+    {"type": "card", "settings": {"background": "#F3EADD", "emoji": "🛡️", "title": "Garanție 30 de zile", "text": "<p>Nu-ți place? Îți dăm banii înapoi.</p>"}},
 ]}]))
 
 # ---------- Problemă vs soluție ----------
@@ -121,13 +121,14 @@ write_schema(P + "c-problem-solution.liquid", section_schema("Problemă vs solu�
     hdr("Coloana „problemă”"),
     image("bad_image", "Imagine sau GIF", GIF_INFO),
     video("bad_video", "Sau video", VIDEO_INFO),
-    inline("bad_title", "Titlu", "Fără produsul nostru"),
+    inline("bad_title", "Titlu", "Fără [produs]"),
     textarea("bad_list", "Probleme (câte una pe rând)", "Nopți agitate\nOboseală dimineața\nSoluții scumpe care nu țin"),
     hdr("Coloana „soluție”"),
     text("good_badge", "Etichetă", "Recomandat"),
     image("good_image", "Imagine sau GIF", GIF_INFO),
     video("good_video", "Sau video", VIDEO_INFO),
-    inline("good_title", "Titlu", "Cu produsul nostru"),
+    chk("use_product_image", "Pe pagina de produs, folosește poza produsului dacă nu alegi alta", True),
+    inline("good_title", "Titlu", "Cu [produs]"),
     textarea("good_list", "Beneficii (câte unul pe rând)", "Somn liniștit din prima noapte\nEnergie toată ziua\nO investiție care ține ani"),
     scheme("good_color_scheme", "Schemă de culori soluție", "scheme-4"),
     *buttons("Vreau și eu"),
@@ -138,6 +139,7 @@ write_schema(P + "c-problem-solution.liquid", section_schema("Problemă vs solu�
 write_schema(P + "c-ingredients.liquid", section_schema("Ingrediente", [
     *heading_block("Ce conține", "Ingrediente <em>atent alese</em>", "", "h2"),
     image("image", "Imagine produs (opțional)", GIF_INFO),
+    chk("use_product_image", "Pe pagina de produs, folosește poza produsului dacă nu alegi alta", True),
     rng("columns_desktop", "Coloane pe desktop", 1, 4, 1, 2),
     chk("expanded", "Descrierile deschise implicit", False),
     CARD("scheme-1"),
@@ -184,6 +186,7 @@ write_schema(P + "c-media-text.liquid", section_schema("Media cu text (GIF/video
     image("image", "Imagine sau GIF", GIF_INFO),
     video("video", "Sau video", VIDEO_INFO),
     url("gif_url", "Sau link GIF extern", None, "Ex: un link direct .gif de pe Giphy. Folosit doar dacă nu ai imagine/video."),
+    chk("use_product_image", "Pe pagina de produs, folosește poza produsului dacă nu alegi alta", True),
     sel("media_position", "Poziție media", [("left", "Stânga"), ("right", "Dreapta")], "left"),
     sel("media_style", "Formă media", [("rounded", "Colțuri rotunjite"), ("blob", "Formă organică"), ("tilt", "Înclinată, cu umbră colorată"), ("circle", "Cerc")], "tilt"),
     rng("media_width", "Lățime media", 30, 70, 5, 50, "%"),

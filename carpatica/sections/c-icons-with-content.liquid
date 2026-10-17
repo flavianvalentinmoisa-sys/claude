@@ -6,7 +6,7 @@
 {%- assign half = icon_blocks.size | plus: 1 | divided_by: 2 -%}
 <div class="c-iwc-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <div class="c-iwc">
       <ul class="c-iwc__col c-iwc__col--left" role="list">
         {%- for block in icon_blocks limit: half -%}{%- render 'c-feature-bullet', block: block -%}{%- endfor -%}
@@ -52,7 +52,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "De ce o să-ți <em>placă</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

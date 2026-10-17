@@ -1,10 +1,11 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
 <div class="c-vticker-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width c-vticker-layout c-vticker-layout--{{ s.layout }}">
     <div class="c-vticker-layout__text">
-      {%- render 'c-section-header', section: section -%}
+      {%- render 'c-section-header', section: section, product: product -%}
       {%- render 'c-buttons', s: s -%}
     </div>
     <div class="c-vticker" style="--c-vticker-height: {{ s.height }}px; --c-marquee-speed: {{ s.speed }}s;">
@@ -12,7 +13,7 @@
         {%- for i in (1..2) -%}
           <ul class="c-vticker__list" role="list"{% if i == 2 %} aria-hidden="true"{% endif %}>
             {%- for block in section.blocks -%}
-              <li class="c-vticker__item h3" {% if i == 1 %}{{ block.shopify_attributes }}{% endif %}>{{ block.settings.text }}</li>
+              <li class="c-vticker__item h3" {% if i == 1 %}{{ block.shopify_attributes }}{% endif %}>{{ block.settings.text | replace: '[produs]', c_product_name }}</li>
             {%- endfor -%}
           </ul>
         {%- endfor -%}
@@ -38,7 +39,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Tot ce primești când comanzi de la noi",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

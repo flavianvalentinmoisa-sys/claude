@@ -1,16 +1,17 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-social.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-sections.js' | asset_url }}" defer="defer"></script>
 {%- render 'c-section-style', section: section -%}
 {%- assign s = section.settings -%}
 <div class="c-stories-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width">
-    {%- render 'c-section-header', section: section -%}
+    {%- render 'c-section-header', section: section, product: product -%}
     <insta-stories class="c-stories" data-duration="{{ s.story_duration }}" style="--c-story-size: {{ s.thumb_size }}px;">
       <ul class="c-stories__thumbs c-align-{{ s.thumbs_alignment }}" role="list">
         {%- for block in section.blocks -%}
           {%- assign b = block.settings -%}
           <li {{ block.shopify_attributes }}>
-            <button type="button" class="c-stories__thumb" data-story-index="{{ forloop.index0 }}" aria-label="{{ b.label | escape }}">
+            <button type="button" class="c-stories__thumb" data-story-index="{{ forloop.index0 }}" aria-label="{{ b.label | replace: '[produs]', c_product_name | escape }}">
               <span class="c-stories__ring">
                 <span class="c-stories__avatar">
                   {%- if b.thumbnail != blank -%}
@@ -22,7 +23,7 @@
                   {%- endif -%}
                 </span>
               </span>
-              {%- if b.label != blank -%}<span class="c-stories__label">{{ b.label | escape }}</span>{%- endif -%}
+              {%- if b.label != blank -%}<span class="c-stories__label">{{ b.label | replace: '[produs]', c_product_name | escape }}</span>{%- endif -%}
             </button>
           </li>
         {%- endfor -%}
@@ -53,7 +54,7 @@
               {%- endif -%}
               {%- if b.caption != blank or b.button_label != blank -%}
                 <div class="c-stories__caption">
-                  {%- if b.caption != blank -%}<div class="rte">{{ b.caption }}</div>{%- endif -%}
+                  {%- if b.caption != blank -%}<div class="rte">{{ b.caption | replace: '[produs]', c_product_name }}</div>{%- endif -%}
                   {%- if b.button_label != blank -%}
                     <a href="{{ b.button_link | default: b.product.url | default: '#' }}" class="button c-stories__button">{{ b.button_label | escape }}</a>
                   {%- endif -%}
@@ -85,7 +86,7 @@
       "id": "heading",
       "label": "Titlu",
       "default": "Urmărește-ne pe <em>Instagram</em>",
-      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent. [produs] devine numele produsului pe pagina lui."
     },
     {
       "type": "select",

@@ -151,6 +151,11 @@
   color: rgb(var(--color-accent-text));
 }
 
+.c-qb__badge--accent_2 {
+  background: rgb(var(--color-accent-2));
+  color: rgb(var(--color-accent-2-text));
+}
+
 .c-qb__badge--savings {
   background: rgb(var(--color-savings));
   color: #fff;
@@ -1496,4 +1501,15 @@ clickable-discount.is-applied .c-cdiscount__state--applied {
 
 .c-field__swatch input:focus-visible + .c-field__swatch-color {
   outline-color: rgb(var(--color-accent));
+}
+
+/* Varianta selectată (mărime, culoare) în culoarea accent */
+fieldset.product-form__input--pill input[type='radio']:checked + label {
+  background-color: rgb(var(--color-accent));
+  border-color: rgb(var(--color-accent));
+  color: rgb(var(--color-accent-text));
+}
+
+fieldset.product-form__input--pill input[type='radio']:not(.disabled):not(:checked) + label:hover {
+  border-color: rgb(var(--color-accent));
 }

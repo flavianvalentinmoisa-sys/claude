@@ -1,3 +1,4 @@
+{%- assign c_product_name = product.title | default: 'produsul nostru' -%}
 {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-sections.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
@@ -37,9 +38,9 @@
         {%- assign b = block.settings -%}
         <div class="c-parallax__box c-align-{{ b.alignment }}{% if b.boxed %} c-parallax__box--boxed color-{{ b.box_color_scheme }}{% endif %}" {{ block.shopify_attributes }}>
           {%- if b.rating_text != blank -%}{%- render 'c-stars', rating: 5, text: b.rating_text, size: 16 -%}{%- endif -%}
-          {%- if b.subheading != blank -%}<p class="c-subheading c-parallax__sub">{{ b.subheading | escape }}</p>{%- endif -%}
-          {%- if b.heading != blank -%}<h1 class="c-heading c-parallax__heading {{ b.heading_size }}">{{ b.heading }}</h1>{%- endif -%}
-          {%- if b.text != blank -%}<div class="rte c-parallax__text">{{ b.text }}</div>{%- endif -%}
+          {%- if b.subheading != blank -%}<p class="c-subheading c-parallax__sub">{{ b.subheading | replace: '[produs]', c_product_name | escape }}</p>{%- endif -%}
+          {%- if b.heading != blank -%}<h1 class="c-heading c-parallax__heading {{ b.heading_size }}">{{ b.heading | replace: '[produs]', c_product_name }}</h1>{%- endif -%}
+          {%- if b.text != blank -%}<div class="rte c-parallax__text">{{ b.text | replace: '[produs]', c_product_name }}</div>{%- endif -%}
           {%- render 'c-buttons', s: b -%}
           {%- if b.benefits != blank -%}
             <ul class="c-parallax__benefits" role="list">
