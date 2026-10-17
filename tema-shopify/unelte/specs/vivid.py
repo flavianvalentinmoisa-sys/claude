@@ -197,7 +197,7 @@ write_schema(P + "c-media-text.liquid", section_schema("Media cu text (GIF/video
     block("text", "Text", [rich("text", "Text", "<p>Spune pe scurt ce problemă rezolvă produsul și de ce e diferit.</p>")]),
     block("checklist", "Listă cu bife", [textarea("items", "Elemente (câte unul pe rând)", "Livrare în 24–48h\nPlata ramburs\nRetur gratuit 30 de zile")]),
     block("buttons", "Butoane", buttons("Cumpără acum")[1:]),
-    block("custom_liquid", "Liquid personalizat", [liquid("custom_liquid", "Cod Liquid", "Poți afișa date dinamice, de ex. {{ product.title }} sau metacâmpuri.")]),
+    block("custom_liquid", "Liquid personalizat", [liquid("custom_liquid", "Cod Liquid", "Poți afișa date dinamice: titlul produsului, prețul sau metacâmpuri.")]),
 ], [{"name": "Media cu text (GIF/video)", "blocks": [{"type": "rating"}, {"type": "heading"}, {"type": "text"}, {"type": "checklist"}, {"type": "buttons"}]}]))
 
 # ---------- Bandă cu recenzii ----------
