@@ -1,6 +1,35 @@
 {
   "name": "Elemente plutitoare",
   "type": "custom.overlay",
-  "sections": {},
-  "order": []
+  "sections": {
+    "scroll-top": {
+      "type": "c-scroll-top",
+      "settings": {
+        "enabled": true,
+        "display_after": 600,
+        "position": "right",
+        "offset_x": 20,
+        "offset_y": 20,
+        "label": "Înapoi sus",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "promo-popup": {
+      "type": "c-promo-popup",
+      "settings": {
+        "enabled": false
+      }
+    },
+    "music": {
+      "type": "c-global-music-player",
+      "settings": {
+        "enabled": false
+      }
+    }
+  },
+  "order": [
+    "scroll-top",
+    "promo-popup",
+    "music"
+  ]
 }

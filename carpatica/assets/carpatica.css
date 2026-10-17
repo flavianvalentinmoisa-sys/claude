@@ -803,3 +803,16 @@ html.c-blocked body > *:not(.c-country-block) {
   height: auto;
   display: block;
 }
+
+/* Dawn ascunde div-urile goale; straturile decorative trebuie să rămână vizibile */
+.c-modal__overlay:empty,
+.c-stories__backdrop:empty,
+.c-parallax__overlay:empty,
+.c-group__slot:empty,
+.c-parallax__layers:empty {
+  display: block;
+}
+
+.c-modal__dialog:focus {
+  outline: none;
+}
