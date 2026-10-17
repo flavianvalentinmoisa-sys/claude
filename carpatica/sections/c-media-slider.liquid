@@ -1,0 +1,330 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-media-slider color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="{% unless s.full_width %}page-width{% endunless %}">
+    {%- render 'c-section-header', section: section -%}
+    <c-slider
+      class="c-slider__peek{% if s.arrows_overlay %} c-slider__arrows-overlay{% endif %}"
+      data-autoplay="{% if s.autoplay %}{{ s.autoplay_speed }}{% endif %}"
+      style="--c-per-view: {{ s.per_view }}; --c-per-view-mobile: {{ s.per_view_mobile }}; --c-slider-gap: {{ s.gap }}px; --c-media-ratio: {{ s.aspect_ratio }}; --c-media-radius: {{ s.radius }}px;"
+    >
+      <ul class="c-slider__track" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          <li class="c-slider__slide c-media-slide" {{ block.shopify_attributes }}>
+            <div class="c-media-slide__media">
+              {%- if block.type == 'video_slide' and b.video != blank -%}
+                {{ b.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1100x', class: 'c-media-slide__el' }}
+              {%- elsif block.type == 'video_slide' and b.video_url != blank -%}
+                {%- render 'c-video-embed', video_url: b.video_url, autoplay: true -%}
+              {%- elsif b.image != blank -%}
+                {%- if b.link != blank -%}<a href="{{ b.link }}">{%- endif -%}
+                {{ b.image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '375, 750, 1100, 1500', sizes: '(min-width: 990px) 33vw, 80vw', class: 'c-media-slide__el' }}
+                {%- if b.link != blank -%}</a>{%- endif -%}
+              {%- else -%}
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg c-media-slide__el' }}
+              {%- endif -%}
+            </div>
+            {%- if b.caption != blank -%}<p class="c-media-slide__caption">{{ b.caption }}</p>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- render 'c-slider-controls', show_dots: s.show_dots -%}
+    </c-slider>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Slider imagini și video",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Văzut în <em>acțiune</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "per_view",
+      "label": "Slide-uri vizibile desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "per_view_mobile",
+      "label": "Slide-uri vizibile mobil",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Spațiu între slide-uri",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Proporție",
+      "options": [
+        {
+          "value": "1",
+          "label": "Pătrat"
+        },
+        {
+          "value": "4 / 5",
+          "label": "Portret"
+        },
+        {
+          "value": "9 / 16",
+          "label": "Story / Reel"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Lat"
+        }
+      ],
+      "default": "9 / 16"
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Rotunjire colțuri",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Derulare automată",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Schimbă la fiecare",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Puncte",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows_overlay",
+      "label": "Săgeți peste slide-uri",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Lățime completă",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_slide",
+      "name": "Imagine",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "caption",
+          "label": "Text sub imagine"
+        }
+      ]
+    },
+    {
+      "type": "video_slide",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video Shopify (redare automată fără sonor)"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Sau link YouTube/Vimeo",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ]
+        },
+        {
+          "type": "inline_richtext",
+          "id": "caption",
+          "label": "Text sub video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slider imagini și video",
+      "blocks": [
+        {
+          "type": "video_slide"
+        },
+        {
+          "type": "video_slide"
+        },
+        {
+          "type": "video_slide"
+        },
+        {
+          "type": "video_slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,302 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-vticker-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width c-vticker-layout c-vticker-layout--{{ s.layout }}">
+    <div class="c-vticker-layout__text">
+      {%- render 'c-section-header', section: section -%}
+      {%- render 'c-buttons', s: s -%}
+    </div>
+    <div class="c-vticker" style="--c-vticker-height: {{ s.height }}px; --c-marquee-speed: {{ s.speed }}s;">
+      <div class="c-vticker__track">
+        {%- for i in (1..2) -%}
+          <ul class="c-vticker__list" role="list"{% if i == 2 %} aria-hidden="true"{% endif %}>
+            {%- for block in section.blocks -%}
+              <li class="c-vticker__item h3" {% if i == 1 %}{{ block.shopify_attributes }}{% endif %}>{{ block.settings.text }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bandă derulantă verticală",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "De ce noi"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Tot ce primești când comanzi de la noi",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "side",
+          "label": "Text și bandă alăturate"
+        },
+        {
+          "value": "stacked",
+          "label": "Una sub alta"
+        }
+      ],
+      "default": "side"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Înălțime bandă",
+      "min": 160,
+      "max": 600,
+      "step": 20,
+      "default": 360,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Durată tură",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "default": 18,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "Butoane"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "Text buton 1"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Link buton 1"
+    },
+    {
+      "type": "select",
+      "id": "button_style_1",
+      "label": "Stil buton 1",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Plin"
+        },
+        {
+          "value": "secondary",
+          "label": "Contur"
+        },
+        {
+          "value": "white",
+          "label": "Alb"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Text buton 2"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Link buton 2"
+    },
+    {
+      "type": "select",
+      "id": "button_style_2",
+      "label": "Stil buton 2",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Plin"
+        },
+        {
+          "value": "secondary",
+          "label": "Contur"
+        },
+        {
+          "value": "white",
+          "label": "Alb"
+        }
+      ],
+      "default": "secondary"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "✔ Livrare în 24–48 de ore"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bandă derulantă verticală",
+      "blocks": [
+        {
+          "type": "text"
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "✔ Plata ramburs la curier"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "✔ Retur gratuit 30 de zile"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "✔ Garanție 2 ani"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "✔ Suport în română"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

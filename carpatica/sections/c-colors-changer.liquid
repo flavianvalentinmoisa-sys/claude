@@ -1,0 +1,104 @@
+{% comment %}
+  Schimbă culorile magazinului doar pe pagina (șablonul) unde este adăugată secțiunea.
+  Util pentru pagini de produs/landing cu altă identitate vizuală.
+{% endcomment %}
+{%- assign s = section.settings -%}
+{%- style -%}
+  :root {
+    {%- if s.accent != blank %}--color-accent: {{ s.accent.red }}, {{ s.accent.green }}, {{ s.accent.blue }};{% endif %}
+    {%- if s.accent_text != blank %}--color-accent-text: {{ s.accent_text.red }}, {{ s.accent_text.green }}, {{ s.accent_text.blue }};{% endif %}
+    {%- if s.savings != blank %}--color-savings: {{ s.savings.red }}, {{ s.savings.green }}, {{ s.savings.blue }};{% endif %}
+    {%- if s.urgency != blank %}--color-urgency: {{ s.urgency.red }}, {{ s.urgency.green }}, {{ s.urgency.blue }};{% endif %}
+    {%- if s.highlight_bg != blank %}--color-highlight-bg: {{ s.highlight_bg.red }}, {{ s.highlight_bg.green }}, {{ s.highlight_bg.blue }};{% endif %}
+  }
+  {%- if s.button != blank or s.button_text != blank or s.background != blank or s.text != blank %}
+    :root, .color-{{ s.scheme_target }} {
+      {%- if s.background != blank %}--color-background: {{ s.background.red }}, {{ s.background.green }}, {{ s.background.blue }}; --gradient-background: {{ s.background }};{% endif %}
+      {%- if s.text != blank %}--color-foreground: {{ s.text.red }}, {{ s.text.green }}, {{ s.text.blue }};{% endif %}
+      {%- if s.button != blank %}--color-button: {{ s.button.red }}, {{ s.button.green }}, {{ s.button.blue }};{% endif %}
+      {%- if s.button_text != blank %}--color-button-text: {{ s.button_text.red }}, {{ s.button_text.green }}, {{ s.button_text.blue }};{% endif %}
+      {%- if s.button != blank %}--color-secondary-button-text: {{ s.button.red }}, {{ s.button.green }}, {{ s.button.blue }}; --color-link: {{ s.button.red }}, {{ s.button.green }}, {{ s.button.blue }};{% endif %}
+    }
+  {%- endif %}
+{%- endstyle -%}
+{%- if request.design_mode -%}
+  <p class="page-width" style="padding: 1rem 0; font-size: 1.2rem; opacity: 0.6;">Schimbător culori activ pe această pagină (nu este vizibil pentru clienți).</p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Schimbător culori pagină",
+  "tag": "div",
+  "class": "c-colors-changer-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Schimbă culorile doar pe paginile care folosesc acest șablon (ex: o pagină de produs cu identitate diferită). Lasă gol ce nu vrei să modifici."
+    },
+    {
+      "type": "header",
+      "content": "Culori conversie"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent"
+    },
+    {
+      "type": "color",
+      "id": "accent_text",
+      "label": "Text pe accent"
+    },
+    {
+      "type": "color",
+      "id": "savings",
+      "label": "Economii"
+    },
+    {
+      "type": "color",
+      "id": "urgency",
+      "label": "Urgență"
+    },
+    {
+      "type": "color",
+      "id": "highlight_bg",
+      "label": "Fundal evidențiere"
+    },
+    {
+      "type": "header",
+      "content": "Schemă de culori"
+    },
+    {
+      "type": "color_scheme",
+      "id": "scheme_target",
+      "label": "Schema modificată",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fundal"
+    },
+    {
+      "type": "color",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "button",
+      "label": "Fundal buton"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Text buton"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Schimbător culori pagină"
+    }
+  ]
+}
+{% endschema %}

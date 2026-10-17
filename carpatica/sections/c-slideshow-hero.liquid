@@ -1,0 +1,380 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-hero-slides color-{{ s.color_scheme }}" id="{{ s.anchor | default: section.id }}" style="--c-hero-min: {{ s.min_height }}vh; --c-hero-min-mobile: {{ s.min_height_mobile }}vh;">
+  <c-slider
+    class="c-hero-slides__slider{% if s.show_arrows %} c-slider__arrows-overlay{% endif %}"
+    data-autoplay="{% if s.autoplay and section.blocks.size > 1 %}{{ s.autoplay_speed }}{% endif %}"
+    data-loop="true"
+    style="--c-per-view: 1; --c-per-view-mobile: 1; --c-slider-gap: 0px;"
+  >
+    <ul class="c-slider__track" role="list">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="c-slider__slide c-hero-slide color-{{ b.color_scheme }}" {{ block.shopify_attributes }}>
+          <div class="c-hero-slide__media">
+            {%- if b.image != blank -%}
+              {%- capture desktop_classes -%}c-hero-slide__img{% if b.image_mobile != blank %} c-hide-mobile{% endif %}{%- endcapture -%}
+              {%- liquid
+                assign img_loading = 'lazy'
+                if forloop.first
+                  assign img_loading = 'eager'
+                endif
+              -%}
+              {{ b.image | image_url: width: 2400 | image_tag: loading: img_loading, widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', class: desktop_classes }}
+              {%- if b.image_mobile != blank -%}
+                {{ b.image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '375, 750, 1100', sizes: '100vw', class: 'c-hero-slide__img c-hide-desktop' }}
+              {%- endif -%}
+            {%- else -%}
+              {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg c-hero-slide__img' }}
+            {%- endif -%}
+            {%- if b.overlay_opacity > 0 -%}<span class="c-hero-slide__overlay" style="opacity: {{ b.overlay_opacity | divided_by: 100.0 }};"></span>{%- endif -%}
+          </div>
+          <div class="page-width c-hero-slide__content c-hero-slide__content--{{ b.position }}">
+            <div class="c-hero-slide__box c-align-{{ b.alignment }}{% if b.boxed %} c-hero-slide__box--boxed{% endif %}">
+              {%- if b.rating_text != blank -%}{%- render 'c-stars', rating: 5, text: b.rating_text, size: 16 -%}{%- endif -%}
+              {%- if b.subheading != blank -%}<p class="c-subheading">{{ b.subheading | escape }}</p>{%- endif -%}
+              {%- if b.heading != blank -%}
+                {%- if forloop.first -%}<h1 class="c-heading {{ b.heading_size }}">{{ b.heading }}</h1>{%- else -%}<h2 class="c-heading {{ b.heading_size }}">{{ b.heading }}</h2>{%- endif -%}
+              {%- endif -%}
+              {%- if b.text != blank -%}<div class="rte c-hero-slide__text">{{ b.text }}</div>{%- endif -%}
+              {%- render 'c-buttons', s: b -%}
+            </div>
+          </div>
+          {%- if b.link != blank and b.button_label_1 == blank -%}<a href="{{ b.link }}" class="c-hero-slide__link" aria-label="{{ b.heading | strip_html | escape }}"></a>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if section.blocks.size > 1 -%}
+      {%- render 'c-slider-controls', show_arrows: s.show_arrows, show_dots: s.show_dots -%}
+    {%- endif -%}
+  </c-slider>
+</div>
+
+{% schema %}
+{
+  "name": "Hero cu slide-uri",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Înălțime desktop",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 75,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Înălțime mobil",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 70,
+      "unit": "vh"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Schimbare automată",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Schimbă la fiecare",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Săgeți",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Puncte",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-3"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Imagine mobil (opțional)"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Întunecare imagine",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "default": 25,
+          "unit": "%"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link pe tot slide-ul",
+          "info": "Folosit doar dacă nu ai butoane."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "rating_text",
+          "label": "Text rating"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Supratitlu",
+          "default": "Ofertă de lansare"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Titlu",
+          "default": "Până la <em>40% reducere</em> la colecția nouă"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Mărime titlu",
+          "options": [
+            {
+              "value": "h4",
+              "label": "Mic"
+            },
+            {
+              "value": "h3",
+              "label": "Mediu"
+            },
+            {
+              "value": "h2",
+              "label": "Mare"
+            },
+            {
+              "value": "h1",
+              "label": "Foarte mare"
+            },
+            {
+              "value": "h0",
+              "label": "Extra mare"
+            }
+          ],
+          "default": "h0"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Livrare gratuită peste 200 lei și plata la livrare.</p>"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Poziție conținut",
+          "options": [
+            {
+              "value": "top-left",
+              "label": "Sus stânga"
+            },
+            {
+              "value": "top-center",
+              "label": "Sus centru"
+            },
+            {
+              "value": "middle-left",
+              "label": "Mijloc stânga"
+            },
+            {
+              "value": "middle-center",
+              "label": "Mijloc centru"
+            },
+            {
+              "value": "middle-right",
+              "label": "Mijloc dreapta"
+            },
+            {
+              "value": "bottom-left",
+              "label": "Jos stânga"
+            },
+            {
+              "value": "bottom-center",
+              "label": "Jos centru"
+            }
+          ],
+          "default": "middle-left"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere text",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "checkbox",
+          "id": "boxed",
+          "label": "Casetă în spatele textului",
+          "default": false
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Schemă de culori",
+          "default": "scheme-3"
+        },
+        {
+          "type": "header",
+          "content": "Butoane"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Text buton 1",
+          "default": "Vezi oferta"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Link buton 1"
+        },
+        {
+          "type": "select",
+          "id": "button_style_1",
+          "label": "Stil buton 1",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Text buton 2"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Link buton 2"
+        },
+        {
+          "type": "select",
+          "id": "button_style_2",
+          "label": "Stil buton 2",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "secondary"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Hero cu slide-uri",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "heading": "Livrare în <em>24 de ore</em>",
+            "subheading": "Din stoc în România",
+            "position": "middle-center",
+            "alignment": "center"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

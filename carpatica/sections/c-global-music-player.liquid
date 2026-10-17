@@ -1,0 +1,108 @@
+{%- assign s = section.settings -%}
+{%- if s.enabled and s.audio_url != blank -%}
+  {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+  <music-player
+    class="c-music c-music--floating c-music--{{ s.position }} color-{{ s.color_scheme }}{% if s.ripple %} c-music--ripple{% endif %}"
+    data-src="{{ s.audio_url | escape }}"
+    data-volume="{{ s.volume }}"
+    data-loop="true"
+    data-global="true"
+    style="--c-offset-x: {{ s.offset_x }}px; --c-offset-y: {{ s.offset_y }}px;"
+  >
+    <button type="button" class="c-music__toggle" data-music-toggle aria-label="{{ 'carpatica.music.play' | t }}" data-label-play="{{ 'carpatica.music.play' | t }}" data-label-pause="{{ 'carpatica.music.pause' | t }}">
+      <span class="c-music__icon-play">{{- 'icon-play.svg' | inline_asset_content -}}</span>
+      <span class="c-music__icon-pause">{{- 'icon-pause.svg' | inline_asset_content -}}</span>
+    </button>
+  </music-player>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Muzică pe tot site-ul",
+  "tag": "div",
+  "class": "c-overlay-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Activează",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "audio_url",
+      "label": "Link fișier audio (.mp3)",
+      "info": "Muzica pornește doar când vizitatorul apasă butonul (browserele blochează redarea automată). Continuă de unde a rămas pe paginile următoare."
+    },
+    {
+      "type": "range",
+      "id": "volume",
+      "label": "Volum",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Poziție",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga jos"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta jos"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "offset_x",
+      "label": "Distanță orizontală",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "offset_y",
+      "label": "Distanță verticală",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "ripple",
+      "label": "Animație unde când rulează",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Muzică pe tot site-ul"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.overlay"
+    ]
+  }
+}
+{% endschema %}

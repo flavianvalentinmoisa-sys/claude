@@ -1,0 +1,305 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-shoppable-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="{% unless s.full_width %}page-width{% endunless %}">
+    {%- render 'c-section-header', section: section -%}
+    <shoppable-image class="c-shoppable" style="--c-hotspot-color: {{ s.hotspot_color }}; --c-media-radius: {{ s.radius }}px;">
+      <div class="c-shoppable__media">
+        {%- if s.image != blank -%}
+          {{ s.image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          {%- assign hp = b.product -%}
+          <div class="c-hotspot" style="left: {{ b.x }}%; top: {{ b.y }}%; --c-hx-mobile: {{ b.x_mobile }}%; --c-hy-mobile: {{ b.y_mobile }}%;" {{ block.shopify_attributes }}>
+            <button type="button" class="c-hotspot__dot" aria-expanded="false" aria-label="{{ hp.title | default: b.title | escape }}"><span></span></button>
+            <div class="c-hotspot__card color-{{ s.card_color_scheme }}" hidden>
+              {%- if hp != blank -%}
+                {%- if hp.featured_media -%}
+                  <span class="c-hotspot__img">{{ hp.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 200', sizes: '80px', alt: '' }}</span>
+                {%- endif -%}
+                <span class="c-hotspot__info">
+                  <a href="{{ hp.url }}" class="c-hotspot__title link">{{ hp.title | escape }}</a>
+                  <span class="c-hotspot__price">
+                    {%- if hp.compare_at_price > hp.price -%}<s>{{ hp.compare_at_price | money }}</s> {% endif -%}
+                    <strong>{{ hp.price | money }}</strong>
+                  </span>
+                  {%- if s.show_add and hp.has_only_default_variant and hp.available -%}
+                    <button type="button" class="button c-hotspot__add" data-quick-add="{{ hp.selected_or_first_available_variant.id }}">
+                      <span>{{ 'products.product.add_to_cart' | t }}</span>
+                      {%- render 'loading-spinner' -%}
+                    </button>
+                  {%- else -%}
+                    <a href="{{ hp.url }}" class="button button--secondary c-hotspot__add">{{ 'carpatica.general.view_product' | t }}</a>
+                  {%- endif -%}
+                </span>
+              {%- else -%}
+                <span class="c-hotspot__info">
+                  <span class="c-hotspot__title">{{ b.title | escape }}</span>
+                  {%- if b.text != blank -%}<span class="rte">{{ b.text }}</span>{%- endif -%}
+                </span>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </shoppable-image>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Imagine cu produse",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Cumpără <em>look-ul</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagine"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_color",
+      "label": "Culoare puncte",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add",
+      "label": "Buton „Adaugă în coș” (produse fără variante)",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Schemă de culori card",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Rotunjire colțuri",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Lățime completă",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Punct produs",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produs"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Sau titlu (fără produs)",
+          "default": "Detaliu"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Poziție orizontală",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 40,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Poziție verticală",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "x_mobile",
+          "label": "Poziție orizontală mobil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 40,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "y_mobile",
+          "label": "Poziție verticală mobil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50,
+          "unit": "%"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Imagine cu produse",
+      "blocks": [
+        {
+          "type": "hotspot"
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "x": 65,
+            "y": 30,
+            "x_mobile": 65,
+            "y_mobile": 30
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

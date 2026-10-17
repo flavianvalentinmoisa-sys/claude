@@ -1,0 +1,512 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+{%- capture items -%}
+  {%- for block in section.blocks -%}
+    {%- assign b = block.settings -%}
+    <li class="c-iconbar__item" {{ block.shopify_attributes }}>
+      <span class="c-iconbar__icon">{%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, image: b.icon_image, size: s.icon_size -%}</span>
+      <span class="c-iconbar__body">
+        <span class="c-iconbar__title">{{ b.title }}</span>
+        {%- if b.text != blank -%}<span class="c-iconbar__text">{{ b.text }}</span>{%- endif -%}
+      </span>
+    </li>
+  {%- endfor -%}
+{%- endcapture -%}
+<div class="c-iconbar-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <div class="c-iconbar c-iconbar--{{ s.layout }} c-iconbar--{{ s.item_layout }}{% if s.dividers %} c-iconbar--dividers{% endif %}{% if s.mobile_layout == 'marquee' %} c-iconbar--mobile-marquee{% else %} c-iconbar--mobile-grid{% endif %}" style="--c-cols: {{ section.blocks.size | at_most: 6 }}; --c-icon-color: {{ s.icon_color }}; --c-marquee-speed: {{ s.speed }}s;">
+      <div class="c-iconbar__track">
+        <ul class="c-iconbar__list" role="list">{{ items }}</ul>
+        <ul class="c-iconbar__list c-iconbar__list--clone" role="list" aria-hidden="true">{{ items }}</ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bară cu iconițe",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "row",
+          "label": "Un rând"
+        }
+      ],
+      "default": "row"
+    },
+    {
+      "type": "select",
+      "id": "item_layout",
+      "label": "Iconiță față de text",
+      "options": [
+        {
+          "value": "inline",
+          "label": "Lângă text"
+        },
+        {
+          "value": "stacked",
+          "label": "Deasupra textului"
+        }
+      ],
+      "default": "inline"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Pe mobil",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grilă 2 coloane"
+        },
+        {
+          "value": "marquee",
+          "label": "Bandă derulantă"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Durată bandă pe mobil",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "default": 20,
+      "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Mărime iconițe",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Culoare iconițe"
+    },
+    {
+      "type": "checkbox",
+      "id": "dividers",
+      "label": "Separatoare",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Iconiță",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Iconiță",
+          "options": [
+            {
+              "value": "none",
+              "label": "Fără iconiță"
+            },
+            {
+              "value": "check",
+              "label": "Bifă"
+            },
+            {
+              "value": "check_circle",
+              "label": "Bifă în cerc"
+            },
+            {
+              "value": "truck",
+              "label": "Camion livrare"
+            },
+            {
+              "value": "truck_fast",
+              "label": "Livrare rapidă"
+            },
+            {
+              "value": "package",
+              "label": "Colet"
+            },
+            {
+              "value": "box_open",
+              "label": "Cutie deschisă"
+            },
+            {
+              "value": "return",
+              "label": "Retur"
+            },
+            {
+              "value": "shield",
+              "label": "Garanție / protecție"
+            },
+            {
+              "value": "lock",
+              "label": "Plată sigură"
+            },
+            {
+              "value": "card",
+              "label": "Card"
+            },
+            {
+              "value": "cash",
+              "label": "Numerar / ramburs"
+            },
+            {
+              "value": "wallet",
+              "label": "Portofel"
+            },
+            {
+              "value": "star",
+              "label": "Stea"
+            },
+            {
+              "value": "heart",
+              "label": "Inimă"
+            },
+            {
+              "value": "gift",
+              "label": "Cadou"
+            },
+            {
+              "value": "fire",
+              "label": "Foc / popular"
+            },
+            {
+              "value": "clock",
+              "label": "Ceas"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "phone",
+              "label": "Telefon"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "support",
+              "label": "Asistență"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "map_pin",
+              "label": "Locație"
+            },
+            {
+              "value": "leaf",
+              "label": "Natural / frunză"
+            },
+            {
+              "value": "water",
+              "label": "Picătură apă"
+            },
+            {
+              "value": "recycle",
+              "label": "Reciclare"
+            },
+            {
+              "value": "sparkle",
+              "label": "Strălucire"
+            },
+            {
+              "value": "thumbs_up",
+              "label": "Like"
+            },
+            {
+              "value": "users",
+              "label": "Clienți"
+            },
+            {
+              "value": "award",
+              "label": "Premiu"
+            },
+            {
+              "value": "medal",
+              "label": "Medalie"
+            },
+            {
+              "value": "percent",
+              "label": "Procent / reducere"
+            },
+            {
+              "value": "tag",
+              "label": "Etichetă"
+            },
+            {
+              "value": "eye",
+              "label": "Ochi"
+            },
+            {
+              "value": "lightning",
+              "label": "Fulger / rapid"
+            },
+            {
+              "value": "bolt_battery",
+              "label": "Baterie"
+            },
+            {
+              "value": "globe",
+              "label": "Glob"
+            },
+            {
+              "value": "plane",
+              "label": "Avion"
+            },
+            {
+              "value": "home",
+              "label": "Casă"
+            },
+            {
+              "value": "sun",
+              "label": "Soare"
+            },
+            {
+              "value": "moon",
+              "label": "Lună / somn"
+            },
+            {
+              "value": "baby",
+              "label": "Copii"
+            },
+            {
+              "value": "paw",
+              "label": "Animale"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Sport / fitness"
+            },
+            {
+              "value": "ruler",
+              "label": "Riglă / mărimi"
+            },
+            {
+              "value": "smile",
+              "label": "Zâmbet"
+            },
+            {
+              "value": "info",
+              "label": "Informație"
+            },
+            {
+              "value": "warning",
+              "label": "Atenționare"
+            },
+            {
+              "value": "question",
+              "label": "Întrebare"
+            },
+            {
+              "value": "romania",
+              "label": "Steag"
+            },
+            {
+              "value": "flag",
+              "label": "Fanion"
+            },
+            {
+              "value": "arrow_right",
+              "label": "Săgeată"
+            }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Sau emoji",
+          "info": "Ex: 🚚. Înlocuiește iconița."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Sau imagine proprie"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Titlu",
+          "default": "Livrare 24–48h"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "În toată țara"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Bară cu iconițe",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "cash",
+            "title": "Plata ramburs",
+            "text": "Plătești la curier"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "return",
+            "title": "Retur 30 de zile",
+            "text": "Gratuit, fără întrebări"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Garanție 2 ani",
+            "text": "Pentru toate produsele"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

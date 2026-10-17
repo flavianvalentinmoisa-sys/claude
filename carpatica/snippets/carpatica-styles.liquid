@@ -107,6 +107,16 @@
     --animation-distance: {{ settings.animation_distance | divided_by: 10.0 }}rem;
   }
 
+  {%- comment -%} Culoarea de evidențiere se deschide automat pe fundaluri închise {%- endcomment -%}
+  {%- assign accent_light = settings.color_accent | color_lighten: 28 -%}
+  {%- for scheme in settings.color_schemes %}
+    {%- assign bg_brightness = scheme.settings.background | color_brightness -%}
+    {%- assign accent_bg_diff = scheme.settings.background | color_difference: settings.color_accent -%}
+    .color-{{ scheme.id }} {
+      --c-highlight: {% if bg_brightness < 110 %}{{ accent_light }}{% elsif accent_bg_diff < 150 %}{{ scheme.settings.text }}{% else %}{{ settings.color_accent }}{% endif %};
+    }
+  {%- endfor %}
+
   {%- if settings.scrollbar_style == 'custom' %}
     @media (pointer: fine) {
       html {

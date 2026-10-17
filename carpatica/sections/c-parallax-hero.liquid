@@ -1,0 +1,474 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-sections.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<parallax-hero
+  class="c-parallax color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding"
+  id="{{ s.anchor | default: section.id }}"
+  data-mode="{{ s.mode }}"
+  data-intensity="{{ s.intensity }}"
+  style="--c-hero-min: {{ s.min_height }}vh; --c-hero-min-mobile: {{ s.min_height_mobile }}vh;"
+>
+  {%- if s.background != blank -%}
+    <div class="c-parallax__bg" data-depth="{{ s.background_depth }}">
+      {{ s.background | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw' }}
+    </div>
+  {%- endif -%}
+  {%- if s.overlay_opacity > 0 -%}<div class="c-parallax__overlay" style="opacity: {{ s.overlay_opacity | divided_by: 100.0 }};"></div>{%- endif -%}
+  <div class="c-parallax__layers" aria-hidden="true">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'layer' and block.settings.image != blank -%}
+        {%- assign b = block.settings -%}
+        <div
+          class="c-parallax__layer{% if b.hide_mobile %} c-hide-mobile{% endif %}"
+          data-depth="{{ b.depth }}"
+          style="left: {{ b.x }}%; top: {{ b.y }}%; width: {{ b.width }}%; --c-layer-width-mobile: {{ b.width_mobile }}%; z-index: {{ b.z_index }};{% if b.float %} --c-float: 1;{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {{ b.image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '400, 800, 1200', sizes: '50vw', alt: '' }}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  <div class="page-width c-parallax__content c-parallax__content--{{ s.content_position }}">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'content' -%}
+        {%- assign b = block.settings -%}
+        <div class="c-parallax__box c-align-{{ b.alignment }}{% if b.boxed %} c-parallax__box--boxed color-{{ b.box_color_scheme }}{% endif %}" {{ block.shopify_attributes }}>
+          {%- if b.rating_text != blank -%}{%- render 'c-stars', rating: 5, text: b.rating_text, size: 16 -%}{%- endif -%}
+          {%- if b.subheading != blank -%}<p class="c-subheading c-parallax__sub">{{ b.subheading | escape }}</p>{%- endif -%}
+          {%- if b.heading != blank -%}<h1 class="c-heading c-parallax__heading {{ b.heading_size }}">{{ b.heading }}</h1>{%- endif -%}
+          {%- if b.text != blank -%}<div class="rte c-parallax__text">{{ b.text }}</div>{%- endif -%}
+          {%- render 'c-buttons', s: b -%}
+          {%- if b.benefits != blank -%}
+            <ul class="c-parallax__benefits" role="list">
+              {%- assign lines = b.benefits | newline_to_br | split: '<br />' -%}
+              {%- for line in lines -%}{%- assign l = line | strip -%}{%- if l != blank -%}<li>{% render 'c-icon', name: 'check_circle', size: 18 %}{{ l }}</li>{%- endif -%}{%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</parallax-hero>
+
+{% schema %}
+{
+  "name": "Hero parallax 3D",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background",
+      "label": "Imagine fundal"
+    },
+    {
+      "type": "range",
+      "id": "background_depth",
+      "label": "Adâncime fundal",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Întunecare fundal",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 20,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Efect",
+      "options": [
+        {
+          "value": "mouse",
+          "label": "La mișcarea mouse-ului"
+        },
+        {
+          "value": "scroll",
+          "label": "La derulare"
+        },
+        {
+          "value": "both",
+          "label": "Ambele"
+        }
+      ],
+      "default": "both"
+    },
+    {
+      "type": "range",
+      "id": "intensity",
+      "label": "Intensitate",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Poziție conținut",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Înălțime minimă desktop",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 85,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Înălțime minimă mobil",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 75,
+      "unit": "vh"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-3"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "Conținut",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "rating_text",
+          "label": "Text rating",
+          "default": "<strong>4.9</strong> din 2.000+ recenzii"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Supratitlu",
+          "default": "Nou în 2026"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Titlu",
+          "default": "Dormi mai bine din <em>prima noapte</em>"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Mărime titlu",
+          "options": [
+            {
+              "value": "h4",
+              "label": "Mic"
+            },
+            {
+              "value": "h3",
+              "label": "Mediu"
+            },
+            {
+              "value": "h2",
+              "label": "Mare"
+            },
+            {
+              "value": "h1",
+              "label": "Foarte mare"
+            },
+            {
+              "value": "h0",
+              "label": "Extra mare"
+            }
+          ],
+          "default": "h0"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Perna ergonomică recomandată de kinetoterapeuți. Livrare în 24–48 de ore.</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits",
+          "label": "Beneficii (câte unul pe rând)",
+          "default": "Plata ramburs la curier\nRetur gratuit 30 de zile"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "checkbox",
+          "id": "boxed",
+          "label": "Casetă în spatele textului",
+          "default": false
+        },
+        {
+          "type": "color_scheme",
+          "id": "box_color_scheme",
+          "label": "Schemă de culori casetă",
+          "default": "scheme-1"
+        },
+        {
+          "type": "header",
+          "content": "Butoane"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Text buton 1",
+          "default": "Comandă acum"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Link buton 1"
+        },
+        {
+          "type": "select",
+          "id": "button_style_1",
+          "label": "Stil buton 1",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Text buton 2",
+          "default": "Află mai multe"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Link buton 2"
+        },
+        {
+          "type": "select",
+          "id": "button_style_2",
+          "label": "Stil buton 2",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "secondary"
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "layer",
+      "name": "Strat imagine",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine (PNG transparent)"
+        },
+        {
+          "type": "range",
+          "id": "depth",
+          "label": "Adâncime (mișcare)",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "default": 4,
+          "info": "Valori mari = mișcare mai puternică. Negativ = direcție opusă."
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Poziție orizontală",
+          "min": -20,
+          "max": 100,
+          "step": 2,
+          "default": 60,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Poziție verticală",
+          "min": -20,
+          "max": 100,
+          "step": 2,
+          "default": 16,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "width",
+          "label": "Lățime",
+          "min": 5,
+          "max": 100,
+          "step": 1,
+          "default": 30,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "width_mobile",
+          "label": "Lățime pe mobil",
+          "min": 5,
+          "max": 100,
+          "step": 1,
+          "default": 45,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "z_index",
+          "label": "Ordine (în față)",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "checkbox",
+          "id": "float",
+          "label": "Plutire continuă",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Ascunde pe mobil",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 11,
+  "presets": [
+    {
+      "name": "Hero parallax 3D",
+      "blocks": [
+        {
+          "type": "content"
+        },
+        {
+          "type": "layer"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,219 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-track-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width page-width--narrow">
+    {%- render 'c-section-header', section: section -%}
+    <track-order class="c-track" data-url="{{ s.tracking_url | escape }}">
+      <form class="c-track__form" novalidate>
+        {%- if s.show_courier -%}
+          <div class="select c-track__courier">
+            <select class="select__select" data-track-courier aria-label="{{ s.courier_label | escape }}">
+              {%- assign couriers = s.couriers | newline_to_br | split: '<br />' -%}
+              {%- for line in couriers -%}
+                {%- assign parts = line | strip | split: '|' -%}
+                {%- if parts.size == 2 -%}<option value="{{ parts.last | strip | escape }}">{{ parts.first | strip | escape }}</option>{%- endif -%}
+              {%- endfor -%}
+            </select>
+            <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+          </div>
+        {%- endif -%}
+        <div class="field">
+          <input class="field__input" type="text" id="TrackInput-{{ section.id }}" name="awb" autocomplete="off" placeholder="{{ s.input_label | escape }}" required>
+          <label class="field__label" for="TrackInput-{{ section.id }}">{{ s.input_label | escape }}</label>
+        </div>
+        <button type="submit" class="button{% if s.button_full_width %} button--full-width{% endif %}">{{ s.button_label | escape }}</button>
+        <p class="c-track__error c-text-urgency" role="alert" hidden>{{ 'carpatica.track.error' | t }}</p>
+      </form>
+      {%- if s.note != blank -%}<div class="rte c-track__note">{{ s.note }}</div>{%- endif -%}
+    </track-order>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Urmărire comandă",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Unde este <em>coletul</em> meu?",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Introdu numărul AWB primit pe email sau SMS.</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "input_label",
+      "label": "Text câmp",
+      "default": "Număr AWB"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Text buton",
+      "default": "Urmărește coletul"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_full_width",
+      "label": "Buton pe toată lățimea",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tracking_url",
+      "label": "Link urmărire implicit",
+      "default": "https://t.17track.net/ro#nums={awb}",
+      "info": "{awb} se înlocuiește cu numărul introdus."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_courier",
+      "label": "Alegere firmă de curierat",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "courier_label",
+      "label": "Text alegere curier",
+      "default": "Firma de curierat"
+    },
+    {
+      "type": "textarea",
+      "id": "couriers",
+      "label": "Firme de curierat",
+      "default": "Toate (17track)|https://t.17track.net/ro#nums={awb}",
+      "info": "Câte una pe rând: Nume|link cu {awb}. Copiază linkul de urmărire de pe site-ul curierului tău."
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Notă",
+      "default": "<p>Ai nevoie de ajutor? Scrie-ne la contact și îți răspundem în aceeași zi.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Urmărire comandă"
+    }
+  ]
+}
+{% endschema %}

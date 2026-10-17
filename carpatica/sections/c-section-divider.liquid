@@ -1,0 +1,103 @@
+{%- assign s = section.settings -%}
+{%- style -%}
+  #shopify-section-{{ section.id }} { line-height: 0; }
+  @media screen and (max-width: 749px) { .c-divider-shape-{{ section.id }} svg { height: {{ s.height | times: 0.6 | round }}px; } }
+{%- endstyle -%}
+<div class="c-divider-shape c-divider-shape-{{ section.id }}{% if s.flip_x %} c-divider-shape--flip-x{% endif %}{% if s.flip_y %} c-divider-shape--flip-y{% endif %}" style="background: {{ s.top_color }}; color: {{ s.bottom_color }};" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="display: block; width: 100%; height: {{ s.height }}px;" fill="currentColor">
+    {%- case s.shape -%}
+      {%- when 'wave' -%}<path d="M0 64c120 32 240 48 360 40s240-40 360-48 240 16 360 32 240 24 360 8v24H0z"/>
+      {%- when 'curve' -%}<path d="M0 120V60Q720-40 1440 60v60z"/>
+      {%- when 'tilt' -%}<path d="M0 120L1440 0v120z"/>
+      {%- when 'zigzag' -%}<path d="M0 120V80l60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40 60-40 60 40v40z"/>
+      {%- when 'triangle' -%}<path d="M0 120V0l720 110L1440 0v120z"/>
+      {%- when 'mountains' -%}<path d="M0 120V70l140-50 160 60 180-70 200 80 170-50 190 60 170-70 230 80v70z"/>
+      {%- else -%}<rect y="58" width="1440" height="4"/>
+    {%- endcase -%}
+  </svg>
+</div>
+
+{% schema %}
+{
+  "name": "Separator decorativ",
+  "tag": "div",
+  "class": "c-divider-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "shape",
+      "label": "Formă",
+      "options": [
+        {
+          "value": "wave",
+          "label": "Val"
+        },
+        {
+          "value": "curve",
+          "label": "Curbă"
+        },
+        {
+          "value": "tilt",
+          "label": "Înclinat"
+        },
+        {
+          "value": "zigzag",
+          "label": "Zigzag"
+        },
+        {
+          "value": "triangle",
+          "label": "Triunghi"
+        },
+        {
+          "value": "mountains",
+          "label": "Munți"
+        },
+        {
+          "value": "line",
+          "label": "Linie"
+        }
+      ],
+      "default": "wave"
+    },
+    {
+      "type": "color",
+      "id": "top_color",
+      "label": "Culoare sus (secțiunea de deasupra)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "bottom_color",
+      "label": "Culoare jos (secțiunea de dedesubt)",
+      "default": "#F1F5F9"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Înălțime",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "flip_x",
+      "label": "Oglindește orizontal",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "flip_y",
+      "label": "Oglindește vertical",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Separator decorativ"
+    }
+  ]
+}
+{% endschema %}

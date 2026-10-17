@@ -1,0 +1,339 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-contact-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width page-width--narrow">
+    {%- render 'c-section-header', section: section -%}
+    {%- form 'contact', id: 'ContactForm', class: 'c-contact' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="c-contact__success c-text-savings" tabindex="-1" autofocus>{% render 'c-icon', name: 'check_circle', size: 20 %}{%- if s.success_message != blank -%}{{ s.success_message }}{%- else -%}{{ 'templates.contact.form.post_success' | t }}{%- endif -%}</p>
+      {%- elsif form.errors -%}
+        <div class="c-contact__errors c-text-urgency" role="alert">{{ 'templates.contact.form.error_heading' | t }} {{ form.errors | default_errors }}</div>
+      {%- endif -%}
+      <div class="c-contact__grid">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          {%- assign field_id = 'ContactForm-' | append: block.id -%}
+          {%- assign field_name = 'contact[' | append: b.label | strip_html | append: ']' -%}
+          {%- if b.type == 'email' -%}{%- assign field_name = 'contact[email]' -%}{%- endif -%}
+          {%- if b.type == 'textarea' -%}{%- assign field_name = 'contact[body]' -%}{%- endif -%}
+          <div class="c-contact__field c-contact__field--{{ b.width }}" {{ block.shopify_attributes }}>
+            {%- case b.type -%}
+              {%- when 'textarea' -%}
+                <div class="field">
+                  <textarea rows="{{ b.rows }}" id="{{ field_id }}" class="text-area field__input" name="{{ field_name }}" placeholder="{{ b.label | escape }}"{% if b.required %} required{% endif %}></textarea>
+                  <label class="form__label field__label" for="{{ field_id }}">{{ b.label | escape }}{% if b.required %} *{% endif %}</label>
+                </div>
+              {%- when 'select' -%}
+                <div class="select">
+                  <select id="{{ field_id }}" class="select__select" name="{{ field_name }}"{% if b.required %} required{% endif %}>
+                    <option value="" selected disabled>{{ b.label | escape }}{% if b.required %} *{% endif %}</option>
+                    {%- assign opts = b.options | split: ',' -%}
+                    {%- for o in opts -%}{%- assign oo = o | strip -%}<option value="{{ oo | escape }}">{{ oo | escape }}</option>{%- endfor -%}
+                  </select>
+                  <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+                </div>
+              {%- else -%}
+                <div class="field">
+                  <input id="{{ field_id }}" type="{{ b.type }}" class="field__input" name="{{ field_name }}" placeholder="{{ b.label | escape }}"{% if b.required %} required{% endif %}{% if b.type == 'email' %} autocomplete="email" spellcheck="false" autocapitalize="off"{% elsif b.type == 'tel' %} autocomplete="tel" pattern="[0-9\-\+\s]*"{% endif %}>
+                  <label class="field__label" for="{{ field_id }}">{{ b.label | escape }}{% if b.required %} *{% endif %}</label>
+                </div>
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if s.consent_text != blank -%}
+        <label class="c-tnc__label c-contact__consent">
+          <input type="checkbox" class="c-tnc__input" required>
+          <span class="c-tnc__box" aria-hidden="true">{% render 'c-icon', name: 'check', size: 12 %}</span>
+          <span class="c-tnc__text">{{ s.consent_text }}</span>
+        </label>
+      {%- endif -%}
+      <button type="submit" class="button{% if s.button_full_width %} button--full-width{% endif %}">{{ s.button_label | escape }}</button>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Formular contact avansat",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Contactează-ne",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Îți răspundem în maximum 24 de ore lucrătoare.</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Text buton",
+      "default": "Trimite mesajul"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_full_width",
+      "label": "Buton pe toată lățimea",
+      "default": false
+    },
+    {
+      "type": "inline_richtext",
+      "id": "consent_text",
+      "label": "Acord (opțional)",
+      "default": "Sunt de acord cu <a href=\"/policies/privacy-policy\">prelucrarea datelor</a>."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "success_message",
+      "label": "Mesaj succes",
+      "default": "Mulțumim! Am primit mesajul tău."
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "field",
+      "name": "Câmp",
+      "settings": [
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Tip",
+          "options": [
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "tel",
+              "label": "Telefon"
+            },
+            {
+              "value": "number",
+              "label": "Număr"
+            },
+            {
+              "value": "textarea",
+              "label": "Mesaj (text lung)"
+            },
+            {
+              "value": "select",
+              "label": "Listă"
+            }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etichetă",
+          "default": "Nume"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Obligatoriu",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Lățime",
+          "options": [
+            {
+              "value": "half",
+              "label": "Jumătate"
+            },
+            {
+              "value": "full",
+              "label": "Completă"
+            }
+          ],
+          "default": "half"
+        },
+        {
+          "type": "range",
+          "id": "rows",
+          "label": "Rânduri (mesaj)",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "options",
+          "label": "Opțiuni listă (separate prin virgulă)",
+          "default": "Comandă, Retur, Altceva"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Formular contact avansat",
+      "blocks": [
+        {
+          "type": "field",
+          "settings": {
+            "label": "Nume",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "type": "email",
+            "label": "Email",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "type": "tel",
+            "label": "Telefon"
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "type": "select",
+            "label": "Subiect"
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "type": "textarea",
+            "label": "Mesaj",
+            "width": "full",
+            "required": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

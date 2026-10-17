@@ -1,0 +1,102 @@
+{%- assign s = section.settings -%}
+{%- if s.enabled -%}
+  {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+  <scroll-top
+    class="c-scroll-top c-scroll-top--{{ s.position }} color-{{ s.color_scheme }}"
+    data-after="{{ s.display_after }}"
+    style="--c-offset-x: {{ s.offset_x }}px; --c-offset-y: {{ s.offset_y }}px;"
+  >
+    <button type="button" aria-label="{{ s.label | escape }}">
+      <span class="svg-wrapper">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
+    </button>
+  </scroll-top>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Buton înapoi sus",
+  "tag": "div",
+  "class": "c-overlay-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Activează",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "display_after",
+      "label": "Apare după derularea a",
+      "min": 100,
+      "max": 2000,
+      "step": 100,
+      "default": 600,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Poziție",
+      "options": [
+        {
+          "value": "right",
+          "label": "Dreapta"
+        },
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "offset_x",
+      "label": "Distanță orizontală",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "offset_y",
+      "label": "Distanță verticală",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Text accesibilitate",
+      "default": "Înapoi sus"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Buton înapoi sus"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.overlay"
+    ]
+  }
+}
+{% endschema %}

@@ -72,6 +72,11 @@ li,
 
 /* ---------- Utilitare ---------- */
 
+/* Atributul hidden câștigă mereu în fața display-ului din componentele Carpatica */
+[class*='c-'][hidden] {
+  display: none !important;
+}
+
 /* Elementele personalizate sunt implicit inline */
 quantity-breaks,
 bundle-offer,
@@ -579,12 +584,12 @@ html.c-blocked body > *:not(.c-country-block) {
   margin-top: 1rem;
 }
 
-.c-section-header .c-subheading {
+.c-subheading {
   font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgb(var(--color-accent));
+  color: var(--c-highlight, rgb(var(--color-accent)));
   margin: 0;
 }
 

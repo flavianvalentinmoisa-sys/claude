@@ -1,0 +1,290 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-pricing-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <div class="c-pricing" style="--c-cols: {{ section.blocks.size | at_most: 4 }};">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <div class="c-plan color-{% if b.highlight %}{{ s.highlight_color_scheme }}{% else %}{{ s.card_color_scheme }}{% endif %}{% if b.highlight %} c-plan--highlight{% endif %}" {{ block.shopify_attributes }}>
+          {%- if b.badge != blank -%}<span class="c-plan__badge">{{ b.badge | escape }}</span>{%- endif -%}
+          {%- if b.image != blank -%}<div class="c-plan__image">{{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600', sizes: '300px' }}</div>{%- endif -%}
+          <p class="c-plan__name h4">{{ b.name | escape }}</p>
+          {%- if b.description != blank -%}<p class="c-plan__desc">{{ b.description }}</p>{%- endif -%}
+          <p class="c-plan__price">
+            <span class="c-plan__amount">{{ b.price | escape }}</span>
+            {%- if b.compare_price != blank -%}<s>{{ b.compare_price | escape }}</s>{%- endif -%}
+            {%- if b.price_note != blank -%}<span class="c-plan__note">{{ b.price_note | escape }}</span>{%- endif -%}
+          </p>
+          {%- assign lines = b.features | newline_to_br | split: '<br />' -%}
+          <ul class="c-plan__features" role="list">
+            {%- for line in lines -%}
+              {%- assign l = line | strip -%}
+              {%- if l == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign first = l | slice: 0 -%}
+              {%- if first == '-' -%}
+                <li class="is-off">{% render 'c-icon', name: 'close', size: 16 %}<span>{{ l | remove_first: '-' | strip }}</span></li>
+              {%- else -%}
+                <li>{% render 'c-icon', name: 'check', size: 16 %}<span>{{ l | remove_first: '+' | strip }}</span></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+          {%- if b.button_label != blank -%}
+            <a href="{{ b.product.url | default: b.button_link | default: '#' }}" class="button button--full-width{% unless b.highlight %} button--secondary{% endunless %}">{{ b.button_label | escape }}</a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tabel de prețuri",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Alege <em>pachetul</em> potrivit",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Schemă de culori card",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "highlight_color_scheme",
+      "label": "Schemă de culori card evidențiat",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "plan",
+      "name": "Pachet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Etichetă"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nume",
+          "default": "Standard"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "Descriere",
+          "default": "Ideal pentru început"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Preț",
+          "default": "149 lei"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Preț tăiat"
+        },
+        {
+          "type": "text",
+          "id": "price_note",
+          "label": "Notă preț",
+          "default": "plată ramburs, TVA inclus"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Caracteristici",
+          "default": "1 pernă\nHusă din bumbac\n- Husă de rezervă\n- Cadou",
+          "info": "Câte una pe rând. Începe cu „-” pentru caracteristică inclusă doar în alte pachete."
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Evidențiază acest pachet",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Text buton",
+          "default": "Alege"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produs (link buton)"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Sau link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Tabel de prețuri",
+      "blocks": [
+        {
+          "type": "plan"
+        },
+        {
+          "type": "plan",
+          "settings": {
+            "badge": "Cel mai popular",
+            "name": "Duo",
+            "price": "249 lei",
+            "compare_price": "298 lei",
+            "features": "2 perne\nHusă din bumbac\nHusă de rezervă\n- Cadou",
+            "highlight": true
+          }
+        },
+        {
+          "type": "plan",
+          "settings": {
+            "name": "Familie",
+            "price": "449 lei",
+            "compare_price": "596 lei",
+            "features": "4 perne\nHusă din bumbac\nHusă de rezervă\nCadou surpriză"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

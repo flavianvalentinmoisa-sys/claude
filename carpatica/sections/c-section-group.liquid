@@ -1,0 +1,155 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<section-group
+  class="c-group color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding{% if s.mobile_reverse %} c-group--mobile-reverse{% endif %}"
+  data-first="{{ s.section_1_id | escape }}"
+  data-second="{{ s.section_2_id | escape }}"
+  style="--c-group-gap: {{ s.gap }}px; --c-group-ratio: {{ s.ratio }};"
+>
+  <div class="{% unless s.full_width %}page-width{% endunless %} c-group__grid">
+    <div class="c-group__slot" data-slot="1"></div>
+    <div class="c-group__slot" data-slot="2"></div>
+  </div>
+  {%- if request.design_mode -%}
+    <p class="c-group__note page-width">Grup secțiuni: introdu ID-urile celor două secțiuni (câmpul „ID secțiune (ancoră)” din fiecare secțiune Carpatica sau ID-ul Shopify al secțiunii).</p>
+  {%- endif -%}
+</section-group>
+
+{% schema %}
+{
+  "name": "Grup de secțiuni",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Afișează două secțiuni din aceeași pagină una lângă alta. Completează în fiecare secțiune Carpatica câmpul „ID secțiune (ancoră)” și scrie aici ID-urile."
+    },
+    {
+      "type": "text",
+      "id": "section_1_id",
+      "label": "ID secțiunea 1",
+      "placeholder": "ex: poveste"
+    },
+    {
+      "type": "text",
+      "id": "section_2_id",
+      "label": "ID secțiunea 2",
+      "placeholder": "ex: video"
+    },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "Proporție coloane",
+      "options": [
+        {
+          "value": "1fr 1fr",
+          "label": "50 / 50"
+        },
+        {
+          "value": "2fr 1fr",
+          "label": "66 / 33"
+        },
+        {
+          "value": "1fr 2fr",
+          "label": "33 / 66"
+        },
+        {
+          "value": "3fr 2fr",
+          "label": "60 / 40"
+        },
+        {
+          "value": "2fr 3fr",
+          "label": "40 / 60"
+        }
+      ],
+      "default": "1fr 1fr"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Spațiu între secțiuni",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_reverse",
+      "label": "A doua secțiune prima pe mobil",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Lățime completă",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grup de secțiuni"
+    }
+  ]
+}
+{% endschema %}

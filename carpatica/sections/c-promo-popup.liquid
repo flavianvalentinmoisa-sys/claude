@@ -1,0 +1,293 @@
+{%- assign s = section.settings -%}
+{%- if s.enabled -%}
+  {{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+  {%- assign popup_id = 'PromoPopup-' | append: section.id -%}
+  <promo-popup
+    class="c-promo"
+    data-trigger="{{ s.trigger }}"
+    data-delay="{{ s.delay }}"
+    data-frequency="{{ s.frequency }}"
+    data-key="c-promo-{{ section.id }}"
+    data-pages="{{ s.show_on }}"
+    data-template="{{ template.name }}"
+    data-design-mode="{{ request.design_mode }}"
+  >
+    <c-modal id="{{ popup_id }}" data-move-to-body="false" class="c-promo__modal" role="dialog" aria-modal="true" aria-label="{{ s.heading | strip_html | escape }}" style="--c-modal-width: {% if s.image != blank and s.layout != 'top' %}82rem{% else %}48rem{% endif %};">
+      <div class="c-modal__overlay"></div>
+      <div class="c-modal__dialog c-promo__dialog c-promo__dialog--{{ s.layout }} color-{{ s.color_scheme }}" tabindex="-1">
+        <button type="button" class="c-modal__close" data-modal-close aria-label="{{ 'accessibility.close' | t }}">{{- 'icon-close.svg' | inline_asset_content -}}</button>
+        {%- if s.image != blank -%}
+          <div class="c-promo__image">{{ s.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400, 600, 900', sizes: '(min-width: 750px) 400px, 100vw' }}</div>
+        {%- endif -%}
+        <div class="c-promo__body c-align-center">
+          {%- form 'customer', id: 'PromoPopupForm', class: 'c-promo__form' -%}
+            {%- if form.posted_successfully? -%}
+              <div class="c-promo__success" data-posted="true">
+                {%- if s.success_heading != blank -%}<p class="c-heading h2">{{ s.success_heading }}</p>{%- endif -%}
+                {%- if s.success_text != blank -%}<div class="rte">{{ s.success_text }}</div>{%- endif -%}
+                {%- if s.discount_code != blank -%}
+                  <copy-button data-text="{{ s.discount_code | escape }}" class="c-promo__code">
+                    <button type="button" class="c-copy">
+                      {{ s.discount_code | escape }}
+                      <span class="c-copy__feedback">{{ 'carpatica.general.copy' | t }}</span>
+                    </button>
+                  </copy-button>
+                {%- endif -%}
+                <button type="button" class="button button--full-width" data-modal-close>{{ s.success_button | escape }}</button>
+              </div>
+            {%- else -%}
+              {%- if s.subheading != blank -%}<p class="c-subheading">{{ s.subheading | escape }}</p>{%- endif -%}
+              {%- if s.heading != blank -%}<p class="c-heading h1 c-promo__heading">{{ s.heading }}</p>{%- endif -%}
+              {%- if s.text != blank -%}<div class="rte c-promo__text">{{ s.text }}</div>{%- endif -%}
+              {%- if s.show_timer -%}
+                <countdown-timer class="c-promo__timer c-timer" data-mode="evergreen" data-duration="{{ s.timer_minutes | times: 60 }}" data-key="promo-{{ section.id }}">
+                  <span class="c-promo__timer-unit"><span data-unit="h">00</span><small>ore</small></span>
+                  <span class="c-promo__timer-unit"><span data-unit="m">00</span><small>min</small></span>
+                  <span class="c-promo__timer-unit"><span data-unit="s">00</span><small>sec</small></span>
+                </countdown-timer>
+              {%- endif -%}
+              {%- if s.mode == 'signup' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter,popup">
+                <div class="field c-promo__field">
+                  <input id="PromoPopupEmail" type="email" name="contact[email]" class="field__input" autocomplete="email" required placeholder="{{ 'carpatica.popup.email_placeholder' | t }}">
+                  <label class="field__label" for="PromoPopupEmail">{{ 'carpatica.popup.email_placeholder' | t }}</label>
+                </div>
+                {%- if form.errors -%}<p class="c-text-urgency">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
+                <button type="submit" class="button button--full-width">{{ s.button_label | escape }}</button>
+              {%- else -%}
+                <a href="{{ s.button_link | default: '#' }}" class="button button--full-width">{{ s.button_label | escape }}</a>
+              {%- endif -%}
+              {%- if s.dismiss_label != blank -%}
+                <button type="button" class="c-promo__dismiss link" data-modal-close>{{ s.dismiss_label | escape }}</button>
+              {%- endif -%}
+              {%- if s.legal_text != blank -%}<p class="c-promo__legal">{{ s.legal_text }}</p>{%- endif -%}
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      </div>
+    </c-modal>
+  </promo-popup>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Pop-up promoțional",
+  "tag": "div",
+  "class": "c-overlay-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Activează",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Tip",
+      "options": [
+        {
+          "value": "signup",
+          "label": "Abonare email + cod reducere"
+        },
+        {
+          "value": "link",
+          "label": "Anunț cu buton"
+        }
+      ],
+      "default": "signup"
+    },
+    {
+      "type": "select",
+      "id": "trigger",
+      "label": "Când apare",
+      "options": [
+        {
+          "value": "delay",
+          "label": "După câteva secunde"
+        },
+        {
+          "value": "exit",
+          "label": "Când vizitatorul vrea să plece"
+        },
+        {
+          "value": "scroll",
+          "label": "După 40% din pagină"
+        }
+      ],
+      "default": "delay"
+    },
+    {
+      "type": "range",
+      "id": "delay",
+      "label": "Întârziere",
+      "min": 1,
+      "max": 60,
+      "step": 1,
+      "default": 8,
+      "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "frequency",
+      "label": "Nu mai apare timp de (zile)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 3,
+      "info": "0 = la fiecare vizită."
+    },
+    {
+      "type": "select",
+      "id": "show_on",
+      "label": "Pagini",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate paginile"
+        },
+        {
+          "value": "home",
+          "label": "Doar prima pagină"
+        },
+        {
+          "value": "product",
+          "label": "Doar paginile de produs"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagine"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Poziție imagine",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        },
+        {
+          "value": "top",
+          "label": "Sus"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Conținut"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Doar pentru abonați"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "<em>10% reducere</em> la prima comandă"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Abonează-te la noutăți și primești codul pe loc.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_timer",
+      "label": "Timer",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "timer_minutes",
+      "label": "Durată timer",
+      "min": 5,
+      "max": 240,
+      "step": 5,
+      "default": 15,
+      "unit": "min"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Text buton",
+      "default": "Vreau reducerea"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link buton (tip anunț)"
+    },
+    {
+      "type": "text",
+      "id": "dismiss_label",
+      "label": "Text refuz",
+      "default": "Nu, mulțumesc"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "legal_text",
+      "label": "Text legal",
+      "default": "Te poți dezabona oricând. Vezi <a href=\"/policies/privacy-policy\">politica de confidențialitate</a>."
+    },
+    {
+      "type": "header",
+      "content": "După abonare"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "success_heading",
+      "label": "Titlu",
+      "default": "Mulțumim! 🎉"
+    },
+    {
+      "type": "richtext",
+      "id": "success_text",
+      "label": "Text",
+      "default": "<p>Folosește codul de mai jos la finalizarea comenzii:</p>"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Cod de reducere",
+      "default": "BINE10"
+    },
+    {
+      "type": "text",
+      "id": "success_button",
+      "label": "Text buton",
+      "default": "Continuă cumpărăturile"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pop-up promoțional"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "custom.overlay"
+    ]
+  }
+}
+{% endschema %}

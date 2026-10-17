@@ -1,0 +1,131 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-music-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    <music-player class="c-music c-music--card" data-src="{{ s.audio_url | escape }}" data-volume="{{ s.volume }}" data-loop="{{ s.loop }}">
+      {%- if s.cover != blank -%}
+        <span class="c-music__cover">{{ s.cover | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 240', sizes: '96px', alt: '' }}</span>
+      {%- endif -%}
+      <span class="c-music__info">
+        <span class="c-music__title">{{ s.title | escape }}</span>
+        {%- if s.artist != blank -%}<span class="c-music__artist">{{ s.artist | escape }}</span>{%- endif -%}
+        <span class="c-music__progress"><span data-music-progress></span></span>
+      </span>
+      <button type="button" class="c-music__toggle" data-music-toggle aria-label="{{ 'carpatica.music.play' | t }}" data-label-play="{{ 'carpatica.music.play' | t }}" data-label-pause="{{ 'carpatica.music.pause' | t }}">
+        <span class="c-music__icon-play">{{- 'icon-play.svg' | inline_asset_content -}}</span>
+        <span class="c-music__icon-pause">{{- 'icon-pause.svg' | inline_asset_content -}}</span>
+      </button>
+    </music-player>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Player muzică",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "audio_url",
+      "label": "Link fișier audio (.mp3)",
+      "info": "Încarcă fișierul în Conținut > Fișiere și lipește linkul aici."
+    },
+    {
+      "type": "image_picker",
+      "id": "cover",
+      "label": "Copertă"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titlu",
+      "default": "Muzica magazinului"
+    },
+    {
+      "type": "text",
+      "id": "artist",
+      "label": "Artist"
+    },
+    {
+      "type": "range",
+      "id": "volume",
+      "label": "Volum",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Repetă",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Player muzică"
+    }
+  ]
+}
+{% endschema %}

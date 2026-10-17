@@ -1,0 +1,1784 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{{ 'carpatica-product.css' | asset_url | stylesheet_tag }}
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-columns-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <div class="c-columns c-columns--valign-{{ s.vertical_alignment }}{% if s.mobile_reverse %} c-columns--mobile-reverse{% endif %}" style="--c-cols: {{ s.columns }}; --c-col-gap: {{ s.gap }}px;">
+      {%- for col in (1..s.columns) -%}
+        <div class="c-columns__col{% if s.boxed_columns %} c-columns__col--boxed color-{{ s.box_color_scheme }}{% endif %}">
+          {%- for block in section.blocks -%}
+            {%- assign b = block.settings -%}
+            {%- assign bcol = b.column | plus: 0 -%}
+            {%- if bcol > s.columns -%}{%- assign bcol = s.columns -%}{%- endif -%}
+            {%- if bcol != col -%}{%- continue -%}{%- endif -%}
+            <div class="c-col-block c-col-block--{{ block.type }} c-align-{{ b.alignment | default: 'left' }}" style="--c-mt: {{ b.margin_top | default: 0 }}px; --c-mb: {{ b.margin_bottom | default: 16 }}px;" {{ block.shopify_attributes }}>
+              {%- case block.type -%}
+                {%- when 'heading' -%}
+                  {%- if b.subheading != blank -%}<p class="c-subheading">{{ b.subheading | escape }}</p>{%- endif -%}
+                  <h2 class="c-heading {{ b.heading_size }}">{{ b.heading }}</h2>
+                {%- when 'richtext' -%}
+                  <div class="rte">{{ b.text }}</div>
+                {%- when 'rating_stars' -%}
+                  {%- render 'c-stars', rating: b.rating, text: b.text, size: 18 -%}
+                {%- when 'buttons' -%}
+                  {%- render 'c-buttons', s: b -%}
+                {%- when 'atc_button' -%}
+                  {%- assign ap = b.product -%}
+                  {%- if ap != blank -%}
+                    {%- if ap.has_only_default_variant -%}
+                      <button type="button" class="button{% if b.full_width %} button--full-width{% endif %}" data-quick-add="{{ ap.selected_or_first_available_variant.id }}"{% unless ap.available %} disabled{% endunless %}>
+                        <span>{{ b.label | default: ap.title | escape }} · {{ ap.price | money }}</span>
+                        {%- render 'loading-spinner' -%}
+                      </button>
+                    {%- else -%}
+                      <a href="{{ ap.url }}" class="button{% if b.full_width %} button--full-width{% endif %}">{{ b.label | default: ap.title | escape }}</a>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- when 'text_with_icon' -%}
+                  <div class="c-twi{% if b.boxed %} c-twi--boxed{% endif %}">
+                    {%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, image: b.icon_image, size: b.icon_size -%}
+                    <div class="c-twi__text rte">{{ b.text }}</div>
+                  </div>
+                {%- when 'image' -%}
+                  {%- if b.image != blank -%}
+                    <div class="c-col-image" style="max-width: {{ b.width }}%; border-radius: {{ b.radius }}px;">
+                      {%- if b.link != blank -%}<a href="{{ b.link }}">{%- endif -%}
+                      {{ b.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '400, 700, 1000, 1400', sizes: '(min-width: 990px) 50vw, 100vw' }}
+                      {%- if b.link != blank -%}</a>{%- endif -%}
+                    </div>
+                  {%- else -%}
+                    <div class="c-col-image">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+                  {%- endif -%}
+                {%- when 'video' -%}
+                  <div class="c-pb-video" style="--c-video-radius: {{ b.radius }}px;">
+                    {%- if b.video != blank -%}
+                      {{ b.video | video_tag: autoplay: b.autoplay, loop: b.autoplay, muted: b.autoplay, controls: b.controls, playsinline: true, image_size: '1200x', class: 'c-pb-video__media' }}
+                    {%- elsif b.video_url != blank -%}
+                      {%- render 'c-video-embed', video_url: b.video_url, autoplay: b.autoplay -%}
+                    {%- endif -%}
+                  </div>
+                {%- when 'accordion' -%}
+                  <div class="accordion c-col-accordion">
+                    <details{% if b.open %} open{% endif %}>
+                      <summary>
+                        <div class="summary__title">
+                          {%- render 'c-icon', name: b.icon, size: 20 -%}
+                          <h3 class="h4 accordion__title">{{ b.heading | escape }}</h3>
+                        </div>
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </summary>
+                      <div class="accordion__content rte">{{ b.content }}</div>
+                    </details>
+                  </div>
+                {%- when 'payment_badges' -%}
+                  <ul class="list list-payment c-payments__list" role="list">
+                    {%- for type in shop.enabled_payment_types -%}<li class="list-payment__item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>{%- endfor -%}
+                  </ul>
+                {%- when 'email_signup' -%}
+                  {%- form 'customer', id: 'ColumnsNewsletter', class: 'newsletter-form c-col-newsletter' -%}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <div class="newsletter-form__field-wrapper">
+                      <div class="field">
+                        <input id="ColumnsNewsletter-{{ block.id }}" type="email" name="contact[email]" class="field__input" autocomplete="email" placeholder="{{ 'newsletter.label' | t }}" required>
+                        <label class="field__label" for="ColumnsNewsletter-{{ block.id }}">{{ 'newsletter.label' | t }}</label>
+                        <button type="submit" class="newsletter-form__button field__button" aria-label="{{ 'newsletter.button_label' | t }}">{{- 'icon-arrow.svg' | inline_asset_content -}}</button>
+                      </div>
+                    </div>
+                    {%- if form.posted_successfully? -%}<p class="c-text-savings">{{ 'newsletter.success' | t }}</p>{%- endif -%}
+                  {%- endform -%}
+                {%- when 'custom_liquid' -%}
+                  {{ b.custom_liquid }}
+              {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Coloane personalizate",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Număr coloane",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Spațiu între coloane",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Aliniere verticală",
+      "options": [
+        {
+          "value": "top",
+          "label": "Sus"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "bottom",
+          "label": "Jos"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_reverse",
+      "label": "Inversează ordinea pe mobil",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "boxed_columns",
+      "label": "Coloane în casete",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "box_color_scheme",
+      "label": "Schemă de culori casete",
+      "default": "scheme-2"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Titlu",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Supratitlu"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Titlu",
+          "default": "Titlu coloană"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Mărime",
+          "options": [
+            {
+              "value": "h4",
+              "label": "Mic"
+            },
+            {
+              "value": "h3",
+              "label": "Mediu"
+            },
+            {
+              "value": "h2",
+              "label": "Mare"
+            },
+            {
+              "value": "h1",
+              "label": "Foarte mare"
+            },
+            {
+              "value": "h0",
+              "label": "Extra mare"
+            }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Scrie un text care să explice beneficiile produsului.</p>"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "rating_stars",
+      "name": "Stele rating",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Notă",
+          "min": 1,
+          "max": 5,
+          "step": 0.1,
+          "default": 4.9
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<strong>4.9</strong> din 2.000+ recenzii"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Butoane",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Text buton 1",
+          "default": "Cumpără acum"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Link buton 1"
+        },
+        {
+          "type": "select",
+          "id": "button_style_1",
+          "label": "Stil buton 1",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Text buton 2"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Link buton 2"
+        },
+        {
+          "type": "select",
+          "id": "button_style_2",
+          "label": "Stil buton 2",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "secondary"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "atc_button",
+      "name": "Buton adaugă în coș",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produs"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Text buton",
+          "default": "Adaugă în coș"
+        },
+        {
+          "type": "checkbox",
+          "id": "full_width",
+          "label": "Lățime completă",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "text_with_icon",
+      "name": "Text cu iconiță",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p><strong>Livrare rapidă</strong> în toată țara</p>"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Iconiță",
+          "options": [
+            {
+              "value": "none",
+              "label": "Fără iconiță"
+            },
+            {
+              "value": "check",
+              "label": "Bifă"
+            },
+            {
+              "value": "check_circle",
+              "label": "Bifă în cerc"
+            },
+            {
+              "value": "truck",
+              "label": "Camion livrare"
+            },
+            {
+              "value": "truck_fast",
+              "label": "Livrare rapidă"
+            },
+            {
+              "value": "package",
+              "label": "Colet"
+            },
+            {
+              "value": "box_open",
+              "label": "Cutie deschisă"
+            },
+            {
+              "value": "return",
+              "label": "Retur"
+            },
+            {
+              "value": "shield",
+              "label": "Garanție / protecție"
+            },
+            {
+              "value": "lock",
+              "label": "Plată sigură"
+            },
+            {
+              "value": "card",
+              "label": "Card"
+            },
+            {
+              "value": "cash",
+              "label": "Numerar / ramburs"
+            },
+            {
+              "value": "wallet",
+              "label": "Portofel"
+            },
+            {
+              "value": "star",
+              "label": "Stea"
+            },
+            {
+              "value": "heart",
+              "label": "Inimă"
+            },
+            {
+              "value": "gift",
+              "label": "Cadou"
+            },
+            {
+              "value": "fire",
+              "label": "Foc / popular"
+            },
+            {
+              "value": "clock",
+              "label": "Ceas"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "phone",
+              "label": "Telefon"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "support",
+              "label": "Asistență"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "map_pin",
+              "label": "Locație"
+            },
+            {
+              "value": "leaf",
+              "label": "Natural / frunză"
+            },
+            {
+              "value": "water",
+              "label": "Picătură apă"
+            },
+            {
+              "value": "recycle",
+              "label": "Reciclare"
+            },
+            {
+              "value": "sparkle",
+              "label": "Strălucire"
+            },
+            {
+              "value": "thumbs_up",
+              "label": "Like"
+            },
+            {
+              "value": "users",
+              "label": "Clienți"
+            },
+            {
+              "value": "award",
+              "label": "Premiu"
+            },
+            {
+              "value": "medal",
+              "label": "Medalie"
+            },
+            {
+              "value": "percent",
+              "label": "Procent / reducere"
+            },
+            {
+              "value": "tag",
+              "label": "Etichetă"
+            },
+            {
+              "value": "eye",
+              "label": "Ochi"
+            },
+            {
+              "value": "lightning",
+              "label": "Fulger / rapid"
+            },
+            {
+              "value": "bolt_battery",
+              "label": "Baterie"
+            },
+            {
+              "value": "globe",
+              "label": "Glob"
+            },
+            {
+              "value": "plane",
+              "label": "Avion"
+            },
+            {
+              "value": "home",
+              "label": "Casă"
+            },
+            {
+              "value": "sun",
+              "label": "Soare"
+            },
+            {
+              "value": "moon",
+              "label": "Lună / somn"
+            },
+            {
+              "value": "baby",
+              "label": "Copii"
+            },
+            {
+              "value": "paw",
+              "label": "Animale"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Sport / fitness"
+            },
+            {
+              "value": "ruler",
+              "label": "Riglă / mărimi"
+            },
+            {
+              "value": "smile",
+              "label": "Zâmbet"
+            },
+            {
+              "value": "info",
+              "label": "Informație"
+            },
+            {
+              "value": "warning",
+              "label": "Atenționare"
+            },
+            {
+              "value": "question",
+              "label": "Întrebare"
+            },
+            {
+              "value": "romania",
+              "label": "Steag"
+            },
+            {
+              "value": "flag",
+              "label": "Fanion"
+            },
+            {
+              "value": "arrow_right",
+              "label": "Săgeată"
+            }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Sau emoji",
+          "info": "Ex: 🚚. Înlocuiește iconița."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Sau imagine proprie"
+        },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "label": "Mărime iconiță",
+          "min": 12,
+          "max": 64,
+          "step": 2,
+          "default": 28,
+          "unit": "px"
+        },
+        {
+          "type": "checkbox",
+          "id": "boxed",
+          "label": "Casetă",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Imagine",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "range",
+          "id": "width",
+          "label": "Lățime",
+          "min": 20,
+          "max": 100,
+          "step": 5,
+          "default": 100,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "label": "Rotunjire colțuri",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "default": 12,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video Shopify"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Sau link YouTube/Vimeo",
+          "accept": [
+            "youtube",
+            "vimeo"
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "autoplay",
+          "label": "Redare automată fără sonor",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "controls",
+          "label": "Controale",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "label": "Rotunjire colțuri",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "default": 12,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Rând pliabil",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titlu",
+          "default": "Întrebare frecventă"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Conținut",
+          "default": "<p>Răspunsul la întrebare.</p>"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Iconiță",
+          "options": [
+            {
+              "value": "none",
+              "label": "Fără iconiță"
+            },
+            {
+              "value": "check",
+              "label": "Bifă"
+            },
+            {
+              "value": "check_circle",
+              "label": "Bifă în cerc"
+            },
+            {
+              "value": "truck",
+              "label": "Camion livrare"
+            },
+            {
+              "value": "truck_fast",
+              "label": "Livrare rapidă"
+            },
+            {
+              "value": "package",
+              "label": "Colet"
+            },
+            {
+              "value": "box_open",
+              "label": "Cutie deschisă"
+            },
+            {
+              "value": "return",
+              "label": "Retur"
+            },
+            {
+              "value": "shield",
+              "label": "Garanție / protecție"
+            },
+            {
+              "value": "lock",
+              "label": "Plată sigură"
+            },
+            {
+              "value": "card",
+              "label": "Card"
+            },
+            {
+              "value": "cash",
+              "label": "Numerar / ramburs"
+            },
+            {
+              "value": "wallet",
+              "label": "Portofel"
+            },
+            {
+              "value": "star",
+              "label": "Stea"
+            },
+            {
+              "value": "heart",
+              "label": "Inimă"
+            },
+            {
+              "value": "gift",
+              "label": "Cadou"
+            },
+            {
+              "value": "fire",
+              "label": "Foc / popular"
+            },
+            {
+              "value": "clock",
+              "label": "Ceas"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "phone",
+              "label": "Telefon"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "support",
+              "label": "Asistență"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "map_pin",
+              "label": "Locație"
+            },
+            {
+              "value": "leaf",
+              "label": "Natural / frunză"
+            },
+            {
+              "value": "water",
+              "label": "Picătură apă"
+            },
+            {
+              "value": "recycle",
+              "label": "Reciclare"
+            },
+            {
+              "value": "sparkle",
+              "label": "Strălucire"
+            },
+            {
+              "value": "thumbs_up",
+              "label": "Like"
+            },
+            {
+              "value": "users",
+              "label": "Clienți"
+            },
+            {
+              "value": "award",
+              "label": "Premiu"
+            },
+            {
+              "value": "medal",
+              "label": "Medalie"
+            },
+            {
+              "value": "percent",
+              "label": "Procent / reducere"
+            },
+            {
+              "value": "tag",
+              "label": "Etichetă"
+            },
+            {
+              "value": "eye",
+              "label": "Ochi"
+            },
+            {
+              "value": "lightning",
+              "label": "Fulger / rapid"
+            },
+            {
+              "value": "bolt_battery",
+              "label": "Baterie"
+            },
+            {
+              "value": "globe",
+              "label": "Glob"
+            },
+            {
+              "value": "plane",
+              "label": "Avion"
+            },
+            {
+              "value": "home",
+              "label": "Casă"
+            },
+            {
+              "value": "sun",
+              "label": "Soare"
+            },
+            {
+              "value": "moon",
+              "label": "Lună / somn"
+            },
+            {
+              "value": "baby",
+              "label": "Copii"
+            },
+            {
+              "value": "paw",
+              "label": "Animale"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Sport / fitness"
+            },
+            {
+              "value": "ruler",
+              "label": "Riglă / mărimi"
+            },
+            {
+              "value": "smile",
+              "label": "Zâmbet"
+            },
+            {
+              "value": "info",
+              "label": "Informație"
+            },
+            {
+              "value": "warning",
+              "label": "Atenționare"
+            },
+            {
+              "value": "question",
+              "label": "Întrebare"
+            },
+            {
+              "value": "romania",
+              "label": "Steag"
+            },
+            {
+              "value": "flag",
+              "label": "Fanion"
+            },
+            {
+              "value": "arrow_right",
+              "label": "Săgeată"
+            }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Deschis implicit",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "payment_badges",
+      "name": "Metode de plată",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Aliniere",
+          "options": [
+            {
+              "value": "left",
+              "label": "Stânga"
+            },
+            {
+              "value": "center",
+              "label": "Centru"
+            },
+            {
+              "value": "right",
+              "label": "Dreapta"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "email_signup",
+      "name": "Abonare email",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Cod Liquid",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Coloana",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Cod Liquid"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margine sus",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 0,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margine jos",
+          "min": 0,
+          "max": 60,
+          "step": 2,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Coloane personalizate",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "column": "1"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "column": "2",
+            "subheading": "Povestea noastră",
+            "heading": "Creat în <em>România</em>, cu grijă"
+          }
+        },
+        {
+          "type": "richtext",
+          "settings": {
+            "column": "2"
+          }
+        },
+        {
+          "type": "buttons",
+          "settings": {
+            "column": "2"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

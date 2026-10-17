@@ -1,0 +1,252 @@
+{{ 'section-c-landing.css' | asset_url | stylesheet_tag }}
+{{ 'carpatica-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-product.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'carpatica-landing.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+{%- assign pct = s.discount_percent | plus: 0 -%}
+<div class="c-deals-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <bundle-deals class="c-deals" data-percent="{{ pct }}">
+      <ul class="c-deals__products" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign dp = block.settings.product -%}
+          {%- if dp == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign dv = dp.selected_or_first_available_variant -%}
+          {%- unless forloop.first -%}<li class="c-deals__plus" aria-hidden="true">+</li>{%- endunless -%}
+          <li class="c-deals__product is-selected" data-deal-item {{ block.shopify_attributes }}>
+            <label class="c-deals__check">
+              <input type="checkbox" data-deal-toggle checked{% unless dv.available %} disabled{% endunless %} aria-label="{{ dp.title | escape }}">
+              <span class="c-bundle__checkbox" aria-hidden="true"></span>
+            </label>
+            <a href="{{ dp.url }}" class="c-deals__media">
+              {%- if dp.featured_media -%}{{ dp.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600', sizes: '(min-width: 990px) 20vw, 40vw', alt: dp.title }}{%- endif -%}
+            </a>
+            <span class="c-deals__title">{{ dp.title | escape }}</span>
+            {%- unless dp.has_only_default_variant -%}
+              <select class="c-bundle__select" data-deal-variant aria-label="{{ dp.title | escape }}">
+                {%- for v in dp.variants -%}
+                  <option value="{{ v.id }}" data-price="{{ v.price }}" data-compare="{{ v.compare_at_price | default: v.price }}"{% if v.id == dv.id %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title | escape }}</option>
+                {%- endfor -%}
+              </select>
+            {%- else -%}
+              <input type="hidden" data-deal-variant value="{{ dv.id }}" data-price="{{ dv.price }}" data-compare="{{ dv.compare_at_price | default: dv.price }}">
+            {%- endunless -%}
+            <span class="c-deals__price"><strong data-deal-price>{{ dv.price | money }}</strong></span>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <div class="c-deals__summary color-{{ s.box_color_scheme }}">
+        <p class="c-deals__total-label">{{ s.total_label | escape }}</p>
+        <p class="c-deals__total">
+          <strong data-deal-total></strong>
+          <s data-deal-compare></s>
+        </p>
+        {%- if pct > 0 -%}<p class="c-deals__benefit c-pill c-pill--savings">{{ s.benefit_text | replace: '[percent]', pct }}</p>{%- endif -%}
+        <button type="button" class="button button--full-width" data-deal-add>
+          <span>{{ s.button_label | escape }}</span>
+          {%- render 'loading-spinner' -%}
+        </button>
+        <p class="c-deals__error c-text-urgency" role="alert" hidden></p>
+      </div>
+    </bundle-deals>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pachet de produse",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Ofertă specială"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Cumpără setul și <em>economisești</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "discount_percent",
+      "label": "Reducere afișată pentru set",
+      "min": 0,
+      "max": 70,
+      "step": 1,
+      "default": 15,
+      "unit": "%",
+      "info": "Creează în Shopify > Reduceri reducerea automată corespunzătoare."
+    },
+    {
+      "type": "text",
+      "id": "total_label",
+      "label": "Text total",
+      "default": "Total set"
+    },
+    {
+      "type": "text",
+      "id": "benefit_text",
+      "label": "Text beneficiu",
+      "default": "Economisești [percent]% cumpărând setul"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Text buton",
+      "default": "Adaugă setul în coș"
+    },
+    {
+      "type": "color_scheme",
+      "id": "box_color_scheme",
+      "label": "Schemă de culori casetă total",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produs",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produs"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Pachet de produse",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
