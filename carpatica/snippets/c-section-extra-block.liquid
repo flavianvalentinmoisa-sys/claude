@@ -1,0 +1,39 @@
+{% comment %}
+  Blocuri Carpatica adăugate secțiunilor Dawn (banner imagine, imagine cu text, text formatat):
+  stele rating, stele Trustpilot, buton „Adaugă în coș”, text cu iconiță.
+  Parametri: block
+{% endcomment %}
+{%- assign b = block.settings -%}
+{%- case block.type -%}
+  {%- when 'rating_stars' or 'trustpilot_stars' -%}
+    {%- liquid
+      assign star_style = 'stars'
+      if block.type == 'trustpilot_stars'
+        assign star_style = 'trustpilot'
+      endif
+    -%}
+    <div class="c-extra-block c-extra-stars" {{ block.shopify_attributes }}>
+      {%- render 'c-stars', rating: b.rating, text: b.text, size: b.star_size, style: star_style -%}
+    </div>
+  {%- when 'atc_button' -%}
+    {%- assign ap = b.product -%}
+    {%- if ap != blank -%}
+      <div class="c-extra-block c-extra-atc" {{ block.shopify_attributes }}>
+        {%- if ap.has_only_default_variant and ap.available -%}
+          <button type="button" class="button{% if b.secondary %} button--secondary{% endif %}" data-quick-add="{{ ap.selected_or_first_available_variant.id }}">
+            <span>{%- if b.label != blank -%}{{ b.label | escape }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}{% if b.show_price %} · {{ ap.price | money }}{% endif %}</span>
+            {%- render 'loading-spinner' -%}
+          </button>
+        {%- else -%}
+          <a href="{{ ap.url }}" class="button{% if b.secondary %} button--secondary{% endif %}">
+            {%- if b.label != blank -%}{{ b.label | escape }}{%- else -%}{{ 'carpatica.general.shop_now' | t }}{%- endif -%}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- when 'text_with_icon' -%}
+    <div class="c-extra-block c-twi{% if b.boxed %} c-twi--boxed{% endif %}" {{ block.shopify_attributes }}>
+      {%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, image: b.icon_image, size: 22 -%}
+      <div class="c-twi__text rte">{{ b.text }}</div>
+    </div>
+{%- endcase -%}

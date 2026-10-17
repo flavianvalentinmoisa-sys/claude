@@ -1821,12 +1821,6 @@
         "info": "Apare când coșul lateral este gol"
       },
       {
-        "type": "color_scheme",
-        "id": "cart_color_scheme",
-        "label": "Schemă de culori",
-        "default": "scheme-1"
-      },
-      {
         "type": "header",
         "content": "Coș gol"
       },

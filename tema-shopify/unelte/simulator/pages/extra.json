@@ -1,0 +1,5 @@
+{"sections":{
+ "banner":{"type":"image-banner","settings":{"color_scheme":"scheme-3"},"blocks":{"h":{"type":"heading","settings":{"heading":"Banner cu stele"}},"s":{"type":"rating_stars","settings":{}},"a":{"type":"atc_button","settings":{"product":"husa"}}},"block_order":["h","s","a"]},
+ "rt":{"type":"rich-text","settings":{},"blocks":{"h":{"type":"heading","settings":{"heading":"Text formatat"}},"t":{"type":"trustpilot_stars","settings":{}},"i":{"type":"text_with_icon","settings":{"boxed":true}}},"block_order":["h","t","i"]},
+ "iwt":{"type":"image-with-text","settings":{},"blocks":{"h":{"type":"heading","settings":{"heading":"Imagine cu text"}},"s":{"type":"rating_stars","settings":{}},"a":{"type":"atc_button","settings":{"product":"perna"}}},"block_order":["h","s","a"]}
+},"order":["banner","rt","iwt"]}

@@ -1035,17 +1035,7 @@ clickable-discount.is-applied .c-cdiscount__state--applied {
   justify-content: center;
 }
 
-.c-payments__cod {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  height: 2.4rem;
-  padding: 0 0.8rem;
-  border: 1px solid rgba(var(--color-foreground), 0.15);
-  border-radius: 0.4rem;
-  font-size: 1.15rem;
-  font-weight: 700;
-}
+
 
 /* ---------- Livrare estimată ---------- */
 

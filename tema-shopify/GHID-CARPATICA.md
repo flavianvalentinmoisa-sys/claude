@@ -54,6 +54,10 @@ Separator decorativ · Schimbător culori pagină · Player muzică · Urmărire
 Formular contact avansat. În grupul „Elemente plutitoare”: Pop-up promoțional, Buton înapoi sus,
 Muzică pe tot site-ul.
 
+Secțiunile Dawn **Banner imagine**, **Imagine cu text** și **Text formatat** au în plus blocurile
+Stele rating, Stele Trustpilot, Buton adaugă în coș și Text cu iconiță. Pe cardurile de produs poți afișa
+„Economisești X lei” din Setări temă → Carduri produs.
+
 ## 6. Pagini
 
 - **Întrebări frecvente**: creează o pagină și alege șablonul `page.faq`.

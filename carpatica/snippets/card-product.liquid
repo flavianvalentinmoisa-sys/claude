@@ -208,6 +208,9 @@
               {%- endif -%}
 
               {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+              {%- if settings.card_show_savings -%}
+                {%- render 'c-price-savings', variant: card_product.selected_or_first_available_variant, mode: 'amount' -%}
+              {%- endif -%}
               {%- if card_product.quantity_price_breaks_configured? -%}
                 {% if card_product.variants_count == 1 and quick_add == 'bulk' %}
                   {% liquid

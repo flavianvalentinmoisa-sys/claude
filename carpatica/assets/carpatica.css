@@ -816,3 +816,71 @@ html.c-blocked body > *:not(.c-country-block) {
 .c-modal__dialog:focus {
   outline: none;
 }
+
+.card-information .c-price-savings {
+  display: inline-flex;
+  margin-top: 0.4rem;
+  font-size: 1.1rem;
+}
+
+.c-extra-block {
+  margin-top: 1.6rem;
+}
+
+.c-extra-block {
+  display: flex;
+}
+
+.center .c-extra-block,
+[class*='--center'] .c-extra-block {
+  justify-content: center;
+}
+
+.right .c-extra-block,
+[class*='--right'] .c-extra-block {
+  justify-content: flex-end;
+}
+
+.c-extra-block .c-stars__text p {
+  margin: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .banner--content-align-center .c-extra-block {
+    justify-content: center;
+  }
+
+  .banner--content-align-right .c-extra-block {
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .banner--content-align-mobile-center .c-extra-block {
+    justify-content: center;
+  }
+
+  .banner--content-align-mobile-right .c-extra-block {
+    justify-content: flex-end;
+  }
+}
+
+
+/* ---------- Plăți ---------- */
+
+.c-payments__cod {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.4rem;
+  padding: 0 0.8rem;
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.cart__blocks .c-cart-payments {
+  margin-top: 1.2rem;
+  justify-content: flex-end;
+}
