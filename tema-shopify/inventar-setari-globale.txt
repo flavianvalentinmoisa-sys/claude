@@ -1,0 +1,307 @@
+### theme_info
+### Authentication
+  animations_type[text]: Authentication token
+### Help
+### Security
+  disable_inspect[checkbox]: Disable copying text, downloading images and opening Inspect element
+  ## Country blocker
+  country_list_function[select]: Country list function
+  country_list[text]: Country codes list
+  country_invalid_error_msg[richtext]: Country invalid error message
+### Logo
+  logo[image_picker]: Logo
+  secondary_logo[image_picker]: Secondary logo
+  logo_width[range]: Desktop logo width
+  mobile_logo_width[range]: Mobile logo width
+  favicon[image_picker]: Favicon image
+### Colors
+  ## Primary colors
+  colors_solid_button_labels[color]: Solid button label
+  colors_accent_1[color]: Accent 1
+  gradient_accent_1[color_background]: Accent 1 gradient
+  colors_accent_2[color]: Accent 2
+  gradient_accent_2[color_background]: Accent 2 gradient
+  ## Secondary colors
+  colors_text[color]: Text
+  colors_outline_button_labels[color]: Outline button
+  colors_background_1[color]: Background 1
+  gradient_background_1[color_background]: Background 1 gradient
+  colors_background_2[color]: Background 2
+  gradient_background_2[color_background]: Background 2 gradient
+### Typography
+  ## Headings
+  type_header_font[font_picker]: Font
+  custom_header_font_link[text]: Custom font link
+  custom_header_font_name[text]: Custom font name
+  custom_header_font_weight[range]: Custom font weight
+  heading_scale[range]: Font size scale
+  heading_line_height[range]: Line height
+  heading_letter_spacing[range]: Letter spacing
+  ## Body
+  type_body_font[font_picker]: Font
+  custom_body_font_link[text]: Custom font link
+  custom_body_font_name[text]: Custom font name
+  custom_body_font_weight[range]: Custom font weight
+  custom_body_bold_font_link[text]: OPTIONAL: Custom bold font link
+  body_scale[range]: Font size scale
+  body_line_height[range]: Line height
+  body_letter_spacing[range]: Letter spacing
+  ## Writing direction
+  enable_rtl[checkbox]: Enable RTL writing direction for all languages
+  rtl_enabled_languages[text]: Languages to enable RTL on
+  display_store_languages[checkbox]: Display added store languages & their codes
+### Animations
+  enable_load_animations[checkbox]: Enable section load animations
+  repeat_section_animations[checkbox]: Repeat load animations
+  ## Duration & timing
+  animation_duration[range]: Animation duration
+  animation_init_delay[range]: Animation initial delay
+  animation_children_delay[range]: Animation children delay
+  ## Starting position
+  animation_start_opacity[range]: Opacity
+  animation_start_x[range]: Horizontal position
+  animation_start_y[range]: Vertical position
+  animation_start_zoom[range]: Zoom
+### Badges
+  badge_position[select]: Position on cards
+  badge_corner_radius[range]: Corner radius
+  sale_badge_color_scheme[select]: Sale badge color scheme
+  sale_badge_text[text]: Sale badge text
+  sale_basge_discount_icon[checkbox]: Display sale badge discount icon
+  sold_out_badge_color_scheme[select]: Sold out badge color scheme
+### Slider controls
+  ## Arrows
+  slider_arrow_size[range]: Button size
+  slider_arrow_border_radius[range]: Corner radius
+  slider_arrow_icon_size[range]: Icon size
+  ## Pagination dots
+  pagination_dot_width[range]: Width
+  pagination_dot_height[range]: Height
+  pagination_dot_active_scale[range]: Active dot scale
+  pagination_dot_spacing[range]: Space between dots
+  pagination_dot_radius[range]: Corner radius
+### Icons
+  accent_icons[select]: Color
+### Layout
+  page_width[range]: Page width
+  spacing_sections[range]: Space between template sections
+  ## Grid
+  spacing_grid_horizontal[range]: Horizontal space
+  spacing_grid_vertical[range]: Vertical space
+### Buttons
+  ## Hover effects
+  link_btn_hover[select]: Link buttons hover effect
+  action_btn_hover[select]: Action buttons hover effect
+  ## Border
+  buttons_border_thickness[range]: Thickness
+  buttons_border_opacity[range]: Opacity
+  buttons_radius[range]: Corner radius
+  ## Shadow
+  buttons_shadow_opacity[range]: Opacity
+  buttons_shadow_horizontal_offset[range]: Horizontal offset
+  buttons_shadow_vertical_offset[range]: Vertical offset
+  buttons_shadow_blur[range]: Blur
+### Color swatches
+  ## Style
+  swatches_border_radius[range]: Corner radius
+  swatches_border_opacity[range]: Outer border opacity
+  swatches_selected_border_opacity[range]: Selected swatch outer border opacity
+  ## Color swatches predefined colors
+  swatches_predefined_colors_list[richtext]: Predefined custom colors
+### Variant pills
+  ## Color
+  variant_pills_accent_color[select]: Color
+  variant_pills_inactive_overlay_opacity[range]: Inactive pills background overlay opacity
+  ## Text & size
+  variant_pills_bold_text[checkbox]: Enable bold text
+  variant_pills_text_size[range]: Text size
+  variant_pills_padding_y[range]: Top & bottom padding
+  variant_pills_padding_x[range]: Side padding
+  ## Border
+  variant_pills_border_thickness[range]: Thickness
+  variant_pills_border_opacity[range]: Opacity
+  variant_pills_radius[range]: Corner radius
+  ## Shadow
+  variant_pills_shadow_opacity[range]: Opacity
+  variant_pills_shadow_horizontal_offset[range]: Horizontal offset
+  variant_pills_shadow_vertical_offset[range]: Vertical offset
+  variant_pills_shadow_blur[range]: Blur
+### Variant dropdowns
+  ## Background & color
+  pickers_color_scheme[select]: Background color
+  pickers_border_color[select]: Border color
+  pickers_text_color[select]: Text & arrow icon color
+  pickers_overlay_color[select]: Overlay color
+  pickers_overlay_opacity[range]: Background overlay opacity
+  ## Border
+  pickers_border_thickness[range]: Thickness
+  pickers_border_opacity[range]: Opacity
+  pickers_radius[range]: Corner radius
+  ## Shadow
+  pickers_shadow_opacity[range]: Opacity
+  pickers_shadow_horizontal_offset[range]: Horizontal offset
+  pickers_shadow_vertical_offset[range]: Vertical offset
+  pickers_shadow_blur[range]: Blur
+  ## Hover state
+  pickers_hover_overlay_opacity[range]: Background overlay opacity
+  pickers_hover_border_opacity[range]: Border opacity
+### Quantity pickers
+  ## Background & color
+  quantity_color_scheme[select]: Background color
+  quantity_border_color[select]: Border color
+  quantity_text_color[select]: Number & icons color
+  quantity_overlay_color[select]: Overlay color
+  quantity_overlay_opacity[range]: Background overlay opacity
+  ## Border
+  quantity_border_thickness[range]: Thickness
+  quantity_border_opacity[range]: Opacity
+  quantity_radius[range]: Corner radius
+  ## Shadow
+  quantity_shadow_opacity[range]: Opacity
+  quantity_shadow_horizontal_offset[range]: Horizontal offset
+  quantity_shadow_vertical_offset[range]: Vertical offset
+  quantity_shadow_blur[range]: Blur
+  ## Hover state
+  quantity_hover_overlay_opacity[range]: Background overlay opacity
+  quantity_hover_border_opacity[range]: Border opacity
+### Inputs
+  ## Border
+  inputs_border_thickness[range]: Thickness
+  inputs_border_opacity[range]: Opacity
+  inputs_radius[range]: Corner radius
+  ## Shadow
+  inputs_shadow_opacity[range]: Opacity
+  inputs_shadow_horizontal_offset[range]: Horizontal offset
+  inputs_shadow_vertical_offset[range]: Vertical offset
+  inputs_shadow_blur[range]: Blur
+### Product cards
+  ## General
+  card_style[select]: Style
+  card_image_padding[range]: Image padding
+  card_text_alignment[select]: Text alignment
+  card_color_scheme[select]: Color scheme
+  ## Badge
+  product_card_badge_position[select]: Badge position
+  product_cards_badge_push_sides[checkbox]: Push badge to the side
+  product_cards_custom_badges_list[text]: Custom badges list
+  ## Card info
+  product_card_title_limited_lines[select]: Limit long titles
+  card_button_style[select]: Add button style
+  ## Border
+  card_border_thickness[range]: Thickness
+  card_border_opacity[range]: Opacity
+  card_corner_radius[range]: Corner radius
+  ## Shadow
+  card_shadow_opacity[range]: Opacity
+  card_shadow_horizontal_offset[range]: Horizontal offset
+  card_shadow_vertical_offset[range]: Vertical offset
+  card_shadow_blur[range]: Blur
+### Collection cards
+  collection_card_style[select]: Style
+  collection_card_image_padding[range]: Image padding
+  collection_card_text_alignment[select]: Text alignment
+  collection_card_color_scheme[select]: Color scheme
+  ## Border
+  collection_card_border_thickness[range]: Thickness
+  collection_card_border_opacity[range]: Opacity
+  collection_card_corner_radius[range]: Corner radius
+  ## Shadow
+  collection_card_shadow_opacity[range]: Opacity
+  collection_card_shadow_horizontal_offset[range]: Horizontal offset
+  collection_card_shadow_vertical_offset[range]: Vertical offset
+  collection_card_shadow_blur[range]: Blur
+### Blog cards
+  blog_card_style[select]: Style
+  blog_card_image_padding[range]: Image padding
+  blog_card_text_alignment[select]: Text alignment
+  blog_card_color_scheme[select]: Color scheme
+  ## Border
+  blog_card_border_thickness[range]: Thickness
+  blog_card_border_opacity[range]: Opacity
+  blog_card_corner_radius[range]: Corner radius
+  ## Shadow
+  blog_card_shadow_opacity[range]: Opacity
+  blog_card_shadow_horizontal_offset[range]: Horizontal offset
+  blog_card_shadow_vertical_offset[range]: Vertical offset
+  blog_card_shadow_blur[range]: Blur
+### Content containers
+  ## Border
+  text_boxes_border_thickness[range]: Thickness
+  text_boxes_border_opacity[range]: Opacity
+  text_boxes_radius[range]: Corner radius
+  ## Shadow
+  text_boxes_shadow_opacity[range]: Opacity
+  text_boxes_shadow_horizontal_offset[range]: Horizontal offset
+  text_boxes_shadow_vertical_offset[range]: Vertical offset
+  text_boxes_shadow_blur[range]: Blur
+### Media
+  ## Border
+  media_border_thickness[range]: Thickness
+  media_border_opacity[range]: Opacity
+  media_radius[range]: Corner radius
+  ## Shadow
+  media_shadow_opacity[range]: Opacity
+  media_shadow_horizontal_offset[range]: Horizontal offset
+  media_shadow_vertical_offset[range]: Vertical offset
+  media_shadow_blur[range]: Blur
+### Dropdowns and pop-ups
+  ## Border
+  popup_border_thickness[range]: Thickness
+  popup_border_opacity[range]: Opacity
+  popup_corner_radius[range]: Corner radius
+  ## Shadow
+  popup_shadow_opacity[range]: Opacity
+  popup_shadow_horizontal_offset[range]: Horizontal offset
+  popup_shadow_vertical_offset[range]: Vertical offset
+  popup_shadow_blur[range]: Blur
+### Drawers
+  ## Border
+  drawer_border_thickness[range]: Thickness
+  drawer_border_opacity[range]: Opacity
+  ## Shadow
+  drawer_shadow_opacity[range]: Opacity
+  drawer_shadow_horizontal_offset[range]: Horizontal offset
+  drawer_shadow_vertical_offset[range]: Vertical offset
+  drawer_shadow_blur[range]: Blur
+### Brand information
+  brand_headline[inline_richtext]: Headline
+  brand_description[richtext]: Description
+  brand_image[image_picker]: Image
+  brand_image_width[range]: Image width
+### Social media
+  ## Social accounts
+  social_facebook_link[text]: Facebook
+  social_instagram_link[text]: Instagram
+  social_youtube_link[text]: YouTube
+  social_tiktok_link[text]: TikTok
+  social_twitter_link[text]: Twitter
+  social_snapchat_link[text]: Snapchat
+  social_pinterest_link[text]: Pinterest
+  social_tumblr_link[text]: Tumblr
+  social_vimeo_link[text]: Vimeo
+### Search behavior
+  ## Search suggestions
+  predictive_search_enabled[checkbox]: Enable search suggestions
+  predictive_search_show_vendor[checkbox]: Show product vendor
+  predictive_search_show_price[checkbox]: Show product price
+### Currency format
+  ## Currency codes
+  currency_code_enabled[checkbox]: Show currency codes
+### Scrollbar & Cursor
+  ## Scrollbar
+  scrollbar_style[select]: Desktop scrollbar style
+  scrollbar_thumb_color[color]: Scrollbar thumb color
+  scrollbar_track_color[color]: Scrollbar track color
+  scrollbar_width[range]: Scrollbar width
+  ## Cursor
+  custom_cursor[image_picker]: Custom cursor
+### Cart
+  ## To customize the cart drawer, customize the Cart drawer section (between the Header group & your added page sections).
+  cart_type[select]: Cart type
+  cart_icon[select]: Header cart icon
+  show_vendor[checkbox]: Show vendor
+  show_cart_note[checkbox]: Enable cart note
+  ## Empty cart
+  cart_drawer_collection[collection]: Collection
+  display_continue_shopping[checkbox]: Display the Continue shopping button link when the cart is empty
+  continue_shopping_url[url]: Continue shopping button custom link
