@@ -189,6 +189,104 @@
           "settings": {
             "color_scheme": "scheme-1"
           }
+        },
+        "cart-drawer": {
+          "type": "cart-drawer",
+          "settings": {
+            "heading": "Coșul tău",
+            "show_count": true,
+            "width": 440,
+            "color_scheme": "scheme-1",
+            "show_vendor": false,
+            "show_compare_price": true,
+            "show_line_savings": true,
+            "empty_heading": "Coșul tău este gol",
+            "empty_text": "<p>Descoperă produsele noastre preferate.</p>",
+            "show_login": false
+          },
+          "blocks": {
+            "progress": {
+              "type": "progress_bar",
+              "settings": {
+                "goal_type": "amount",
+                "goal": 200,
+                "progress_message": "Mai adaugă <strong>[remaining]</strong> pentru <strong>livrare gratuită</strong>",
+                "success_message": "🎉 Felicitări! Ai <strong>livrare gratuită</strong>",
+                "icon": "truck",
+                "accent": "accent"
+              }
+            },
+            "upsells": {
+              "type": "product_upsells",
+              "settings": {
+                "position": "body",
+                "heading": "Ți-ar mai putea plăcea",
+                "layout": "slider",
+                "button_label": "Adaugă",
+                "hide_in_cart": true,
+                "display": "all"
+              }
+            },
+            "cod": {
+              "type": "text_with_icon",
+              "settings": {
+                "position": "body",
+                "text": "<p><strong>Plata ramburs</strong> la curier – plătești doar când primești coletul.</p>",
+                "icon": "cash",
+                "boxed": true
+              }
+            },
+            "discount": {
+              "type": "discount_field",
+              "settings": {
+                "placeholder": "Cod de reducere",
+                "button_label": "Aplică"
+              }
+            },
+            "totals": {
+              "type": "subtotals",
+              "settings": {
+                "show_subtotal": true,
+                "subtotal_label": "Preț inițial",
+                "show_savings": true,
+                "savings_label": "Ai economisit",
+                "total_label": "Total",
+                "show_tax_note": false
+              }
+            },
+            "checkout": {
+              "type": "checkout_button",
+              "settings": {
+                "label": "Finalizează comanda",
+                "show_lock": true,
+                "price_in_button": false,
+                "show_continue": false,
+                "continue_label": "Continuă cumpărăturile",
+                "show_dynamic_checkout": false
+              }
+            },
+            "icons": {
+              "type": "icons_with_text",
+              "settings": {
+                "position": "footer",
+                "icon_1": "truck",
+                "text_1": "Livrare 24–48h",
+                "icon_2": "return",
+                "text_2": "Retur 30 de zile",
+                "icon_3": "lock",
+                "text_3": "Plată sigură"
+              }
+            }
+          },
+          "block_order": [
+            "progress",
+            "upsells",
+            "cod",
+            "discount",
+            "totals",
+            "checkout",
+            "icons"
+          ]
         }
       }
     }

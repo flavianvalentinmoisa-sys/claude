@@ -131,14 +131,14 @@ if (!customElements.get('product-form')) {
       }
 
       get cartExtensions() {
-        const formId = this.form.id;
+        const formId = this.form.getAttribute('id');
         return Array.from(document.querySelectorAll(`[data-cart-extension][data-form-id="${formId}"]`)).filter(
           (el) => typeof el.getExtraItems === 'function' || typeof el.replaceMainItems === 'function'
         );
       }
 
       validateCustomFields() {
-        const formId = this.form.id;
+        const formId = this.form.getAttribute('id');
         const fields = Array.from(document.querySelectorAll('custom-product-field')).filter((field) =>
           field.querySelector(`[form="${formId}"]`)
         );

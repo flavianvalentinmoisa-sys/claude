@@ -877,6 +877,26 @@ sticky-atc[style*='--c-sticky-btn'] .c-sticky-atc__button {
     max-width: 14rem;
   }
 
+  .c-sticky-atc__image {
+    flex-basis: 4.4rem;
+    width: 4.4rem;
+    height: 4.4rem;
+  }
+
+  .c-sticky-atc__title {
+    font-size: 1.3rem;
+  }
+
+  .c-sticky-atc__price {
+    font-size: 1.3rem;
+    white-space: nowrap;
+  }
+
+  .c-sticky-atc__price s,
+  .c-sticky-atc__button-price {
+    display: none;
+  }
+
   .c-sticky-atc__button {
     min-width: 0;
     padding: 0 1.6rem;
@@ -1024,15 +1044,20 @@ clickable-discount.is-applied .c-cdiscount__state--applied {
   color: rgba(var(--color-foreground), 0.75);
 }
 
-.c-payments__list {
+.c-payments .c-payments__list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 0.6rem;
   margin: 0;
   padding: 0;
 }
 
-.c-align-center .c-payments__list {
+.c-align-right.c-payments .c-payments__list {
+  justify-content: flex-end;
+}
+
+.c-align-center.c-payments .c-payments__list {
   justify-content: center;
 }
 

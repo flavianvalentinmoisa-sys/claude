@@ -72,6 +72,31 @@ li,
 
 /* ---------- Utilitare ---------- */
 
+/* Elementele personalizate sunt implicit inline */
+quantity-breaks,
+bundle-offer,
+product-upsell,
+quantity-gifts,
+clickable-discount,
+delivery-date,
+custom-product-field,
+cart-upsell,
+cart-gift,
+cart-discount-field,
+tnc-checkbox,
+c-slider,
+insta-stories,
+comparison-slider,
+promo-popup,
+content-tabs,
+parallax-hero,
+shoppable-image,
+music-player,
+track-order,
+scroll-top {
+  display: block;
+}
+
 .c-visually-hidden {
   position: absolute !important;
   width: 1px;

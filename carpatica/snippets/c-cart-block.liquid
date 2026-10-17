@@ -1,0 +1,455 @@
+{% comment %}
+  Blocurile coșului (lateral și pagina de coș).
+  Parametri:
+  - block
+  - section
+  - context: 'drawer' (implicit) sau 'page'
+{% endcomment %}
+{%- liquid
+  assign bs = block.settings
+  assign form_id = 'CartDrawer-Form'
+  if context == 'page'
+    assign form_id = 'cart'
+  endif
+  assign subtotal = cart.items_subtotal_price
+-%}
+{%- case block.type -%}
+  {%- when 'progress_bar' -%}
+    {%- liquid
+      if bs.goal_type == 'quantity'
+        assign current = cart.item_count
+        assign goal = bs.goal | plus: 0
+      else
+        assign current = subtotal
+        assign goal = bs.goal | times: 100
+      endif
+      assign remaining = goal | minus: current
+      assign percent = 100
+      if goal > 0
+        assign percent = current | times: 100 | divided_by: goal | at_most: 100
+      endif
+      if bs.goal_type == 'quantity'
+        assign remaining_text = remaining
+      else
+        assign remaining_text = remaining | money_without_trailing_zeros
+      endif
+    -%}
+    <div class="c-cart-progress{% if remaining <= 0 %} is-complete{% endif %}" style="--c-progress: {{ percent }}%; --c-progress-color: var(--color-{{ bs.accent }});" {{ block.shopify_attributes }}>
+      <p class="c-cart-progress__message">
+        {%- render 'c-icon', name: bs.icon, emoji: bs.icon_emoji, size: 18 -%}
+        <span>
+          {%- if remaining > 0 -%}
+            {{ bs.progress_message | replace: '[remaining]', remaining_text }}
+          {%- else -%}
+            {{ bs.success_message }}
+          {%- endif -%}
+        </span>
+      </p>
+      <div class="c-cart-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ percent }}">
+        <span class="c-cart-progress__fill"></span>
+      </div>
+    </div>
+
+  {%- when 'checkpoints_bar' -%}
+    {%- liquid
+      if bs.goal_type == 'quantity'
+        assign current = cart.item_count
+        assign multiplier = 1
+      else
+        assign current = subtotal
+        assign multiplier = 100
+      endif
+      assign max_goal = 0
+      assign next_goal = 0
+      assign next_label = ''
+      for i in (1..3)
+        assign enable_key = 'goal_' | append: i | append: '_enable'
+        assign amount_key = 'goal_' | append: i | append: '_amount'
+        assign label_key = 'goal_' | append: i | append: '_label'
+        if bs[enable_key]
+          assign g = bs[amount_key] | times: multiplier
+          if g > max_goal
+            assign max_goal = g
+          endif
+          if g > current and next_goal == 0
+            assign next_goal = g
+            assign next_label = bs[label_key] | strip_html
+          endif
+        endif
+      endfor
+      assign percent = 100
+      if max_goal > 0
+        assign percent = current | times: 100 | divided_by: max_goal | at_most: 100
+      endif
+      assign remaining = next_goal | minus: current
+      if bs.goal_type == 'quantity'
+        assign remaining_text = remaining
+      else
+        assign remaining_text = remaining | money_without_trailing_zeros
+      endif
+    -%}
+    <div class="c-cart-checkpoints" style="--c-progress: {{ percent }}%; --c-progress-color: var(--color-{{ bs.accent }});" {{ block.shopify_attributes }}>
+      <p class="c-cart-checkpoints__message">
+        {%- if next_goal > 0 -%}
+          {{ bs.progress_message | replace: '[remaining]', remaining_text | replace: '[goal]', next_label }}
+        {%- else -%}
+          {{ bs.success_message }}
+        {%- endif -%}
+      </p>
+      <div class="c-cart-checkpoints__bar">
+        <div class="c-cart-checkpoints__track"><span class="c-cart-checkpoints__fill"></span></div>
+        {%- for i in (1..3) -%}
+          {%- liquid
+            assign enable_key = 'goal_' | append: i | append: '_enable'
+            assign amount_key = 'goal_' | append: i | append: '_amount'
+            assign label_key = 'goal_' | append: i | append: '_label'
+            assign icon_key = 'goal_' | append: i | append: '_icon'
+            unless bs[enable_key]
+              continue
+            endunless
+            assign g = bs[amount_key] | times: multiplier
+            assign pos = 100
+            if max_goal > 0
+              assign pos = g | times: 100 | divided_by: max_goal
+            endif
+          -%}
+          <div class="c-cart-checkpoints__point{% if current >= g %} is-reached{% endif %}" style="--c-pos: {{ pos }}%;">
+            <span class="c-cart-checkpoints__icon">{% render 'c-icon', name: bs[icon_key], size: 16 %}</span>
+            <span class="c-cart-checkpoints__label">{{ bs[label_key] }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  {%- when 'countdown_timer' -%}
+    <div class="c-cart-timer color-{{ bs.color_scheme }}" data-timer-wrapper {{ block.shopify_attributes }}>
+      {%- render 'c-icon', name: 'clock', size: 18 -%}
+      {%- capture timer -%}<countdown-timer class="c-timer" data-mode="evergreen" data-duration="{{ bs.duration }}" data-key="cart" data-format="ms" data-restart="{{ bs.restart }}" data-hide-on-end="{{ bs.hide_on_end }}"><span data-timer-output>--:--</span></countdown-timer>{%- endcapture -%}
+      <span>{{ bs.text | replace: '[timer]', timer }}</span>
+    </div>
+
+  {%- when 'product_upsells' -%}
+    {%- liquid
+      assign show_upsell = true
+      if bs.display == 'products' and bs.trigger_products != blank
+        assign show_upsell = false
+        for item in cart.items
+          for trigger in bs.trigger_products
+            if item.product_id == trigger.id
+              assign show_upsell = true
+            endif
+          endfor
+        endfor
+      endif
+      assign cart_product_ids = cart.items | map: 'product_id'
+    -%}
+    {%- if show_upsell and bs.products != blank and cart != empty -%}
+      <cart-upsell class="c-cart-upsell c-cart-upsell--{{ bs.layout }}" {{ block.shopify_attributes }}>
+        {%- if bs.heading != blank -%}<p class="c-cart-upsell__heading">{{ bs.heading }}</p>{%- endif -%}
+        {%- capture upsell_items -%}
+          {%- for up in bs.products -%}
+            {%- if bs.hide_in_cart and cart_product_ids contains up.id -%}{%- continue -%}{%- endif -%}
+            {%- assign uv = up.selected_or_first_available_variant -%}
+            {%- unless uv.available -%}{%- continue -%}{%- endunless -%}
+            <li class="c-cart-upsell__item{% if bs.layout == 'slider' %} c-slider__slide{% endif %}">
+              <div class="c-cart-upsell__card">
+                {%- if up.featured_media -%}
+                  <a href="{{ up.url }}" class="c-cart-upsell__image" tabindex="-1" aria-hidden="true">
+                    {{- up.featured_media | image_url: width: 160 | image_tag: loading: 'lazy', sizes: '64px', widths: '80, 160', alt: '' -}}
+                  </a>
+                {%- endif -%}
+                <div class="c-cart-upsell__info">
+                  <a href="{{ up.url }}" class="c-cart-upsell__title link">{{ up.title | escape }}</a>
+                  <span class="c-cart-upsell__prices">
+                    <strong>{{ uv.price | money }}</strong>
+                    {%- if uv.compare_at_price > uv.price -%}<s>{{ uv.compare_at_price | money }}</s>{%- endif -%}
+                  </span>
+                  {%- unless up.has_only_default_variant -%}
+                    <select class="c-cart-upsell__select" data-upsell-variant aria-label="{{ up.title | escape }}">
+                      {%- for v in up.variants -%}
+                        <option value="{{ v.id }}"{% if v.id == uv.id %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title | escape }}</option>
+                      {%- endfor -%}
+                    </select>
+                  {%- endunless -%}
+                </div>
+                <button type="button" class="c-cart-upsell__add button button--secondary" data-upsell-add data-variant-id="{{ uv.id }}">
+                  <span>{{ bs.button_label | default: '+' | escape }}</span>
+                  {%- render 'loading-spinner' -%}
+                </button>
+              </div>
+            </li>
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if bs.layout == 'slider' -%}
+          <c-slider style="--c-per-view: 1; --c-per-view-mobile: 1; --c-slider-gap: 0.8rem;">
+            <ul class="c-slider__track c-cart-upsell__list" role="list">{{ upsell_items }}</ul>
+            <div class="c-slider__controls">
+              <button type="button" class="c-slider__arrow c-slider__arrow--prev" data-slider-prev aria-label="{{ 'carpatica.general.previous' | t }}">{{- 'icon-arrow.svg' | inline_asset_content -}}</button>
+              <ol class="c-slider__dots"></ol>
+              <button type="button" class="c-slider__arrow c-slider__arrow--next" data-slider-next aria-label="{{ 'carpatica.general.next' | t }}">{{- 'icon-arrow.svg' | inline_asset_content -}}</button>
+            </div>
+          </c-slider>
+        {%- else -%}
+          <ul class="c-cart-upsell__list" role="list">{{ upsell_items }}</ul>
+        {%- endif -%}
+      </cart-upsell>
+    {%- endif -%}
+
+  {%- when 'gift' -%}
+    {%- liquid
+      assign gift = bs.product
+      assign gv = gift.selected_or_first_available_variant
+      if bs.goal_type == 'quantity'
+        assign gift_qty = 0
+        for item in cart.items
+          if item.variant_id == gv.id and item.properties._cadou != blank
+            assign gift_qty = gift_qty | plus: item.quantity
+          endif
+        endfor
+        assign current = cart.item_count | minus: gift_qty
+        assign goal = bs.requirement | plus: 0
+      else
+        assign current = subtotal
+        assign goal = bs.requirement | times: 100
+      endif
+      assign unlocked = false
+      if current >= goal and cart.item_count > 0
+        assign unlocked = true
+      endif
+      assign gift_line = 0
+      for item in cart.items
+        if item.variant_id == gv.id and item.properties._cadou != blank
+          assign gift_line = forloop.index
+        endif
+      endfor
+      assign remaining = goal | minus: current
+      if bs.goal_type == 'quantity'
+        assign remaining_text = remaining
+      else
+        assign remaining_text = remaining | money_without_trailing_zeros
+      endif
+    -%}
+    {%- if gift != blank and cart != empty -%}
+      <cart-gift
+        class="c-cart-gift{% if unlocked %} is-unlocked{% endif %}"
+        data-variant-id="{{ gv.id }}"
+        data-unlocked="{{ unlocked }}"
+        data-line="{{ gift_line }}"
+        data-auto="{{ bs.auto_add }}"
+        {{ block.shopify_attributes }}
+      >
+        <span class="c-cart-gift__image">
+          {%- if bs.image != blank -%}
+            {{- bs.image | image_url: width: 160 | image_tag: loading: 'lazy', sizes: '64px', widths: '80, 160', alt: gift.title -}}
+          {%- elsif gift.featured_media -%}
+            {{- gift.featured_media | image_url: width: 160 | image_tag: loading: 'lazy', sizes: '64px', widths: '80, 160', alt: gift.title -}}
+          {%- endif -%}
+          {%- unless unlocked -%}<span class="c-cart-gift__lock">{% render 'c-icon', name: 'lock', size: 16 %}</span>{%- endunless -%}
+        </span>
+        <span class="c-cart-gift__info">
+          <span class="c-cart-gift__title">{{ gift.title | escape }}</span>
+          {%- if bs.description != blank -%}<span class="c-cart-gift__desc">{{ bs.description }}</span>{%- endif -%}
+          <span class="c-cart-gift__status">
+            {%- if unlocked -%}
+              {{ bs.unlocked_text }}
+            {%- else -%}
+              {{ bs.locked_text | replace: '[remaining]', remaining_text }}
+            {%- endif -%}
+          </span>
+        </span>
+        <span class="c-cart-gift__price">
+          <strong class="c-text-savings">{{ 'carpatica.general.free' | t }}</strong>
+          {%- if gv.price > 0 -%}<s>{{ gv.price | money }}</s>{%- endif -%}
+        </span>
+      </cart-gift>
+    {%- endif -%}
+
+  {%- when 'text_with_icon' -%}
+    <div class="c-cart-twi{% if bs.boxed %} c-twi--boxed{% endif %} c-twi" {{ block.shopify_attributes }}>
+      {%- render 'c-icon', name: bs.icon, emoji: bs.icon_emoji, image: bs.icon_image, size: 20 -%}
+      <div class="c-twi__text rte">{{ bs.text }}</div>
+    </div>
+
+  {%- when 'icons_with_text' -%}
+    <ul class="c-cart-icons" role="list" {{ block.shopify_attributes }}>
+      {%- for i in (1..3) -%}
+        {%- assign text_key = 'text_' | append: i -%}
+        {%- assign icon_key = 'icon_' | append: i -%}
+        {%- if bs[text_key] != blank -%}
+          <li>{% render 'c-icon', name: bs[icon_key], size: 22 %}<span>{{ bs[text_key] }}</span></li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+  {%- when 'image' -%}
+    {%- if bs.image != blank -%}
+      <div class="c-cart-image" {{ block.shopify_attributes }}>
+        {%- if bs.link != blank -%}<a href="{{ bs.link }}">{%- endif -%}
+        {{- bs.image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '400px', widths: '400, 800' -}}
+        {%- if bs.link != blank -%}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- when 'payment_badges' -%}
+    <ul class="list list-payment c-cart-payments" role="list" {{ block.shopify_attributes }}>
+      {%- if bs.show_cod -%}
+        <li class="list-payment__item c-payments__cod">{% render 'c-icon', name: 'cash', size: 16 %}<span>{{ bs.cod_label | escape }}</span></li>
+      {%- endif -%}
+      {%- for type in shop.enabled_payment_types -%}
+        <li class="list-payment__item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+      {%- endfor -%}
+    </ul>
+
+  {%- when 'discount_field' -%}
+    {%- liquid
+      assign applied_codes = ''
+      for d in cart.discount_codes
+        if d.applicable
+          assign applied_codes = applied_codes | append: d.code | append: ','
+        endif
+      endfor
+    -%}
+    <cart-discount-field class="c-cart-discount" {{ block.shopify_attributes }}>
+      <form class="c-cart-discount__form" novalidate>
+        {%- capture discount_label -%}{%- if bs.placeholder != blank -%}{{ bs.placeholder | escape }}{%- else -%}{{ 'carpatica.cart.discount_placeholder' | t }}{%- endif -%}{%- endcapture -%}
+        <div class="field c-cart-discount__field">
+          <input class="field__input" type="text" name="discount" autocomplete="off" id="CartDiscount-{{ context }}-{{ block.id }}" placeholder="{{ discount_label }}">
+          <label class="field__label" for="CartDiscount-{{ context }}-{{ block.id }}">{{ discount_label }}</label>
+        </div>
+        <button type="submit" class="button button--secondary c-cart-discount__button">
+          <span>{%- if bs.button_label != blank -%}{{ bs.button_label | escape }}{%- else -%}{{ 'carpatica.cart.apply' | t }}{%- endif -%}</span>
+          {%- render 'loading-spinner' -%}
+        </button>
+      </form>
+      <p class="c-cart-discount__message" role="status" hidden data-invalid="{{ 'carpatica.cart.discount_invalid' | t | escape }}"></p>
+      {%- if cart.discount_codes.size > 0 -%}
+        <ul class="c-cart-discount__codes" role="list">
+          {%- for d in cart.discount_codes -%}
+            <li class="c-cart-discount__code{% unless d.applicable %} is-invalid{% endunless %}">
+              {% render 'c-icon', name: 'tag', size: 14 %}
+              <span>{{ d.code | escape }}</span>
+              <button type="button" data-remove-discount="{{ d.code | escape }}" aria-label="{{ 'carpatica.cart.remove_discount' | t: code: d.code | escape }}">{% render 'c-icon', name: 'close', size: 12 %}</button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </cart-discount-field>
+
+  {%- when 'cart_note' -%}
+    {%- if context == 'drawer' -%}
+      <details id="Details-CartDrawer" class="c-cart-note" {{ block.shopify_attributes }}>
+        <summary>
+          <span class="summary__title">
+            {%- if bs.label != blank -%}{{ bs.label | escape }}{%- else -%}{{ 'sections.cart.note' | t }}{%- endif -%}
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </summary>
+        <cart-note class="cart__note field">
+          <label class="visually-hidden" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
+          <textarea id="CartDrawer-Note" class="text-area text-area--resize-vertical field__input" name="note" placeholder="{{ bs.placeholder | escape }}">{{ cart.note }}</textarea>
+        </cart-note>
+      </details>
+    {%- endif -%}
+
+  {%- when 'subtotals' -%}
+    {%- liquid
+      assign compare_total = 0
+      for item in cart.items
+        assign line_compare = item.variant.compare_at_price | times: item.quantity
+        if line_compare < item.original_line_price
+          assign line_compare = item.original_line_price
+        endif
+        assign compare_total = compare_total | plus: line_compare
+      endfor
+      assign total_savings = compare_total | minus: cart.total_price
+    -%}
+    <div class="cart-drawer__footer c-cart-totals" {{ block.shopify_attributes }}>
+      {%- if bs.show_subtotal and compare_total > cart.total_price -%}
+        <div class="c-cart-totals__row">
+          <span>{{ bs.subtotal_label | escape }}</span>
+          <s>{{ compare_total | money }}</s>
+        </div>
+      {%- endif -%}
+      {%- if cart.cart_level_discount_applications.size > 0 -%}
+        <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <li class="discounts__discount discounts__discount--end">
+              {{- 'icon-discount.svg' | inline_asset_content -}}
+              {{ discount.title | escape }}
+              (-{{ discount.total_allocated_amount | money }})
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {%- if bs.show_savings and total_savings > 0 -%}
+        <div class="c-cart-totals__row c-cart-totals__savings c-text-savings">
+          <span>{%- if bs.savings_label != blank -%}{{ bs.savings_label | escape }}{%- else -%}{{ 'carpatica.cart.you_saved' | t }}{%- endif -%}</span>
+          <strong>-{{ total_savings | money }}</strong>
+        </div>
+      {%- endif -%}
+      <div class="totals c-cart-totals__total" role="status">
+        <h2 class="totals__total">{%- if bs.total_label != blank -%}{{ bs.total_label | escape }}{%- else -%}{{ 'sections.cart.estimated_total' | t }}{%- endif -%}</h2>
+        <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+      </div>
+      {%- if bs.show_tax_note -%}
+        <small class="tax-note caption-large rte">
+          {%- if cart.taxes_included -%}
+            {%- if shop.shipping_policy.body == blank -%}
+              {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
+            {%- else -%}
+              {{ 'sections.cart.taxes_included_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
+            {%- endif -%}
+          {%- else -%}
+            {%- if shop.shipping_policy.body == blank -%}
+              {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
+            {%- else -%}
+              {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
+            {%- endif -%}
+          {%- endif -%}
+        </small>
+      {%- endif -%}
+    </div>
+
+  {%- when 'tnc_checkbox' -%}
+    <tnc-checkbox class="c-tnc" data-disable-checkout="{{ bs.disable_checkout }}" {{ block.shopify_attributes }}>
+      <label class="c-tnc__label">
+        <input type="checkbox" class="c-tnc__input" data-tnc-input>
+        <span class="c-tnc__box" aria-hidden="true">{% render 'c-icon', name: 'check', size: 12 %}</span>
+        <span class="c-tnc__text">{{ bs.text }}</span>
+      </label>
+      <p class="c-tnc__warning c-text-urgency" role="alert" hidden>
+        {%- if bs.warning != blank -%}{{ bs.warning }}{%- else -%}{{ 'carpatica.cart.terms_error' | t }}{%- endif -%}
+      </p>
+    </tnc-checkbox>
+
+  {%- when 'checkout_button' -%}
+    <div class="cart__ctas c-cart-checkout" {{ block.shopify_attributes }}>
+      <button
+        type="submit"
+        id="{% if context == 'page' %}checkout{% else %}CartDrawer-Checkout{% endif %}"
+        class="cart__checkout-button button c-cart-checkout__button"
+        name="checkout"
+        form="{{ form_id }}"
+        {% if cart == empty %}
+          disabled
+        {% endif %}
+      >
+        {%- if bs.show_lock -%}{% render 'c-icon', name: 'lock', size: 18 %}{%- endif -%}
+        <span>{%- if bs.label != blank -%}{{ bs.label | escape }}{%- else -%}{{ 'sections.cart.checkout' | t }}{%- endif -%}</span>
+        {%- if bs.price_in_button -%}<span class="c-cart-checkout__price">· {{ cart.total_price | money }}</span>{%- endif -%}
+      </button>
+      {%- if bs.show_continue -%}
+        <button type="button" class="c-cart-continue link" onclick="this.closest('cart-drawer')?.close()">
+          {%- if bs.continue_label != blank -%}{{ bs.continue_label | escape }}{%- else -%}{{ 'general.continue_shopping' | t }}{%- endif -%}
+        </button>
+      {%- endif -%}
+      {%- if bs.show_dynamic_checkout and additional_checkout_buttons -%}
+        <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+          {{ content_for_additional_checkout_buttons }}
+        </div>
+      {%- endif -%}
+    </div>
+
+  {%- when 'custom_liquid' -%}
+    <div class="c-cart-liquid" {{ block.shopify_attributes }}>{{ bs.custom_liquid }}</div>
+{%- endcase -%}
