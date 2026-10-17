@@ -1,0 +1,520 @@
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{{ 'collapsible-content.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="collapsible-content collapsible-{{ section.settings.layout }}-layout isolate{% if section.settings.layout == 'section' %} page-width{% elsif section.settings.layout == 'none' %} content-container content-container--full-width{% endif %}">
+    <div class="collapsible-content__wrapper section-{{ section.id }}-padding{% if section.settings.layout == 'section' %} content-container color-{{ section.settings.container_color_scheme }} gradient{% endif %}">
+      <div class="{% if section.settings.image == blank %}collapsible-content-wrapper-narrow{% else %}page-width{% endif %}">
+        <div
+          class="collapsible-content__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          style="text-align: {{ section.settings.heading_alignment }};"
+        >
+          {%- if section.settings.caption != blank -%}
+            <p class="caption-with-letter-spacing">
+              {{ section.settings.caption | escape }}
+            </p>
+          {% endif %}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="collapsible-content__heading inline-richtext {{ section.settings.heading_size }}">
+              {{ section.settings.heading }}
+            </h2>
+          {%- else -%}
+            <h2 class="visually-hidden">{{ 'accessibility.collapsible_content_title' | t }}</h2>
+          {% endif %}
+        </div>
+        <div class="grid grid--1-col grid--2-col-tablet collapsible-content__grid{% if section.settings.desktop_layout == 'image_second' %} collapsible-content__grid--reverse{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {%- if section.settings.image != blank -%}
+            <div class="grid__item collapsible-content__grid-item">
+              <div
+                class="collapsible-content__media collapsible-content__media--{{ section.settings.image_ratio }} media global-media-settings gradient"
+                {% if section.settings.image_ratio == 'adapt' %}
+                  style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
+                {% endif %}
+              >
+                {%- liquid
+                  assign padding_multiplier = 1
+                  if section.settings.layout == 'section'
+                    assign padding_multiplier = 2
+                  endif
+                  assign desktop_tablet_padding = 100 | times: padding_multiplier | append: 'px'
+                  assign mobile_padding = 30 | times: padding_multiplier | append: 'px'
+                -%}
+                {%- capture sizes -%}
+                  (min-width: {{ settings.page_width }}px) calc(({{ settings.page_width }}px - {{ desktop_tablet_padding }}) / 2),
+                  (min-width: 750px) calc((100vw - {{ desktop_tablet_padding }}) / 2),
+                  calc(100vw - {{ mobile_padding }})
+                {%- endcapture -%}
+                {{
+                  section.settings.image
+                  | image_url: width: 3200
+                  | image_tag:
+                    sizes: sizes,
+                    widths: '50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3200'
+                }}
+              </div>
+            </div>
+          {% endif %}
+          <div class="grid__item">
+            {%- for block in section.blocks -%}
+              <div
+                class="accordion{% if section.settings.layout == 'row' %} content-container color-{{ section.settings.container_color_scheme }} gradient{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <details
+                  id="Details-{{ block.id }}-{{ section.id }}"
+                  {% if section.settings.open_first_collapsible_row and forloop.first %}
+                    open
+                  {% endif %}
+                >
+                  <summary id="Summary-{{ block.id }}-{{ section.id }}">
+                    {% render 'icon-accordion', icon: block.settings.icon %}
+                    <h3 class="accordion__title inline-richtext h4">
+                      {{ block.settings.heading | default: block.settings.page.title | escape }}
+                    </h3>
+                    {{- 'icon-caret.svg' | inline_asset_content -}}
+                  </summary>
+                  <div
+                    class="accordion__content rte"
+                    id="CollapsibleAccordion-{{ block.id }}-{{ section.id }}"
+                    role="region"
+                    aria-labelledby="Summary-{{ block.id }}-{{ section.id }}"
+                  >
+                    {{ block.settings.row_content }}
+                    {{ block.settings.page.content }}
+                  </div>
+                </details>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Conținut pliabil",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Conținut pliabil"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Mic"
+        },
+        {
+          "value": "h1",
+          "label": "Mediu"
+        },
+        {
+          "value": "h0",
+          "label": "Mare"
+        },
+        {
+          "value": "hxl",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h1",
+      "label": "Mărime titlu"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Aranjare"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Container",
+      "options": [
+        {
+          "value": "none",
+          "label": "Fără container"
+        },
+        {
+          "value": "row",
+          "label": "Container pe rând"
+        },
+        {
+          "value": "section",
+          "label": "Container pe secțiune"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color_scheme",
+      "id": "container_color_scheme",
+      "label": "Schemă de culori container",
+      "default": "scheme-2"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori secțiune",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_collapsible_row",
+      "default": false,
+      "label": "Deschide primul rând"
+    },
+    {
+      "type": "header",
+      "content": "Imagine"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagine"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adaptează la imagine"
+        },
+        {
+          "value": "small",
+          "label": "Mic"
+        },
+        {
+          "value": "large",
+          "label": "Mare"
+        }
+      ],
+      "default": "adapt",
+      "label": "Proporție imagine"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "options": [
+        {
+          "value": "image_first",
+          "label": "Imaginea prima"
+        },
+        {
+          "value": "image_second",
+          "label": "Imaginea a doua"
+        }
+      ],
+      "default": "image_second",
+      "label": "Amplasare"
+    },
+    {
+      "type": "header",
+      "content": "Spațiere interioară"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Sus",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Jos",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collapsible_row",
+      "name": "Rând pliabil",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Rând pliabil",
+          "label": "Titlu"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "Niciunul"
+            },
+            {
+              "value": "apple",
+              "label": "Măr"
+            },
+            {
+              "value": "banana",
+              "label": "Banană"
+            },
+            {
+              "value": "bottle",
+              "label": "Sticlă"
+            },
+            {
+              "value": "box",
+              "label": "Cutie"
+            },
+            {
+              "value": "carrot",
+              "label": "Morcov"
+            },
+            {
+              "value": "chat_bubble",
+              "label": "Balon de chat"
+            },
+            {
+              "value": "check_mark",
+              "label": "Bifă"
+            },
+            {
+              "value": "clipboard",
+              "label": "Clipboard"
+            },
+            {
+              "value": "dairy",
+              "label": "Lactate"
+            },
+            {
+              "value": "dairy_free",
+              "label": "Fără lactate"
+            },
+            {
+              "value": "dryer",
+              "label": "Uscător"
+            },
+            {
+              "value": "eye",
+              "label": "Ochi"
+            },
+            {
+              "value": "fire",
+              "label": "Foc"
+            },
+            {
+              "value": "gluten_free",
+              "label": "Fără gluten"
+            },
+            {
+              "value": "heart",
+              "label": "Inimă"
+            },
+            {
+              "value": "iron",
+              "label": "Fier de călcat"
+            },
+            {
+              "value": "leaf",
+              "label": "Frunză"
+            },
+            {
+              "value": "leather",
+              "label": "Piele"
+            },
+            {
+              "value": "lightning_bolt",
+              "label": "Fulger"
+            },
+            {
+              "value": "lipstick",
+              "label": "Ruj"
+            },
+            {
+              "value": "lock",
+              "label": "Lacăt"
+            },
+            {
+              "value": "map_pin",
+              "label": "Pin hartă"
+            },
+            {
+              "value": "nut_free",
+              "label": "Fără nuci"
+            },
+            {
+              "value": "pants",
+              "label": "Pantaloni"
+            },
+            {
+              "value": "paw_print",
+              "label": "Lăbuță"
+            },
+            {
+              "value": "pepper",
+              "label": "Ardei"
+            },
+            {
+              "value": "perfume",
+              "label": "Parfum"
+            },
+            {
+              "value": "plane",
+              "label": "Avion"
+            },
+            {
+              "value": "plant",
+              "label": "Plantă"
+            },
+            {
+              "value": "price_tag",
+              "label": "Etichetă preț"
+            },
+            {
+              "value": "question_mark",
+              "label": "Semn de întrebare"
+            },
+            {
+              "value": "recycle",
+              "label": "Reciclare"
+            },
+            {
+              "value": "return",
+              "label": "Retur"
+            },
+            {
+              "value": "ruler",
+              "label": "Riglă"
+            },
+            {
+              "value": "serving_dish",
+              "label": "Platou"
+            },
+            {
+              "value": "shirt",
+              "label": "Cămașă"
+            },
+            {
+              "value": "shoe",
+              "label": "Pantof"
+            },
+            {
+              "value": "silhouette",
+              "label": "Siluetă"
+            },
+            {
+              "value": "snowflake",
+              "label": "Fulg de nea"
+            },
+            {
+              "value": "star",
+              "label": "Stea"
+            },
+            {
+              "value": "stopwatch",
+              "label": "Cronometru"
+            },
+            {
+              "value": "truck",
+              "label": "Camion"
+            },
+            {
+              "value": "washing",
+              "label": "Spălare"
+            }
+          ],
+          "default": "check_mark",
+          "label": "Iconiță"
+        },
+        {
+          "type": "richtext",
+          "id": "row_content",
+          "label": "Conținut rând"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Conținut rând dintr-o pagină"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Conținut pliabil",
+      "blocks": [
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

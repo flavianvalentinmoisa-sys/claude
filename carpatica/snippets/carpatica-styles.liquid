@@ -1,0 +1,164 @@
+{% comment %}
+  Stiluri globale Carpatica: fonturi incluse în temă, variabile de tipografie,
+  culori de conversie, controale slider, scrollbar și cursor.
+  Randat în <head> din layout/theme.liquid.
+{% endcomment %}
+{%- liquid
+  assign heading_family = settings.type_header_font.family | append: ', ' | append: settings.type_header_font.fallback_families
+  assign body_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+  assign heading_weight = settings.type_header_font.weight
+  assign body_weight = settings.type_body_font.weight
+  assign body_weight_bold = settings.type_body_font.weight | plus: 300 | at_most: 1000
+
+  if settings.use_theme_fonts
+    assign heading_family = "'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"
+    assign body_family = "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"
+    assign heading_weight = settings.heading_font_weight
+    assign body_weight = settings.body_font_weight
+    assign body_weight_bold = settings.body_font_weight | plus: 200 | at_most: 900
+  endif
+
+  if settings.custom_heading_font_url != blank and settings.custom_heading_font_name != blank
+    assign heading_family = "'" | append: settings.custom_heading_font_name | append: "', " | append: heading_family
+  endif
+  if settings.custom_body_font_url != blank and settings.custom_body_font_name != blank
+    assign body_family = "'" | append: settings.custom_body_font_name | append: "', " | append: body_family
+  endif
+-%}
+{% style %}
+  {%- if settings.use_theme_fonts -%}
+    @font-face {
+      font-family: 'Inter';
+      src: url('{{ 'carpatica-inter.woff2' | asset_url }}') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('{{ 'carpatica-inter-italic.woff2' | asset_url }}') format('woff2');
+      font-weight: 100 900;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Plus Jakarta Sans';
+      src: url('{{ 'carpatica-jakarta.woff2' | asset_url }}') format('woff2');
+      font-weight: 200 800;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Plus Jakarta Sans';
+      src: url('{{ 'carpatica-jakarta-italic.woff2' | asset_url }}') format('woff2');
+      font-weight: 200 800;
+      font-style: italic;
+      font-display: swap;
+    }
+  {%- endif -%}
+  {%- if settings.custom_heading_font_url != blank and settings.custom_heading_font_name != blank -%}
+    @font-face {
+      font-family: '{{ settings.custom_heading_font_name }}';
+      src: url('{{ settings.custom_heading_font_url }}');
+      font-display: swap;
+    }
+  {%- endif -%}
+  {%- if settings.custom_body_font_url != blank and settings.custom_body_font_name != blank -%}
+    @font-face {
+      font-family: '{{ settings.custom_body_font_name }}';
+      src: url('{{ settings.custom_body_font_url }}');
+      font-display: swap;
+    }
+  {%- endif -%}
+
+  :root {
+    --font-body-family: {{ body_family }};
+    --font-body-weight: {{ body_weight }};
+    --font-body-weight-bold: {{ body_weight_bold }};
+    --font-heading-family: {{ heading_family }};
+    --font-heading-weight: {{ heading_weight }};
+    {%- if settings.use_theme_fonts %}
+      --font-body-style: normal;
+      --font-heading-style: normal;
+    {%- endif %}
+
+    --heading-line-height: {{ settings.heading_line_height | divided_by: 100.0 }};
+    --heading-letter-spacing: {{ settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    --body-line-height: {{ settings.body_line_height | divided_by: 100.0 }};
+    --body-letter-spacing: {{ settings.body_letter_spacing | divided_by: 100.0 }}em;
+
+    --color-accent: {{ settings.color_accent.red }}, {{ settings.color_accent.green }}, {{ settings.color_accent.blue }};
+    --color-accent-text: {{ settings.color_accent_text.red }}, {{ settings.color_accent_text.green }}, {{ settings.color_accent_text.blue }};
+    --color-savings: {{ settings.color_savings.red }}, {{ settings.color_savings.green }}, {{ settings.color_savings.blue }};
+    --color-urgency: {{ settings.color_urgency.red }}, {{ settings.color_urgency.green }}, {{ settings.color_urgency.blue }};
+    --color-stars: {{ settings.color_stars.red }}, {{ settings.color_stars.green }}, {{ settings.color_stars.blue }};
+    --color-highlight-bg: {{ settings.color_highlight_bg.red }}, {{ settings.color_highlight_bg.green }}, {{ settings.color_highlight_bg.blue }};
+
+    --slider-arrow-size: {{ settings.slider_arrow_size }}px;
+    --slider-arrow-radius: {{ settings.slider_arrow_radius }}px;
+    --slider-dot-size: {{ settings.slider_dot_size }}px;
+    --slider-dot-active-width: {{ settings.slider_dot_active_width }}px;
+    --slider-dot-spacing: {{ settings.slider_dot_spacing }}px;
+
+    --swatch-radius: {{ settings.swatch_radius }}%;
+    --card-title-lines: {{ settings.card_title_lines }};
+
+    --duration-extra-long: {{ settings.animation_duration }}ms;
+    --animation-distance: {{ settings.animation_distance | divided_by: 10.0 }}rem;
+  }
+
+  {%- if settings.scrollbar_style == 'custom' %}
+    @media (pointer: fine) {
+      html {
+        scrollbar-color: {{ settings.scrollbar_thumb }} {{ settings.scrollbar_track }};
+      }
+      ::-webkit-scrollbar {
+        width: {{ settings.scrollbar_width }}px;
+        height: {{ settings.scrollbar_width }}px;
+      }
+      ::-webkit-scrollbar-track {
+        background: {{ settings.scrollbar_track }};
+      }
+      ::-webkit-scrollbar-thumb {
+        background: {{ settings.scrollbar_thumb }};
+        border-radius: {{ settings.scrollbar_width }}px;
+      }
+    }
+  {%- elsif settings.scrollbar_style == 'hidden' %}
+    @media (pointer: fine) {
+      html {
+        scrollbar-width: none;
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  {%- endif %}
+
+  {%- if settings.use_theme_fonts %}
+    body {
+      font-synthesis-weight: none;
+    }
+  {%- endif %}
+
+  {%- if settings.card_title_lines != '0' %}
+    .card__heading a,
+    .card__heading .full-unstyled-link {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: {{ settings.card_title_lines }};
+      line-clamp: {{ settings.card_title_lines }};
+      overflow: hidden;
+      line-height: 1.35;
+      padding-top: 0.08em;
+    }
+  {%- endif %}
+
+  {%- if settings.custom_cursor != blank %}
+    @media (pointer: fine) {
+      body {
+        cursor: url('{{ settings.custom_cursor | image_url: width: 32, height: 32 }}') 4 4, auto;
+      }
+    }
+  {%- endif %}
+{% endstyle %}

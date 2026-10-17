@@ -1,0 +1,744 @@
+/* ==========================================================================
+   Carpatica – stiluri globale
+   Tipografie optimizată pentru limba română + componente comune
+   ========================================================================== */
+
+/* ---------- Tipografie ---------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+}
+
+/* Ghilimele românești: „citat” și «citat în citat» */
+:lang(ro) q {
+  quotes: '„' '”' '«' '»';
+}
+
+p,
+li,
+.rte {
+  text-wrap: pretty;
+}
+
+.headings-balanced :is(h1, h2, h3, .h0, .h1, .h2, .h3, .hxl, .hxxl) {
+  text-wrap: balance;
+}
+
+/* Cuvintele românești lungi nu mai ies din ecran pe telefon */
+@media screen and (max-width: 749px) {
+  :lang(ro) .rte p,
+  :lang(ro) .rte li {
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    hyphenate-limit-chars: 10 4 4;
+  }
+}
+
+/* Cifre de aceeași lățime pentru prețuri și timere */
+.price,
+.price-item,
+.totals__total-value,
+.cart-item__price-wrapper,
+.c-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.button,
+.shopify-challenge__button,
+.customer button {
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+.caption-with-letter-spacing {
+  letter-spacing: 0.08em;
+}
+
+/* Text evidențiat în titluri: scrie cuvântul cu italic în editor și primește culoarea de accent */
+.c-heading em,
+.c-highlight em {
+  font-style: normal;
+  color: var(--c-highlight, rgb(var(--color-accent)));
+}
+
+/* ---------- Utilitare ---------- */
+
+.c-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.c-hidden {
+  display: none !important;
+}
+
+@media screen and (max-width: 749px) {
+  .c-hide-mobile {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .c-hide-desktop {
+    display: none !important;
+  }
+}
+
+.c-block-spacing {
+  margin-top: var(--c-mt, 0);
+  margin-bottom: var(--c-mb, 0);
+}
+
+/* ---------- Iconițe ---------- */
+
+.c-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--c-icon-size, 2rem);
+  height: var(--c-icon-size, 2rem);
+  color: var(--c-icon-color, currentColor);
+}
+
+.c-icon svg,
+.c-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.c-emoji {
+  font-size: var(--c-icon-size, 2rem);
+  line-height: 1;
+}
+
+/* ---------- Stele rating ---------- */
+
+.c-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.c-stars__icons {
+  display: inline-flex;
+  gap: 0.15rem;
+  color: var(--c-star-color, rgb(var(--color-stars)));
+  line-height: 1;
+}
+
+.c-stars__icons svg {
+  width: var(--c-star-size, 1.7rem);
+  height: var(--c-star-size, 1.7rem);
+}
+
+.c-stars__text {
+  font-size: var(--c-stars-text-size, 1.4rem);
+  color: rgba(var(--color-foreground), 0.85);
+}
+
+.c-stars__text strong {
+  color: rgb(var(--color-foreground));
+}
+
+/* ---------- Badge-uri ---------- */
+
+.c-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 10rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  background: rgb(var(--c-pill-bg, var(--color-accent)));
+  color: rgb(var(--c-pill-fg, var(--color-accent-text)));
+}
+
+.c-pill--savings {
+  --c-pill-bg: var(--color-savings);
+  --c-pill-fg: 255, 255, 255;
+}
+
+.c-pill--urgency {
+  --c-pill-bg: var(--color-urgency);
+  --c-pill-fg: 255, 255, 255;
+}
+
+.c-pill--soft {
+  background: rgba(var(--c-pill-bg, var(--color-accent)), 0.12);
+  color: rgb(var(--c-pill-bg, var(--color-accent)));
+}
+
+.c-text-savings {
+  color: rgb(var(--color-savings));
+}
+
+.c-text-urgency {
+  color: rgb(var(--color-urgency));
+}
+
+.c-text-accent {
+  color: rgb(var(--color-accent));
+}
+
+/* ---------- Casete ---------- */
+
+.c-box {
+  border-radius: var(--c-box-radius, 1.2rem);
+  background: rgb(var(--color-highlight-bg));
+  padding: var(--c-box-padding, 1.2rem 1.4rem);
+}
+
+/* ---------- Puls (indicator live / stoc) ---------- */
+
+.c-pulse {
+  position: relative;
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: rgb(var(--c-pulse-color, var(--color-savings)));
+  flex-shrink: 0;
+}
+
+.c-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: c-pulse 1.8s ease-out infinite;
+}
+
+@keyframes c-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-pulse::after {
+    animation: none;
+  }
+}
+
+/* ---------- Timer ---------- */
+
+.c-timer {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+/* ---------- Buton copiere ---------- */
+
+copy-button {
+  display: inline-flex;
+}
+
+.c-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  border: 1px dashed currentColor;
+  border-radius: 0.6rem;
+  padding: 0.3rem 0.9rem;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: transparent;
+  color: inherit;
+}
+
+.c-copy__feedback {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* ---------- Slider (componenta c-slider) ---------- */
+
+c-slider {
+  display: block;
+  position: relative;
+}
+
+.c-slider__track {
+  display: flex;
+  gap: var(--c-slider-gap, 1.6rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.c-slider__track::-webkit-scrollbar {
+  display: none;
+}
+
+.c-slider__slide {
+  flex: 0 0 calc((100% - (var(--c-per-view-mobile, 1) - 1) * var(--c-slider-gap, 1.6rem)) / var(--c-per-view-mobile, 1));
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .c-slider__slide {
+    flex-basis: calc((100% - (var(--c-per-view, 3) - 1) * var(--c-slider-gap, 1.6rem)) / var(--c-per-view, 3));
+  }
+}
+
+.c-slider__peek .c-slider__slide {
+  flex-basis: calc((100% - (var(--c-per-view-mobile, 1)) * var(--c-slider-gap, 1.6rem)) / (var(--c-per-view-mobile, 1) + 0.15));
+}
+
+@media screen and (min-width: 750px) {
+  .c-slider__peek .c-slider__slide {
+    flex-basis: calc((100% - (var(--c-per-view, 3) - 1) * var(--c-slider-gap, 1.6rem)) / var(--c-per-view, 3));
+  }
+}
+
+.c-slider__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.c-slider__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--slider-arrow-size, 4rem);
+  height: var(--slider-arrow-size, 4rem);
+  border-radius: var(--slider-arrow-radius, 50%);
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  transition: background var(--duration-short) ease, opacity var(--duration-short) ease;
+}
+
+.c-slider__arrow:hover {
+  background: rgba(var(--color-foreground), 0.06);
+}
+
+.c-slider__arrow[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.c-slider__arrow svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.c-slider__arrow--prev svg {
+  transform: rotate(180deg);
+}
+
+.c-slider__arrows-overlay .c-slider__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.12);
+}
+
+.c-slider__arrows-overlay .c-slider__arrow--prev {
+  left: 1rem;
+}
+
+.c-slider__arrows-overlay .c-slider__arrow--next {
+  right: 1rem;
+}
+
+.c-slider__dots {
+  display: flex;
+  gap: var(--slider-dot-spacing, 6px);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.c-slider__dot {
+  width: var(--slider-dot-size, 8px);
+  height: var(--slider-dot-size, 8px);
+  padding: 0;
+  border: 0;
+  border-radius: 10rem;
+  background: rgba(var(--color-foreground), 0.25);
+  cursor: pointer;
+  transition: width var(--duration-default) ease, background var(--duration-default) ease;
+}
+
+.c-slider__dot[aria-current='true'] {
+  width: var(--slider-dot-active-width, 24px);
+  background: rgb(var(--color-foreground));
+}
+
+/* ---------- Pop-up generic (c-modal) ---------- */
+
+c-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--duration-default) ease, visibility var(--duration-default) ease;
+}
+
+c-modal[open] {
+  visibility: visible;
+  opacity: 1;
+}
+
+.c-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.c-modal__dialog {
+  position: relative;
+  width: 100%;
+  max-width: var(--c-modal-width, 52rem);
+  max-height: calc(100dvh - 3.2rem);
+  overflow-y: auto;
+  border-radius: var(--popup-corner-radius);
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.25);
+  transform: translateY(1.6rem) scale(0.98);
+  transition: transform var(--duration-medium) var(--ease-out-slow, ease);
+}
+
+c-modal[open] .c-modal__dialog {
+  transform: none;
+}
+
+.c-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(var(--color-foreground), 0.06);
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+}
+
+.c-modal__close svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.c-modal__body {
+  padding: 3.2rem 2.4rem 2.4rem;
+}
+
+/* ---------- Protecție conținut ---------- */
+
+body.no-copy {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body.no-copy :is(input, textarea, [contenteditable='true'], .c-allow-select) {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+body.no-copy img {
+  -webkit-user-drag: none;
+  pointer-events: auto;
+}
+
+/* ---------- Blocare țări ---------- */
+
+.c-country-block {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.4rem;
+  text-align: center;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  font-size: 1.8rem;
+}
+
+html.c-blocked body > *:not(.c-country-block) {
+  display: none !important;
+}
+
+/* ---------- Secțiuni: titlu standard ---------- */
+
+.c-section-header {
+  margin-bottom: 3.2rem;
+}
+
+.c-section-header > * + * {
+  margin-top: 1rem;
+}
+
+.c-section-header .c-subheading {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-accent));
+  margin: 0;
+}
+
+.c-section-header .c-heading {
+  margin: 0;
+}
+
+.c-section-header .c-text {
+  margin: 0 auto;
+  max-width: 64rem;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.c-section-header .c-text p {
+  margin: 0;
+}
+
+.c-align-left {
+  text-align: left;
+}
+
+.c-align-center {
+  text-align: center;
+}
+
+.c-align-right {
+  text-align: right;
+}
+
+.c-align-left .c-text {
+  margin-left: 0;
+}
+
+/* ---------- Antet ---------- */
+
+.c-cart-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__icon .c-cart-icon svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: transform var(--duration-short) ease;
+}
+
+.header__icon:hover .c-cart-icon svg {
+  transform: scale(1.07);
+}
+
+.cart-count-bubble {
+  background-color: rgb(var(--color-accent));
+  color: rgb(var(--color-accent-text));
+  font-weight: 700;
+}
+
+/* ---------- Mega meniu cu produse ---------- */
+
+.c-mega {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 4rem;
+  align-items: start;
+}
+
+.c-mega .mega-menu__list {
+  padding: 0;
+}
+
+.c-mega__products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.c-mega__product-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+}
+
+.c-mega__product-media {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--media-radius);
+  background: rgba(var(--color-foreground), 0.04);
+}
+
+.c-mega__product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-long) ease;
+}
+
+.c-mega__product-link:hover img {
+  transform: scale(1.04);
+}
+
+.c-mega__product-title {
+  font-size: 1.4rem;
+  line-height: 1.35;
+}
+
+.c-mega__product-price {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+}
+
+.c-mega__product-price s {
+  opacity: 0.6;
+}
+
+.c-mega__collection-image {
+  display: block;
+  margin: 0.8rem 0;
+  max-width: 16rem;
+  border-radius: var(--media-radius);
+  overflow: hidden;
+}
+
+.c-mega__collection-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- Subsol ---------- */
+
+.c-footer-contact {
+  display: grid;
+  gap: 1rem;
+}
+
+.c-footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  line-height: 1.5;
+}
+
+.c-footer-contact .c-icon {
+  margin-top: 0.1rem;
+  opacity: 0.75;
+}
+
+.c-footer-contact__company {
+  font-size: 1.3rem;
+  opacity: 0.75;
+}
+
+.c-footer-product {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c-footer-product__media {
+  flex: 0 0 8rem;
+  border-radius: var(--media-radius);
+  overflow: hidden;
+}
+
+.c-footer-product__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.c-footer-product__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.c-footer-product__title {
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.c-footer-product__price s {
+  opacity: 0.6;
+}
+
+.c-footer-product__button {
+  margin-top: 0.6rem;
+  min-height: 3.6rem;
+  padding: 0 1.4rem;
+  font-size: 1.3rem;
+}
+
+.c-anpc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.c-anpc img {
+  width: 20rem;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

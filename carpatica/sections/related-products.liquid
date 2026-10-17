@@ -1,0 +1,256 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.image_shape == 'blob' %}
+  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <product-recommendations
+    class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product.id }}"
+  >
+    {% if recommendations.performed and recommendations.products_count > 0 %}
+      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
+        {{ section.settings.heading }}
+      </h2>
+      <ul
+        class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+        role="list"
+      >
+        {% assign skip_card_product_styles = false %}
+        {% for recommendation in recommendations.products %}
+          <li class="grid__item">
+            {% render 'card-product',
+              card_product: recommendation,
+              media_aspect_ratio: section.settings.image_ratio,
+              image_shape: section.settings.image_shape,
+              show_secondary_image: section.settings.show_secondary_image,
+              show_vendor: section.settings.show_vendor,
+              show_rating: section.settings.show_rating,
+              skip_styles: skip_card_product_styles,
+              product_view_context: 'recommendation'
+            %}
+          </li>
+          {%- assign skip_card_product_styles = true -%}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </product-recommendations>
+  {% if section.settings.image_shape == 'arch' %}
+    {{ 'mask-arch.svg' | inline_asset_content }}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Produse similare",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Produsele similare se gestionează în [aplicația Search & Discovery](https://help.shopify.com/manual/online-store/search-and-discovery/product-recommendations)"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Ți-ar putea plăcea și",
+      "label": "Titlu"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Mic"
+        },
+        {
+          "value": "h1",
+          "label": "Mediu"
+        },
+        {
+          "value": "h0",
+          "label": "Mare"
+        },
+        {
+          "value": "hxl",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h1",
+      "label": "Mărime titlu"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "label": "Număr de produse"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Coloane"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "Coloane pe mobil",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "info": "Pentru a schimba schema de culori a cardurilor, modifică setările temei.",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Card produs"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adaptează la imagine"
+        },
+        {
+          "value": "portrait",
+          "label": "Portret"
+        },
+        {
+          "value": "square",
+          "label": "Pătrat"
+        }
+      ],
+      "default": "adapt",
+      "label": "Proporție imagine"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        {
+          "value": "default",
+          "label": "Implicit"
+        },
+        {
+          "value": "arch",
+          "label": "Arcadă"
+        },
+        {
+          "value": "blob",
+          "label": "Formă organică"
+        },
+        {
+          "value": "chevronleft",
+          "label": "Săgeată stânga"
+        },
+        {
+          "value": "chevronright",
+          "label": "Săgeată dreapta"
+        },
+        {
+          "value": "diamond",
+          "label": "Romb"
+        },
+        {
+          "value": "parallelogram",
+          "label": "Paralelogram"
+        },
+        {
+          "value": "round",
+          "label": "Rotund"
+        }
+      ],
+      "default": "default",
+      "label": "Formă imagine"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "Afișează a doua imagine la trecerea cursorului"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Producător"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Rating produs",
+      "info": "Pentru rating este necesară o aplicație. [Află mai multe](https://help.shopify.com/manual/online-store/themes/customizing-themes/add-product-recommendations)"
+    },
+    {
+      "type": "header",
+      "content": "Spațiere interioară"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Sus",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Jos",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

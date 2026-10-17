@@ -1,0 +1,56 @@
+{% comment %}
+  Conținutul unui anunț din bara de anunțuri.
+  Tipuri de bloc: announcement (text + iconiță + link + timer), discount (cod copiabil)
+
+  Parametri:
+  - block
+  - section
+{% endcomment %}
+{%- case block.type -%}
+  {%- when 'announcement' -%}
+    {%- if block.settings.text != blank -%}
+      {%- if block.settings.link != blank -%}
+        <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+      {%- endif -%}
+      <p class="announcement-bar__message c-announcement">
+        {%- render 'c-icon',
+          name: block.settings.icon,
+          emoji: block.settings.icon_emoji,
+          image: block.settings.icon_image,
+          size: 18
+        -%}
+        <span>{{ block.settings.text }}</span>
+        {%- if block.settings.timer_mode != 'none' -%}
+          <countdown-timer
+            class="c-timer c-announcement__timer"
+            data-mode="{{ block.settings.timer_mode }}"
+            data-duration="{{ block.settings.timer_minutes | times: 60 }}"
+            data-end="{{ block.settings.timer_end }}"
+            data-key="ann-{{ block.id }}"
+            data-hide-on-end="true"
+          >
+            <span data-timer-output>--:--:--</span>
+          </countdown-timer>
+        {%- endif -%}
+        {%- if block.settings.link != blank -%}
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        {%- endif -%}
+      </p>
+      {%- if block.settings.link != blank -%}
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+  {%- when 'discount' -%}
+    <p class="announcement-bar__message c-announcement">
+      {%- render 'c-icon', name: block.settings.icon, emoji: block.settings.icon_emoji, size: 18 -%}
+      <span>{{ block.settings.text }}</span>
+      {%- if block.settings.code != blank -%}
+        <copy-button data-text="{{ block.settings.code | escape }}" data-copied-text="{{ 'carpatica.general.copied' | t }}">
+          <button type="button" class="c-copy c-announcement__code" aria-label="{{ 'carpatica.general.copy' | t }} {{ block.settings.code | escape }}">
+            {{ block.settings.code | escape }}
+            <span class="c-copy__feedback">{{ block.settings.copy_label | default: '' }}</span>
+          </button>
+        </copy-button>
+      {%- endif -%}
+    </p>
+{%- endcase -%}

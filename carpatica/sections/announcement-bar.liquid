@@ -1,0 +1,844 @@
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+{{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign social_icons = true
+  if settings.social_facebook_link == blank and settings.social_instagram_link == blank and settings.social_youtube_link == blank and settings.social_tiktok_link == blank and settings.social_twitter_link == blank and settings.social_pinterest_link == blank and settings.social_snapchat_link == blank and settings.social_tumblr_link == blank and settings.social_vimeo_link == blank
+    assign social_icons = false
+  endif
+  if section.settings.enable_country_selector or section.settings.enable_language_selector
+    assign language_country_selector = true
+  endif
+  if section.blocks.size > 0
+    assign announcement_bar = true
+  endif
+-%}
+
+{% if social_icons %}
+  {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+<div
+  style="--c-ann-size: {{ section.settings.text_size | divided_by: 10.0 }}rem;"
+  class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.uppercase %} c-announcement--uppercase{% endif %}{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
+>
+  <div class="page-width utility-bar__grid{% if announcement_bar and language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--3-col{% elsif language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--2-col{% endif %}">
+    {%- if section.settings.show_social and social_icons -%}
+      {%- render 'social-icons' -%}
+    {%- endif -%}
+    {%- if section.settings.mode == 'marquee' and section.blocks.size > 0 -%}
+      <div
+        class="announcement-bar c-announcement-marquee"
+        role="region"
+        aria-label="{{ 'sections.announcements.announcement_bar' | t }}"
+        style="--c-marquee-speed: {{ section.settings.marquee_speed }}s;"
+      >
+        <div class="c-announcement-marquee__track">
+          {%- for i in (1..2) -%}
+            <div class="c-announcement-marquee__group"{% if forloop.index == 2 %} aria-hidden="true"{% endif %}>
+              {%- for block in section.blocks -%}
+                <div class="c-announcement-marquee__item" {% if forloop.parentloop.index == 1 %}{{ block.shopify_attributes }}{% endif %}>
+                  {%- render 'announcement-content', block: block, section: section -%}
+                </div>
+                <span class="c-announcement-marquee__sep" aria-hidden="true">{{ section.settings.marquee_separator }}</span>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- elsif section.blocks.size == 1 -%}
+      <div
+        class="announcement-bar{% if section.settings.show_social %} announcement-bar--one-announcement{% endif %}"
+        role="region"
+        aria-label="{{ 'sections.header.announcement' | t }}"
+        {{ section.blocks.first.shopify_attributes }}
+      >
+        {%- render 'announcement-content', block: section.blocks.first, section: section -%}
+      </div>
+    {%- elsif section.blocks.size > 1 -%}
+      <slideshow-component
+        class="announcement-bar"
+        role="region"
+        aria-roledescription="{{ 'sections.announcements.carousel' | t }}"
+        aria-label="{{ 'sections.announcements.announcement_bar' | t }}"
+      >
+        <div class="announcement-bar-slider slider-buttons">
+          <button
+            type="button"
+            class="slider-button slider-button--prev{% unless section.settings.show_arrows %} c-hidden{% endunless %}"
+            name="previous"
+            aria-label="{{ 'sections.announcements.previous_announcement' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+          <div
+            class="grid grid--1-col slider slider--everywhere"
+            id="Slider-{{ section.id }}"
+            aria-live="polite"
+            aria-atomic="true"
+            data-autoplay="{{ section.settings.auto_rotate }}"
+            data-speed="{{ section.settings.change_slides_speed }}"
+          >
+            {%- for block in section.blocks -%}
+              <div
+                class="slideshow__slide slider__slide grid__item grid--1-col"
+                id="Slide-{{ section.id }}-{{ forloop.index }}"
+                {{ block.shopify_attributes }}
+                role="group"
+                aria-roledescription="{{ 'sections.announcements.announcement' | t }}"
+                aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                tabindex="-1"
+              >
+                <div
+                  class="announcement-bar__announcement"
+                  role="region"
+                  aria-label="{{ 'sections.header.announcement' | t }}"
+                >
+                  {%- render 'announcement-content', block: block, section: section -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+          <button
+            type="button"
+            class="slider-button slider-button--next{% unless section.settings.show_arrows %} c-hidden{% endunless %}"
+            name="next"
+            aria-label="{{ 'sections.announcements.next_announcement' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+        </div>
+      </slideshow-component>
+      {%- if request.design_mode -%}
+        <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+        <style>
+          /* theme editor power preview fix */
+          .announcement-bar-slider .slider__slide[aria-hidden='true'] {
+            visibility: hidden;
+          }
+        </style>
+      {%- endif -%}
+    {%- endif -%}
+    <div class="localization-wrapper">
+      {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+        <localization-form class="small-hide medium-hide">
+          {%- form 'localization', id: 'AnnouncementCountryForm', class: 'localization-form' -%}
+            <div>
+              <h2 class="visually-hidden" id="AnnouncementCountryLabel">{{ 'localization.country_label' | t }}</h2>
+              {%- render 'country-localization', localPosition: 'AnnouncementCountry' -%}
+            </div>
+          {%- endform -%}
+        </localization-form>
+      {% endif %}
+
+      {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+        <localization-form class="small-hide medium-hide">
+          {%- form 'localization', id: 'AnnouncementLanguageForm', class: 'localization-form' -%}
+            <div>
+              <h2 class="visually-hidden" id="AnnouncementLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+              {%- render 'language-localization', localPosition: 'AnnouncementLanguage' -%}
+            </div>
+          {%- endform -%}
+        </localization-form>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bară de anunțuri",
+  "max_blocks": 12,
+  "class": "announcement-bar-section",
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Mod afișare",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Slider (un anunț pe rând)"
+        },
+        {
+          "value": "marquee",
+          "label": "Bandă derulantă"
+        }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Rotește automat anunțurile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "label": "Schimbă la fiecare",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Afișează săgețile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "Viteză bandă derulantă",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "default": 30,
+      "unit": "s",
+      "info": "Durata unei ture complete. Valori mai mici = mai rapid."
+    },
+    {
+      "type": "text",
+      "id": "marquee_separator",
+      "label": "Separator bandă",
+      "default": "•"
+    },
+    {
+      "type": "header",
+      "content": "Stil"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Mărime text",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "default": 13,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase",
+      "label": "Majuscule",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "label": "Linie de separare",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Utilitare"
+    },
+    {
+      "type": "paragraph",
+      "content": "Apar doar pe ecrane mari"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Iconițe rețele sociale",
+      "default": false,
+      "info": "[Gestionează conturile sociale](/editor?context=theme&category=social%20media)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Selector țară/regiune",
+      "default": false,
+      "info": "[Gestionează țările/regiunile](/admin/settings/markets)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Selector limbă",
+      "default": false,
+      "info": "[Gestionează limbile](/admin/settings/languages)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Anunț",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "Livrare <strong>gratuită</strong> la comenzile peste 200 lei"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Iconiță",
+          "options": [
+            {
+              "value": "none",
+              "label": "Fără iconiță"
+            },
+            {
+              "value": "check",
+              "label": "Bifă"
+            },
+            {
+              "value": "check_circle",
+              "label": "Bifă în cerc"
+            },
+            {
+              "value": "truck",
+              "label": "Camion livrare"
+            },
+            {
+              "value": "truck_fast",
+              "label": "Livrare rapidă"
+            },
+            {
+              "value": "package",
+              "label": "Colet"
+            },
+            {
+              "value": "box_open",
+              "label": "Cutie deschisă"
+            },
+            {
+              "value": "return",
+              "label": "Retur"
+            },
+            {
+              "value": "shield",
+              "label": "Garanție / protecție"
+            },
+            {
+              "value": "lock",
+              "label": "Plată sigură"
+            },
+            {
+              "value": "card",
+              "label": "Card"
+            },
+            {
+              "value": "cash",
+              "label": "Numerar / ramburs"
+            },
+            {
+              "value": "wallet",
+              "label": "Portofel"
+            },
+            {
+              "value": "star",
+              "label": "Stea"
+            },
+            {
+              "value": "heart",
+              "label": "Inimă"
+            },
+            {
+              "value": "gift",
+              "label": "Cadou"
+            },
+            {
+              "value": "fire",
+              "label": "Foc / popular"
+            },
+            {
+              "value": "clock",
+              "label": "Ceas"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "phone",
+              "label": "Telefon"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "support",
+              "label": "Asistență"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "map_pin",
+              "label": "Locație"
+            },
+            {
+              "value": "leaf",
+              "label": "Natural / frunză"
+            },
+            {
+              "value": "water",
+              "label": "Picătură apă"
+            },
+            {
+              "value": "recycle",
+              "label": "Reciclare"
+            },
+            {
+              "value": "sparkle",
+              "label": "Strălucire"
+            },
+            {
+              "value": "thumbs_up",
+              "label": "Like"
+            },
+            {
+              "value": "users",
+              "label": "Clienți"
+            },
+            {
+              "value": "award",
+              "label": "Premiu"
+            },
+            {
+              "value": "medal",
+              "label": "Medalie"
+            },
+            {
+              "value": "percent",
+              "label": "Procent / reducere"
+            },
+            {
+              "value": "tag",
+              "label": "Etichetă"
+            },
+            {
+              "value": "eye",
+              "label": "Ochi"
+            },
+            {
+              "value": "lightning",
+              "label": "Fulger / rapid"
+            },
+            {
+              "value": "bolt_battery",
+              "label": "Baterie"
+            },
+            {
+              "value": "globe",
+              "label": "Glob"
+            },
+            {
+              "value": "plane",
+              "label": "Avion"
+            },
+            {
+              "value": "home",
+              "label": "Casă"
+            },
+            {
+              "value": "sun",
+              "label": "Soare"
+            },
+            {
+              "value": "moon",
+              "label": "Lună / somn"
+            },
+            {
+              "value": "baby",
+              "label": "Copii"
+            },
+            {
+              "value": "paw",
+              "label": "Animale"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Sport / fitness"
+            },
+            {
+              "value": "ruler",
+              "label": "Riglă / mărimi"
+            },
+            {
+              "value": "smile",
+              "label": "Zâmbet"
+            },
+            {
+              "value": "info",
+              "label": "Informație"
+            },
+            {
+              "value": "warning",
+              "label": "Atenționare"
+            },
+            {
+              "value": "question",
+              "label": "Întrebare"
+            },
+            {
+              "value": "romania",
+              "label": "Steag"
+            },
+            {
+              "value": "flag",
+              "label": "Fanion"
+            },
+            {
+              "value": "arrow_right",
+              "label": "Săgeată"
+            }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Sau emoji",
+          "info": "Ex: 🚚. Înlocuiește iconița."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Sau imagine proprie"
+        },
+        {
+          "type": "header",
+          "content": "Timer"
+        },
+        {
+          "type": "select",
+          "id": "timer_mode",
+          "label": "Tip timer",
+          "options": [
+            {
+              "value": "none",
+              "label": "Fără timer"
+            },
+            {
+              "value": "evergreen",
+              "label": "Timer per vizitator (repornește)"
+            },
+            {
+              "value": "daily",
+              "label": "Până la miezul nopții"
+            },
+            {
+              "value": "fixed",
+              "label": "Până la o dată fixă"
+            }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "range",
+          "id": "timer_minutes",
+          "label": "Durată timer per vizitator",
+          "min": 5,
+          "max": 240,
+          "step": 5,
+          "default": 30,
+          "unit": "min"
+        },
+        {
+          "type": "text",
+          "id": "timer_end",
+          "label": "Dată finală",
+          "info": "Doar pentru „Până la o dată fixă”. Format: 2026-12-31T23:59"
+        }
+      ]
+    },
+    {
+      "type": "discount",
+      "name": "Cod de reducere",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "Folosește codul pentru 10% reducere:"
+        },
+        {
+          "type": "text",
+          "id": "code",
+          "label": "Cod",
+          "default": "BINE10"
+        },
+        {
+          "type": "text",
+          "id": "copy_label",
+          "label": "Text după cod",
+          "default": "Click pentru copiere",
+          "info": "Lasă gol pentru a ascunde."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Iconiță",
+          "options": [
+            {
+              "value": "none",
+              "label": "Fără iconiță"
+            },
+            {
+              "value": "check",
+              "label": "Bifă"
+            },
+            {
+              "value": "check_circle",
+              "label": "Bifă în cerc"
+            },
+            {
+              "value": "truck",
+              "label": "Camion livrare"
+            },
+            {
+              "value": "truck_fast",
+              "label": "Livrare rapidă"
+            },
+            {
+              "value": "package",
+              "label": "Colet"
+            },
+            {
+              "value": "box_open",
+              "label": "Cutie deschisă"
+            },
+            {
+              "value": "return",
+              "label": "Retur"
+            },
+            {
+              "value": "shield",
+              "label": "Garanție / protecție"
+            },
+            {
+              "value": "lock",
+              "label": "Plată sigură"
+            },
+            {
+              "value": "card",
+              "label": "Card"
+            },
+            {
+              "value": "cash",
+              "label": "Numerar / ramburs"
+            },
+            {
+              "value": "wallet",
+              "label": "Portofel"
+            },
+            {
+              "value": "star",
+              "label": "Stea"
+            },
+            {
+              "value": "heart",
+              "label": "Inimă"
+            },
+            {
+              "value": "gift",
+              "label": "Cadou"
+            },
+            {
+              "value": "fire",
+              "label": "Foc / popular"
+            },
+            {
+              "value": "clock",
+              "label": "Ceas"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "phone",
+              "label": "Telefon"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "support",
+              "label": "Asistență"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "map_pin",
+              "label": "Locație"
+            },
+            {
+              "value": "leaf",
+              "label": "Natural / frunză"
+            },
+            {
+              "value": "water",
+              "label": "Picătură apă"
+            },
+            {
+              "value": "recycle",
+              "label": "Reciclare"
+            },
+            {
+              "value": "sparkle",
+              "label": "Strălucire"
+            },
+            {
+              "value": "thumbs_up",
+              "label": "Like"
+            },
+            {
+              "value": "users",
+              "label": "Clienți"
+            },
+            {
+              "value": "award",
+              "label": "Premiu"
+            },
+            {
+              "value": "medal",
+              "label": "Medalie"
+            },
+            {
+              "value": "percent",
+              "label": "Procent / reducere"
+            },
+            {
+              "value": "tag",
+              "label": "Etichetă"
+            },
+            {
+              "value": "eye",
+              "label": "Ochi"
+            },
+            {
+              "value": "lightning",
+              "label": "Fulger / rapid"
+            },
+            {
+              "value": "bolt_battery",
+              "label": "Baterie"
+            },
+            {
+              "value": "globe",
+              "label": "Glob"
+            },
+            {
+              "value": "plane",
+              "label": "Avion"
+            },
+            {
+              "value": "home",
+              "label": "Casă"
+            },
+            {
+              "value": "sun",
+              "label": "Soare"
+            },
+            {
+              "value": "moon",
+              "label": "Lună / somn"
+            },
+            {
+              "value": "baby",
+              "label": "Copii"
+            },
+            {
+              "value": "paw",
+              "label": "Animale"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Sport / fitness"
+            },
+            {
+              "value": "ruler",
+              "label": "Riglă / mărimi"
+            },
+            {
+              "value": "smile",
+              "label": "Zâmbet"
+            },
+            {
+              "value": "info",
+              "label": "Informație"
+            },
+            {
+              "value": "warning",
+              "label": "Atenționare"
+            },
+            {
+              "value": "question",
+              "label": "Întrebare"
+            },
+            {
+              "value": "romania",
+              "label": "Steag"
+            },
+            {
+              "value": "flag",
+              "label": "Fanion"
+            },
+            {
+              "value": "arrow_right",
+              "label": "Săgeată"
+            }
+          ],
+          "default": "percent"
+        },
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Sau emoji",
+          "info": "Ex: 🚚. Înlocuiește iconița."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Sau imagine proprie"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bară de anunțuri",
+      "blocks": [
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

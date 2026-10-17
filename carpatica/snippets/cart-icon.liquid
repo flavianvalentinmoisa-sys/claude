@@ -1,0 +1,32 @@
+{% comment %}
+  Iconița coșului din antet + numărul de produse.
+  Stilul se alege din Setări temă > Coș > Iconiță coș în antet.
+{% endcomment %}
+<span class="svg-wrapper c-cart-icon">
+  {%- case settings.cart_icon -%}
+    {%- when 'cart' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M2.5 3.5h2.3l2.4 11.2a1.6 1.6 0 001.6 1.3h8.6a1.6 1.6 0 001.6-1.2l1.5-6.8H6.1"/>
+        <circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/>
+      </svg>
+    {%- when 'basket' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M3 9.5h18l-1.8 9.2a1.8 1.8 0 01-1.8 1.5H6.6a1.8 1.8 0 01-1.8-1.5z"/>
+        <path d="M8 9.5l3-6M16 9.5l-3-6M9.5 13v3.5M14.5 13v3.5"/>
+      </svg>
+    {%- else -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M5 8h14l-.9 11.3a1.8 1.8 0 01-1.8 1.7H7.7a1.8 1.8 0 01-1.8-1.7z"/>
+        <path d="M8.8 10.5V7a3.2 3.2 0 016.4 0v3.5"/>
+      </svg>
+  {%- endcase -%}
+</span>
+<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+{%- if cart != empty -%}
+  <div class="cart-count-bubble">
+    {%- if cart.item_count < 100 -%}
+      <span aria-hidden="true">{{ cart.item_count }}</span>
+    {%- endif -%}
+    <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+  </div>
+{%- endif -%}
