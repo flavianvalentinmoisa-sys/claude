@@ -19,8 +19,7 @@ s = subset.Subsetter(opts)
 s.populate(unicodes=unicodes)
 s.subset(f)
 if pin:
-    k,v = pin.split('=')
-    f = instancer.instantiateVariableFont(f, {k: float(v)})
+    f = instancer.instantiateVariableFont(f, {k: float(v) for k,v in (x.split('=') for x in pin.split(','))})
 f.flavor='woff2'
 f.save(out)
 import os; print(' ->', out.split('/')[-1], os.path.getsize(out)//1024, 'KB')

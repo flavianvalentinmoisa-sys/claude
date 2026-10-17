@@ -19,7 +19,7 @@
       <ul class="c-features__col c-features__col--left" role="list">{{ bullets_left }}</ul>
       <div class="c-features__media c-shoppable__media">
         {%- if s.image != blank -%}
-          {{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 40vw, 90vw' }}
+          {%- if s.image.src contains '.gif' or s.image.src contains '.GIF' -%}{%- render 'c-gif', image: s.image, loading: 'lazy' -%}{%- else -%}{{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 40vw, 90vw' }}{%- endif -%}
         {%- else -%}
           {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}

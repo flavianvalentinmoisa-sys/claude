@@ -1,0 +1,25 @@
+{% comment %}
+  Afișează un GIF animat la dimensiunea originală (fără srcset redimensionat),
+  ca animația să se păstreze.
+
+  @param {object} image - Imaginea (GIF)
+  @param {string} [alt] - Text alternativ
+  @param {string} [class] - Clase CSS
+  @param {string} [loading] - lazy (implicit) sau eager
+{% endcomment %}
+{%- liquid
+  assign gif_alt = alt | default: image.alt
+  assign gif_loading = loading | default: 'lazy'
+  assign gif_width = image.width | at_most: 3000
+-%}
+<img
+  src="{{ image | image_url: width: gif_width }}"
+  alt="{{ gif_alt | escape }}"
+  width="{{ image.width }}"
+  height="{{ image.height }}"
+  loading="{{ gif_loading }}"
+  decoding="async"
+  {% if class != blank %}
+    class="{{ class }}"
+  {% endif %}
+>

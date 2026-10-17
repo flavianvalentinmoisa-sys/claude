@@ -144,6 +144,7 @@ function resolveSettingValue(def, value) {
   if (def.type === 'color' && typeof value === 'string' && value) return colorObj(value);
   if (def.type === 'image_picker' && typeof value === 'string' && value) return img(value);
   if (def.type === 'video_url' && typeof value === 'string' && value) return { type: 'youtube', id: value };
+  if (def.type === 'video' && typeof value === 'string' && value) return { alt: value, sources: [{ format: 'mp4', url: `/img/${value}.mp4`, mime_type: 'video/mp4' }], preview_image: img(value, 1080, 1920) };
   return value;
 }
 function makeSection(id, type, data = {}) {
@@ -254,7 +255,7 @@ engine.registerFilter('image_url', (o) => imgUrl(o));
 engine.registerFilter('img_url', (o) => imgUrl(o));
 engine.registerFilter('image_tag', (u, ...args) => {
   const a = {}; args.forEach((x) => Array.isArray(x) && (a[x[0]] = x[1]));
-  return `<img src="${u}" alt="${a.alt || ''}" loading="lazy"${a.class ? ` class="${a.class}"` : ''}${a.width ? ` width="${a.width}"` : ''}>`;
+  return `<img src="${u}" alt="${a.alt || ''}" loading="${a.loading || 'lazy'}"${a.class ? ` class="${a.class}"` : ''} width="${a.width || 800}" height="${a.height || 800}">`;
 });
 engine.registerFilter('placeholder_svg_tag', (n, cls) => `<svg class="${cls || ''}" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ddd"/></svg>`);
 engine.registerFilter('payment_type_svg_tag', (t) => `<svg class="icon" viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="3" fill="#eee"/><text x="19" y="15" font-size="7" text-anchor="middle">${t}</text></svg>`);

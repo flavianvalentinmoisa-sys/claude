@@ -59,6 +59,87 @@ li,
   font-weight: 600;
 }
 
+/* ---------- Titluri fluide (se scalează lin între telefon și desktop) ---------- */
+
+.h0 {
+  font-size: clamp(calc(var(--font-heading-scale) * 3.4rem), 2.2rem + 3.6vw, calc(var(--font-heading-scale) * 5.6rem));
+}
+
+h1,
+.h1 {
+  font-size: clamp(calc(var(--font-heading-scale) * 2.8rem), 2rem + 2.4vw, calc(var(--font-heading-scale) * 4.4rem));
+}
+
+h2,
+.h2 {
+  font-size: clamp(calc(var(--font-heading-scale) * 2.3rem), 1.8rem + 1.6vw, calc(var(--font-heading-scale) * 3.4rem));
+}
+
+h1,
+h2,
+.h0,
+.h1,
+.h2,
+.hxl,
+.hxxl {
+  letter-spacing: min(var(--heading-letter-spacing), -0.015em);
+}
+
+/* Cuvinte evidențiate în titluri: scrie textul cursiv sau îngroșat în editor */
+:is(h1, h2, .h0, .h1, .h2, .hxl, .hxxl) em {
+  font-style: normal;
+  background: var(--c-em-gradient, linear-gradient(100deg, rgb(var(--color-accent)) 10%, #7c3aed 55%, #e0217a 95%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.04em;
+}
+
+:is(h1, h2, .h0, .h1, .h2, .hxl, .hxxl) strong {
+  background: linear-gradient(transparent 62%, rgba(255, 210, 63, 0.75) 62%, rgba(255, 210, 63, 0.75) 92%, transparent 92%);
+  padding: 0 0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ---------- Butoane vii ---------- */
+
+.button:not(.button--tertiary):not([disabled]),
+.shopify-payment-button__button--unbranded {
+  transition: transform 0.18s cubic-bezier(0.3, 0.7, 0.4, 1.4), box-shadow 0.18s ease, filter 0.18s ease;
+  font-weight: 700;
+}
+
+@media (hover: hover) {
+  .button:not(.button--tertiary):not([disabled]):hover,
+  .shopify-payment-button__button--unbranded:hover {
+    transform: translateY(-2px);
+    filter: saturate(1.15) brightness(1.04);
+  }
+}
+
+.button:not(.button--tertiary):not([disabled]):active {
+  transform: translateY(1px) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 .caption-with-letter-spacing {
   letter-spacing: 0.08em;
 }

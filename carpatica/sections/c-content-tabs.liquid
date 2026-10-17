@@ -27,7 +27,7 @@
         {%- assign b = block.settings -%}
         <div class="c-tabs__panel c-tabs__panel--{{ b.image_position }}" role="tabpanel" id="TabPanel-{{ block.id }}" aria-labelledby="Tab-{{ block.id }}"{% unless forloop.first %} hidden{% endunless %}>
           {%- if b.image != blank -%}
-            <div class="c-tabs__image">{{ b.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw' }}</div>
+            <div class="c-tabs__image">{%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw' }}{%- endif -%}</div>
           {%- endif -%}
           <div class="c-tabs__content">
             {%- if b.heading != blank -%}<h3 class="c-tabs__heading h3">{{ b.heading }}</h3>{%- endif -%}

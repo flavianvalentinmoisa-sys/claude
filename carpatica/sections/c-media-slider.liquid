@@ -20,7 +20,7 @@
                 {%- render 'c-video-embed', video_url: b.video_url, autoplay: true -%}
               {%- elsif b.image != blank -%}
                 {%- if b.link != blank -%}<a href="{{ b.link }}">{%- endif -%}
-                {{ b.image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '375, 750, 1100, 1500', sizes: '(min-width: 990px) 33vw, 80vw', class: 'c-media-slide__el' }}
+                {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, class: 'c-media-slide__el', loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '375, 750, 1100, 1500', sizes: '(min-width: 990px) 33vw, 80vw', class: 'c-media-slide__el' }}{%- endif -%}
                 {%- if b.link != blank -%}</a>{%- endif -%}
               {%- else -%}
                 {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg c-media-slide__el' }}

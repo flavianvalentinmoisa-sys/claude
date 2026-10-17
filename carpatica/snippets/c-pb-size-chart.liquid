@@ -18,7 +18,7 @@
     <div class="c-modal__body">
       {%- if bs.heading != blank -%}<p class="h3 c-size-chart__title">{{ bs.heading }}</p>{%- endif -%}
       {%- if bs.image != blank -%}
-        <div class="c-size-chart__image">{{ bs.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700, 1000, 1400', sizes: '(min-width: 750px) 720px, 100vw' }}</div>
+        <div class="c-size-chart__image">{%- if bs.image.src contains '.gif' or bs.image.src contains '.GIF' -%}{%- render 'c-gif', image: bs.image, loading: 'lazy' -%}{%- else -%}{{ bs.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700, 1000, 1400', sizes: '(min-width: 750px) 720px, 100vw' }}{%- endif -%}</div>
       {%- endif -%}
       <div class="rte c-size-chart__content">
         {{ bs.content }}

@@ -9,7 +9,7 @@
         {%- assign b = block.settings -%}
         <div class="c-plan color-{% if b.highlight %}{{ s.highlight_color_scheme }}{% else %}{{ s.card_color_scheme }}{% endif %}{% if b.highlight %} c-plan--highlight{% endif %}" {{ block.shopify_attributes }}>
           {%- if b.badge != blank -%}<span class="c-plan__badge">{{ b.badge | escape }}</span>{%- endif -%}
-          {%- if b.image != blank -%}<div class="c-plan__image">{{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600', sizes: '300px' }}</div>{%- endif -%}
+          {%- if b.image != blank -%}<div class="c-plan__image">{%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600', sizes: '300px' }}{%- endif -%}</div>{%- endif -%}
           <p class="c-plan__name h4">{{ b.name | escape }}</p>
           {%- if b.description != blank -%}<p class="c-plan__desc">{{ b.description }}</p>{%- endif -%}
           <p class="c-plan__price">

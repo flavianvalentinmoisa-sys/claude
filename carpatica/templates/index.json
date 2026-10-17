@@ -115,37 +115,6 @@
         "text_3"
       ]
     },
-    "testimonials": {
-      "type": "c-testimonials",
-      "settings": {},
-      "blocks": {
-        "testimonial_0": {
-          "type": "testimonial",
-          "settings": {}
-        },
-        "testimonial_1": {
-          "type": "testimonial",
-          "settings": {
-            "author": "Radu M.",
-            "location": "București",
-            "text": "<p>Livrare rapidă, plata la curier, produs exact ca în descriere. Recomand!</p>"
-          }
-        },
-        "testimonial_2": {
-          "type": "testimonial",
-          "settings": {
-            "author": "Ioana P.",
-            "location": "Iași",
-            "text": "<p>Calitate foarte bună la prețul ăsta. Am primit și un cadou mic în colet, drăguț gest.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_0",
-        "testimonial_1",
-        "testimonial_2"
-      ]
-    },
     "compare": {
       "type": "c-comparison-table",
       "settings": {},
@@ -186,35 +155,6 @@
         "row_2",
         "row_3",
         "row_4"
-      ]
-    },
-    "results": {
-      "type": "c-results",
-      "settings": {},
-      "blocks": {
-        "result_0": {
-          "type": "result",
-          "settings": {}
-        },
-        "result_1": {
-          "type": "result",
-          "settings": {
-            "percent": 89,
-            "text": "au scăpat de durerile de gât"
-          }
-        },
-        "result_2": {
-          "type": "result",
-          "settings": {
-            "percent": 97,
-            "text": "ar recomanda produsul unui prieten"
-          }
-        }
-      },
-      "block_order": [
-        "result_0",
-        "result_1",
-        "result_2"
       ]
     },
     "faq": {
@@ -306,16 +246,280 @@
         "padding_top": 48,
         "padding_bottom": 56
       }
+    },
+    "benefit_cards": {
+      "type": "c-benefit-cards",
+      "settings": {},
+      "blocks": {
+        "card_0": {
+          "type": "card",
+          "settings": {
+            "background": "#FFE8D6",
+            "emoji": "⚡",
+            "title": "Efect rapid"
+          }
+        },
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "background": "#DDF7EA",
+            "emoji": "🌿",
+            "title": "100% natural",
+            "text": "<p>Ingrediente curate, fără aditivi inutili.</p>"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "background": "#E3E9FF",
+            "emoji": "🛡️",
+            "title": "Garanție 30 de zile",
+            "text": "<p>Nu-ți place? Îți dăm banii înapoi.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_0",
+        "card_1",
+        "card_2"
+      ]
+    },
+    "media_text": {
+      "type": "c-media-text",
+      "settings": {
+        "color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "rating_0": {
+          "type": "rating",
+          "settings": {}
+        },
+        "heading_1": {
+          "type": "heading",
+          "settings": {}
+        },
+        "text_2": {
+          "type": "text",
+          "settings": {}
+        },
+        "checklist_3": {
+          "type": "checklist",
+          "settings": {}
+        },
+        "buttons_4": {
+          "type": "buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "rating_0",
+        "heading_1",
+        "text_2",
+        "checklist_3",
+        "buttons_4"
+      ]
+    },
+    "steps": {
+      "type": "c-steps",
+      "settings": {},
+      "blocks": {
+        "step_0": {
+          "type": "step",
+          "settings": {
+            "title": "Comanzi în 30 de secunde",
+            "accent": "#2B59FF"
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Primești în 24–48h",
+            "text": "<p>Curierul îți aduce coletul direct la ușă.</p>",
+            "accent": "#FF5A1F"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Te bucuri de rezultat",
+            "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>",
+            "accent": "#0F9D63"
+          }
+        }
+      },
+      "block_order": [
+        "step_0",
+        "step_1",
+        "step_2"
+      ]
+    },
+    "photo_reviews": {
+      "type": "c-photo-reviews",
+      "settings": {},
+      "blocks": {
+        "review_0": {
+          "type": "review",
+          "settings": {}
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "title": "Livrare super rapidă",
+            "text": "<p>Comandat luni, primit marți. Ambalaj impecabil și exact ca în descriere.</p>",
+            "name": "Mihai T.",
+            "location": "București",
+            "date": "acum o săptămână"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "title": "Merită fiecare leu",
+            "text": "<p>Eram sceptică, dar după două săptămâni văd diferența. Am comandat și pentru sora mea.</p>",
+            "name": "Ioana P.",
+            "location": "Iași",
+            "date": "acum 2 săptămâni",
+            "rating": 5
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "title": "Foarte mulțumit",
+            "text": "<p>Calitate bună, comunicare rapidă. Plata la livrare m-a convins să încerc.</p>",
+            "name": "Radu S.",
+            "location": "Timișoara",
+            "date": "acum 3 săptămâni",
+            "rating": 4
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "title": "Recomand cu încredere",
+            "text": "<p>Al doilea produs luat de aici, la fel de bun ca primul.</p>",
+            "name": "Elena D.",
+            "location": "Brașov",
+            "date": "acum o lună"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "title": "Peste așteptări",
+            "text": "<p>Arată și mai bine în realitate. Mulțumesc!</p>",
+            "name": "Cristina V.",
+            "location": "Constanța",
+            "date": "acum o lună"
+          }
+        }
+      },
+      "block_order": [
+        "review_0",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ]
+    },
+    "review_marquee": {
+      "type": "c-review-marquee",
+      "settings": {
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "review_0": {
+          "type": "review",
+          "settings": {}
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "text": "Am comandat al doilea, pentru mama. Recomand!",
+            "name": "Elena D."
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "text": "Exact ca în poze. Plata la livrare a fost un mare plus.",
+            "name": "Cristina V."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "text": "Comunicare rapidă și colet bine ambalat.",
+            "name": "Radu S."
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "text": "Cel mai bun raport calitate-preț.",
+            "name": "Alina G."
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "text": "Copiii îl adoră, folosim zilnic!",
+            "name": "Bogdan F."
+          }
+        }
+      },
+      "block_order": [
+        "review_0",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ]
+    },
+    "guarantee": {
+      "type": "c-guarantee",
+      "settings": {},
+      "blocks": {
+        "point_0": {
+          "type": "point",
+          "settings": {}
+        },
+        "point_1": {
+          "type": "point",
+          "settings": {
+            "icon": "cash",
+            "text": "Plata ramburs, la livrare"
+          }
+        },
+        "point_2": {
+          "type": "point",
+          "settings": {
+            "icon": "support",
+            "text": "Suport rapid pe WhatsApp și email"
+          }
+        }
+      },
+      "block_order": [
+        "point_0",
+        "point_1",
+        "point_2"
+      ]
     }
   },
   "order": [
     "hero",
     "icon_bar",
     "featured_collection",
+    "benefit_cards",
+    "media_text",
     "ticker",
-    "testimonials",
+    "steps",
+    "photo_reviews",
+    "review_marquee",
     "compare",
-    "results",
+    "guarantee",
     "faq",
     "newsletter"
   ]

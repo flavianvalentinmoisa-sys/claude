@@ -1464,6 +1464,7 @@ body.c-has-sticky-atc .c-scroll-top {
 scroll-top.c-scroll-top {
   position: fixed;
   z-index: 94;
+  background: none;
   bottom: var(--c-offset-y, 24px);
   opacity: 0;
   visibility: hidden;

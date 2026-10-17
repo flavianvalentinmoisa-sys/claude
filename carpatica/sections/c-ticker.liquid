@@ -10,7 +10,7 @@
           {%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, size: s.icon_size -%}
           <span class="c-ticker__text">{{ b.text }}</span>
         {%- when 'image' -%}
-          {%- if b.image != blank -%}{{ b.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '200px', alt: b.image.alt | default: '' }}{%- endif -%}
+          {%- if b.image != blank -%}{%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, alt: b.image.alt, loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '200px', alt: b.image.alt | default: '' }}{%- endif -%}{%- endif -%}
         {%- when 'review' -%}
           <span class="c-ticker__review color-{{ s.card_color_scheme }}">
             {%- render 'c-stars', rating: b.rating, size: 14 -%}

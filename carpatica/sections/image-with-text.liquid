@@ -50,11 +50,15 @@
               (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
             {%- endcapture -%}
               {%- endif -%}
+              {%- if section.settings.image.src contains '.gif' or section.settings.image.src contains '.GIF' -%}
+                {%- render 'c-gif', image: section.settings.image -%}
+              {%- else -%}
               {{
                 section.settings.image
                 | image_url: width: 1500
                 | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
               }}
+              {%- endif -%}
             {%- else -%}
               {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}

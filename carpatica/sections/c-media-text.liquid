@@ -1,0 +1,402 @@
+{{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-mt-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    <div class="c-mt c-mt--{{ s.media_position }} c-mt--{{ s.media_style }}" style="--c-media-width: {{ s.media_width }}%;">
+      <div class="c-mt__media{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <div class="c-mt__frame">
+          {%- if s.image != blank or s.video != blank -%}
+            {%- render 'c-media', image: s.image, video: s.video, width: 1400, widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw', eager: s.above_fold -%}
+          {%- elsif s.gif_url != blank -%}
+            <img src="{{ s.gif_url | escape }}" alt="" loading="{% if s.above_fold %}eager{% else %}lazy{% endif %}" decoding="async" width="800" height="800">
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        {%- if s.sticker != blank -%}<span class="c-mt__sticker">{{ s.sticker | escape }}</span>{%- endif -%}
+      </div>
+      <div class="c-mt__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          {%- case block.type -%}
+            {%- when 'rating' -%}
+              <div class="c-mt__rating" {{ block.shopify_attributes }}>
+                {%- render 'c-stars', rating: b.rating, size: 18 -%}
+                <span>{{ b.text }}</span>
+              </div>
+            {%- when 'subheading' -%}
+              <p class="c-subheading" {{ block.shopify_attributes }}>{{ b.text | escape }}</p>
+            {%- when 'heading' -%}
+              <h2 class="c-heading {{ b.heading_size }}" {{ block.shopify_attributes }}>{{ b.heading }}</h2>
+            {%- when 'text' -%}
+              <div class="c-text rte" {{ block.shopify_attributes }}>{{ b.text }}</div>
+            {%- when 'checklist' -%}
+              <ul class="c-mt__checks" role="list" {{ block.shopify_attributes }}>
+                {%- assign lines = b.items | newline_to_br | split: '<br />' -%}
+                {%- for line in lines -%}
+                  {%- assign line = line | strip -%}
+                  {%- if line != blank -%}
+                    <li>{% render 'c-icon', name: 'check', size: 16 %}<span>{{ line }}</span></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- when 'buttons' -%}
+              <div {{ block.shopify_attributes }}>{%- render 'c-buttons', s: b -%}</div>
+            {%- when 'custom_liquid' -%}
+              <div {{ block.shopify_attributes }}>{{ b.custom_liquid }}</div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Media cu text (GIF/video)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagine sau GIF",
+      "info": "Poți încărca și GIF-uri animate – animația se păstrează."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Sau video",
+      "info": "Video fără sunet, în buclă, ca un GIF (mai ușor decât un GIF). Are prioritate față de imagine."
+    },
+    {
+      "type": "url",
+      "id": "gif_url",
+      "label": "Sau link GIF extern",
+      "info": "Ex: un link direct .gif de pe Giphy. Folosit doar dacă nu ai imagine/video."
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Poziție media",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "media_style",
+      "label": "Formă media",
+      "options": [
+        {
+          "value": "rounded",
+          "label": "Colțuri rotunjite"
+        },
+        {
+          "value": "blob",
+          "label": "Formă organică"
+        },
+        {
+          "value": "tilt",
+          "label": "Înclinată, cu umbră colorată"
+        },
+        {
+          "value": "circle",
+          "label": "Cerc"
+        }
+      ],
+      "default": "tilt"
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Lățime media",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "sticker",
+      "label": "Abțibild pe imagine",
+      "default": "-40%"
+    },
+    {
+      "type": "checkbox",
+      "id": "above_fold",
+      "label": "Secțiunea e în primul ecran",
+      "default": false,
+      "info": "Încarcă imaginea imediat (bun pentru prima secțiune a paginii)."
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rating",
+      "name": "Rating",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Stele",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<strong>4.9/5</strong> din 2.000+ recenzii"
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "subheading",
+      "name": "Supratitlu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Nou"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Titlu",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Titlu",
+          "default": "Rezultate pe care le <em>vezi</em>"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Mărime",
+          "options": [
+            {
+              "value": "h4",
+              "label": "Mic"
+            },
+            {
+              "value": "h3",
+              "label": "Mediu"
+            },
+            {
+              "value": "h2",
+              "label": "Mare"
+            },
+            {
+              "value": "h1",
+              "label": "Foarte mare"
+            },
+            {
+              "value": "h0",
+              "label": "Extra mare"
+            }
+          ],
+          "default": "h1"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Spune pe scurt ce problemă rezolvă produsul și de ce e diferit.</p>"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "name": "Listă cu bife",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Elemente (câte unul pe rând)",
+          "default": "Livrare în 24–48h\nPlata ramburs\nRetur gratuit 30 de zile"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Butoane",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Text buton 1",
+          "default": "Cumpără acum"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Link buton 1"
+        },
+        {
+          "type": "select",
+          "id": "button_style_1",
+          "label": "Stil buton 1",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Text buton 2"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Link buton 2"
+        },
+        {
+          "type": "select",
+          "id": "button_style_2",
+          "label": "Stil buton 2",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Plin"
+            },
+            {
+              "value": "secondary",
+              "label": "Contur"
+            },
+            {
+              "value": "white",
+              "label": "Alb"
+            }
+          ],
+          "default": "secondary"
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Liquid personalizat",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Cod Liquid",
+          "info": "Poți afișa date dinamice, de ex. {{ product.title }} sau metacâmpuri."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media cu text (GIF/video)",
+      "blocks": [
+        {
+          "type": "rating"
+        },
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "checklist"
+        },
+        {
+          "type": "buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

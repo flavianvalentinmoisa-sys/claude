@@ -106,6 +106,25 @@
   </div>
 </div>
 
+{%- if section.settings.faq_schema and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {%- assign faq_answer = block.settings.row_content | append: block.settings.page.content | strip_html | strip -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.heading | default: block.settings.page.title | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ faq_answer | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Conținut pliabil",
@@ -287,6 +306,13 @@
       "unit": "px",
       "label": "Jos",
       "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "faq_schema",
+      "label": "Date structurate FAQ pentru Google",
+      "info": "Activează doar pentru secțiuni cu întrebări și răspunsuri, o singură dată pe pagină.",
+      "default": true
     }
   ],
   "blocks": [

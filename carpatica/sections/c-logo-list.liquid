@@ -10,7 +10,7 @@
         <li class="c-logos__item" {{ block.shopify_attributes }}>
           {%- if b.link != blank -%}<a href="{{ b.link }}" target="_blank" rel="noopener">{%- endif -%}
           {%- if b.image != blank -%}
-            {{ b.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '200px', alt: b.image.alt | default: '' }}
+            {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, alt: b.image.alt, loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '200px', alt: b.image.alt | default: '' }}{%- endif -%}
           {%- else -%}
             <span class="c-logos__placeholder">{{ b.name | default: 'Logo' | escape }}</span>
           {%- endif -%}

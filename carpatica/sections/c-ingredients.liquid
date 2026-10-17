@@ -1,0 +1,280 @@
+{{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-ingr-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <div class="c-ingr-layout{% if s.image != blank %} c-ingr-layout--image{% endif %}">
+      {%- if s.image != blank -%}
+        <div class="c-ingr__hero{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {%- render 'c-media', image: s.image, width: 1000, widths: '400, 700, 1000', sizes: '(min-width: 990px) 35vw, 80vw' -%}
+        </div>
+      {%- endif -%}
+      <ul class="c-ingr" role="list" style="--c-cols: {{ s.columns_desktop }};">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          <li
+            class="c-ingr__item color-{{ s.card_color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <details class="c-ingr__details"{% if s.expanded %} open{% endif %}>
+              <summary>
+                <span class="c-ingr__image">
+                  {%- if b.image != blank -%}
+                    {%- render 'c-media', image: b.image, width: 240, widths: '120, 240', sizes: '96px', alt: b.name -%}
+                  {%- elsif b.emoji != blank -%}
+                    <span aria-hidden="true">{{ b.emoji }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="c-ingr__head">
+                  <span class="c-ingr__name">{{ b.name | escape }}</span>
+                  {%- if b.amount != blank -%}<span class="c-ingr__amount">{{ b.amount | escape }}</span>{%- endif -%}
+                </span>
+                {%- if b.text != blank -%}<span class="c-ingr__toggle" aria-hidden="true">{% render 'c-icon', name: 'plus', size: 16 %}</span>{%- endif -%}
+              </summary>
+              {%- if b.text != blank -%}<div class="c-ingr__text rte">{{ b.text }}</div>{%- endif -%}
+            </details>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ingrediente",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Ce conține"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Ingrediente <em>atent alese</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagine produs (opțional)",
+      "info": "Poți încărca și GIF-uri animate – animația se păstrează."
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Coloane pe desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "expanded",
+      "label": "Descrierile deschise implicit",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Schemă de culori card",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-6"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine",
+          "info": "Poți încărca și GIF-uri animate – animația se păstrează."
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Sau emoji",
+          "default": "🌱"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nume",
+          "default": "Ashwagandha"
+        },
+        {
+          "type": "text",
+          "id": "amount",
+          "label": "Cantitate",
+          "default": "600 mg"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Descriere",
+          "default": "<p>Ajută la reducerea stresului și la un somn mai odihnitor.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingrediente",
+      "blocks": [
+        {
+          "type": "ingredient"
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "emoji": "🍋",
+            "name": "Vitamina C",
+            "amount": "80 mg",
+            "text": "<p>Susține imunitatea și energia.</p>"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "emoji": "🧲",
+            "name": "Magneziu",
+            "amount": "200 mg",
+            "text": "<p>Pentru relaxare musculară și oboseală redusă.</p>"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "emoji": "🍯",
+            "name": "Zinc",
+            "amount": "10 mg",
+            "text": "<p>Contribuie la funcționarea normală a sistemului imunitar.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

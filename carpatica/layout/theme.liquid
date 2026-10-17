@@ -11,10 +11,7 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
-    {%- if settings.use_theme_fonts -%}
-      {{ 'carpatica-inter.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
-      {{ 'carpatica-jakarta.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
-    {%- else -%}
+    {%- if settings.use_theme_fonts == false -%}
       {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
         <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
       {%- endunless -%}
@@ -287,7 +284,8 @@
       }
     {% endstyle %}
 
-    {%- render 'carpatica-styles' -%}
+    {%- render 'carpatica-styles', preload_fonts: true -%}
+    {%- render 'c-breadcrumbs-schema' -%}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'carpatica.css' | asset_url | stylesheet_tag }}
@@ -312,10 +310,6 @@
       {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
 
-    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
-      {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
-      <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
 
     {%- if settings.predictive_search_enabled -%}
       <link
@@ -425,7 +419,6 @@
         playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
         recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
         recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
-        countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
       };
     </script>
 

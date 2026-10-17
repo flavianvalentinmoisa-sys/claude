@@ -6,7 +6,7 @@
   <div class="page-width">
     <music-player class="c-music c-music--card" data-src="{{ s.audio_url | escape }}" data-volume="{{ s.volume }}" data-loop="{{ s.loop }}">
       {%- if s.cover != blank -%}
-        <span class="c-music__cover">{{ s.cover | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 240', sizes: '96px', alt: '' }}</span>
+        <span class="c-music__cover">{%- if s.cover.src contains '.gif' or s.cover.src contains '.GIF' -%}{%- render 'c-gif', image: s.cover, alt: '', loading: 'lazy' -%}{%- else -%}{{ s.cover | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 240', sizes: '96px', alt: '' }}{%- endif -%}</span>
       {%- endif -%}
       <span class="c-music__info">
         <span class="c-music__title">{{ s.title | escape }}</span>

@@ -14,6 +14,7 @@ const { chromium } = require('playwright');
   await p.goto('http://localhost:4567' + pathname, { waitUntil: 'networkidle' });
   await p.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); } window.scrollTo(0, 0); });
   await p.waitForTimeout(1600);
+  await p.addStyleTag({ content: '.scroll-trigger{opacity:1!important;animation:none!important;transform:none!important}' });
   await p.screenshot({ path: out, fullPage: full !== 'no' });
   console.log(logs.join('\n') || 'fără erori în consolă');
   await b.close();

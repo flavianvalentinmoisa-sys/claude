@@ -6,7 +6,7 @@
   <div class="page-width c-results-layout{% if s.image != blank %} c-results-layout--image c-results-layout--{{ s.image_position }}{% endif %}">
     {%- if s.image != blank -%}
       <div class="c-results__image">
-        {{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw' }}
+        {%- if s.image.src contains '.gif' or s.image.src contains '.GIF' -%}{%- render 'c-gif', image: s.image, loading: 'lazy' -%}{%- else -%}{{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw' }}{%- endif -%}
       </div>
     {%- endif -%}
     <div class="c-results__content">

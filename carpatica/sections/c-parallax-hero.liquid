@@ -12,7 +12,7 @@
 >
   {%- if s.background != blank -%}
     <div class="c-parallax__bg" data-depth="{{ s.background_depth }}">
-      {{ s.background | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw' }}
+      {%- if s.background.src contains '.gif' or s.background.src contains '.GIF' -%}{%- render 'c-gif', image: s.background, loading: 'eager' -%}{%- else -%}{{ s.background | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw' }}{%- endif -%}
     </div>
   {%- endif -%}
   {%- if s.overlay_opacity > 0 -%}<div class="c-parallax__overlay" style="opacity: {{ s.overlay_opacity | divided_by: 100.0 }};"></div>{%- endif -%}
@@ -26,7 +26,7 @@
           style="left: {{ b.x }}%; top: {{ b.y }}%; width: {{ b.width }}%; --c-layer-width-mobile: {{ b.width_mobile }}%; z-index: {{ b.z_index }};{% if b.float %} --c-float: 1;{% endif %}"
           {{ block.shopify_attributes }}
         >
-          {{ b.image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '400, 800, 1200', sizes: '50vw', alt: '' }}
+          {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, alt: '', loading: 'eager' -%}{%- else -%}{{ b.image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '400, 800, 1200', sizes: '50vw', alt: '' }}{%- endif -%}
         </div>
       {%- endif -%}
     {%- endfor -%}

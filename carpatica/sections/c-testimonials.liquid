@@ -11,7 +11,7 @@
           <figure class="c-tcard c-tcard--{{ s.card_style }} color-{{ s.card_color_scheme }}">
             {%- if b.image != blank -%}
               <div class="c-tcard__media">
-                {{- b.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 400px, 90vw' -}}
+                {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, loading: 'lazy' -%}{%- else -%}{{- b.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 400px, 90vw' -}}{%- endif -%}
               </div>
             {%- endif -%}
             <div class="c-tcard__body">

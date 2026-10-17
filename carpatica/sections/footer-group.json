@@ -42,8 +42,6 @@
         "newsletter_heading": "Abonează-te la noutăți",
         "enable_follow_on_shop": true,
         "show_social": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
         "payment_enable": true,
         "show_policy": true,
         "margin_top": 0,

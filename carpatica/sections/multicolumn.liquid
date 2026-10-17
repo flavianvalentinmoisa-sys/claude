@@ -107,6 +107,9 @@
                       (min-width: 750px) calc((100vw - {{ grid_space_tablet }}) * {{ image_width }} / {{ number_of_columns_mobile }}),
                       calc((100vw - {{ grid_space_mobile }}) * {{ image_width }} / {{ number_of_columns_mobile }})
                     {% endcapture %}
+                    {%- if block.settings.image.src contains '.gif' or block.settings.image.src contains '.GIF' -%}
+                      {%- render 'c-gif', image: block.settings.image, class: 'multicolumn-card__image' -%}
+                    {%- else -%}
                     {{
                       block.settings.image
                       | image_url: width: 3200
@@ -115,6 +118,7 @@
                         sizes: sizes,
                         class: 'multicolumn-card__image'
                     }}
+                    {%- endif -%}
                   </div>
                 </div>
               {%- endif -%}

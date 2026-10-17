@@ -1,0 +1,612 @@
+{{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-bcards-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <ul
+      class="c-bcards c-bcards--{{ s.style }}{% if s.mobile_slider %} c-bcards--mobile-slider{% endif %}"
+      role="list"
+      style="--c-cols: {{ s.columns_desktop }};"
+    >
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li
+          class="c-bcard{% if b.link != blank %} c-bcard--link{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          style="--c-card-bg: {{ b.background }}; --c-card-text: {{ b.text_color }};{% if settings.animations_reveal_on_scroll %} --animation-order: {{ forloop.index }};{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
+          {%- if b.image != blank or b.video != blank -%}
+            <div class="c-bcard__media c-bcard__media--{{ b.media_style }}">
+              {%- render 'c-media', image: b.image, video: b.video, width: 800, widths: '200, 400, 800', sizes: '(min-width: 990px) 30vw, 80vw', alt: b.title -%}
+            </div>
+          {%- elsif b.emoji != blank -%}
+            <span class="c-bcard__emoji" aria-hidden="true">{{ b.emoji }}</span>
+          {%- elsif b.icon != 'none' -%}
+            <span class="c-bcard__icon">{% render 'c-icon', name: b.icon, size: 30 %}</span>
+          {%- endif -%}
+          {%- if b.stat != blank -%}<p class="c-bcard__stat">{{ b.stat | escape }}</p>{%- endif -%}
+          {%- if b.title != blank -%}<h3 class="c-bcard__title h4">{{ b.title }}</h3>{%- endif -%}
+          {%- if b.text != blank -%}<div class="c-bcard__text rte">{{ b.text }}</div>{%- endif -%}
+          {%- if b.link != blank -%}
+            <a href="{{ b.link }}" class="c-bcard__cta">
+              {{- b.link_label | default: '→' | escape }} {% render 'c-icon', name: 'arrow_right', size: 16 -%}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- render 'c-buttons', s: s -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Carduri colorate",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "De ce să ne alegi"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Beneficii pe care le <em>simți</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Coloane pe desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Stil",
+      "options": [
+        {
+          "value": "pop",
+          "label": "Pop (umbră colorată)"
+        },
+        {
+          "value": "soft",
+          "label": "Moale"
+        },
+        {
+          "value": "outline",
+          "label": "Contur"
+        }
+      ],
+      "default": "pop"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_slider",
+      "label": "Glisare pe mobil",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Butoane"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "Text buton 1"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Link buton 1"
+    },
+    {
+      "type": "select",
+      "id": "button_style_1",
+      "label": "Stil buton 1",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Plin"
+        },
+        {
+          "value": "secondary",
+          "label": "Contur"
+        },
+        {
+          "value": "white",
+          "label": "Alb"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Text buton 2"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Link buton 2"
+    },
+    {
+      "type": "select",
+      "id": "button_style_2",
+      "label": "Stil buton 2",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Plin"
+        },
+        {
+          "value": "secondary",
+          "label": "Contur"
+        },
+        {
+          "value": "white",
+          "label": "Alb"
+        }
+      ],
+      "default": "secondary"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Culoare fundal",
+          "default": "#FFE8D6"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Culoare text",
+          "default": "#0B1020"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine sau GIF",
+          "info": "Poți încărca și GIF-uri animate – animația se păstrează."
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Sau video",
+          "info": "Video fără sunet, în buclă, ca un GIF (mai ușor decât un GIF). Are prioritate față de imagine."
+        },
+        {
+          "type": "select",
+          "id": "media_style",
+          "label": "Formă imagine",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Imagine mare"
+            },
+            {
+              "value": "icon",
+              "label": "Mică (iconiță)"
+            }
+          ],
+          "default": "icon"
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji",
+          "default": "⚡"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Iconiță",
+          "options": [
+            {
+              "value": "none",
+              "label": "Fără iconiță"
+            },
+            {
+              "value": "check",
+              "label": "Bifă"
+            },
+            {
+              "value": "check_circle",
+              "label": "Bifă în cerc"
+            },
+            {
+              "value": "truck",
+              "label": "Camion livrare"
+            },
+            {
+              "value": "truck_fast",
+              "label": "Livrare rapidă"
+            },
+            {
+              "value": "package",
+              "label": "Colet"
+            },
+            {
+              "value": "box_open",
+              "label": "Cutie deschisă"
+            },
+            {
+              "value": "return",
+              "label": "Retur"
+            },
+            {
+              "value": "shield",
+              "label": "Garanție / protecție"
+            },
+            {
+              "value": "lock",
+              "label": "Plată sigură"
+            },
+            {
+              "value": "card",
+              "label": "Card"
+            },
+            {
+              "value": "cash",
+              "label": "Numerar / ramburs"
+            },
+            {
+              "value": "wallet",
+              "label": "Portofel"
+            },
+            {
+              "value": "star",
+              "label": "Stea"
+            },
+            {
+              "value": "heart",
+              "label": "Inimă"
+            },
+            {
+              "value": "gift",
+              "label": "Cadou"
+            },
+            {
+              "value": "fire",
+              "label": "Foc / popular"
+            },
+            {
+              "value": "clock",
+              "label": "Ceas"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "phone",
+              "label": "Telefon"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "support",
+              "label": "Asistență"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "map_pin",
+              "label": "Locație"
+            },
+            {
+              "value": "leaf",
+              "label": "Natural / frunză"
+            },
+            {
+              "value": "water",
+              "label": "Picătură apă"
+            },
+            {
+              "value": "recycle",
+              "label": "Reciclare"
+            },
+            {
+              "value": "sparkle",
+              "label": "Strălucire"
+            },
+            {
+              "value": "thumbs_up",
+              "label": "Like"
+            },
+            {
+              "value": "users",
+              "label": "Clienți"
+            },
+            {
+              "value": "award",
+              "label": "Premiu"
+            },
+            {
+              "value": "medal",
+              "label": "Medalie"
+            },
+            {
+              "value": "percent",
+              "label": "Procent / reducere"
+            },
+            {
+              "value": "tag",
+              "label": "Etichetă"
+            },
+            {
+              "value": "eye",
+              "label": "Ochi"
+            },
+            {
+              "value": "lightning",
+              "label": "Fulger / rapid"
+            },
+            {
+              "value": "bolt_battery",
+              "label": "Baterie"
+            },
+            {
+              "value": "globe",
+              "label": "Glob"
+            },
+            {
+              "value": "plane",
+              "label": "Avion"
+            },
+            {
+              "value": "home",
+              "label": "Casă"
+            },
+            {
+              "value": "sun",
+              "label": "Soare"
+            },
+            {
+              "value": "moon",
+              "label": "Lună / somn"
+            },
+            {
+              "value": "baby",
+              "label": "Copii"
+            },
+            {
+              "value": "paw",
+              "label": "Animale"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Sport / fitness"
+            },
+            {
+              "value": "ruler",
+              "label": "Riglă / mărimi"
+            },
+            {
+              "value": "smile",
+              "label": "Zâmbet"
+            },
+            {
+              "value": "info",
+              "label": "Informație"
+            },
+            {
+              "value": "warning",
+              "label": "Atenționare"
+            },
+            {
+              "value": "question",
+              "label": "Întrebare"
+            },
+            {
+              "value": "romania",
+              "label": "Steag"
+            },
+            {
+              "value": "flag",
+              "label": "Fanion"
+            },
+            {
+              "value": "arrow_right",
+              "label": "Săgeată"
+            }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "text",
+          "id": "stat",
+          "label": "Număr mare",
+          "info": "Ex: 98%"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Titlu",
+          "default": "Efect rapid"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Simți diferența din primele zile de utilizare.</p>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Text link",
+          "default": "Află mai multe"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carduri colorate",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "background": "#FFE8D6",
+            "emoji": "⚡",
+            "title": "Efect rapid"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "background": "#DDF7EA",
+            "emoji": "🌿",
+            "title": "100% natural",
+            "text": "<p>Ingrediente curate, fără aditivi inutili.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "background": "#E3E9FF",
+            "emoji": "🛡️",
+            "title": "Garanție 30 de zile",
+            "text": "<p>Nu-ți place? Îți dăm banii înapoi.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

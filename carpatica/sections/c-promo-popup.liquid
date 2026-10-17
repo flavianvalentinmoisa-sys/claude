@@ -18,7 +18,7 @@
       <div class="c-modal__dialog c-promo__dialog c-promo__dialog--{{ s.layout }} color-{{ s.color_scheme }}" tabindex="-1">
         <button type="button" class="c-modal__close" data-modal-close aria-label="{{ 'accessibility.close' | t }}">{{- 'icon-close.svg' | inline_asset_content -}}</button>
         {%- if s.image != blank -%}
-          <div class="c-promo__image">{{ s.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400, 600, 900', sizes: '(min-width: 750px) 400px, 100vw' }}</div>
+          <div class="c-promo__image">{%- if s.image.src contains '.gif' or s.image.src contains '.GIF' -%}{%- render 'c-gif', image: s.image, loading: 'lazy' -%}{%- else -%}{{ s.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400, 600, 900', sizes: '(min-width: 750px) 400px, 100vw' }}{%- endif -%}</div>
         {%- endif -%}
         <div class="c-promo__body c-align-center">
           {%- form 'customer', id: 'PromoPopupForm', class: 'c-promo__form' -%}

@@ -1,0 +1,284 @@
+{{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
+{%- render 'c-section-style', section: section -%}
+{%- liquid
+  assign s = section.settings
+  assign half = section.blocks.size | divided_by: 2.0 | ceil
+  if s.rows == '1'
+    assign half = section.blocks.size
+  endif
+-%}
+<div class="c-rmq-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+  </div>
+  <div class="c-rmq" style="--c-speed: {{ s.speed }}s;">
+    {%- for row in (1..2) -%}
+      {%- if row == 2 and s.rows == '1' -%}{%- break -%}{%- endif -%}
+      {%- capture cards -%}
+        {%- for block in section.blocks -%}
+          {%- if row == 1 and forloop.index > half -%}{%- continue -%}{%- endif -%}
+          {%- if row == 2 and forloop.index <= half -%}{%- continue -%}{%- endif -%}
+          {%- assign b = block.settings -%}
+          <li class="c-rmq__card color-{{ s.card_color_scheme }}" {{ block.shopify_attributes }}>
+            {%- if b.image != blank -%}
+              <span class="c-rmq__photo">{%- render 'c-media', image: b.image, width: 200, widths: '100, 200', sizes: '84px', alt: b.name -%}</span>
+            {%- endif -%}
+            <span class="c-rmq__body">
+              {%- render 'c-stars', rating: b.rating, size: 14 -%}
+              <span class="c-rmq__text">{{ b.text | escape }}</span>
+              <span class="c-rmq__name">{{ b.name | escape }}{% if b.verified %} {% render 'c-icon', name: 'check_circle', size: 13 %}{% endif %}</span>
+            </span>
+          </li>
+        {%- endfor -%}
+      {%- endcapture -%}
+      <div class="c-rmq__row{% if row == 2 %} c-rmq__row--reverse{% endif %}">
+        <ul class="c-rmq__track" role="list">{{ cards }}</ul>
+        <ul class="c-rmq__track" role="list" aria-hidden="true">{{ cards | replace: 'data-shopify-editor-block', 'data-c-clone' }}</ul>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bandă cu recenzii",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Iubit de <em>mii</em> de români",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "rows",
+      "label": "Rânduri",
+      "options": [
+        {
+          "value": "1",
+          "label": "Un rând"
+        },
+        {
+          "value": "2",
+          "label": "Două rânduri (sensuri opuse)"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Durata unei treceri",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 50,
+      "unit": "s"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Schemă de culori card",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Recenzie",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Poză",
+          "info": "Poți încărca și GIF-uri animate – animația se păstrează."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Stele",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Super calitate, a ajuns super repede!"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nume",
+          "default": "Mihai T."
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verificat",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bandă cu recenzii",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Am comandat al doilea, pentru mama. Recomand!",
+            "name": "Elena D."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Exact ca în poze. Plata la livrare a fost un mare plus.",
+            "name": "Cristina V."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Comunicare rapidă și colet bine ambalat.",
+            "name": "Radu S."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Cel mai bun raport calitate-preț.",
+            "name": "Alina G."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Copiii îl adoră, folosim zilnic!",
+            "name": "Bogdan F."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

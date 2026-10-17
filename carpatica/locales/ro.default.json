@@ -623,6 +623,12 @@
     "music": {
       "play": "Pornește muzica",
       "pause": "Oprește muzica"
+    },
+    "reviews": {
+      "open_photo": "Vezi poza de la {{ name }}",
+      "gallery": "Galerie foto recenzii",
+      "sound": "Pornește sau oprește sunetul",
+      "play": "Redă video"
     }
   }
 }

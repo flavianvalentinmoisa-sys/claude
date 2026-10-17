@@ -21,9 +21,9 @@
                   assign img_loading = 'eager'
                 endif
               -%}
-              {{ b.image | image_url: width: 2400 | image_tag: loading: img_loading, widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', class: desktop_classes }}
+              {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, class: desktop_classes, loading: img_loading -%}{%- else -%}{{ b.image | image_url: width: 2400 | image_tag: loading: img_loading, widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', class: desktop_classes }}{%- endif -%}
               {%- if b.image_mobile != blank -%}
-                {{ b.image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '375, 750, 1100', sizes: '100vw', class: 'c-hero-slide__img c-hide-desktop' }}
+                {%- if b.image_mobile.src contains '.gif' or b.image_mobile.src contains '.GIF' -%}{%- render 'c-gif', image: b.image_mobile, class: 'c-hero-slide__img c-hide-desktop', loading: 'lazy' -%}{%- else -%}{{ b.image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '375, 750, 1100', sizes: '100vw', class: 'c-hero-slide__img c-hide-desktop' }}{%- endif -%}
               {%- endif -%}
             {%- else -%}
               {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg c-hero-slide__img' }}

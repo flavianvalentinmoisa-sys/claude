@@ -191,7 +191,7 @@
       {%- if bs.image != blank -%}
         {%- if bs.link != blank -%}<a href="{{ bs.link }}">{%- endif -%}
         <span class="c-pb-image__frame" style="max-width: {{ bs.width }}%; border-radius: {{ bs.radius }}px;">
-          {{- bs.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200', sizes: '(min-width: 990px) 600px, 100vw' -}}
+          {%- if bs.image.src contains '.gif' or bs.image.src contains '.GIF' -%}{%- render 'c-gif', image: bs.image, loading: 'lazy' -%}{%- else -%}{{- bs.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200', sizes: '(min-width: 990px) 600px, 100vw' -}}{%- endif -%}
         </span>
         {%- if bs.link != blank -%}</a>{%- endif -%}
       {%- else -%}

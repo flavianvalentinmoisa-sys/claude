@@ -47,7 +47,7 @@
                   {%- if b.image != blank -%}
                     <div class="c-col-image" style="max-width: {{ b.width }}%; border-radius: {{ b.radius }}px;">
                       {%- if b.link != blank -%}<a href="{{ b.link }}">{%- endif -%}
-                      {{ b.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '400, 700, 1000, 1400', sizes: '(min-width: 990px) 50vw, 100vw' }}
+                      {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '400, 700, 1000, 1400', sizes: '(min-width: 990px) 50vw, 100vw' }}{%- endif -%}
                       {%- if b.link != blank -%}</a>{%- endif -%}
                     </div>
                   {%- else -%}

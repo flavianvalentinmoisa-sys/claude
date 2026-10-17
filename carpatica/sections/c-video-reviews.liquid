@@ -1,0 +1,281 @@
+{{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-vreviews-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <c-slider
+      class="c-slider__peek c-vreviews"
+      style="--c-per-view: {{ s.columns_desktop }}; --c-per-view-mobile: 1.6; --c-slider-gap: 1.6rem;"
+    >
+      <ul class="c-slider__track" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          <li class="c-slider__slide" {{ block.shopify_attributes }}>
+            <figure class="c-vreview">
+              <div class="c-vreview__media">
+                {%- if b.video != blank -%}
+                  {%- render 'c-media', video: b.video, image: b.cover, alt: b.name -%}
+                  <button type="button" class="c-vreview__sound" data-sound-toggle aria-label="{{ 'carpatica.reviews.sound' | t }}">
+                    <svg class="c-vreview__muted" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m16 9 5 6m0-6-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+                    <svg class="c-vreview__unmuted" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+                  </button>
+                {%- elsif b.cover != blank -%}
+                  {%- render 'c-media', image: b.cover, width: 700, widths: '350, 700', sizes: '(min-width: 990px) 25vw, 60vw', alt: b.name -%}
+                {%- else -%}
+                  {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+                {%- if b.badge != blank -%}<span class="c-vreview__badge">{{ b.badge | escape }}</span>{%- endif -%}
+              </div>
+              <figcaption class="c-vreview__caption">
+                {%- render 'c-stars', rating: b.rating, size: 14 -%}
+                {%- if b.text != blank -%}<p class="c-vreview__text">{{ b.text | escape }}</p>{%- endif -%}
+                <p class="c-vreview__name">{{ b.name | escape }}{% if b.verified %} {% render 'c-icon', name: 'check_circle', size: 14 %}{% endif %}</p>
+                {%- if b.product != blank -%}
+                  <a href="{{ b.product.url }}" class="c-vreview__product">
+                    {%- if b.product.featured_image != blank -%}
+                      {{ b.product.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', alt: b.product.title, width: 34, height: 34 }}
+                    {%- endif -%}
+                    <span>
+                      <span class="c-vreview__product-title">{{ b.product.title | escape }}</span>
+                      <span class="c-vreview__product-price">{{ b.product.price | money }}</span>
+                    </span>
+                  </a>
+                {%- endif -%}
+              </figcaption>
+            </figure>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- render 'c-slider-controls', show_dots: s.show_dots -%}
+    </c-slider>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Recenzii video",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Văzut pe TikTok"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Clienții ne arată <em>rezultatele</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Coloane pe desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Puncte paginare",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "Videoclipurile pornesc fără sunet când devin vizibile; o atingere pornește sunetul. Se încarcă doar când ajung pe ecran."
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_review",
+      "name": "Recenzie video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (format vertical 9:16)"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover",
+          "label": "Copertă (opțional)",
+          "info": "Poți încărca și GIF-uri animate – animația se păstrează."
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Etichetă",
+          "default": "⭐ Top recenzie"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Stele",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text scurt",
+          "default": "Cel mai bun produs cumpărat anul ăsta!"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nume",
+          "default": "Ioana P."
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Cumpărător verificat",
+          "default": true
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produs"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recenzii video",
+      "blocks": [
+        {
+          "type": "video_review"
+        },
+        {
+          "type": "video_review"
+        },
+        {
+          "type": "video_review"
+        },
+        {
+          "type": "video_review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

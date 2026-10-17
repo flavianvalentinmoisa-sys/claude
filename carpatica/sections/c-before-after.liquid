@@ -13,7 +13,7 @@
     <comparison-slider class="c-ba" style="--c-ba-pos: {{ s.start_position }}%; --c-ba-radius: {{ s.radius }}px; --c-ba-ratio: {{ s.aspect_ratio }};">
       <div class="c-ba__img c-ba__img--after">
         {%- if s.image_after != blank -%}
-          {{ s.image_after | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw' }}
+          {%- if s.image_after.src contains '.gif' or s.image_after.src contains '.GIF' -%}{%- render 'c-gif', image: s.image_after, loading: 'lazy' -%}{%- else -%}{{ s.image_after | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw' }}{%- endif -%}
         {%- else -%}
           {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
@@ -21,7 +21,7 @@
       </div>
       <div class="c-ba__img c-ba__img--before">
         {%- if s.image_before != blank -%}
-          {{ s.image_before | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw' }}
+          {%- if s.image_before.src contains '.gif' or s.image_before.src contains '.GIF' -%}{%- render 'c-gif', image: s.image_before, loading: 'lazy' -%}{%- else -%}{{ s.image_before | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 600px, 100vw' }}{%- endif -%}
         {%- else -%}
           {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}

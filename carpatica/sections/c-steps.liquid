@@ -1,0 +1,349 @@
+{{ 'section-c-vivid.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'carpatica-vivid.js' | asset_url }}" defer="defer"></script>
+{%- render 'c-section-style', section: section -%}
+{%- assign s = section.settings -%}
+<div class="c-steps-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
+  <div class="page-width">
+    {%- render 'c-section-header', section: section -%}
+    <ol class="c-steps c-steps--{{ s.layout }}{% if s.show_line %} c-steps--line{% endif %}" role="list" style="--c-cols: {{ section.blocks.size | at_most: 4 }};">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li
+          class="c-step color-{{ s.card_color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          style="--c-step-color: {{ b.accent | default: settings.color_accent }};{% if settings.animations_reveal_on_scroll %} --animation-order: {{ forloop.index }};{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
+          {%- if b.image != blank or b.video != blank -%}
+            <div class="c-step__media">
+              {%- render 'c-media', image: b.image, video: b.video, width: 900, widths: '300, 600, 900', sizes: '(min-width: 990px) 25vw, 90vw', alt: b.title -%}
+            </div>
+          {%- endif -%}
+          <div class="c-step__body">
+            <span class="c-step__number" aria-hidden="true">
+              {%- if b.emoji != blank -%}{{ b.emoji }}{%- else -%}{{ forloop.index }}{%- endif -%}
+            </span>
+            <div>
+              {%- if s.show_step_label -%}<p class="c-step__label">{{ s.step_label | escape }} {{ forloop.index }}</p>{%- endif -%}
+              {%- if b.title != blank -%}<h3 class="c-step__title h4">{{ b.title }}</h3>{%- endif -%}
+              {%- if b.text != blank -%}<div class="c-step__text rte">{{ b.text }}</div>{%- endif -%}
+            </div>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+    {%- render 'c-buttons', s: s -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cum funcționează (pași)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Supratitlu",
+      "default": "Simplu și rapid"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Cum <em>funcționează</em>",
+      "info": "Scrie un cuvânt cu italic ca să primească culoarea de accent."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Mărime titlu",
+      "options": [
+        {
+          "value": "h4",
+          "label": "Mic"
+        },
+        {
+          "value": "h3",
+          "label": "Mediu"
+        },
+        {
+          "value": "h2",
+          "label": "Mare"
+        },
+        {
+          "value": "h1",
+          "label": "Foarte mare"
+        },
+        {
+          "value": "h0",
+          "label": "Extra mare"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Aliniere titlu",
+      "options": [
+        {
+          "value": "left",
+          "label": "Stânga"
+        },
+        {
+          "value": "center",
+          "label": "Centru"
+        },
+        {
+          "value": "right",
+          "label": "Dreapta"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Aranjare",
+      "options": [
+        {
+          "value": "cards",
+          "label": "Carduri pe orizontală"
+        },
+        {
+          "value": "timeline",
+          "label": "Linie verticală (cronologie)"
+        }
+      ],
+      "default": "cards"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line",
+      "label": "Linie de legătură între pași",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_step_label",
+      "label": "Afișează „Pasul 1, 2...”",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "step_label",
+      "label": "Text pas",
+      "default": "Pasul"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Schemă de culori card",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Butoane"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "Text buton 1",
+      "default": "Încearcă acum"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Link buton 1"
+    },
+    {
+      "type": "select",
+      "id": "button_style_1",
+      "label": "Stil buton 1",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Plin"
+        },
+        {
+          "value": "secondary",
+          "label": "Contur"
+        },
+        {
+          "value": "white",
+          "label": "Alb"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Text buton 2"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Link buton 2"
+    },
+    {
+      "type": "select",
+      "id": "button_style_2",
+      "label": "Stil buton 2",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Plin"
+        },
+        {
+          "value": "secondary",
+          "label": "Contur"
+        },
+        {
+          "value": "white",
+          "label": "Alb"
+        }
+      ],
+      "default": "secondary"
+    },
+    {
+      "type": "header",
+      "content": "Stil secțiune"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Afișează pe",
+      "options": [
+        {
+          "value": "all",
+          "label": "Toate dispozitivele"
+        },
+        {
+          "value": "desktop",
+          "label": "Doar desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Doar mobil"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "ID secțiune (ancoră)",
+      "info": "Folosit de butoanele de derulare. Ex: recenzii → link #recenzii."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Spațiere sus",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Spațiere jos",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Pas",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagine sau GIF",
+          "info": "Poți încărca și GIF-uri animate – animația se păstrează."
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Sau video",
+          "info": "Video fără sunet, în buclă, ca un GIF (mai ușor decât un GIF). Are prioritate față de imagine."
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji în loc de număr",
+          "info": "Ex: 📦"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Culoare pas"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Titlu",
+          "default": "Comanzi online"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Alegi produsul și plătești ramburs, la curier.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cum funcționează (pași)",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Comanzi în 30 de secunde",
+            "accent": "#2B59FF"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Primești în 24–48h",
+            "text": "<p>Curierul îți aduce coletul direct la ușă.</p>",
+            "accent": "#FF5A1F"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Te bucuri de rezultat",
+            "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>",
+            "accent": "#0F9D63"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -29,7 +29,7 @@
                 {%- endif -%}
               </div>
               {%- if b.image != blank -%}
-                <div class="c-fb__image">{{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600', sizes: '300px' }}</div>
+                <div class="c-fb__image">{%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600', sizes: '300px' }}{%- endif -%}</div>
               {%- endif -%}
               <p class="c-fb__actions">
                 <span>{{ s.like_label | escape }}</span>

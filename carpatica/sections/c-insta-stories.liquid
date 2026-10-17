@@ -14,9 +14,9 @@
               <span class="c-stories__ring">
                 <span class="c-stories__avatar">
                   {%- if b.thumbnail != blank -%}
-                    {{ b.thumbnail | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 200', sizes: '90px', alt: '' }}
+                    {%- if b.thumbnail.src contains '.gif' or b.thumbnail.src contains '.GIF' -%}{%- render 'c-gif', image: b.thumbnail, alt: '', loading: 'lazy' -%}{%- else -%}{{ b.thumbnail | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 200', sizes: '90px', alt: '' }}{%- endif -%}
                   {%- elsif b.image != blank -%}
-                    {{ b.image | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 200', sizes: '90px', alt: '' }}
+                    {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, alt: '', loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 200', sizes: '90px', alt: '' }}{%- endif -%}
                   {%- else -%}
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                   {%- endif -%}
@@ -47,7 +47,7 @@
               {%- if b.video != blank -%}
                 {{ b.video | video_tag: muted: true, playsinline: true, preload: 'none', class: 'c-stories__media', image_size: '720x' }}
               {%- elsif b.image != blank -%}
-                {{ b.image | image_url: width: 1080 | image_tag: loading: 'lazy', widths: '540, 720, 1080', sizes: '(min-width: 750px) 420px, 100vw', class: 'c-stories__media' }}
+                {%- if b.image.src contains '.gif' or b.image.src contains '.GIF' -%}{%- render 'c-gif', image: b.image, class: 'c-stories__media', loading: 'lazy' -%}{%- else -%}{{ b.image | image_url: width: 1080 | image_tag: loading: 'lazy', widths: '540, 720, 1080', sizes: '(min-width: 750px) 420px, 100vw', class: 'c-stories__media' }}{%- endif -%}
               {%- else -%}
                 {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg c-stories__media' }}
               {%- endif -%}

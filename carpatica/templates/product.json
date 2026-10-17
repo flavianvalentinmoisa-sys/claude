@@ -250,8 +250,50 @@
         "row_4"
       ]
     },
-    "reviews": {
-      "type": "c-review-wall",
+    "problem_solution": {
+      "type": "c-problem-solution",
+      "settings": {}
+    },
+    "steps": {
+      "type": "c-steps",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-2",
+        "button_label_1": ""
+      },
+      "blocks": {
+        "step_0": {
+          "type": "step",
+          "settings": {
+            "title": "Comanzi în 30 de secunde",
+            "accent": "#2B59FF"
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Primești în 24–48h",
+            "text": "<p>Curierul îți aduce coletul direct la ușă.</p>",
+            "accent": "#FF5A1F"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Te bucuri de rezultat",
+            "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>",
+            "accent": "#0F9D63"
+          }
+        }
+      },
+      "block_order": [
+        "step_0",
+        "step_1",
+        "step_2"
+      ]
+    },
+    "photo_reviews": {
+      "type": "c-photo-reviews",
       "settings": {
         "anchor": "recenzii"
       },
@@ -263,34 +305,105 @@
         "review_1": {
           "type": "review",
           "settings": {
-            "author": "Alina G.",
-            "title": "Recomand 100%",
-            "text": "<p>Am avut o întrebare și am primit răspuns imediat. Produsul e superb.</p>",
+            "title": "Livrare super rapidă",
+            "text": "<p>Comandat luni, primit marți. Ambalaj impecabil și exact ca în descriere.</p>",
+            "name": "Mihai T.",
+            "location": "București",
             "date": "acum o săptămână"
           }
         },
         "review_2": {
           "type": "review",
           "settings": {
-            "author": "Mihai T.",
-            "title": "Raport calitate-preț excelent",
-            "text": "<p>Mi-a depășit așteptările. Ambalaj frumos și livrare rapidă.</p>",
-            "date": "acum 2 săptămâni"
+            "title": "Merită fiecare leu",
+            "text": "<p>Eram sceptică, dar după două săptămâni văd diferența. Am comandat și pentru sora mea.</p>",
+            "name": "Ioana P.",
+            "location": "Iași",
+            "date": "acum 2 săptămâni",
+            "rating": 5
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "title": "Foarte mulțumit",
+            "text": "<p>Calitate bună, comunicare rapidă. Plata la livrare m-a convins să încerc.</p>",
+            "name": "Radu S.",
+            "location": "Timișoara",
+            "date": "acum 3 săptămâni",
+            "rating": 4
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "title": "Recomand cu încredere",
+            "text": "<p>Al doilea produs luat de aici, la fel de bun ca primul.</p>",
+            "name": "Elena D.",
+            "location": "Brașov",
+            "date": "acum o lună"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "title": "Peste așteptări",
+            "text": "<p>Arată și mai bine în realitate. Mulțumesc!</p>",
+            "name": "Cristina V.",
+            "location": "Constanța",
+            "date": "acum o lună"
           }
         }
       },
       "block_order": [
         "review_0",
         "review_1",
-        "review_2"
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ]
+    },
+    "guarantee": {
+      "type": "c-guarantee",
+      "settings": {
+        "button_label_1": ""
+      },
+      "blocks": {
+        "point_0": {
+          "type": "point",
+          "settings": {}
+        },
+        "point_1": {
+          "type": "point",
+          "settings": {
+            "icon": "cash",
+            "text": "Plata ramburs, la livrare"
+          }
+        },
+        "point_2": {
+          "type": "point",
+          "settings": {
+            "icon": "support",
+            "text": "Suport rapid pe WhatsApp și email"
+          }
+        }
+      },
+      "block_order": [
+        "point_0",
+        "point_1",
+        "point_2"
       ]
     }
   },
   "order": [
     "main",
     "icon_bar",
+    "problem_solution",
+    "steps",
+    "photo_reviews",
     "compare",
-    "reviews",
+    "guarantee",
     "disclosures",
     "related-products"
   ]

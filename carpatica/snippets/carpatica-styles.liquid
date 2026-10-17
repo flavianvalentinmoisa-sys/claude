@@ -11,8 +11,23 @@
   assign body_weight_bold = settings.type_body_font.weight | plus: 300 | at_most: 1000
 
   if settings.use_theme_fonts
-    assign heading_family = "'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"
-    assign body_family = "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"
+    assign sans_fallback = "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"
+    case settings.font_pair
+      when 'prietenos'
+        assign heading_name = 'Nunito'
+        assign body_name = 'Nunito'
+      when 'modern'
+        assign heading_name = 'Outfit'
+        assign body_name = 'Inter'
+      when 'clasic'
+        assign heading_name = 'Plus Jakarta Sans'
+        assign body_name = 'Inter'
+      else
+        assign heading_name = 'Bricolage Grotesque'
+        assign body_name = 'Plus Jakarta Sans'
+    endcase
+    assign heading_family = "'" | append: heading_name | append: "', " | append: sans_fallback
+    assign body_family = "'" | append: body_name | append: "', " | append: sans_fallback
     assign heading_weight = settings.heading_font_weight
     assign body_weight = settings.body_font_weight
     assign body_weight_bold = settings.body_font_weight | plus: 200 | at_most: 900
@@ -25,36 +40,52 @@
     assign body_family = "'" | append: settings.custom_body_font_name | append: "', " | append: body_family
   endif
 -%}
+{%- if settings.use_theme_fonts and preload_fonts -%}
+  {%- liquid
+    assign font_files = ''
+    case heading_name
+      when 'Bricolage Grotesque'
+        assign font_files = 'carpatica-bricolage.woff2'
+      when 'Nunito'
+        assign font_files = 'carpatica-nunito.woff2'
+      when 'Outfit'
+        assign font_files = 'carpatica-outfit.woff2'
+      else
+        assign font_files = 'carpatica-jakarta.woff2'
+    endcase
+    case body_name
+      when 'Inter'
+        assign font_files = font_files | append: ',carpatica-inter.woff2'
+      when 'Plus Jakarta Sans'
+        assign font_files = font_files | append: ',carpatica-jakarta.woff2'
+    endcase
+    assign font_files = font_files | split: ',' | uniq
+  -%}
+  {%- for file in font_files -%}
+    {{ file | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  {%- endfor -%}
+{%- endif -%}
 {% style %}
   {%- if settings.use_theme_fonts -%}
-    @font-face {
-      font-family: 'Inter';
-      src: url('{{ 'carpatica-inter.woff2' | asset_url }}') format('woff2');
-      font-weight: 100 900;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Inter';
-      src: url('{{ 'carpatica-inter-italic.woff2' | asset_url }}') format('woff2');
-      font-weight: 100 900;
-      font-style: italic;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Plus Jakarta Sans';
-      src: url('{{ 'carpatica-jakarta.woff2' | asset_url }}') format('woff2');
-      font-weight: 200 800;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Plus Jakarta Sans';
-      src: url('{{ 'carpatica-jakarta-italic.woff2' | asset_url }}') format('woff2');
-      font-weight: 200 800;
-      font-style: italic;
-      font-display: swap;
-    }
+    {%- assign used_fonts = heading_name | append: '|' | append: body_name -%}
+    {%- if used_fonts contains 'Inter' %}
+      @font-face { font-family: 'Inter'; src: url('{{ 'carpatica-inter.woff2' | asset_url }}') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Inter'; src: url('{{ 'carpatica-inter-italic.woff2' | asset_url }}') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Plus Jakarta Sans' %}
+      @font-face { font-family: 'Plus Jakarta Sans'; src: url('{{ 'carpatica-jakarta.woff2' | asset_url }}') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Plus Jakarta Sans'; src: url('{{ 'carpatica-jakarta-italic.woff2' | asset_url }}') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Nunito' %}
+      @font-face { font-family: 'Nunito'; src: url('{{ 'carpatica-nunito.woff2' | asset_url }}') format('woff2'); font-weight: 200 1000; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Nunito'; src: url('{{ 'carpatica-nunito-italic.woff2' | asset_url }}') format('woff2'); font-weight: 200 1000; font-style: italic; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Bricolage' %}
+      @font-face { font-family: 'Bricolage Grotesque'; src: url('{{ 'carpatica-bricolage.woff2' | asset_url }}') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Outfit' %}
+      @font-face { font-family: 'Outfit'; src: url('{{ 'carpatica-outfit.woff2' | asset_url }}') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+    {%- endif -%}
   {%- endif -%}
   {%- if settings.custom_heading_font_url != blank and settings.custom_heading_font_name != blank -%}
     @font-face {
@@ -114,6 +145,7 @@
     {%- assign accent_bg_diff = scheme.settings.background | color_difference: settings.color_accent -%}
     .color-{{ scheme.id }} {
       --c-highlight: {% if bg_brightness < 110 %}{{ accent_light }}{% elsif accent_bg_diff < 150 %}{{ scheme.settings.text }}{% else %}{{ settings.color_accent }}{% endif %};
+      --c-em-gradient: {% if bg_brightness < 110 or accent_bg_diff < 150 %}linear-gradient(100deg, #ffd23f 10%, #ff9f1c 90%){% else %}linear-gradient(100deg, {{ settings.color_accent }} 10%, #7c3aed 55%, #e0217a 95%){% endif %};
     }
   {%- endfor %}
 

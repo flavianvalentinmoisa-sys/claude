@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Carpatica",
-    "theme_version": "1.0.0",
+    "theme_version": "1.1.0",
     "theme_author": "Carpatica",
     "theme_documentation_url": "https://help.shopify.com/ro/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/ro"
@@ -112,7 +112,7 @@
         "type": "color",
         "id": "color_accent",
         "label": "Accent (selecție, bife, progres)",
-        "default": "#1D4ED8"
+        "default": "#2B59FF"
       },
       {
         "type": "color",
@@ -124,25 +124,25 @@
         "type": "color",
         "id": "color_savings",
         "label": "Economii și reduceri",
-        "default": "#15803D"
+        "default": "#0F9D63"
       },
       {
         "type": "color",
         "id": "color_urgency",
         "label": "Urgență și stoc limitat",
-        "default": "#DC2626"
+        "default": "#F0285A"
       },
       {
         "type": "color",
         "id": "color_stars",
         "label": "Stele rating",
-        "default": "#F5A524"
+        "default": "#FFB800"
       },
       {
         "type": "color",
         "id": "color_highlight_bg",
         "label": "Fundal evidențiere",
-        "default": "#EFF6FF",
+        "default": "#EEF2FF",
         "info": "Fundalul opțiunii selectate, al ofertelor și al casetelor de informații."
       }
     ]
@@ -156,7 +156,7 @@
       },
       {
         "type": "paragraph",
-        "content": "Plus Jakarta Sans (titluri) și Inter (text) sunt incluse în temă și conțin toate diacriticele românești: ă, â, î, ș, ț. Se încarcă rapid și arată identic pe orice dispozitiv."
+        "content": "Fonturile Carpatica sunt incluse în temă, conțin toate diacriticele românești (ă, â, î, ș, ț) și se încarcă rapid, fără servicii externe."
       },
       {
         "type": "checkbox",
@@ -165,13 +165,37 @@
         "default": true
       },
       {
+        "type": "select",
+        "id": "font_pair",
+        "label": "Combinație fonturi",
+        "default": "energic",
+        "options": [
+          {
+            "value": "energic",
+            "label": "Energic: Bricolage Grotesque + Plus Jakarta Sans"
+          },
+          {
+            "value": "prietenos",
+            "label": "Prietenos (rotunjit): Nunito"
+          },
+          {
+            "value": "modern",
+            "label": "Modern: Outfit + Inter"
+          },
+          {
+            "value": "clasic",
+            "label": "Clasic: Plus Jakarta Sans + Inter"
+          }
+        ]
+      },
+      {
         "type": "range",
         "id": "heading_font_weight",
         "label": "Grosime titluri",
         "min": 500,
-        "max": 800,
+        "max": 900,
         "step": 100,
-        "default": 700,
+        "default": 800,
         "info": "Se aplică fonturilor Carpatica."
       },
       {
@@ -1888,7 +1912,7 @@
         "type": "color",
         "id": "scrollbar_thumb",
         "label": "Culoare indicator",
-        "default": "#1D4ED8"
+        "default": "#2B59FF"
       },
       {
         "type": "color",
