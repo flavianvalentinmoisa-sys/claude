@@ -612,9 +612,113 @@
     "i2",
     "i3"
    ]
+  },
+  "results": {
+   "type": "c-results",
+   "settings": {},
+   "blocks": {
+    "r0": {
+     "type": "result",
+     "settings": {}
+    },
+    "r1": {
+     "type": "result",
+     "settings": {
+      "percent": 89,
+      "emoji": "💆",
+      "text": "au scăpat de durerile de gât"
+     }
+    },
+    "r2": {
+     "type": "result",
+     "settings": {
+      "percent": 97,
+      "emoji": "💙",
+      "text": "ar recomanda produsul unui prieten"
+     }
+    }
+   },
+   "block_order": [
+    "r0",
+    "r1",
+    "r2"
+   ]
+  },
+  "results_cards": {
+   "type": "c-results",
+   "settings": {
+    "style": "cards",
+    "bar_style": "gradient",
+    "color_scheme": "scheme-2"
+   },
+   "blocks": {
+    "r0": {
+     "type": "result",
+     "settings": {}
+    },
+    "r1": {
+     "type": "result",
+     "settings": {
+      "percent": 89,
+      "emoji": "💆",
+      "color": "#FF5A1F",
+      "text": "au scăpat de durerile de gât"
+     }
+    },
+    "r2": {
+     "type": "result",
+     "settings": {
+      "percent": 97,
+      "emoji": "💙",
+      "color": "#0F9D63",
+      "text": "ar recomanda produsul unui prieten"
+     }
+    }
+   },
+   "block_order": [
+    "r0",
+    "r1",
+    "r2"
+   ]
+  },
+  "results_circles": {
+   "type": "c-results",
+   "settings": {
+    "style": "circles"
+   },
+   "blocks": {
+    "r0": {
+     "type": "result",
+     "settings": {}
+    },
+    "r1": {
+     "type": "result",
+     "settings": {
+      "percent": 89,
+      "emoji": "💆",
+      "text": "au scăpat de durerile de gât"
+     }
+    },
+    "r2": {
+     "type": "result",
+     "settings": {
+      "percent": 97,
+      "emoji": "💙",
+      "text": "ar recomanda produsul unui prieten"
+     }
+    }
+   },
+   "block_order": [
+    "r0",
+    "r1",
+    "r2"
+   ]
   }
  },
  "order": [
+  "results",
+  "results_cards",
+  "results_circles",
   "hero",
   "icon_bar",
   "featured_collection",

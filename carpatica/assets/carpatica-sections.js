@@ -113,40 +113,93 @@
     }
   }
 
-  /* ---------- Numere animate ---------- */
+  /* ---------- Numere animate și bare de progres ---------- */
 
+  // Un singur ciclu de animație mișcă sincron bara, numărul și bulina (--c-progress pe fiecare rând).
+  // Rândurile pornesc pe rând (data-stagger), iar la final primesc .is-done pentru efectul „pop”.
   class CountUp extends HTMLElement {
     connectedCallback() {
-      if (reducedMotion() || window.Shopify?.designMode) {
-        this.classList.add('is-visible');
-        return;
-      }
-      const observer = new IntersectionObserver(
+      this.rows = Array.from(this.querySelectorAll('.c-result'));
+      if (!this.rows.length) this.rows = [this];
+      if (reducedMotion()) return this.finish();
+      this.reset();
+      this.observer = new IntersectionObserver(
         (entries) => {
-          if (!entries.some((e) => e.isIntersecting)) return;
-          observer.disconnect();
-          this.classList.add('is-visible');
-          this.animate();
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              this.play();
+              if (!this.hasAttribute('data-replay')) this.observer.disconnect();
+            } else if (this.hasAttribute('data-replay') && entry.boundingClientRect.top > 0) {
+              this.reset();
+            }
+          });
         },
-        { threshold: 0.3 }
+        { threshold: 0.35 }
       );
-      observer.observe(this);
+      this.observer.observe(this);
     }
 
-    animate() {
-      this.querySelectorAll('[data-count-to]').forEach((el) => {
-        const target = parseFloat(el.dataset.countTo) || 0;
+    disconnectedCallback() {
+      this.observer?.disconnect();
+      cancelAnimationFrame(this.frame);
+    }
+
+    numbersOf(row) {
+      return Array.from(row.querySelectorAll('[data-count-to]'));
+    }
+
+    render(row, value, target) {
+      row.style.setProperty('--c-progress', value.toFixed(2));
+      this.numbersOf(row).forEach((el) => {
+        const final = parseFloat(el.dataset.countTo) || 0;
         const decimals = (String(el.dataset.countTo).split('.')[1] || '').length;
-        const start = performance.now();
-        const duration = 1400;
-        const step = (now) => {
-          const p = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = (target * eased).toFixed(decimals).replace('.', ',');
-          if (p < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
+        const shown = target ? (final * value) / target : 0;
+        el.textContent = shown.toFixed(decimals).replace('.', ',');
       });
+    }
+
+    reset() {
+      cancelAnimationFrame(this.frame);
+      this.playing = false;
+      this.classList.remove('is-visible');
+      this.rows.forEach((row) => {
+        row.classList.remove('is-done', 'is-running');
+        this.render(row, 0, 1);
+      });
+    }
+
+    finish() {
+      this.classList.add('is-visible');
+      this.rows.forEach((row) => {
+        const target = parseFloat(row.dataset.value) || 100;
+        this.render(row, target, target);
+        row.classList.add('is-done');
+      });
+    }
+
+    play() {
+      if (this.playing) return;
+      this.playing = true;
+      this.classList.add('is-visible');
+      const duration = parseInt(this.dataset.duration, 10) || 1800;
+      const stagger = parseInt(this.dataset.stagger, 10) || 0;
+      const start = performance.now();
+      const ease = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+      const tick = (now) => {
+        let running = false;
+        this.rows.forEach((row, i) => {
+          const target = parseFloat(row.dataset.value) || 100;
+          const t = Math.min(1, Math.max(0, (now - start - i * stagger) / duration));
+          if (t > 0 && t < 1) running = true;
+          if (t === 0) running = true;
+          row.classList.toggle('is-running', t > 0 && t < 1);
+          this.render(row, target * ease(t), target);
+          if (t === 1 && !row.classList.contains('is-done')) row.classList.add('is-done');
+        });
+        if (running) this.frame = requestAnimationFrame(tick);
+        else this.playing = false;
+      };
+      this.frame = requestAnimationFrame(tick);
     }
   }
 

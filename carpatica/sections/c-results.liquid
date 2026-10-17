@@ -1,32 +1,73 @@
 {{ 'section-c-social.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'carpatica-sections.js' | asset_url }}" defer="defer"></script>
 {%- render 'c-section-style', section: section -%}
-{%- assign s = section.settings -%}
+{%- liquid
+  assign s = section.settings
+  case s.accent
+    when 'savings'
+      assign result_color = 'var(--color-savings)'
+    when 'urgency'
+      assign result_color = 'var(--color-urgency)'
+    else
+      assign result_color = 'var(--color-accent)'
+  endcase
+-%}
 <div class="c-results-section color-{{ s.color_scheme }} gradient section-{{ section.id }}-padding" id="{{ s.anchor | default: section.id }}">
   <div class="page-width c-results-layout{% if s.image != blank %} c-results-layout--image c-results-layout--{{ s.image_position }}{% endif %}">
     {%- if s.image != blank -%}
       <div class="c-results__image">
-        {%- if s.image.src contains '.gif' or s.image.src contains '.GIF' -%}{%- render 'c-gif', image: s.image, loading: 'lazy' -%}{%- else -%}{{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw' }}{%- endif -%}
+        {%- render 'c-media', image: s.image, width: 1400, widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 50vw, 100vw' -%}
       </div>
     {%- endif -%}
     <div class="c-results__content">
       {%- render 'c-section-header', section: section -%}
-      <c-count-up class="c-results c-results--{{ s.style }}" style="--c-result-color: var(--color-{{ s.accent }});">
+      <c-count-up
+        class="c-results c-results--{{ s.style }} c-results--fill-{{ s.bar_style }}{% if s.show_tip %} c-results--tip{% endif %}"
+        data-duration="{{ s.duration | times: 100 }}"
+        data-stagger="{{ s.stagger }}"
+        {% if s.replay %}
+          data-replay
+        {% endif %}
+        style="--c-result-color: {{ result_color }}; --c-bar-height: {{ s.bar_height }}px;"
+      >
         {%- for block in section.blocks -%}
-          {%- assign b = block.settings -%}
-          <div class="c-result" {{ block.shopify_attributes }} style="--c-value: {{ b.percent }};">
+          {%- liquid
+            assign b = block.settings
+            assign row_style = '--c-value: ' | append: b.percent | append: ';'
+            if b.color != blank
+              assign row_style = row_style | append: ' --c-row-color: ' | append: b.color | append: ';'
+            endif
+          -%}
+          <div class="c-result" data-value="{{ b.percent }}" style="{{ row_style }}" {{ block.shopify_attributes }}>
             {%- if s.style == 'circles' -%}
               <span class="c-result__circle">
-                <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15.9" class="c-result__track"/><circle cx="18" cy="18" r="15.9" class="c-result__arc" pathLength="100"/></svg>
-                <span class="c-result__number"><span data-count-to="{{ b.percent }}">{{ b.percent }}</span>{{ b.suffix }}</span>
+                <svg viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+                  <circle cx="18" cy="18" r="15.9" class="c-result__track"/>
+                  <circle cx="18" cy="18" r="15.9" class="c-result__arc" pathLength="100"/>
+                </svg>
+                <span class="c-result__number">
+                  {%- if b.emoji != blank -%}<span class="c-result__emoji" aria-hidden="true">{{ b.emoji }}</span>{%- endif -%}
+                  <span><span data-count-to="{{ b.percent }}">{{ b.percent }}</span>{{ b.suffix }}</span>
+                </span>
               </span>
               <span class="c-result__text">{{ b.text }}</span>
             {%- else -%}
               <div class="c-result__row">
+                {%- if b.emoji != blank -%}<span class="c-result__emoji" aria-hidden="true">{{ b.emoji }}</span>{%- endif -%}
                 <span class="c-result__number"><span data-count-to="{{ b.percent }}">{{ b.percent }}</span>{{ b.suffix }}</span>
                 <span class="c-result__text">{{ b.text }}</span>
               </div>
-              <span class="c-result__bar"><span></span></span>
+              <span
+                class="c-result__bar"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="{{ b.percent }}"
+                aria-label="{{ b.text | strip_html | escape }}"
+              >
+                <span class="c-result__fill"></span>
+                {%- if s.show_tip -%}<span class="c-result__tip" aria-hidden="true"><span data-count-to="{{ b.percent }}">{{ b.percent }}</span>{{ b.suffix }}</span>{%- endif -%}
+              </span>
             {%- endif -%}
           </div>
         {%- endfor -%}
@@ -118,6 +159,10 @@
           "label": "Bare"
         },
         {
+          "value": "cards",
+          "label": "Carduri cu bare"
+        },
+        {
           "value": "circles",
           "label": "Cercuri"
         }
@@ -145,9 +190,80 @@
       "default": "accent"
     },
     {
+      "type": "header",
+      "content": "Animație"
+    },
+    {
+      "type": "select",
+      "id": "bar_style",
+      "label": "Umplere",
+      "options": [
+        {
+          "value": "gradient",
+          "label": "Gradient viu"
+        },
+        {
+          "value": "striped",
+          "label": "Dungi în mișcare"
+        },
+        {
+          "value": "solid",
+          "label": "Culoare plină"
+        }
+      ],
+      "default": "striped"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tip",
+      "label": "Bulină cu procentul pe capătul barei",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "label": "Grosime bară",
+      "min": 6,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Durată umplere",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 20,
+      "info": "În zecimi de secundă (20 = 2 secunde)."
+    },
+    {
+      "type": "range",
+      "id": "stagger",
+      "label": "Pauză între rânduri",
+      "min": 0,
+      "max": 600,
+      "step": 50,
+      "default": 250,
+      "unit": "ms"
+    },
+    {
+      "type": "checkbox",
+      "id": "replay",
+      "label": "Repornește animația la fiecare derulare",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Imagine"
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Imagine"
+      "label": "Imagine sau GIF",
+      "info": "Poți încărca și GIF-uri animate – animația se păstrează."
     },
     {
       "type": "select",
@@ -249,10 +365,21 @@
           "default": "%"
         },
         {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji",
+          "default": "😴"
+        },
+        {
           "type": "inline_richtext",
           "id": "text",
           "label": "Text",
           "default": "au dormit mai bine încă din prima săptămână"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Culoare proprie (opțional)"
         }
       ]
     }
@@ -268,6 +395,7 @@
           "type": "result",
           "settings": {
             "percent": 89,
+            "emoji": "💆",
             "text": "au scăpat de durerile de gât"
           }
         },
@@ -275,6 +403,7 @@
           "type": "result",
           "settings": {
             "percent": 97,
+            "emoji": "💙",
             "text": "ar recomanda produsul unui prieten"
           }
         }

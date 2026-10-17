@@ -6,7 +6,7 @@ selector de limbă sau de țară.
 
 ## 1. Instalare
 
-1. Descarcă `carpatica-1.1.1.zip` (din acest folder).
+1. Descarcă `carpatica-1.1.2.zip` (din acest folder).
 2. Shopify Admin → **Magazin online → Teme → Adaugă temă → Încarcă fișier zip**.
 3. Apasă **Personalizează** pentru a o configura, apoi **Publică**.
 

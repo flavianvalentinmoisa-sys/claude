@@ -109,17 +109,27 @@ write_schema(P + "c-before-after.liquid", section_schema("Înainte și după", [
 # ---------- Rezultate ----------
 write_schema(P + "c-results.liquid", section_schema("Rezultate", [
     *heading_block("Studiu pe 500 de clienți", "Rezultate <em>dovedite</em>", "", "h2", "left"),
-    sel("style", "Stil", [("bars", "Bare"), ("circles", "Cercuri")], "bars"),
+    sel("style", "Stil", [("bars", "Bare"), ("cards", "Carduri cu bare"), ("circles", "Cercuri")], "bars"),
     sel("accent", "Culoare", [("accent", "Accent"), ("savings", "Economii (verde)"), ("urgency", "Urgență (roșu)")], "accent"),
-    image("image", "Imagine"),
+    hdr("Animație"),
+    sel("bar_style", "Umplere", [("gradient", "Gradient viu"), ("striped", "Dungi în mișcare"), ("solid", "Culoare plină")], "striped"),
+    chk("show_tip", "Bulină cu procentul pe capătul barei", True),
+    rng("bar_height", "Grosime bară", 6, 24, 2, 12, "px"),
+    rng("duration", "Durată umplere", 8, 40, 2, 20, info="În zecimi de secundă (20 = 2 secunde)."),
+    rng("stagger", "Pauză între rânduri", 0, 600, 50, 250, "ms"),
+    chk("replay", "Repornește animația la fiecare derulare", False),
+    hdr("Imagine"),
+    image("image", "Imagine sau GIF", "Poți încărca și GIF-uri animate – animația se păstrează."),
     sel("image_position", "Poziție imagine", [("left", "Stânga"), ("right", "Dreapta")], "left"),
     inline("footnote", "Notă de subsol", "*Rezultate raportate de clienți după 30 de zile de utilizare."),
     *common_end("scheme-1"),
 ], [block("result", "Rezultat", [
     rng("percent", "Valoare", 0, 100, 1, 94),
     text("suffix", "Sufix", "%"),
+    text("emoji", "Emoji", "😴"),
     inline("text", "Text", "au dormit mai bine încă din prima săptămână"),
-])], [{"name": "Rezultate", "blocks": [{"type": "result"}, {"type": "result", "settings": {"percent": 89, "text": "au scăpat de durerile de gât"}}, {"type": "result", "settings": {"percent": 97, "text": "ar recomanda produsul unui prieten"}}]}]))
+    color("color", "Culoare proprie (opțional)"),
+])], [{"name": "Rezultate", "blocks": [{"type": "result"}, {"type": "result", "settings": {"percent": 89, "emoji": "💆", "text": "au scăpat de durerile de gât"}}, {"type": "result", "settings": {"percent": 97, "emoji": "💙", "text": "ar recomanda produsul unui prieten"}}]}]))
 
 # ---------- Tabel comparativ ----------
 VAL = [("yes", "Da (bifă)"), ("no", "Nu (x)"), ("partial", "Parțial (~)")]

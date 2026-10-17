@@ -735,29 +735,95 @@
 
 .c-results-layout:not(.c-results-layout--image) .c-results__content {
   max-width: 80rem;
+  width: 100%;
   margin: 0 auto;
 }
 
-.c-results--bars {
+.c-result {
+  --c-color: var(--c-row-color, rgb(var(--c-result-color, var(--color-accent))));
+  --c-progress: var(--c-value);
+  position: relative;
+}
+
+/* Până pornește scriptul, barele stau la zero (fără „sărituri” vizuale) */
+c-count-up:not(:defined) .c-result {
+  --c-progress: 0;
+}
+
+.c-results--bars,
+.c-results--cards {
   display: grid;
-  gap: 2rem;
+  gap: 2.4rem;
+}
+
+.c-results--cards {
+  gap: 1.4rem;
+}
+
+.c-results--cards .c-result {
+  padding: 1.6rem 1.8rem 1.8rem;
+  border-radius: var(--text-boxes-radius, 16px);
+  background: rgb(var(--color-background));
+  box-shadow: 0 1px 0 rgba(var(--color-foreground), 0.05), 0 14px 32px -22px rgba(var(--color-shadow), 0.55);
+  transition: translate 0.3s ease, box-shadow 0.3s ease;
+}
+
+.c-results--cards .c-result.is-done {
+  box-shadow: 0 1px 0 rgba(var(--color-foreground), 0.05), 0 18px 36px -22px color-mix(in srgb, var(--c-color) 70%, transparent);
+}
+
+@media (hover: hover) {
+  .c-results--cards .c-result:hover {
+    translate: 0 -3px;
+  }
 }
 
 .c-result__row {
   display: flex;
-  align-items: baseline;
-  gap: 1.6rem;
-  margin-bottom: 0.8rem;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.c-result__emoji {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 1.4rem;
+  font-size: 2.4rem;
+  line-height: 1;
+  background: color-mix(in srgb, var(--c-color) 14%, transparent);
+  transform: scale(0.6) rotate(-12deg);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1), opacity 0.3s ease;
+}
+
+.is-visible .c-result__emoji {
+  transform: none;
+  opacity: 1;
+}
+
+.c-result.is-done .c-result__emoji {
+  animation: c-result-wiggle 0.6s ease 0.1s;
 }
 
 .c-result__number {
   flex-shrink: 0;
+  min-width: 2.6em;
   font-family: var(--font-heading-family);
-  font-weight: var(--font-heading-weight);
-  font-size: 3.2rem;
+  font-weight: 800;
+  font-size: clamp(3rem, 2.4rem + 1.6vw, 4.4rem);
   line-height: 1;
-  color: rgb(var(--c-result-color, var(--color-accent)));
+  letter-spacing: -0.03em;
+  color: var(--c-color);
   font-variant-numeric: tabular-nums;
+  transform-origin: left center;
+}
+
+.c-result.is-done .c-result__row .c-result__number {
+  animation: c-result-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 
 .c-result__text {
@@ -770,24 +836,107 @@
 }
 
 .c-result__bar {
+  position: relative;
   display: block;
-  height: 0.8rem;
+  height: var(--c-bar-height, 12px);
   border-radius: 10rem;
-  background: rgba(var(--color-foreground), 0.1);
+  background: rgba(var(--color-foreground), 0.08);
+}
+
+.c-results--tip .c-result__bar {
+  margin-top: 3rem;
+}
+
+.c-result__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--c-progress) * 1%);
+  border-radius: inherit;
+  background: var(--c-color);
   overflow: hidden;
 }
 
-.c-result__bar > span {
-  display: block;
-  height: 100%;
-  width: 0;
-  border-radius: inherit;
-  background: rgb(var(--c-result-color, var(--color-accent)));
-  transition: width 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+.c-results--fill-gradient .c-result__fill,
+.c-results--fill-striped .c-result__fill {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c-color) 55%, #7c3aed), var(--c-color) 55%, color-mix(in srgb, var(--c-color) 70%, #22d3ee));
+  box-shadow: 0 0 18px -2px color-mix(in srgb, var(--c-color) 65%, transparent);
 }
 
-.c-results.is-visible .c-result__bar > span {
-  width: calc(var(--c-value) * 1%);
+.c-results--fill-striped .c-result__fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.28) 0 8px, transparent 8px 16px);
+  background-size: 22.6px 100%;
+  animation: c-result-stripes 0.9s linear infinite;
+}
+
+/* Strălucire care trece peste bară în timpul umplerii */
+.c-result__fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+}
+
+.c-result.is-running .c-result__fill::after {
+  animation: c-result-shine 1.1s ease-in-out infinite;
+}
+
+.c-result__tip {
+  position: absolute;
+  bottom: calc(100% + 0.8rem);
+  left: clamp(2.4rem, calc(var(--c-progress) * 1%), calc(100% - 2.4rem));
+  translate: -50% 0;
+  padding: 0.3rem 0.9rem;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #fff;
+  background: var(--c-color);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 6px 14px -6px var(--c-color);
+}
+
+.c-result__tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 6px solid transparent;
+  border-top-color: var(--c-color);
+  translate: -50% 0;
+}
+
+.c-result.is-done .c-result__tip {
+  animation: c-result-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+/* Punct luminos care pulsează pe capătul barei la final */
+.c-results--tip .c-result__bar::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: calc(var(--c-progress) * 1%);
+  width: calc(var(--c-bar-height, 12px) + 8px);
+  height: calc(var(--c-bar-height, 12px) + 8px);
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--c-color);
+  translate: -50% -50%;
+  opacity: 0;
+}
+
+.c-results--tip .c-result.is-running .c-result__bar::after,
+.c-results--tip .c-result.is-done .c-result__bar::after {
+  opacity: 1;
+}
+
+.c-results--tip .c-result.is-done .c-result__bar::after {
+  animation: c-result-pulse 2s ease-out 0.2s infinite;
 }
 
 .c-results--circles {
@@ -806,8 +955,8 @@
 .c-result__circle {
   position: relative;
   display: block;
-  width: 12rem;
-  height: 12rem;
+  width: 13rem;
+  height: 13rem;
   margin: 0 auto 1.2rem;
 }
 
@@ -815,40 +964,97 @@
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
+  overflow: visible;
 }
 
 .c-result__track {
   fill: none;
-  stroke: rgba(var(--color-foreground), 0.1);
-  stroke-width: 3;
+  stroke: rgba(var(--color-foreground), 0.08);
+  stroke-width: 3.2;
 }
 
 .c-result__arc {
   fill: none;
-  stroke: rgb(var(--c-result-color, var(--color-accent)));
-  stroke-width: 3;
+  stroke: var(--c-color);
+  stroke-width: 3.2;
   stroke-linecap: round;
-  stroke-dasharray: 0 100;
-  transition: stroke-dasharray 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.c-results.is-visible .c-result__arc {
-  stroke-dasharray: var(--c-value) 100;
+  stroke-dasharray: calc(var(--c-progress) * 1) 100;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--c-color) 60%, transparent));
 }
 
 .c-result__circle .c-result__number {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 2.6rem;
+  gap: 0.2rem;
+  min-width: 0;
+  font-size: 2.8rem;
+  transform-origin: center;
+}
+
+.c-result__circle .c-result__emoji {
+  width: auto;
+  height: auto;
+  font-size: 2rem;
+  background: none;
+}
+
+.c-result.is-done .c-result__circle {
+  animation: c-result-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 
 .c-results__footnote {
   margin: 2rem 0 0;
   font-size: 1.2rem;
   color: rgba(var(--color-foreground), 0.6);
+}
+
+@keyframes c-result-pop {
+  40% {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes c-result-wiggle {
+  25% {
+    transform: rotate(-12deg) scale(1.1);
+  }
+  60% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes c-result-stripes {
+  to {
+    background-position: 22.6px 0;
+  }
+}
+
+@keyframes c-result-shine {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes c-result-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-color) 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 12px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-result__fill::before,
+  .c-result__fill::after,
+  .c-results--tip .c-result__bar::after {
+    animation: none !important;
+  }
 }
 
 /* ---------- Tabel comparativ ---------- */
