@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "steps": {
+      "type": "c-steps",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "card_color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "step_0": {
+          "type": "step",
+          "settings": {
+            "title": "Comanzi în 30 de secunde",
+            "accent": "#6B7F5E"
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Primești în 24–48h",
+            "text": "<p>Curierul îți aduce coletul direct la ușă.</p>",
+            "accent": "#C8664A"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Te bucuri de rezultat",
+            "text": "<p>Iar dacă nu-ți place, ai retur gratuit 30 de zile.</p>",
+            "accent": "#55684A"
+          }
+        }
+      },
+      "block_order": [
+        "step_0",
+        "step_1",
+        "step_2"
+      ]
+    }
+  },
+  "order": [
+    "steps"
+  ]
+}

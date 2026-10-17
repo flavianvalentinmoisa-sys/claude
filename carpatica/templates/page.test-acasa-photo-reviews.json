@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "photo_reviews": {
+      "type": "c-photo-reviews",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-5"
+      },
+      "blocks": {
+        "review_0": {
+          "type": "review",
+          "settings": {}
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "title": "Livrare super rapidă",
+            "text": "<p>Comandat luni, primit marți. Ambalaj impecabil și exact ca în descriere.</p>",
+            "name": "Mihai T.",
+            "location": "București",
+            "date": "acum o săptămână"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "title": "Merită fiecare leu",
+            "text": "<p>Eram sceptică, dar după două săptămâni văd diferența. Am comandat și pentru sora mea.</p>",
+            "name": "Ioana P.",
+            "location": "Iași",
+            "date": "acum 2 săptămâni",
+            "rating": 5
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "title": "Foarte mulțumit",
+            "text": "<p>Calitate bună, comunicare rapidă. Plata la livrare m-a convins să încerc.</p>",
+            "name": "Radu S.",
+            "location": "Timișoara",
+            "date": "acum 3 săptămâni",
+            "rating": 4
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "title": "Recomand cu încredere",
+            "text": "<p>Al doilea produs luat de aici, la fel de bun ca primul.</p>",
+            "name": "Elena D.",
+            "location": "Brașov",
+            "date": "acum o lună"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "title": "Peste așteptări",
+            "text": "<p>Arată și mai bine în realitate. Mulțumesc!</p>",
+            "name": "Cristina V.",
+            "location": "Constanța",
+            "date": "acum o lună"
+          }
+        }
+      },
+      "block_order": [
+        "review_0",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ]
+    }
+  },
+  "order": [
+    "photo_reviews"
+  ]
+}

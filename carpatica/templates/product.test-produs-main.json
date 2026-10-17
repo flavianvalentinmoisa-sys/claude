@@ -1,0 +1,150 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "text": "<strong>4.8</strong> (2.341 recenzii)",
+            "link_to": "#recenzii"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h2",
+            "show_tag_badges": true
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_savings": "amount",
+            "price_size": "medium"
+          }
+        },
+        "avatars": {
+          "type": "review_avatars",
+          "settings": {
+            "text": "Peste <strong>10.000</strong> de clienți mulțumiți",
+            "show_stars": false
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_breaks": {
+          "type": "quantity_breaks",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "urgency": {
+          "type": "urgency",
+          "settings": {
+            "only_low_stock": true,
+            "threshold": 10
+          }
+        },
+        "eta": {
+          "type": "estimated_shipping",
+          "settings": {}
+        },
+        "benefits": {
+          "type": "emoji_benefits",
+          "settings": {}
+        },
+        "guarantee": {
+          "type": "text_with_icon",
+          "settings": {}
+        },
+        "payments": {
+          "type": "payment_badges",
+          "settings": {
+            "alignment": "center",
+            "text": "Plată 100% sigură"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Livrare și plată",
+            "icon": "truck",
+            "content": "<p>Livrare prin curier în 24–48 de ore lucrătoare. Plata ramburs, la primirea coletului, sau online cu cardul.</p>"
+          }
+        },
+        "returns": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Retur și garanție",
+            "icon": "return",
+            "content": "<p>Ai 30 de zile pentru retur gratuit. Toate produsele au garanție 2 ani.</p>"
+          }
+        },
+        "sticky": {
+          "type": "sticky_atc",
+          "settings": {
+            "rating": 4.8,
+            "rating_text": "<strong>4.8</strong> (2.341)"
+          }
+        }
+      },
+      "block_order": [
+        "rating",
+        "title",
+        "price",
+        "avatars",
+        "variant_picker",
+        "quantity_breaks",
+        "quantity_selector",
+        "buy_buttons",
+        "urgency",
+        "eta",
+        "benefits",
+        "guarantee",
+        "payments",
+        "description",
+        "shipping",
+        "returns",
+        "sticky"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

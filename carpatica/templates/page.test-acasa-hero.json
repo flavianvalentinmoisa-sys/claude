@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "hero": {
+      "type": "c-parallax-hero",
+      "settings": {
+        "color_scheme": "scheme-3"
+      },
+      "blocks": {
+        "content_0": {
+          "type": "content",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "content_0"
+      ]
+    }
+  },
+  "order": [
+    "hero"
+  ]
+}

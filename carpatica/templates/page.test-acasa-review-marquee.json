@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "review_marquee": {
+      "type": "c-review-marquee",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "card_color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "review_0": {
+          "type": "review",
+          "settings": {}
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "text": "Am comandat al doilea, pentru mama. Recomand!",
+            "name": "Elena D."
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "text": "Exact ca în poze. Plata la livrare a fost un mare plus.",
+            "name": "Cristina V."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "text": "Comunicare rapidă și colet bine ambalat.",
+            "name": "Radu S."
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "text": "Cel mai bun raport calitate-preț.",
+            "name": "Alina G."
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "text": "Copiii îl adoră, folosim zilnic!",
+            "name": "Bogdan F."
+          }
+        }
+      },
+      "block_order": [
+        "review_0",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ]
+    }
+  },
+  "order": [
+    "review_marquee"
+  ]
+}

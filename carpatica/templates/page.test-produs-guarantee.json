@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "guarantee": {
+      "type": "c-guarantee",
+      "settings": {
+        "button_label_1": "",
+        "color_scheme": "scheme-1",
+        "box_color_scheme": "scheme-2"
+      },
+      "blocks": {
+        "point_0": {
+          "type": "point",
+          "settings": {}
+        },
+        "point_1": {
+          "type": "point",
+          "settings": {
+            "icon": "cash",
+            "text": "Plata ramburs, la livrare"
+          }
+        },
+        "point_2": {
+          "type": "point",
+          "settings": {
+            "icon": "support",
+            "text": "Suport rapid pe WhatsApp și email"
+          }
+        }
+      },
+      "block_order": [
+        "point_0",
+        "point_1",
+        "point_2"
+      ]
+    }
+  },
+  "order": [
+    "guarantee"
+  ]
+}
