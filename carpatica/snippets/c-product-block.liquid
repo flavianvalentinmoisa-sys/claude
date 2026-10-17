@@ -1,0 +1,24 @@
+{% comment %}
+  Distribuie blocurile Carpatica din paginile de produs către snippet-ul potrivit.
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- case block.type -%}
+  {%- when 'quantity_breaks' -%}
+    {%- render 'c-pb-quantity-breaks', block: block, product: product, section: section, product_form_id: product_form_id -%}
+  {%- when 'bundle_offer' -%}
+    {%- render 'c-pb-bundle', block: block, product: product, section: section, product_form_id: product_form_id -%}
+  {%- when 'product_upsell' -%}
+    {%- render 'c-pb-upsell', block: block, product: product, section: section, product_form_id: product_form_id -%}
+  {%- when 'quantity_gifts' -%}
+    {%- render 'c-pb-gifts', block: block, product: product, section: section, product_form_id: product_form_id -%}
+  {%- when 'sticky_atc' -%}
+    {%- render 'c-pb-sticky-atc', block: block, product: product, section: section, product_form_id: product_form_id -%}
+  {%- when 'reviews' -%}
+    {%- render 'c-pb-reviews', block: block, product: product, section: section -%}
+  {%- when 'size_chart' -%}
+    {%- render 'c-pb-size-chart', block: block, product: product, section: section -%}
+  {%- when 'custom_field' -%}
+    {%- render 'c-pb-custom-field', block: block, product: product, section: section, product_form_id: product_form_id -%}
+  {%- else -%}
+    {%- render 'c-pb-misc', block: block, product: product, section: section, product_form_id: product_form_id -%}
+{%- endcase -%}

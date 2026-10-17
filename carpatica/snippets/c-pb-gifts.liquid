@@ -1,0 +1,67 @@
+{% comment %}
+  Bloc „Cadouri la cantitate”: până la 4 cadouri care se deblochează când clientul
+  alege o anumită cantitate. Cadourile deblocate se adaugă automat în coș
+  împreună cu produsul. Setează prețul cadoului la 0 sau creează o reducere automată.
+
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- assign bs = block.settings -%}
+<quantity-gifts
+  class="c-gifts c-block-spacing"
+  style="--c-mt: {{ bs.margin_top }}px; --c-mb: {{ bs.margin_bottom }}px;"
+  data-form-id="{{ product_form_id }}"
+  data-cart-extension
+  {{ block.shopify_attributes }}
+>
+  {%- if bs.heading != blank -%}
+    <p class="c-gifts__heading">{{ bs.heading }}</p>
+  {%- endif -%}
+  <ul class="c-gifts__list" role="list">
+    {%- for i in (1..4) -%}
+      {%- liquid
+        assign gkey = 'gift_' | append: i
+        assign gift = bs[gkey]
+        assign qkey = 'gift_' | append: i | append: '_quantity'
+        assign ikey = 'gift_' | append: i | append: '_image'
+        assign lkey = 'gift_' | append: i | append: '_label'
+        assign min_q = bs[qkey] | plus: 0
+        if gift == blank and bs[ikey] == blank
+          continue
+        endif
+        if min_q < 1
+          assign min_q = 1
+        endif
+        assign gv = gift.selected_or_first_available_variant
+      -%}
+      <li
+        class="c-gifts__item"
+        data-gift
+        data-min="{{ min_q }}"
+        {% if gv %}
+          data-variant-id="{{ gv.id }}"
+        {% endif %}
+      >
+        <span class="c-gifts__media">
+          {%- if bs[ikey] != blank -%}
+            {{- bs[ikey] | image_url: width: 240 | image_tag: loading: 'lazy', sizes: '120px', widths: '120, 240', alt: gift.title -}}
+          {%- elsif gift.featured_media -%}
+            {{- gift.featured_media | image_url: width: 240 | image_tag: loading: 'lazy', sizes: '120px', widths: '120, 240', alt: gift.title -}}
+          {%- else -%}
+            {%- render 'c-icon', name: 'gift', size: 36 -%}
+          {%- endif -%}
+          <span class="c-gifts__lock" aria-hidden="true">{% render 'c-icon', name: 'lock', size: 18 %}</span>
+        </span>
+        <span class="c-gifts__label">
+          {%- if bs[lkey] != blank -%}
+            {{ bs[lkey] | replace: '[quantity]', min_q }}
+          {%- else -%}
+            {{ gift.title | escape }}
+          {%- endif -%}
+        </span>
+        <span class="c-gifts__status" data-gift-status data-locked="{{ bs.locked_text | replace: '[quantity]', min_q | escape }}" data-unlocked="{{ 'carpatica.product.gift_unlocked' | t | escape }}">
+          {{- bs.locked_text | replace: '[quantity]', min_q -}}
+        </span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</quantity-gifts>

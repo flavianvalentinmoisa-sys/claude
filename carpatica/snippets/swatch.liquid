@@ -3,6 +3,7 @@
   Accepts:
   - swatch: {Object} a swatch object
   - shape: {String} swatch shape. Accepts 'square', defaults to circle.
+  - fallback_name: {String} numele opțiunii, căutat în culorile predefinite din setările temei (opțional)
 
   Usage:
   {% render 'swatch',
@@ -21,6 +22,13 @@
     assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
   endif
 -%}
+{%- if swatch_value == null and fallback_name != blank -%}
+  {%- capture fallback_color -%}{% render 'c-swatch-color', name: fallback_name %}{%- endcapture -%}
+  {%- assign fallback_color = fallback_color | strip -%}
+  {%- if fallback_color != blank -%}
+    {%- assign swatch_value = fallback_color -%}
+  {%- endif -%}
+{%- endif -%}
 
 <span
   {% if swatch_value %}

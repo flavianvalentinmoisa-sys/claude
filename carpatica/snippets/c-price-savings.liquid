@@ -1,0 +1,21 @@
+{% comment %}
+  Etichetă „Economisești X” lângă preț.
+  Parametri: variant, mode ('amount' | 'percent' | 'both')
+{% endcomment %}
+{%- if variant.compare_at_price > variant.price -%}
+  {%- liquid
+    assign savings = variant.compare_at_price | minus: variant.price
+    assign percent = savings | times: 100.0 | divided_by: variant.compare_at_price | round
+    assign savings_money = savings | money_without_trailing_zeros
+  -%}
+  <span class="c-price-savings c-pill c-pill--savings">
+    {%- case mode -%}
+      {%- when 'percent' -%}
+        {{ 'carpatica.general.save_percent' | t: percent: percent }}
+      {%- when 'both' -%}
+        {{ 'carpatica.general.you_save' | t: amount: savings_money }} ({{ percent }}%)
+      {%- else -%}
+        {{ 'carpatica.general.you_save' | t: amount: savings_money }}
+    {%- endcase -%}
+  </span>
+{%- endif -%}

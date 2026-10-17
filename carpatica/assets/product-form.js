@@ -23,6 +23,16 @@ if (!customElements.get('product-form')) {
 
         this.handleErrorMessage();
 
+        // Carpatica: câmpuri personalizate obligatorii
+        if (!this.validateCustomFields()) return;
+
+        // Carpatica: reduceri la cantitate, upsell, cadouri → adăugare cu mai multe produse
+        const extensions = this.cartExtensions;
+        if (extensions.length) {
+          this.submitWithExtensions(evt, extensions);
+          return;
+        }
+
         this.submitButton.setAttribute('aria-disabled', true);
         this.submitButton.classList.add('loading');
         this.querySelector('.loading__spinner').classList.remove('hidden');
@@ -117,6 +127,116 @@ if (!customElements.get('product-form')) {
             this.querySelector('.loading__spinner').classList.add('hidden');
 
             CartPerformance.measureFromEvent("add:user-action", evt);
+          });
+      }
+
+      get cartExtensions() {
+        const formId = this.form.id;
+        return Array.from(document.querySelectorAll(`[data-cart-extension][data-form-id="${formId}"]`)).filter(
+          (el) => typeof el.getExtraItems === 'function' || typeof el.replaceMainItems === 'function'
+        );
+      }
+
+      validateCustomFields() {
+        const formId = this.form.id;
+        const fields = Array.from(document.querySelectorAll('custom-product-field')).filter((field) =>
+          field.querySelector(`[form="${formId}"]`)
+        );
+        const invalid = fields.filter((field) => typeof field.isValid === 'function' && !field.isValid());
+        invalid.forEach((field) => field.showError());
+        if (invalid.length) {
+          const header = document.querySelector('sticky-header');
+          const offset = header ? header.getBoundingClientRect().height + 20 : 20;
+          window.scrollTo({ top: invalid[0].getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+          invalid[0].querySelector('input, select, textarea')?.focus({ preventScroll: true });
+          return false;
+        }
+        return true;
+      }
+
+      submitWithExtensions(evt, extensions) {
+        const formData = new FormData(this.form);
+        const properties = {};
+        formData.forEach((value, key) => {
+          const match = key.match(/^properties\[(.+)\]$/);
+          if (match && !(value instanceof File) && value !== '') properties[match[1]] = value;
+        });
+        const sellingPlan = formData.get('selling_plan');
+        const mainItem = {
+          id: Number(formData.get('id')),
+          quantity: parseInt(formData.get('quantity')) || 1,
+          properties,
+        };
+        if (sellingPlan) mainItem.selling_plan = sellingPlan;
+
+        let items = [mainItem];
+        extensions.forEach((ext) => {
+          if (typeof ext.replaceMainItems === 'function') items = ext.replaceMainItems(items);
+        });
+        const mainItems = items;
+        extensions.forEach((ext) => {
+          if (typeof ext.getExtraItems === 'function') items = items.concat(ext.getExtraItems(mainItems) || []);
+        });
+
+        this.submitButton.setAttribute('aria-disabled', true);
+        this.submitButton.classList.add('loading');
+        this.querySelector('.loading__spinner').classList.remove('hidden');
+        if (this.cart) this.cart.setActiveElement(document.activeElement);
+
+        const body = {
+          items,
+          sections: this.cart ? this.cart.getSectionsToRender().map((section) => section.id) : undefined,
+          sections_url: window.location.pathname,
+        };
+
+        fetch(`${routes.cart_add_url}.js`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: JSON.stringify(body),
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            if (response.status) {
+              publish(PUB_SUB_EVENTS.cartError, {
+                source: 'product-form',
+                productVariantId: mainItem.id,
+                errors: response.errors || response.description,
+                message: response.message,
+              });
+              this.handleErrorMessage(response.description || response.message);
+              this.dispatchCartErrorEvent(response.description || response.message, 'INVALID');
+              return;
+            }
+            if (!this.cart) {
+              window.location = window.routes.cart_url;
+              return;
+            }
+            const first = response.items?.[0] || {};
+            const parsed = { ...response, id: first.id, key: first.key, product_id: first.product_id };
+            publish(PUB_SUB_EVENTS.cartUpdate, {
+              source: 'product-form',
+              productVariantId: mainItem.id,
+              cartData: parsed,
+            });
+            const quickAddModal = this.closest('quick-add-modal');
+            if (quickAddModal) {
+              document.body.addEventListener('modalClosed', () => setTimeout(() => this.cart.renderContents(parsed)), {
+                once: true,
+              });
+              quickAddModal.hide(true);
+            } else {
+              this.cart.renderContents(parsed);
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            this.dispatchCartErrorEvent(e.message || 'Network error', 'SERVICE_UNAVAILABLE');
+          })
+          .finally(() => {
+            this.submitButton.classList.remove('loading');
+            if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
+            this.submitButton.removeAttribute('aria-disabled');
+            this.querySelector('.loading__spinner').classList.add('hidden');
           });
       }
 

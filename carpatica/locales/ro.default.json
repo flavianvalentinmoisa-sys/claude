@@ -568,7 +568,8 @@
         "one": "{{ count }} bucată",
         "few": "{{ count }} bucăți",
         "other": "{{ count }} de bucăți"
-      }
+      },
+      "you_save_html": "Economisești {{ amount }}"
     },
     "dates": {
       "days": "duminică, luni, marți, miercuri, joi, vineri, sâmbătă",

@@ -555,7 +555,8 @@
       "pieces": {
         "one": "{{ count }} item",
         "other": "{{ count }} items"
-      }
+      },
+      "you_save_html": "You save {{ amount }}"
     },
     "dates": {
       "days": "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday",

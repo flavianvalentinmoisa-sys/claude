@@ -1,0 +1,164 @@
+{% comment %}
+  Bloc „Ofertă pachet”: produsul curent + până la 3 produse, fiecare cu reducere,
+  total calculat și buton propriu „Adaugă pachetul în coș”.
+  Reducerile sunt vizuale: creează în Shopify > Reduceri o reducere automată pentru pachet.
+
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- liquid
+  assign bs = block.settings
+  assign main_variant = product.selected_or_first_available_variant
+  assign main_pct = bs.main_discount_percent | plus: 0
+  assign main_price = main_variant.price
+  if main_pct > 0
+    assign main_price = 100 | minus: main_pct | times: main_variant.price | divided_by: 100
+  endif
+  assign total = main_price
+  assign compare_total = main_variant.price
+  if main_variant.compare_at_price > main_variant.price and bs.use_compare_at
+    assign compare_total = main_variant.compare_at_price
+  endif
+-%}
+<bundle-offer
+  class="c-bundle c-block-spacing color-{{ bs.color_scheme }}"
+  style="--c-mt: {{ bs.margin_top }}px; --c-mb: {{ bs.margin_bottom }}px;"
+  data-form-id="{{ product_form_id }}"
+  data-section-id="{{ section.id }}"
+  data-main-percent="{{ main_pct }}"
+  data-use-compare="{{ bs.use_compare_at }}"
+  {{ block.shopify_attributes }}
+>
+  {%- if bs.title != blank -%}
+    <p class="c-bundle__title h4">{{ bs.title }}</p>
+  {%- endif -%}
+
+  <ul class="c-bundle__items" role="list">
+    <li class="c-bundle__item is-main is-selected" data-bundle-item data-main data-price="{{ main_variant.price }}" data-compare="{{ main_variant.compare_at_price | default: main_variant.price }}" data-percent="{{ main_pct }}">
+      {%- if bs.show_images and product.featured_media -%}
+        <span class="c-bundle__image">
+          {{- product.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '80px', widths: '100, 200', alt: product.title -}}
+        </span>
+      {%- endif -%}
+      <span class="c-bundle__info">
+        <span class="c-bundle__product-title">
+          <span class="c-pill c-pill--soft c-bundle__this">{{ bs.main_label | escape }}</span>
+          {{ product.title | escape }}
+        </span>
+        <span class="c-bundle__prices">
+          <strong data-bundle-price>{{ main_price | money }}</strong>
+          {%- if main_price < compare_total -%}<s data-bundle-compare>{{ compare_total | money }}</s>{%- endif -%}
+        </span>
+      </span>
+    </li>
+
+    {%- for i in (1..3) -%}
+      {%- liquid
+        assign pkey = 'product_' | append: i
+        assign bp = bs[pkey]
+        if bp == blank or bp.id == product.id
+          continue
+        endif
+        assign pct_key = 'product_' | append: i | append: '_discount'
+        assign desc_key = 'product_' | append: i | append: '_desc'
+        assign pct = bs[pct_key] | plus: 0
+        assign bv = bp.selected_or_first_available_variant
+        assign price = bv.price
+        if pct > 0
+          assign price = 100 | minus: pct | times: bv.price | divided_by: 100
+        endif
+        assign cmp = bv.price
+        if bv.compare_at_price > bv.price and bs.use_compare_at
+          assign cmp = bv.compare_at_price
+        endif
+        if bv.available
+          assign total = total | plus: price
+          assign compare_total = compare_total | plus: cmp
+        endif
+      -%}
+      <li class="c-bundle__plus" aria-hidden="true">+</li>
+      <li
+        class="c-bundle__item{% if bv.available %} is-selected{% else %} is-unavailable{% endif %}"
+        data-bundle-item
+        data-percent="{{ pct }}"
+      >
+        <label class="c-bundle__check">
+          <input
+            type="checkbox"
+            data-bundle-toggle
+            {% if bv.available %}
+              checked
+            {% else %}
+              disabled
+            {% endif %}
+            aria-label="{{ bp.title | escape }}"
+          >
+          <span class="c-bundle__checkbox" aria-hidden="true"></span>
+        </label>
+        {%- if bs.show_images and bp.featured_media -%}
+          <span class="c-bundle__image">
+            {{- bp.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '80px', widths: '100, 200', alt: bp.title -}}
+          </span>
+        {%- endif -%}
+        <span class="c-bundle__info">
+          {%- if bs.title_link -%}
+            <a href="{{ bp.url }}" class="c-bundle__product-title link">{{ bp.title | escape }}</a>
+          {%- else -%}
+            <span class="c-bundle__product-title">{{ bp.title | escape }}</span>
+          {%- endif -%}
+          {%- if bs[desc_key] != blank -%}
+            <span class="c-bundle__desc">{{ bs[desc_key] }}</span>
+          {%- endif -%}
+          <span class="c-bundle__prices">
+            <strong data-bundle-price>
+              {%- if price == 0 -%}{{ 'carpatica.general.free' | t }}{%- else -%}{{ price | money }}{%- endif -%}
+            </strong>
+            <s data-bundle-compare{% if cmp <= price %} class="c-hidden"{% endif %}>{{ cmp | money }}</s>
+          </span>
+          {%- if bp.has_only_default_variant -%}
+            <input type="hidden" data-bundle-variant value="{{ bv.id }}" data-price="{{ bv.price }}" data-compare="{{ bv.compare_at_price | default: bv.price }}">
+          {%- else -%}
+            <select class="c-bundle__select select__select" data-bundle-variant aria-label="{{ bp.title | escape }}">
+              {%- for v in bp.variants -%}
+                <option
+                  value="{{ v.id }}"
+                  data-price="{{ v.price }}"
+                  data-compare="{{ v.compare_at_price | default: v.price }}"
+                  {% if v.id == bv.id %}
+                    selected
+                  {% endif %}
+                  {% unless v.available %}
+                    disabled
+                  {% endunless %}
+                >
+                  {{ v.title | escape }}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- endif -%}
+        </span>
+      </li>
+    {%- endfor -%}
+  </ul>
+
+  <div class="c-bundle__footer">
+    <div class="c-bundle__total">
+      <span>{%- if bs.total_label != blank -%}{{ bs.total_label }}{%- else -%}{{ 'carpatica.product.total' | t }}{%- endif -%}</span>
+      <span class="c-bundle__total-prices">
+        <strong data-bundle-total>{{ total | money }}</strong>
+        <s data-bundle-total-compare{% if compare_total <= total %} class="c-hidden"{% endif %}>{{ compare_total | money }}</s>
+      </span>
+    </div>
+    {%- if bs.show_savings -%}
+      {%- assign savings = compare_total | minus: total -%}
+      <p class="c-bundle__savings c-text-savings{% if savings <= 0 %} c-hidden{% endif %}" data-bundle-savings>
+        {%- capture savings_html -%}<span data-bundle-savings-amount>{{ savings | money }}</span>{%- endcapture -%}
+        {{ 'carpatica.general.you_save_html' | t: amount: savings_html }}
+      </p>
+    {%- endif -%}
+    <button type="button" class="button button--full-width c-bundle__button" data-bundle-add>
+      <span>{%- if bs.button_label != blank -%}{{ bs.button_label | escape }}{%- else -%}{{ 'carpatica.product.add_bundle' | t }}{%- endif -%}</span>
+      {%- render 'loading-spinner' -%}
+    </button>
+    <p class="c-bundle__error c-text-urgency" role="alert" hidden></p>
+  </div>
+</bundle-offer>

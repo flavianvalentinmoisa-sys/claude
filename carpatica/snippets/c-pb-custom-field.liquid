@@ -1,0 +1,72 @@
+{% comment %}
+  Bloc „Câmp personalizat”: câmp completat de client (text, număr, text lung, listă,
+  culori) salvat pe produsul din comandă (ex: text gravură, nume, mărime pantof).
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- liquid
+  assign bs = block.settings
+  assign field_id = 'CustomField-' | append: section.id | append: '-' | append: block.id
+  assign prop = 'properties[' | append: bs.field_name | append: ']'
+-%}
+<custom-product-field
+  class="c-field c-block-spacing{% if bs.full_width %} c-field--full{% endif %}"
+  style="--c-mt: {{ bs.margin_top }}px; --c-mb: {{ bs.margin_bottom }}px;"
+  data-required="{{ bs.required }}"
+  data-error="{{ bs.error_message | escape }}"
+  {{ block.shopify_attributes }}
+>
+  {%- if bs.label != blank -%}
+    <label class="c-field__label" for="{{ field_id }}">
+      {{ bs.label }}
+      {%- if bs.required %} <span class="c-text-urgency" aria-hidden="true">*</span>{% endif -%}
+    </label>
+  {%- endif -%}
+  {%- case bs.type -%}
+    {%- when 'text' -%}
+      <div class="field">
+        <input class="field__input c-field__input" type="text" id="{{ field_id }}" name="{{ prop }}" form="{{ product_form_id }}" placeholder="{{ bs.placeholder | escape }}"{% if bs.max_characters > 0 %} maxlength="{{ bs.max_characters }}"{% endif %}{% if bs.required %} required{% endif %}>
+      </div>
+    {%- when 'number' -%}
+      <div class="field">
+        <input class="field__input c-field__input" type="number" id="{{ field_id }}" name="{{ prop }}" form="{{ product_form_id }}" placeholder="{{ bs.placeholder | escape }}"{% if bs.number_min != blank %} min="{{ bs.number_min }}"{% endif %}{% if bs.number_max != blank %} max="{{ bs.number_max }}"{% endif %}{% if bs.required %} required{% endif %}>
+      </div>
+    {%- when 'textarea' -%}
+      <div class="field">
+        <textarea class="text-area field__input c-field__input" id="{{ field_id }}" name="{{ prop }}" form="{{ product_form_id }}" rows="{{ bs.rows }}" placeholder="{{ bs.placeholder | escape }}"{% if bs.max_characters > 0 %} maxlength="{{ bs.max_characters }}"{% endif %}{% if bs.required %} required{% endif %}></textarea>
+      </div>
+    {%- when 'select' -%}
+      {%- assign options = bs.options | split: ',' -%}
+      <div class="select">
+        <select class="select__select c-field__input" id="{{ field_id }}" name="{{ prop }}" form="{{ product_form_id }}"{% if bs.required %} required{% endif %}>
+          <option value="" disabled selected>{%- if bs.placeholder != blank -%}{{ bs.placeholder | escape }}{%- else -%}{{ 'carpatica.general.select_option' | t }}{%- endif -%}</option>
+          {%- for option in options -%}
+            {%- assign clean = option | strip -%}
+            {%- if clean != blank -%}<option value="{{ clean | escape }}">{{ clean | escape }}</option>{%- endif -%}
+          {%- endfor -%}
+        </select>
+        <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+      </div>
+    {%- when 'swatches' -%}
+      {%- assign options = bs.options | split: ',' -%}
+      <div class="c-field__swatches" role="radiogroup" aria-labelledby="{{ field_id }}-legend">
+        <span id="{{ field_id }}-legend" class="c-visually-hidden">{{ bs.label | strip_html }}</span>
+        {%- for option in options -%}
+          {%- assign clean = option | strip -%}
+          {%- if clean == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign color_value = clean -%}
+          {%- if clean contains ':' -%}
+            {%- assign parts = clean | split: ':' -%}
+            {%- assign clean = parts.first | strip -%}
+            {%- assign color_value = parts.last | strip -%}
+          {%- endif -%}
+          <label class="c-field__swatch" title="{{ clean | escape }}">
+            <input type="radio" class="c-visually-hidden" name="{{ prop }}" value="{{ clean | escape }}" form="{{ product_form_id }}"{% if bs.required and forloop.first %} required{% endif %}>
+            <span class="c-field__swatch-color" style="--c-swatch: {{ color_value | escape }};"></span>
+            <span class="c-visually-hidden">{{ clean | escape }}</span>
+          </label>
+        {%- endfor -%}
+      </div>
+  {%- endcase -%}
+  {%- if bs.info != blank -%}<p class="c-field__info">{{ bs.info }}</p>{%- endif -%}
+  <p class="c-field__error c-text-urgency" role="alert" hidden></p>
+</custom-product-field>

@@ -683,6 +683,25 @@
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
   });
 
+  // Video încorporat cu redare automată: se încarcă când devine vizibil
+  function initAutoplayEmbeds(root = document) {
+    const items = root.querySelectorAll('deferred-media[data-autoplay="true"]:not([loaded])');
+    if (!items.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          if (typeof entry.target.loadContent === 'function') entry.target.loadContent(false);
+        });
+      },
+      { rootMargin: '200px' }
+    );
+    items.forEach((item) => observer.observe(item));
+  }
+
+  document.addEventListener('shopify:section:load', (e) => initAutoplayEmbeds(e.target));
+
   function debounceFrame(fn) {
     let frame;
     return (...args) => {
@@ -705,6 +724,7 @@
     initCedillaFix();
     initContentProtection();
     initCountryBlocker();
+    initAutoplayEmbeds();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

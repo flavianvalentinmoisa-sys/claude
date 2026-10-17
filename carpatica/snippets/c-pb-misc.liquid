@@ -1,0 +1,234 @@
+{% comment %}
+  Blocuri mici pentru pagina de produs (și secțiunile cu blocuri de produs).
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- assign bs = block.settings -%}
+{%- capture spacing -%}--c-mt: {{ bs.margin_top | default: 0 }}px; --c-mb: {{ bs.margin_bottom | default: 0 }}px;{%- endcapture -%}
+{%- case block.type -%}
+  {%- when 'rating_stars' or 'trustpilot_stars' -%}
+    {%- liquid
+      assign rating = bs.rating
+      assign text = bs.text
+      if bs.use_metafield and product.metafields.reviews.rating.value != blank
+        assign rating = product.metafields.reviews.rating.value.rating
+        assign count = product.metafields.reviews.rating_count.value | default: 0
+        assign text = text | replace: '[rating]', rating | replace: '[count]', count
+      endif
+      assign star_style = 'stars'
+      if block.type == 'trustpilot_stars'
+        assign star_style = 'trustpilot'
+      endif
+    -%}
+    <div class="c-pb-stars c-block-spacing c-align-{{ bs.alignment }}" style="{{ spacing }}" {{ block.shopify_attributes }}>
+      {%- if bs.link_to != blank -%}<a href="{{ bs.link_to }}" class="c-pb-stars__link"{% if bs.link_to contains '#' %} data-scroll-to="{{ bs.link_to }}"{% endif %}>{%- endif -%}
+      {%- render 'c-stars', rating: rating, text: text, size: bs.star_size, color: bs.star_color, style: star_style -%}
+      {%- if bs.link_to != blank -%}</a>{%- endif -%}
+    </div>
+
+  {%- when 'clickable_discount' -%}
+    <clickable-discount
+      class="c-cdiscount c-block-spacing"
+      style="{{ spacing }} --c-cd-bg: {{ bs.bg_color }}; --c-cd-bg-applied: {{ bs.bg_color_applied }}; --c-cd-fg: {{ bs.text_color }}; --c-cd-fg-applied: {{ bs.text_color_applied }};"
+      data-code="{{ bs.code | escape }}"
+      {{ block.shopify_attributes }}
+    >
+      <button type="button" class="c-cdiscount__button" data-cd-apply>
+        <span class="c-cdiscount__state c-cdiscount__state--idle">
+          {%- render 'c-icon', name: bs.icon, emoji: bs.icon_emoji, size: 20 -%}
+          <span>{{ bs.text | replace: '[code]', bs.code }}</span>
+        </span>
+        <span class="c-cdiscount__state c-cdiscount__state--applied">
+          {%- render 'c-icon', name: 'check_circle', size: 20 -%}
+          <span>{{ bs.applied_text | replace: '[code]', bs.code }}</span>
+        </span>
+        <span class="c-cdiscount__state c-cdiscount__state--loading">
+          {%- render 'loading-spinner' -%}
+        </span>
+      </button>
+    </clickable-discount>
+
+  {%- when 'urgency' -%}
+    {%- liquid
+      assign v = product.selected_or_first_available_variant
+      assign stock = v.inventory_quantity
+      assign show = true
+      if bs.only_low_stock and v.inventory_management == 'shopify'
+        if stock > bs.threshold or stock <= 0
+          assign show = false
+        endif
+      endif
+    -%}
+    {%- if show -%}
+      <div class="c-urgency c-block-spacing c-urgency--{{ bs.style }}" style="{{ spacing }}" {{ block.shopify_attributes }}>
+        {%- if bs.show_pulse -%}<span class="c-pulse" style="--c-pulse-color: var(--color-{{ bs.color }});"></span>{%- endif -%}
+        <span class="c-urgency__text">{{ bs.text | replace: '[stock]', stock }}</span>
+        {%- if bs.show_bar and v.inventory_management == 'shopify' and stock > 0 -%}
+          {%- assign bar = stock | times: 100 | divided_by: bs.bar_max | at_most: 100 | at_least: 6 -%}
+          <span class="c-urgency__bar" aria-hidden="true"><span style="width: {{ bar }}%;"></span></span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- when 'emoji_benefits' -%}
+    {%- assign lines = bs.benefits | newline_to_br | split: '<br />' -%}
+    <ul class="c-benefits c-block-spacing c-benefits--{{ bs.layout }}" role="list" style="{{ spacing }}" {{ block.shopify_attributes }}>
+      {%- for line in lines -%}
+        {%- assign clean = line | strip -%}
+        {%- if clean != blank -%}
+          <li>{{ clean }}</li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+  {%- when 'payment_badges' -%}
+    <div class="c-payments c-block-spacing c-align-{{ bs.alignment }}" style="{{ spacing }}" {{ block.shopify_attributes }}>
+      {%- if bs.text != blank -%}<p class="c-payments__text">{{ bs.text }}</p>{%- endif -%}
+      <ul class="list list-payment c-payments__list" role="list">
+        {%- if bs.show_cod -%}
+          <li class="list-payment__item c-payments__cod">{% render 'c-icon', name: 'cash', size: 18 %}<span>{{ bs.cod_label | escape }}</span></li>
+        {%- endif -%}
+        {%- for type in shop.enabled_payment_types -%}
+          <li class="list-payment__item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  {%- when 'estimated_shipping' -%}
+    <delivery-date
+      class="c-eta c-block-spacing c-eta--{{ bs.style }}"
+      style="{{ spacing }}"
+      data-format="{{ bs.date_format }}"
+      data-skip-weekends="{{ bs.skip_weekends }}"
+      data-cutoff="{{ bs.cutoff_hour }}"
+      {{ block.shopify_attributes }}
+    >
+      {%- render 'c-icon', name: bs.icon, emoji: bs.icon_emoji, image: bs.icon_image, size: bs.icon_size -%}
+      {%- capture min_date -%}<strong data-date-offset="{{ bs.min_days }}"></strong>{%- endcapture -%}
+      {%- capture max_date -%}<strong data-date-offset="{{ bs.max_days }}"></strong>{%- endcapture -%}
+      <span class="c-eta__text">{{ bs.text | replace: '[min_date]', min_date | replace: '[max_date]', max_date }}</span>
+    </delivery-date>
+
+  {%- when 'shipping_checkpoints' -%}
+    <delivery-date
+      class="c-checkpoints c-block-spacing"
+      style="{{ spacing }} --c-cp-color: var(--color-{{ bs.accent }});"
+      data-format="{{ bs.date_format }}"
+      data-skip-weekends="{{ bs.skip_weekends }}"
+      data-cutoff="{{ bs.cutoff_hour }}"
+      {{ block.shopify_attributes }}
+    >
+      {%- if bs.heading != blank -%}<p class="c-checkpoints__heading">{{ bs.heading }}</p>{%- endif -%}
+      <ol class="c-checkpoints__list" role="list">
+        {%- for i in (1..4) -%}
+          {%- liquid
+            assign label_key = 'step_' | append: i | append: '_label'
+            assign days_key = 'step_' | append: i | append: '_days'
+            assign icon_key = 'step_' | append: i | append: '_icon'
+            if bs[label_key] == blank
+              continue
+            endif
+          -%}
+          <li class="c-checkpoints__step">
+            <span class="c-checkpoints__icon">{% render 'c-icon', name: bs[icon_key], size: 20 %}</span>
+            <span class="c-checkpoints__date" data-date-offset="{{ bs[days_key] }}"></span>
+            <span class="c-checkpoints__label">{{ bs[label_key] }}</span>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </delivery-date>
+
+  {%- when 'scroll_buttons' -%}
+    <div class="c-scroll-buttons c-block-spacing c-scroll-buttons--{{ bs.layout }}" style="{{ spacing }}" {{ block.shopify_attributes }}>
+      {%- for i in (1..4) -%}
+        {%- liquid
+          assign label_key = 'button_' | append: i | append: '_label'
+          assign target_key = 'button_' | append: i | append: '_target'
+          assign icon_key = 'button_' | append: i | append: '_icon'
+          if bs[label_key] == blank
+            continue
+          endif
+          assign target = bs[target_key] | strip
+          assign first_char = target | slice: 0
+          unless first_char == '#' or first_char == '.'
+            assign target = '#' | append: target
+          endunless
+        -%}
+        <a href="{{ target }}" class="c-scroll-button" data-scroll-to="{{ target | escape }}">
+          {%- render 'c-icon', name: bs[icon_key], size: 18 -%}
+          <span>{{ bs[label_key] }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+
+  {%- when 'review_avatars' -%}
+    <div class="c-avatars c-block-spacing c-align-{{ bs.alignment }}" style="{{ spacing }} --c-avatar-size: {{ bs.avatar_size }}px;" {{ block.shopify_attributes }}>
+      <span class="c-avatars__images">
+        {%- for i in (1..5) -%}
+          {%- assign key = 'avatar_' | append: i -%}
+          {%- if bs[key] != blank -%}
+            <span class="c-avatars__image">{{ bs[key] | image_url: width: 120 | image_tag: loading: 'lazy', alt: '', widths: '60, 120', sizes: '48px' }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </span>
+      <span class="c-avatars__content">
+        {%- if bs.show_stars -%}{%- render 'c-stars', rating: bs.rating, size: 15 -%}{%- endif -%}
+        <span class="c-avatars__text">{{ bs.text }}</span>
+      </span>
+    </div>
+
+  {%- when 'text_with_icon' -%}
+    <div
+      class="c-twi c-block-spacing{% if bs.show_background %} c-twi--boxed{% endif %} c-align-{{ bs.alignment }}"
+      style="{{ spacing }}{% if bs.background != blank %} --c-twi-bg: {{ bs.background }};{% endif %}{% if bs.text_color != blank %} --c-twi-fg: {{ bs.text_color }};{% endif %}"
+      {{ block.shopify_attributes }}
+    >
+      {%- render 'c-icon', name: bs.icon, emoji: bs.icon_emoji, image: bs.icon_image, size: bs.icon_size, color: bs.icon_color -%}
+      <div class="c-twi__text rte">{{ bs.text }}</div>
+    </div>
+
+  {%- when 'image' -%}
+    <div class="c-pb-image c-block-spacing c-align-{{ bs.alignment }}" style="{{ spacing }}" {{ block.shopify_attributes }}>
+      {%- if bs.image != blank -%}
+        {%- if bs.link != blank -%}<a href="{{ bs.link }}">{%- endif -%}
+        <span class="c-pb-image__frame" style="max-width: {{ bs.width }}%; border-radius: {{ bs.radius }}px;">
+          {{- bs.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '300, 600, 900, 1200', sizes: '(min-width: 990px) 600px, 100vw' -}}
+        </span>
+        {%- if bs.link != blank -%}</a>{%- endif -%}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+
+  {%- when 'video' -%}
+    <div class="c-pb-video c-block-spacing" style="{{ spacing }} --c-video-radius: {{ bs.radius }}px;" {{ block.shopify_attributes }}>
+      {%- if bs.video != blank -%}
+        {{- bs.video | video_tag: autoplay: bs.autoplay, loop: bs.autoplay, muted: bs.autoplay, controls: bs.controls, playsinline: true, image_size: '1200x', class: 'c-pb-video__media' -}}
+      {%- elsif bs.video_url != blank -%}
+        {%- render 'c-video-embed', video_url: bs.video_url, autoplay: bs.autoplay -%}
+      {%- endif -%}
+    </div>
+
+  {%- when 'divider' -%}
+    <div class="c-divider c-block-spacing{% if bs.text != blank %} c-divider--text{% endif %}" style="{{ spacing }} --c-divider-opacity: {{ bs.opacity | divided_by: 100.0 }}; --c-divider-thickness: {{ bs.thickness }}px;" {{ block.shopify_attributes }} role="separator">
+      {%- if bs.text != blank -%}<span>{{ bs.text }}</span>{%- endif -%}
+    </div>
+
+  {%- when 'link_button' -%}
+    {%- if bs.label != blank -%}
+      <div class="c-pb-button c-block-spacing c-align-{{ bs.alignment }}" style="{{ spacing }}" {{ block.shopify_attributes }}>
+        <a
+          href="{{ bs.link | default: '#' }}"
+          class="button{% if bs.style == 'secondary' %} button--secondary{% elsif bs.style == 'link' %} link underlined-link c-link-button{% endif %}{% if bs.full_width %} button--full-width{% endif %}"
+          {% if bs.link contains '#' %}
+            data-scroll-to="{{ bs.link | split: '#' | last | prepend: '#' }}"
+          {% endif %}
+          {% if bs.new_tab %}
+            target="_blank" rel="noopener"
+          {% endif %}
+        >
+          {%- render 'c-icon', name: bs.icon, size: 18 -%}
+          {{ bs.label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+{%- endcase -%}

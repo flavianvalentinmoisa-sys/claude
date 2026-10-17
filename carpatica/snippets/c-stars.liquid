@@ -1,0 +1,67 @@
+{% comment %}
+  Stele de rating (suportă jumătăți de stea).
+
+  Parametri:
+  - rating: notă 0–5 (ex: 4.8)
+  - text: text afișat lângă stele (opțional, inline richtext)
+  - size: mărime stea în px (opțional)
+  - color: culoare stele (opțional)
+  - style: 'stars' (implicit) sau 'trustpilot'
+{% endcomment %}
+{%- liquid
+  assign r = rating | default: 5 | times: 1.0
+  assign full = r | floor
+  assign rest = r | minus: full
+  assign half = false
+  if rest >= 0.25 and rest < 0.75
+    assign half = true
+  elsif rest >= 0.75
+    assign full = full | plus: 1
+  endif
+  assign half_index = full | plus: 1
+  assign style_attr = ''
+  if size
+    assign style_attr = style_attr | append: '--c-star-size:' | append: size | append: 'px;'
+  endif
+  if color != blank
+    assign style_attr = style_attr | append: '--c-star-color:' | append: color | append: ';'
+  endif
+-%}
+<span class="c-stars{% if style == 'trustpilot' %} c-stars--trustpilot{% endif %}" style="{{ style_attr }}">
+  <span class="c-stars__icons" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: r, rating_max: 5 }}">
+    {%- for i in (1..5) -%}
+      {%- liquid
+        assign state = 'empty'
+        if i <= full
+          assign state = 'full'
+        elsif half and i == half_index
+          assign state = 'half'
+        endif
+      -%}
+      {%- if style == 'trustpilot' -%}
+        <span class="c-tp-star c-tp-star--{{ state }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#fff" d="M12 4.2l2.2 5.1 5.5.4-4.2 3.6 1.3 5.4L12 15.8l-4.8 2.9 1.3-5.4-4.2-3.6 5.5-.4z"/></svg>
+        </span>
+      {%- else -%}
+        <svg class="c-star c-star--{{ state }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="c-half-{{ i }}">
+              <stop offset="50%" stop-color="currentColor"/>
+              <stop offset="50%" stop-color="currentColor" stop-opacity="0.22"/>
+            </linearGradient>
+          </defs>
+          <path
+            fill="{% if state == 'full' %}currentColor{% elsif state == 'half' %}url(#c-half-{{ i }}){% else %}currentColor{% endif %}"
+            {% if state == 'empty' %}
+              fill-opacity="0.22"
+            {% endif %}
+            d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"
+          />
+        </svg>
+      {%- endif -%}
+    {%- endfor -%}
+  </span>
+  {%- if text != blank -%}
+    <span class="c-stars__text">{{ text }}</span>
+  {%- endif -%}
+</span>
