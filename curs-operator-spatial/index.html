@@ -1,0 +1,1861 @@
+<title>Curs Operator Spațial</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Curs interactiv despre spațiul cosmic ca domeniu operațional militar: ASR, orbite, SATCOM, supravegherea spațiului, amenințări, drept spațial și carieră.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: consolă de instruire — bară de capitol fixă, cuprins lateral, lecții de ~70ch, instrumente ca panouri de operator */
+:root{
+  --bg:#f2f4f8; --surface:#ffffff; --sunk:#e8ecf3; --ink:#131a2c; --muted:#59627a; --line:#d5dbe6;
+  --accent:#2a3fc2; --accent-ink:#ffffff; --accent-soft:#e5e9ff;
+  --signal:#b4480f; --signal-soft:#fbeadf;
+  --ok:#1d7548; --ok-soft:#e0f2e8; --bad:#b42318; --bad-soft:#fbe5e3;
+  --orbit:#7f8bb0; --earth:#2a3fc2;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1020; --surface:#131a2d; --sunk:#0f1526; --ink:#e6e9f2; --muted:#98a1b9; --line:#253049;
+    --accent:#93a3ff; --accent-ink:#0b1020; --accent-soft:#1c2550;
+    --signal:#f39a5c; --signal-soft:#3a2416;
+    --ok:#5fd29a; --ok-soft:#14321f; --bad:#ff8277; --bad-soft:#3b1a18;
+    --orbit:#5b6688; --earth:#6f82ff; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1020; --surface:#131a2d; --sunk:#0f1526; --ink:#e6e9f2; --muted:#98a1b9; --line:#253049;
+  --accent:#93a3ff; --accent-ink:#0b1020; --accent-soft:#1c2550;
+  --signal:#f39a5c; --signal-soft:#3a2416;
+  --ok:#5fd29a; --ok-soft:#14321f; --bad:#ff8277; --bad-soft:#3b1a18;
+  --orbit:#5b6688; --earth:#6f82ff; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+h1,h2,h3,h4{font-family:var(--f-display);font-stretch:112%;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:780;letter-spacing:-.01em}
+h2{font-size:clamp(1.45rem,2.6vw,1.9rem);font-weight:720}
+h3{font-size:1.15rem;font-weight:680;margin-top:.4rem}
+h4{font-size:1rem;font-weight:650}
+p{margin:0}
+.mono{font-family:var(--f-mono);font-size:.9em}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+
+/* bară de sus */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1280px;margin:0 auto;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand-mark{width:28px;height:28px;flex:none}
+.brand b{font-family:var(--f-display);font-stretch:118%;font-weight:760;font-size:1.02rem;letter-spacing:.01em}
+.progress-wrap{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:0}
+.meter{width:140px;height:6px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.meter>i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+.mnav{display:none;width:100%}
+.mnav select{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--ink)}
+
+/* schelet */
+.app{max-width:1280px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px}
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding-right:4px}
+.side nav{display:grid;gap:2px}
+.side .grp{margin:14px 0 4px;padding-left:10px}
+.side a{display:grid;grid-template-columns:26px 1fr 14px;align-items:center;gap:6px;padding:6px 10px;border-radius:var(--r);text-decoration:none;color:var(--ink);font-size:.93rem;line-height:1.3}
+.side a .n{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.side a:hover{background:var(--sunk)}
+.side a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.side a .st{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--line)}
+.side a .st.done{background:var(--ok);border-color:var(--ok)}
+@media (max-width:920px){
+  .app{grid-template-columns:minmax(0,1fr);padding-block:18px 56px}
+  .side{display:none}
+  .mnav{display:block}
+  .progress-wrap .meter{width:90px}
+}
+main{min-width:0}
+.view{display:grid;gap:22px}
+.lesson{max-width:74ch;display:grid;gap:18px}
+.lesson>p,.lesson li{max-width:70ch}
+.lesson ul,.lesson ol{margin:0;padding-left:1.25rem;display:grid;gap:6px}
+.lhead{display:grid;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.lhead .lead{font-size:1.08rem;color:var(--muted)}
+
+/* insigne de sursă */
+.src{display:inline-block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;vertical-align:2px;margin-right:6px;white-space:nowrap}
+.src.art{background:var(--signal-soft);color:var(--signal)}
+.src.gen{background:var(--sunk);color:var(--muted)}
+
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:grid;gap:10px}
+.keys{background:var(--accent-soft);border-radius:var(--r);padding:16px 20px;display:grid;gap:8px}
+.keys h4{color:var(--accent);font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-stretch:100%}
+.quote{border-left:3px solid var(--signal);padding:4px 0 4px 16px;font-style:italic;color:var(--ink)}
+.quote cite{display:block;font-style:normal;font-size:.85rem;color:var(--muted);margin-top:6px}
+.formula{font-family:var(--f-mono);background:var(--sunk);border-radius:var(--r);padding:10px 14px;overflow-x:auto;white-space:nowrap;font-size:.92rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* cronologie */
+.tl{display:grid;gap:0;border-left:2px solid var(--line);margin-left:6px}
+.tl>div{position:relative;padding:0 0 16px 20px}
+.tl>div::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.tl b{font-family:var(--f-mono);font-size:.85rem;color:var(--accent);display:block}
+
+/* flux */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;counter-reset:f}
+.flow>div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:grid;gap:4px;font-size:.88rem;position:relative}
+.flow>div b{font-family:var(--f-display);font-stretch:110%;font-size:.95rem}
+.flow>div .t{font-family:var(--f-mono);font-size:.72rem;color:var(--signal);text-transform:uppercase;letter-spacing:.06em}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+
+/* butoane */
+.btn{font:inherit;font-weight:600;font-size:.93rem;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:9px 16px;border-radius:var(--r);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.quiet{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn:hover{filter:brightness(1.07)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.lfoot{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-top:16px;border-top:1px solid var(--line)}
+.lfoot .sp{flex:1}
+
+/* acasă */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:28px}
+.hero .lead{font-size:1.1rem;color:var(--muted);max-width:52ch}
+.hero canvas{width:100%;aspect-ratio:1/1;max-width:100%;display:block}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:0}
+@media (max-width:780px){.hero{grid-template-columns:minmax(0,1fr);padding:18px}}
+.road{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.road a{display:grid;gap:4px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);text-decoration:none;color:var(--ink)}
+.road a:hover{border-color:var(--accent)}
+.road a .h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.road a b{font-family:var(--f-display);font-stretch:108%;font-size:1rem}
+.road a span.d{font-size:.86rem;color:var(--muted);line-height:1.45}
+.chip{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.chip.done{background:var(--ok-soft);color:var(--ok)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.stat b{display:block;font-family:var(--f-display);font-stretch:115%;font-size:1.7rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:.84rem;color:var(--muted)}
+
+/* instrumente */
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px;min-width:0}
+.tool h3{margin:0}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.fields label{display:grid;gap:4px;font-size:.8rem;color:var(--muted)}
+input[type=number],input[type=text],input[type=search],textarea,select{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:8px 10px;width:100%;min-width:0}
+textarea{font-family:var(--f-mono);font-size:.82rem;resize:vertical;min-height:70px;white-space:pre;overflow-x:auto}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.out>div{background:var(--sunk);border-radius:var(--r);padding:10px 12px;display:grid;gap:2px;min-width:0}
+.out>div span{font-size:.74rem;color:var(--muted);font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.05em}
+.out>div b{font-family:var(--f-mono);font-weight:500;font-size:1.02rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.hint{font-size:.85rem;color:var(--muted)}
+.bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;position:relative}
+.bar>i{position:absolute;left:0;top:0;bottom:0;background:var(--ok)}
+.bar>i.neg{background:var(--bad)}
+
+/* quiz & scenarii */
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:14px;max-width:760px}
+.qopts{display:grid;gap:8px}
+.qopt{font:inherit;text-align:left;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);padding:11px 14px;cursor:pointer;line-height:1.45}
+.qopt:hover:not([disabled]){border-color:var(--accent)}
+.qopt.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ink)}
+.qopt.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--ink)}
+.qopt[disabled]{cursor:default}
+.expl{border-radius:var(--r);padding:12px 14px;background:var(--sunk);font-size:.93rem;display:grid;gap:6px}
+.expl b.ok{color:var(--ok)} .expl b.no{color:var(--bad)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{font:inherit;font-size:.82rem;padding:5px 10px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.filters button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.sit{background:var(--sunk);border-radius:var(--r);padding:14px 16px;font-size:.95rem;display:grid;gap:8px}
+.sit .clock{font-family:var(--f-mono);font-size:.78rem;color:var(--signal);letter-spacing:.05em}
+
+/* fișe */
+.fc{max-width:560px;min-height:220px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:26px;display:grid;align-content:center;gap:12px;cursor:pointer;text-align:center}
+.fc .term{font-family:var(--f-display);font-stretch:115%;font-weight:720;font-size:1.6rem}
+.fc .def{font-size:1rem;line-height:1.55;text-align:left}
+.boxes{display:flex;gap:6px;flex-wrap:wrap}
+.boxes span{font-family:var(--f-mono);font-size:.75rem;padding:4px 8px;border-radius:3px;background:var(--sunk);color:var(--muted)}
+
+/* glosar */
+.gl{display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.gl>div{display:grid;grid-template-columns:minmax(120px,220px) minmax(0,1fr);gap:16px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.gl>div:last-child{border-bottom:0}
+.gl dt{font-weight:600}
+.gl dd{margin:0;color:var(--ink);font-size:.94rem}
+.gl .tag{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);display:block;margin-top:2px;font-weight:400}
+@media (max-width:560px){.gl>div{grid-template-columns:minmax(0,1fr);gap:4px}}
+
+.foot{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#acasa" aria-label="Curs Operator Spațial, pagina de start">
+      <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="5" fill="var(--accent)"/><ellipse cx="14" cy="14" rx="12.5" ry="5.2" fill="none" stroke="var(--ink)" stroke-width="1.4" transform="rotate(-28 14 14)"/><circle cx="24.6" cy="8.4" r="2" fill="var(--signal)"/></svg>
+      <b>Curs Operator Spațial</b>
+    </a>
+    <div class="progress-wrap" title="Capitole parcurse">
+      <span class="eyebrow" id="prog-label">0 / 11 capitole</span>
+      <div class="meter"><i id="prog-bar"></i></div>
+    </div>
+    <div class="mnav"><label class="eyebrow" for="mnav-sel" hidden>Capitol</label><select id="mnav-sel" aria-label="Alege capitolul"></select></div>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="side" aria-label="Cuprins"><nav id="side-nav"></nav></aside>
+  <main id="main">
+
+<!-- ============ ACASĂ ============ -->
+<section class="view" id="v-acasa">
+  <div class="hero">
+    <div style="display:grid;gap:16px;min-width:0">
+      <span class="eyebrow">Curs de autoinstruire · domeniul spațial militar</span>
+      <h1>Spațiul nu mai e ultima frontieră. E un domeniu operațional.</h1>
+      <p class="lead">Pornești de la ce face Agenția Spațială și de Radiocomunicații a Armatei și ajungi la tot ce stă în spatele muncii ei: orbite, legături satelitare, supravegherea cerului cu telescopul, amenințări, drept spațial și drumul spre o carieră în domeniu.</p>
+      <div class="row">
+        <a class="btn" href="#asr">Începe cu capitolul 1</a>
+        <a class="btn ghost" href="#instrumente">Deschide instrumentele</a>
+      </div>
+    </div>
+    <div style="display:grid;gap:8px;min-width:0">
+      <canvas id="orbit-canvas" width="600" height="600" aria-label="Pământul cu orbitele LEO, MEO și GEO desenate la scară; satelitul geostaționar rămâne deasupra aceluiași punct de pe sol"></canvas>
+      <div class="legend">
+        <span><i style="background:var(--signal)"></i>LEO 420 km · 93 min</span>
+        <span><i style="background:var(--ok)"></i>MEO 20.200 km · 12 h</span>
+        <span><i style="background:var(--accent)"></i>GEO 35.786 km · 23 h 56 min</span>
+      </div>
+      <p class="hint">Desen la scară reală. Punctul de pe Pământ e Dobrogea: observă că satelitul GEO rămâne mereu deasupra aceleiași longitudini.</p>
+    </div>
+  </div>
+
+  <div class="stats" id="home-stats"></div>
+
+  <div style="display:grid;gap:12px">
+    <h2>Traseul de învățare</h2>
+    <p class="muted" style="max-width:70ch">Capitolele sunt în ordinea în care se construiesc cunoștințele. Fiecare se termină cu un test scurt. Progresul se salvează în acest browser.</p>
+    <div class="road" id="road"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="box">
+      <span class="eyebrow">Cum citești lecțiile</span>
+      <p><span class="src art">din articol</span>informație preluată din articolul presamil.ro despre ASR.</p>
+      <p><span class="src gen">context general</span>cunoștințe de bază ale domeniului, publice, care explică articolul. Nu descriu proceduri interne ale ASR.</p>
+    </div>
+    <div class="box">
+      <span class="eyebrow">Exersează</span>
+      <p><a href="#instrumente">Instrumente de calcul</a>: orbite, unghiuri spre GEO din Dobrogea, buget de legătură, telescop, decodor TLE.</p>
+      <p><a href="#scenarii">Scenarii de tură</a>, <a href="#quiz">quiz</a>, <a href="#fise">fișe de memorare</a> și <a href="#glosar">glosar</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1. ASR ============ -->
+<section class="view" id="v-asr" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 1</span>
+    <h2>Agenția Spațială și de Radiocomunicații a Armatei</h2>
+    <p class="lead">Ce este ASR, de unde vine, ce face zi de zi și noapte de noapte, și de ce contează pentru cineva care vrea să lucreze în domeniu.</p>
+  </div>
+
+  <div class="box">
+    <span class="eyebrow">Fișa instituției</span>
+    <div class="tablewrap" style="border:0">
+    <table>
+      <tr><th>Denumire</th><td>Agenția Spațială și de Radiocomunicații a Armatei (ASR), în cadrul Ministerului Apărării Naționale</td></tr>
+      <tr><th>Înființare</th><td>1 iulie; la data articolului împlinea 5 ani</td></tr>
+      <tr><th>Origine</th><td>Oficiul comunicații satelitare (2019), din Comandamentul Comunicațiilor și Informaticii (CCI)</td></tr>
+      <tr><th>Șef</th><td>Colonelul Tudor Georgian</td></tr>
+      <tr><th>Personal</th><td>Circa 20 de tineri specialiști, număr considerat insuficient</td></tr>
+      <tr><th>Senzor propriu</th><td>Telescop instalat în Dobrogea, operat de la distanță din sediul agenției</td></tr>
+      <tr><th>Partener civil</th><td>Institutul Astronomic al Academiei Române</td></tr>
+    </table>
+    </div>
+    <p class="hint"><span class="src art">din articol</span>Toate rândurile de mai sus.</p>
+  </div>
+
+  <h3>De unde vine: cronologia</h3>
+  <div class="tl">
+    <div><b>2017</b><span class="src art">din articol</span>Se fundamentează arhitectura spațială românească. Se pun bazele programului de înzestrare „Sistem satelitar militar de telecomunicații”. Căpitanul Valeria Toma lucrează încă de atunci la etapele premergătoare.</div>
+    <div><b>Iunie 2019</b><span class="src gen">context general</span>Miniștrii apărării din NATO adoptă prima politică spațială a Alianței.</div>
+    <div><b>2019</b><span class="src art">din articol</span>Ia ființă Oficiul comunicații satelitare în cadrul CCI.</div>
+    <div><b>2019</b><span class="src art">din articol</span>NATO recunoaște spațiul ca domeniu operațional, alături de cel terestru, maritim, aerian și cibernetic. <span class="src gen">context general</span>Decizia a fost luată în decembrie, la reuniunea liderilor de la Londra.</div>
+    <div><b>1 iulie</b><span class="src art">din articol</span>Se înființează ASR, „o continuare firească” a deciziei NATO din 2019.</div>
+    <div><b>Azi</b><span class="src art">din articol</span>20 de specialiști, telescop în Dobrogea, pregătire la NATO Space Centre, în SUA și Marea Britanie, recrutare activă din mediul civil.</div>
+  </div>
+
+  <h3>Cele trei misiuni</h3>
+  <div class="grid3">
+    <div class="box"><span class="eyebrow">Misiunea 1</span><h4>Sprijin CIS prin fluxuri satelitare</h4><p><span class="src art">din articol</span>ASR asigură sprijinul pentru Sistemele de Comunicații și Informatică (CIS) ale MApN, gestionând fluxurile satelitare.</p></div>
+    <div class="box"><span class="eyebrow">Misiunea 2</span><h4>Monitorizarea spațiului cosmic</h4><p><span class="src art">din articol</span>Urmărire permanentă a evenimentelor din spațiu: intrări și ieșiri pe orbită, sateliți noi, mișcările altor corpuri și ale sateliților din jurul celor care asigură comunicațiile armatei.</p></div>
+    <div class="box"><span class="eyebrow">Misiunea 3</span><h4>Sprijin decizional</h4><p><span class="src art">din articol</span>Datele ajung la decidenții MApN. În caz de conflict, ASR este furnizor critic de informații strategice și de baze de date despre întregul domeniu spațial.</p></div>
+  </div>
+
+  <h3>Ce înseamnă „gestionarea fluxurilor satelitare”</h3>
+  <p><span class="src gen">context general</span>Articolul nu detaliază, dar în orice armată această muncă are aceleași componente. Le vei studia pe larg în capitolul 5.</p>
+  <ul>
+    <li><b>Planificarea capacității.</b> Un satelit are o lățime de bandă și o putere limitate. Cineva decide cine primește cât, pe ce frecvență și cu ce prioritate.</li>
+    <li><b>Acces și configurare.</b> Fiecare terminal nou trebuie aprobat și aliniat corect înainte să transmită, ca să nu perturbe alți utilizatori.</li>
+    <li><b>Monitorizarea purtătoarelor.</b> Analizoare de spectru urmăresc permanent semnalele: putere, raport semnal/zgomot, apariția unor semnale străine.</li>
+    <li><b>Rezolvarea interferențelor.</b> Detecție, caracterizare, localizare, eliminare. Interferența poate fi accidentală sau bruiaj intenționat.</li>
+    <li><b>Prioritizare în criză.</b> Când capacitatea scade, traficul critic trece primul.</li>
+  </ul>
+
+  <h3>Ciclul telescopului: de la noapte la masa decidentului</h3>
+  <div class="flow">
+    <div><span class="t">După-amiază</span><b>Planificare</b><span>Ce ținte, ce zonă a cerului, prognoza meteo, faza Lunii.</span></div>
+    <div><span class="t">Noaptea</span><b>Observație</b><span>Telescopul din Dobrogea, acționat de la distanță din sediu.</span></div>
+    <div><span class="t">Noaptea</span><b>Procesare</b><span>Poziții măsurate față de stele, identificare în catalog.</span></div>
+    <div><span class="t">Dimineața</span><b>Analiză</b><span>Ce s-a schimbat: obiecte noi, manevre, apropieri.</span></div>
+    <div><span class="t">Dimineața</span><b>Raport</b><span>Datele ajung „direct pe masa decidenților”.</span></div>
+  </div>
+  <p class="hint"><span class="src art">din articol</span>Observație nocturnă, operare de la distanță, date dimineața la decidenți. <span class="src gen">context general</span>Pașii intermediari sunt practica standard în observarea optică a sateliților (capitolul 6).</p>
+
+  <h3>ASR nu este AIGA</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th></th><th>ASR</th><th>AIGA</th></tr>
+      <tr><td>Nume complet</td><td>Agenția Spațială și de Radiocomunicații a Armatei</td><td>Agenția de Informații Geospațiale a Apărării</td></tr>
+      <tr><td>Accent</td><td>Misiuni în spectrul operativ-tactic: comunicații satelitare, supravegherea spațiului</td><td>Topogeodezie, realizarea hărților</td></tr>
+      <tr><td>Relația</td><td colspan="2">Structuri diferite, cooperare descrisă ca „excelentă”</td></tr>
+    </table>
+  </div>
+
+  <h3>Oamenii și pregătirea lor</h3>
+  <ul>
+    <li><span class="src art">din articol</span>Căpitanul Valeria Toma: absolventă a Academiei Forțelor Terestre „Nicolae Bălcescu”, specializarea comunicații și informatică. A trecut prin toate etapele, de la Oficiu la Agenție.</li>
+    <li><span class="src art">din articol</span>O sublocotenentă astronom de profesie, activată în structurile militare, operează telescopul.</li>
+    <li><span class="src art">din articol</span>Stagiu de două luni la NATO Space Centre, cu certificare ca operatori satelitari. Cursuri în SUA și Marea Britanie, conferințe internaționale.</li>
+    <li><span class="src art">din articol</span>Nu există o academie militară pentru spațiu. Agenția caută absolvenți civili, inclusiv de la Facultatea de Inginerie Aerospațială a Politehnicii București, și discută cu facultatea stagii de practică.</li>
+  </ul>
+  <div class="quote">Misiunile din cadrul agenției nu necesită neapărat o pregătire prealabilă strictă în domeniul spațial militar […] Totuși, calitatea principală căutată la cei doritori să ni se alăture este pasiunea pentru domeniu.<cite>Căpitan Valeria Toma, ASR</cite></div>
+
+  <h3>Deschiderea către public</h3>
+  <p><span class="src art">din articol</span>ASR colaborează cu ONG-ul Space Club și participă la evenimentele publice ale armatei, de exemplu Porțile Deschise de la Palatul Mogoșoaia. Scopul declarat este ca pasiunea pentru spațiu să apară de la vârste mici.</p>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>ASR face trei lucruri: comunicații satelitare pentru armată, supravegherea spațiului cu un telescop propriu, informații pentru decidenți.</li>
+      <li>Este o structură tânără și mică, născută din Oficiul comunicații satelitare al CCI, ca răspuns la decizia NATO din 2019.</li>
+      <li>Spațiul este un „integrator global”, nu un domeniu în competiție cu celelalte.</li>
+      <li>Ușa de intrare pentru civili este deschisă. Contează pasiunea, nu un parcurs militar anume.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 2. DOMENIU ============ -->
+<section class="view" id="v-domeniu" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 2</span>
+    <h2>Spațiul, al cincilea domeniu operațional</h2>
+    <p class="lead">De ce armatele au început să trateze spațiul ca pe un câmp de operații, ce a decis NATO și cum s-au organizat alte state.</p>
+  </div>
+
+  <p>Un domeniu operațional este un mediu în care forțele militare acționează și pe care trebuie să-l poată apăra: uscat, mare, aer, spațiul cibernetic și spațiul cosmic. Primele trei sunt vechi. Ultimele două au apărut pentru că armatele moderne depind complet de ele.</p>
+
+  <h3>De ce spațiul este „integratorul”</h3>
+  <p>Aproape nicio operație militară modernă nu funcționează fără servicii din spațiu. O singură misiune folosește simultan:</p>
+  <div class="grid3">
+    <div class="box"><h4>SATCOM</h4><p>Comandă și control peste orizont, legătura cu dronele, cu navele, cu trupele dislocate departe.</p></div>
+    <div class="box"><h4>PNT</h4><p>Poziționare, navigație și timp (GPS, Galileo). Ghidarea munițiilor, sincronizarea rețelelor.</p></div>
+    <div class="box"><h4>ISR</h4><p>Informații, supraveghere și recunoaștere: imagini optice și radar, interceptări.</p></div>
+    <div class="box"><h4>Avertizare timpurie</h4><p>Senzori în infraroșu care detectează lansările de rachete balistice.</p></div>
+    <div class="box"><h4>Meteo</h4><p>Vremea terestră pentru planificare și vremea spațială pentru comunicații.</p></div>
+    <div class="box"><h4>SDA</h4><p>Cunoașterea situației din spațiu: ce e pe orbită, unde și ce face.</p></div>
+  </div>
+  <p>Asta explică ideea din articol: spațiul nu concurează cu celelalte domenii, ci le leagă. Dacă pierzi spațiul, pierzi viteză și precizie pe uscat, pe mare și în aer.</p>
+
+  <h3>Ce a decis NATO</h3>
+  <div class="tl">
+    <div><b>Iunie 2019</b>Prima politică spațială cuprinzătoare a NATO.</div>
+    <div><b>Decembrie 2019</b>La reuniunea liderilor de la Londra, spațiul este declarat domeniu operațional.</div>
+    <div><b>Octombrie 2020</b>Se decide înființarea NATO Space Centre la Comandamentul Aerian Aliat (AIRCOM) din Ramstein, Germania. Aici s-au pregătit și specialiștii ASR.</div>
+    <div><b>Iunie 2021</b>La summitul de la Bruxelles, aliații afirmă că atacurile spre, din sau în spațiu pot duce la invocarea Articolului 5.</div>
+    <div><b>2023</b>Centrul de Excelență NATO pentru Spațiu, de la Toulouse, este acreditat.</div>
+  </div>
+  <p>Două idei importante: NATO nu are o abordare ofensivă în spațiu și nu deține, ca alianță, o flotă proprie de sateliți militari. Folosește capacitățile naționale ale aliaților și servicii comerciale. De aceea fiecare aliat, inclusiv România, are nevoie de structuri proprii care să se conecteze la acest sistem.</p>
+
+  <h3>Cum s-au organizat alte state</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Stat</th><th>Structură</th><th>An</th></tr>
+      <tr><td>SUA</td><td>U.S. Space Command (reînființat) și U.S. Space Force, ramură separată a forțelor armate</td><td class="num">2019</td></tr>
+      <tr><td>Franța</td><td>Commandement de l’espace; Forțele Aeriene devin Armée de l’Air et de l’Espace</td><td class="num">2019 / 2020</td></tr>
+      <tr><td>Regatul Unit</td><td>UK Space Command</td><td class="num">2021</td></tr>
+      <tr><td>Germania</td><td>Weltraumkommando der Bundeswehr</td><td class="num">2021</td></tr>
+      <tr><td>România</td><td>Oficiul comunicații satelitare (CCI), apoi ASR</td><td class="num">2019 / 1 iulie</td></tr>
+    </table>
+  </div>
+  <p>Uniunea Europeană și-a adoptat în martie 2023 prima Strategie spațială pentru securitate și apărare. Strategia militară a României include domeniul spațial printre domeniile de cooperare cu aliații.</p>
+
+  <h3>Vocabularul funcțiilor spațiale</h3>
+  <ul>
+    <li><b>Space Domain Awareness (SDA)</b>: cunoașterea mediului spațial și a activităților din el, cu accent pe intenții și amenințări.</li>
+    <li><b>Sprijin spațial pentru operații</b>: livrarea SATCOM, PNT, ISR, avertizare și meteo către forțele de pe Pământ.</li>
+    <li><b>Controlul spațiului</b>: asigurarea propriei libertăți de acțiune în spațiu și, defensiv, protejarea propriilor sisteme.</li>
+    <li><b>Coordonare spațială</b>: integrarea efectelor spațiale în planificarea operațiilor.</li>
+  </ul>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>Cele cinci domenii: terestru, maritim, aerian, cibernetic, spațial.</li>
+      <li>NATO: politică 2019, domeniu operațional decembrie 2019, Space Centre la Ramstein, Articolul 5 se poate aplica și pentru spațiu.</li>
+      <li>NATO se bazează pe capacitățile aliaților, deci contribuția națională contează.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 3. ORBITE ============ -->
+<section class="view" id="v-orbite" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 3</span>
+    <h2>Mecanică orbitală pentru operatori</h2>
+    <p class="lead">Fizica fără de care nu poți înțelege nici telescopul, nici satelitul de comunicații. Matematica e simplă. Intuiția contează mai mult.</p>
+  </div>
+
+  <h3>De ce nu cade un satelit</h3>
+  <p>Un satelit cade permanent spre Pământ, dar se mișcă lateral atât de repede încât Pământul se curbează sub el la fel de repede cum cade. La 400 km altitudine, viteza necesară este de circa 7,7 km/s. Cu cât orbita e mai sus, cu atât viteza e mai mică și perioada mai lungă.</p>
+  <div class="formula">v = √(μ / r) &nbsp;&nbsp;&nbsp; T = 2π · √(a³ / μ) &nbsp;&nbsp;&nbsp; μ = 398 600,44 km³/s² &nbsp;&nbsp;&nbsp; R⊕ = 6 378 km</div>
+  <p>Aici <span class="mono">r</span> este distanța de la centrul Pământului (raza Pământului plus altitudinea), iar <span class="mono">a</span> este semiaxa mare (pentru orbită circulară, <span class="mono">a = r</span>).</p>
+  <div class="box">
+    <span class="eyebrow">Exemplu rezolvat · ISS la 420 km</span>
+    <p class="mono">r = 6 378 + 420 = 6 798 km</p>
+    <p class="mono">v = √(398 600 / 6 798) = 7,66 km/s</p>
+    <p class="mono">T = 2π · √(6 798³ / 398 600) = 5 578 s ≈ 93 min</p>
+    <p>Stația face aproape 16 rotații pe zi. Verifică cu <a href="#instrumente">calculatorul orbital</a>.</p>
+  </div>
+
+  <h3>Legile lui Kepler, pe scurt</h3>
+  <ol>
+    <li>Orbitele sunt elipse, cu Pământul într-unul dintre focare.</li>
+    <li>Satelitul merge mai repede aproape de Pământ (perigeu) și mai încet departe (apogeu).</li>
+    <li>Pătratul perioadei este proporțional cu cubul semiaxei mari. Dublezi orbita, perioada crește de 2,8 ori.</li>
+  </ol>
+
+  <h3>Regimurile orbitale</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Regim</th><th>Altitudine</th><th>Perioadă</th><th>Folosire tipică</th></tr>
+      <tr><td>LEO</td><td class="num">160–2 000 km</td><td class="num">88–127 min</td><td>Imagini, ISS, constelații de comunicații (Starlink, OneWeb), meteo polar</td></tr>
+      <tr><td>MEO</td><td class="num">2 000–35 786 km</td><td class="num">2–24 h</td><td>Navigație: GPS ~20 200 km, Galileo ~23 222 km, GLONASS ~19 100 km</td></tr>
+      <tr><td>GEO</td><td class="num">35 786 km</td><td class="num">23 h 56 min</td><td>Comunicații militare și comerciale, meteo, avertizare timpurie</td></tr>
+      <tr><td>HEO</td><td>eliptică, apogeu foarte înalt</td><td class="num">ex. 12 h</td><td>Acoperirea latitudinilor mari (Molniya, înclinare 63,4°)</td></tr>
+    </table>
+  </div>
+
+  <h3>Orbita geostaționară, pe larg</h3>
+  <p>Un satelit la 35 786 km deasupra ecuatorului face o rotație exact cât Pământul (o zi siderală, 23 h 56 min 4 s). Văzut de pe sol, stă pe loc. De aceea antenele de comunicații pot fi fixe și de aceea un telescop îl poate observa toată noaptea în același punct al cerului, în timp ce stelele se rotesc.</p>
+  <ul>
+    <li>Toți sateliții GEO stau pe un singur cerc, „centura geostaționară”. Pozițiile pe ea (sloturi orbitale) sunt o resursă rară, coordonată prin Uniunea Internațională a Telecomunicațiilor.</li>
+    <li>Atracția Lunii și a Soarelui înclină treptat orbita, cu aproape un grad pe an. Operatorul face manevre de menținere a poziției (nord-sud și est-vest).</li>
+    <li>La sfârșitul vieții, sateliții GEO se ridică pe o „orbită cimitir”, câteva sute de km mai sus.</li>
+    <li>Pentru supraveghere, contează mult ce se apropie de un satelit GEO. Exact asta face ASR pentru sateliții care asigură comunicațiile armatei.</li>
+  </ul>
+
+  <h3>Cele șase elemente orbitale</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Simbol</th><th>Nume</th><th>Ce descrie</th></tr>
+      <tr><td class="mono">a</td><td>Semiaxa mare</td><td>Mărimea orbitei, deci perioada</td></tr>
+      <tr><td class="mono">e</td><td>Excentricitatea</td><td>Cât de alungită e (0 = cerc)</td></tr>
+      <tr><td class="mono">i</td><td>Înclinarea</td><td>Unghiul planului orbitei față de ecuator</td></tr>
+      <tr><td class="mono">Ω</td><td>Longitudinea nodului ascendent (RAAN)</td><td>Unde traversează orbita ecuatorul spre nord</td></tr>
+      <tr><td class="mono">ω</td><td>Argumentul perigeului</td><td>Unde e perigeul în planul orbitei</td></tr>
+      <tr><td class="mono">ν sau M</td><td>Anomalia adevărată sau medie</td><td>Unde e satelitul pe orbită, la un moment dat</td></tr>
+    </table>
+  </div>
+  <p>Aceste elemente, plus momentul lor (epoca), sunt publicate pentru zeci de mii de obiecte în formatul <b>TLE</b> (Two-Line Element), care se propagă cu modelul matematic <b>SGP4</b>. Încearcă <a href="#instrumente">decodorul TLE</a>.</p>
+
+  <h3>Perturbații: de ce orbitele se schimbă</h3>
+  <ul>
+    <li><b>Turtirea Pământului (J2)</b> rotește planul orbitei. Se folosește intenționat la orbitele heliosincrone (~98°), care trec peste un loc mereu la aceeași oră locală.</li>
+    <li><b>Frânarea atmosferică</b> coboară sateliții LEO. Crește mult în timpul furtunilor solare.</li>
+    <li><b>Luna și Soarele</b> schimbă înclinarea orbitelor înalte, inclusiv GEO.</li>
+    <li><b>Presiunea radiației solare</b> contează la sateliții ușori cu suprafețe mari.</li>
+  </ul>
+  <p>Consecința practică: un catalog orbital îmbătrânește. Un TLE vechi de o săptămână poate greși poziția unui satelit LEO cu kilometri. De aceea observațiile trebuie repetate.</p>
+
+  <h3>Manevre și Δv</h3>
+  <p>Orice schimbare de orbită costă variație de viteză (Δv), plătită cu combustibil. Transferul Hohmann trece între două orbite circulare cu două impulsuri. Schimbarea planului orbitei este foarte scumpă: <span class="mono">Δv = 2v · sin(Δi/2)</span>. Pentru supraveghere, o schimbare neanunțată a orbitei unui satelit (manevră) este un semnal care merită raportat.</p>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>Mai sus înseamnă mai lent: LEO ~93 min, GEO o zi siderală.</li>
+      <li>GEO stă pe loc deasupra ecuatorului, pe un singur cerc aglomerat.</li>
+      <li>Orbitele sunt descrise de 6 elemente, publicate ca TLE și propagate cu SGP4.</li>
+      <li>Perturbațiile fac ca datele orbitale să expire. Observația continuă este necesară.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 4. RADIO ============ -->
+<section class="view" id="v-radio" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 4</span>
+    <h2>Radiocomunicații: fundamentele</h2>
+    <p class="lead">„Radiocomunicații” e jumătate din numele agenției. Tot ce vine din spațiu, de la date la imagini, ajunge pe Pământ ca undă radio.</p>
+  </div>
+
+  <h3>Unda electromagnetică</h3>
+  <div class="formula">λ = c / f &nbsp;&nbsp;&nbsp; c ≈ 300 000 km/s &nbsp;&nbsp;&nbsp; 8 GHz → λ ≈ 3,75 cm &nbsp;&nbsp;&nbsp; 300 MHz → λ = 1 m</div>
+  <p>Frecvența decide aproape totul: cât de mare e antena, cât de bine trece semnalul prin ploaie, cât de multă informație poți transmite și cât de ușor te pot bruia.</p>
+
+  <h3>Benzile de frecvență</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Bandă ITU</th><th>Domeniu</th><th>Propagare</th><th>Folosire militară tipică</th></tr>
+      <tr><td>HF</td><td class="num">3–30 MHz</td><td>Se reflectă pe ionosferă, ajunge peste orizont fără sateliți</td><td>Legături la mare distanță, rezervă când SATCOM cade</td></tr>
+      <tr><td>VHF</td><td class="num">30–300 MHz</td><td>Linie de vedere, puțin peste orizont</td><td>Radio tactic de luptă, aviație</td></tr>
+      <tr><td>UHF</td><td class="num">300 MHz–3 GHz</td><td>Linie de vedere</td><td>Radio tactic, SATCOM tactic de bandă îngustă, GNSS</td></tr>
+      <tr><td>SHF</td><td class="num">3–30 GHz</td><td>Linie de vedere, antene directive</td><td>SATCOM de bandă largă (X, Ku, Ka), radioreleu, radar</td></tr>
+      <tr><td>EHF</td><td class="num">30–300 GHz</td><td>Atenuare mare în ploaie</td><td>SATCOM protejat, rezistent la bruiaj</td></tr>
+    </table>
+  </div>
+
+  <h3>Decibelul: limba operatorului</h3>
+  <p>În radio, puterile variază pe zeci de ordine de mărime, așa că se lucrează logaritmic. Adunarea în dB înlocuiește înmulțirea.</p>
+  <div class="formula">dB = 10 · log₁₀(P₂/P₁) &nbsp;&nbsp; +3 dB = ×2 &nbsp;&nbsp; +10 dB = ×10 &nbsp;&nbsp; −3 dB = ÷2 &nbsp;&nbsp; 0 dBW = 1 W = 30 dBm</div>
+  <ul>
+    <li><b>dBW, dBm</b>: putere raportată la 1 W, respectiv 1 mW.</li>
+    <li><b>dBi</b>: câștigul unei antene față de o antenă ideală care radiază egal în toate direcțiile.</li>
+    <li><b>EIRP</b>: puterea emițătorului plus câștigul antenei. Cât „strigă” stația în direcția dorită.</li>
+  </ul>
+
+  <h3>Antene</h3>
+  <p>O antenă nu amplifică energie, o concentrează. Cu cât antena e mai mare față de lungimea de undă, cu atât fasciculul e mai îngust și câștigul mai mare. Lățimea aproximativă a fasciculului unei antene parabolice:</p>
+  <div class="formula">θ ≈ 70 · λ / D (grade) &nbsp;&nbsp; antenă de 2,4 m la 8 GHz → θ ≈ 1,1°</div>
+  <p><b>Polarizarea</b> (liniară orizontală sau verticală, circulară dreapta sau stânga) trebuie să coincidă între emițător și receptor. O antenă aliniată greșit pe polarizare produce interferență pe polarizarea opusă, una dintre cele mai frecvente probleme în SATCOM.</p>
+
+  <h3>Zgomot și capacitate</h3>
+  <p>Orice receptor are zgomot termic: <span class="mono">N = k·T·B</span>, unde k este constanta lui Boltzmann (−228,6 dBW/K/Hz). Limita teoretică a informației este dată de Shannon:</p>
+  <div class="formula">C = B · log₂(1 + S/N)</div>
+  <p>Mai multă bandă sau un raport semnal/zgomot mai bun înseamnă mai mulți biți pe secundă. Modulațiile simple (BPSK, QPSK) rezistă la zgomot. Cele dense (16APSK, 32APSK) transportă mai mult dar cer semnal curat.</p>
+
+  <h3>Orizontul radio</h3>
+  <div class="formula">d ≈ 4,12 · (√h₁ + √h₂) km &nbsp;&nbsp; (h în metri) &nbsp;&nbsp; antene la 10 m și 10 m → ~26 km</div>
+  <p>Dincolo de orizont, VHF/UHF nu ajung direct. Soluțiile sunt HF prin ionosferă, relee, sau sateliți. Asta e rațiunea de a exista a SATCOM-ului militar.</p>
+
+  <h3>Războiul electronic, pe scurt</h3>
+  <ul>
+    <li><b>Sprijin electronic (ES)</b>: asculți și localizezi emisiile adversarului.</li>
+    <li><b>Atac electronic (EA)</b>: bruiaj sau înșelare (spoofing).</li>
+    <li><b>Protecție electronică (EP)</b>: salt de frecvență, spectru împrăștiat, antene care anulează direcția bruiajului, disciplină de emisie (EMCON).</li>
+  </ul>
+  <p>Gestionarea spectrului este o funcție militară separată: cine emite pe ce frecvență, unde și când, astfel încât propriile sisteme să nu se bruieze între ele.</p>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>Frecvența decide antena, debitul și vulnerabilitățile.</li>
+      <li>Gândește în dB: +3 dB e dublu, +10 dB e de zece ori.</li>
+      <li>VHF/UHF sunt limitate de orizont. SATCOM și HF trec de el.</li>
+      <li>Polarizarea greșită este o sursă clasică de interferență.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 5. SATCOM ============ -->
+<section class="view" id="v-satcom" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 5</span>
+    <h2>Comunicații satelitare militare</h2>
+    <p class="lead">Misiunea de bază a ASR este sprijinul CIS prin fluxuri satelitare. Aici înveți cum funcționează un sistem SATCOM și ce face, concret, un operator.</p>
+  </div>
+
+  <h3>Arhitectura unui sistem</h3>
+  <div class="flow">
+    <div><span class="t">Segment spațial</span><b>Satelitul</b><span>Antene, transpondere, panouri solare, propulsie.</span></div>
+    <div><span class="t">Segment de control</span><b>TT&amp;C</b><span>Telemetrie, urmărire și comandă: „pilotarea” satelitului.</span></div>
+    <div><span class="t">Segment terestru</span><b>Teleporturi</b><span>Stații mari care leagă satelitul de rețelele terestre.</span></div>
+    <div><span class="t">Segment utilizator</span><b>Terminale</b><span>Fixe, mobile, portabile, la bordul navelor și aeronavelor.</span></div>
+    <div><span class="t">Legătura</span><b>Uplink / downlink</b><span>Sol → satelit pe o frecvență, satelit → sol pe alta.</span></div>
+  </div>
+  <p>Orice segment poate fi atacat. Atacul cibernetic asupra rețelei KA-SAT din 24 februarie 2022 a lovit terminalele utilizatorilor, nu satelitul.</p>
+
+  <h3>Transponderul</h3>
+  <p>Un transponder clasic („bent pipe”) primește semnalul pe frecvența de uplink, îl amplifică, îl mută pe frecvența de downlink și îl trimite înapoi. Nu înțelege datele. Sateliții moderni cu procesare la bord demodulează semnalul, îl pot ruta între fascicule și pot rezista mai bine bruiajului.</p>
+
+  <h3>Benzile SATCOM</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Bandă</th><th>Uplink / downlink</th><th>Caracter</th><th>Exemple</th></tr>
+      <tr><td>UHF</td><td class="num">~240–400 MHz</td><td>Bandă îngustă, antene mici, terminale portabile</td><td>SATCOM tactic, MUOS (SUA)</td></tr>
+      <tr><td>L</td><td class="num">1,5 / 1,6 GHz</td><td>Mobil, robust, debit mic</td><td>Inmarsat, Iridium</td></tr>
+      <tr><td>C</td><td class="num">6 / 4 GHz</td><td>Rezistent la ploaie, antene mari</td><td>Comercial clasic</td></tr>
+      <tr><td>X militar</td><td class="num">7,9–8,4 / 7,25–7,75 GHz</td><td>Rezervată guvernamental-militar, bun compromis ploaie/debit</td><td>Skynet (UK), Syracuse (FR), SICRAL (IT), WGS (SUA)</td></tr>
+      <tr><td>Ku</td><td class="num">14 / 11–12 GHz</td><td>Comercial, antene mici</td><td>Televiziune, VSAT</td></tr>
+      <tr><td>Ka</td><td class="num">30 / 20 GHz</td><td>Debit mare, sensibilă la ploaie</td><td>Bandă largă, Ka militar 30–31 / 20,2–21,2 GHz</td></tr>
+      <tr><td>EHF</td><td class="num">44 / 20 GHz</td><td>Protejat, anti-bruiaj, debit modest</td><td>AEHF (SUA)</td></tr>
+    </table>
+  </div>
+  <p>Militarii folosesc trei familii: <b>protejat</b> (rezistă bruiajului, pentru comandă strategică), <b>bandă largă</b> (X și Ka, pentru volum mare de date) și <b>tactic de bandă îngustă</b> (UHF, pentru trupe). La acestea se adaugă tot mai mult SATCOM comercial, inclusiv constelații LEO. NATO cumpără servicii SATCOM de la aliați care au sateliți militari proprii. Uniunea Europeană dezvoltă GOVSATCOM și constelația IRIS².</p>
+
+  <h3>GEO sau LEO?</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th></th><th>GEO</th><th>Constelație LEO</th></tr>
+      <tr><td>Acoperire</td><td>Un satelit vede ~1/3 din Pământ</td><td>Sute sau mii de sateliți</td></tr>
+      <tr><td>Latență</td><td>~250 ms pe un salt sol-satelit-sol</td><td>Zeci de ms</td></tr>
+      <tr><td>Antenă</td><td>Fixă, orientată o dată</td><td>Urmărire continuă, antene cu fază</td></tr>
+      <tr><td>Reziliență</td><td>Puțini sateliți valoroși, ținte clare</td><td>Pierderea unuia contează puțin</td></tr>
+    </table>
+  </div>
+
+  <h3>Bugetul de legătură</h3>
+  <p>Este calculul de bază al oricărui inginer SATCOM: ajunge semnalul suficient de puternic peste zgomot?</p>
+  <div class="formula">FSPL (dB) = 92,45 + 20·log₁₀(d km) + 20·log₁₀(f GHz)</div>
+  <div class="formula">C/N₀ (dBHz) = EIRP − FSPL − pierderi + G/T + 228,6 &nbsp;&nbsp;&nbsp; C/N = C/N₀ − 10·log₁₀(B Hz)</div>
+  <ul>
+    <li><b>FSPL</b>: pierderea în spațiul liber. Spre GEO, în banda X, e în jur de 200 dB, adică semnalul scade de 10²⁰ ori.</li>
+    <li><b>G/T</b>: calitatea receptorului, câștigul antenei împărțit la temperatura de zgomot. O antenă mare și un amplificator silențios dau G/T mare.</li>
+    <li><b>Marja</b>: cât de mult peste pragul cerut de modulație ești. Marja te salvează în ploaie, la vânt sau sub bruiaj ușor.</li>
+  </ul>
+  <p>Calculează-l singur în <a href="#instrumente">instrumentul de buget de legătură</a>.</p>
+
+  <h3>Ce face un operator: fluxul de lucru</h3>
+  <p><span class="src gen">context general</span>Practica standard în centrele de operații SATCOM.</p>
+  <ol>
+    <li><b>Cererea de acces.</b> O unitate are nevoie de o legătură. Se verifică prioritatea, capacitatea disponibilă și terminalul.</li>
+    <li><b>Alocarea.</b> Se stabilesc frecvența, lățimea de bandă, puterea, modulația și codarea.</li>
+    <li><b>Alinierea (line-up).</b> La prima transmisie, terminalul emite controlat sub supravegherea operatorului de satelit. Se verifică izolarea de polarizare și nivelul puterii.</li>
+    <li><b>Monitorizarea.</b> Analizoare de spectru și sisteme de monitorizare a purtătoarelor urmăresc permanent fiecare semnal.</li>
+    <li><b>Gestionarea incidentelor.</b> Interferență, degradare, cădere: diagnostic, comutare pe rezervă, raportare.</li>
+    <li><b>Securitatea.</b> Criptarea traficului (COMSEC) și protecția rețelei de management.</li>
+  </ol>
+
+  <h3>Interferența: diagnostic în cinci pași</h3>
+  <ol>
+    <li><b>Detectează</b>: scade C/N, apare un semnal străin pe analizor.</li>
+    <li><b>Caracterizează</b>: e o purtătoare modulată, un ton continuu, zgomot de bandă largă? Se mișcă în frecvență?</li>
+    <li><b>Separă uplink de downlink</b>: dacă toate stațiile din fascicul văd problema, interferența a intrat pe satelit (uplink). Dacă doar o stație o vede, sursa e locală, la sol.</li>
+    <li><b>Localizează</b>: pentru uplink, geolocalizarea folosește doi sateliți vecini și diferențele de timp și frecvență ale semnalului (TDOA/FDOA).</li>
+    <li><b>Elimină sau ocolește</b>: contactezi sursa, schimbi frecvența, treci pe calea de rezervă.</li>
+  </ol>
+  <p>Majoritatea interferențelor sunt accidentale: terminale prost configurate, polarizare greșită, sateliți vecini. Bruiajul intenționat există, dar nu se presupune primul.</p>
+
+  <h3>Fenomene care se pot anticipa</h3>
+  <ul>
+    <li><b>Atenuarea în ploaie</b>: crește cu frecvența. Ka suferă mult, X puțin, UHF aproape deloc.</li>
+    <li><b>Sun outage</b>: în preajma echinocțiilor, Soarele trece exact prin spatele unui satelit GEO, văzut de la stația de sol. Zgomotul Soarelui acoperă semnalul câteva minute pe zi, câteva zile la rând. Momentele se calculează dinainte.</li>
+    <li><b>Scintilația ionosferică</b>: afectează în special UHF și L, mai ales în timpul activității solare intense.</li>
+  </ul>
+
+  <h3>Planificarea PACE</h3>
+  <p>Orice legătură critică are patru căi: <b>P</b>rimară, <b>A</b>lternativă, de <b>C</b>ontingență și de <b>U</b>rgență (Emergency). De exemplu: SATCOM X militar, SATCOM comercial Ka, HF, curier. Operatorul SATCOM trebuie să știe exact când și cum se comută.</p>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>Patru segmente: spațial, control, terestru, utilizator. Toate pot fi ținte.</li>
+      <li>Banda X este „casa” SATCOM-ului militar. Ka aduce debit, EHF aduce protecție, UHF aduce mobilitate.</li>
+      <li>Bugetul de legătură: EIRP − pierderi + G/T. Marja te ține în aer.</li>
+      <li>Interferența se diagnostichează metodic: uplink sau downlink, apoi localizare.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 6. SDA ============ -->
+<section class="view" id="v-sda" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 6</span>
+    <h2>Supravegherea spațiului și telescopul</h2>
+    <p class="lead">A doua misiune a ASR: să știe ce se întâmplă pe orbită, mai ales în jurul sateliților care asigură comunicațiile armatei.</p>
+  </div>
+
+  <h3>SSA și SDA</h3>
+  <p><b>Space Situational Awareness (SSA)</b> înseamnă să știi unde sunt obiectele de pe orbită, ca să eviți coliziunile. <b>Space Domain Awareness (SDA)</b> merge mai departe: ce fac acele obiecte, cine le controlează, ce intenții au. Termenul militar actual este SDA.</p>
+  <p>Pe orbită sunt zeci de mii de obiecte urmărite, iar numărul sateliților activi a trecut de 10 000 odată cu marile constelații LEO. Majoritatea obiectelor sunt deșeuri: etaje de rachetă, sateliți morți, fragmente.</p>
+
+  <h3>Senzorii</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Senzor</th><th>Bun pentru</th><th>Limitări</th></tr>
+      <tr><td>Radar</td><td>LEO, zi și noapte, orice vreme</td><td>Scump, puterea necesară crește enorm cu distanța</td></tr>
+      <tr><td>Telescop optic</td><td>GEO și MEO, ieftin, precis unghiular</td><td>Doar noaptea, cer senin, ținta trebuie luminată de Soare</td></tr>
+      <tr><td>RF pasiv</td><td>Identifică sateliții după emisii</td><td>Nu vede obiecte care tac</td></tr>
+      <tr><td>Telemetrie laser</td><td>Distanță la centimetru</td><td>Doar ținte cu reflectoare, vreme bună</td></tr>
+      <tr><td>Senzori în spațiu</td><td>Fără vreme și zi/noapte, priviri de aproape</td><td>Cost foarte mare</td></tr>
+    </table>
+  </div>
+  <p><span class="src art">din articol</span>ASR folosește un telescop optic în Dobrogea, operat de la distanță, cu observații pe timpul nopții. Alegerea are sens: pentru orbita geostaționară, unde stau sateliții de comunicații, telescopul optic este senzorul potrivit.</p>
+
+  <h3>Când poți vedea un satelit</h3>
+  <ul>
+    <li><b>Cerul trebuie să fie întunecat</b> la observator: Soarele la peste 12–18° sub orizont.</li>
+    <li><b>Satelitul trebuie să fie luminat</b> de Soare. Sateliții LEO se văd doar seara și dimineața. Sateliții GEO sunt luminați aproape toată noaptea.</li>
+    <li><b>Sezonul de eclipse GEO</b>: în preajma echinocțiilor, sateliții GEO intră în umbra Pământului în jurul miezului nopții locale, până la circa 70 de minute.</li>
+    <li><b>Luna</b> luminează cerul și reduce obiectele slabe vizibile.</li>
+    <li><b>Vremea</b>: un nor oprește observația. Lipsa datelor trebuie raportată onest, nu ascunsă.</li>
+  </ul>
+
+  <h3>Arcul GEO văzut din Dobrogea</h3>
+  <p>De la circa 44° latitudine nordică, centura geostaționară apare ca un arc jos pe cerul de sud. Un satelit aflat pe aceeași longitudine cu observatorul (~28,6° E) stă la circa 39° deasupra orizontului, exact spre sud. Cu cât longitudinea satelitului e mai departe, cu atât coboară spre orizont. Calculează exact în <a href="#instrumente">instrumentul de unghiuri GEO</a>.</p>
+
+  <h3>Telescopul și camera</h3>
+  <div class="formula">scara pixelului (″/px) = 206,265 · mărime pixel (µm) / distanță focală (mm)</div>
+  <ul>
+    <li><b>Deschiderea</b> (diametrul) decide cât de slabe sunt obiectele pe care le vezi. Sateliții GEO tipici au magnitudini în jur de 11–15, invizibili cu ochiul liber.</li>
+    <li><b>Câmpul de vedere</b> decide cât din cer acoperi dintr-o expunere. Pentru căutare vrei câmp larg. Pentru precizie vrei scară fină.</li>
+    <li><b>Urmărirea siderală</b>: montura urmărește stelele. Stelele sunt puncte, sateliții GEO lasă dâre de ~15″ pe secundă.</li>
+    <li><b>Urmărirea țintei</b>: montura urmărește satelitul. Satelitul e punct, stelele devin dâre.</li>
+    <li><b>Timpul exact</b> al fiecărei expuneri, sincronizat prin GPS, este esențial: o eroare de o secundă înseamnă kilometri pe orbită.</li>
+  </ul>
+
+  <h3>De la imagine la informație</h3>
+  <ol>
+    <li><b>Astrometrie</b>: poziția satelitului (ascensie dreaptă și declinație) măsurată față de stele cu poziții cunoscute din cataloage precum Gaia.</li>
+    <li><b>Corelare</b>: comparare cu catalogul. Un obiect fără corespondent este un UCT (uncorrelated track), adică un posibil obiect nou sau unul care a manevrat.</li>
+    <li><b>Determinarea orbitei</b>: din mai multe observații se calculează elementele orbitale.</li>
+    <li><b>Fotometrie</b>: luminozitatea în timp (curba de lumină) arată dacă obiectul e stabilizat, se rotește necontrolat sau și-a schimbat orientarea.</li>
+    <li><b>Analiză</b>: manevre, apropieri de sateliți proprii, lansări noi, fragmentări, reintrări.</li>
+  </ol>
+
+  <h3>Produsele unui centru SDA</h3>
+  <ul>
+    <li><b>Evaluarea conjuncțiilor</b>: momentul celei mai mari apropieri (TCA), distanța de ratare și probabilitatea de coliziune (Pc). Multe agenții iau în calcul o manevră când Pc depășește aproximativ 1 la 10 000.</li>
+    <li><b>Detectarea operațiilor de apropiere (RPO)</b>: un satelit străin care se deplasează spre unul dintre sateliții tăi.</li>
+    <li><b>Monitorizarea lansărilor și a intrărilor pe orbită</b>: obiecte noi care apar în catalog. <span class="src art">din articol</span>„intrările și ieșirile pe și de pe orbită, sateliții noi”.</li>
+    <li><b>Predicția reintrărilor</b> în atmosferă.</li>
+  </ul>
+  <p>Formate standard de date: TLE, OMM (Orbit Mean-Elements Message), CDM (Conjunction Data Message), TDM (Tracking Data Message), publicate de organizația internațională CCSDS.</p>
+
+  <h3>Surse publice de date</h3>
+  <ul>
+    <li><b>Space-Track.org</b>: catalogul U.S. Space Force, gratuit după înregistrare.</li>
+    <li><b>CelesTrak</b>: TLE-uri organizate pe categorii, documentație excelentă.</li>
+    <li><b>EU SST</b>: serviciul european de supraveghere și urmărire spațială. România participă prin Agenția Spațială Română.</li>
+    <li><b>ESA DISCOS</b>: baza de date a ESA despre obiectele spațiale.</li>
+  </ul>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>SDA înseamnă poziții plus intenții.</li>
+      <li>Radarul domină în LEO, telescopul optic în GEO.</li>
+      <li>Ca să vezi un satelit: cer întunecat, satelit luminat, vreme bună.</li>
+      <li>Lanțul de lucru: imagine → astrometrie → corelare → orbită → analiză → raport.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 7. AMENINȚĂRI ============ -->
+<section class="view" id="v-amenintari" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 7</span>
+    <h2>Amenințări și reziliență</h2>
+    <p class="lead">De ce un satelit de comunicații are nevoie de cineva care să-i supravegheze vecinătatea și ce se poate face când e atacat.</p>
+  </div>
+
+  <h3>Cele patru familii de amenințări</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Familie</th><th>Exemple</th><th>Efect</th><th>Atribuire</th></tr>
+      <tr><td>Cinetic fizic</td><td>Rachetă antisatelit lansată de la sol (DA-ASAT), satelit care lovește alt satelit</td><td>Distrugere, deșeuri</td><td>Ușoară, vizibilă</td></tr>
+      <tr><td>Non-cinetic fizic</td><td>Laser care orbește senzorii, microunde de mare putere, explozie nucleară la altitudine</td><td>Degradare sau distrugere fără impact</td><td>Dificilă</td></tr>
+      <tr><td>Electronic</td><td>Bruiaj pe uplink sau downlink, spoofing GNSS</td><td>Temporar, reversibil</td><td>Medie, sursa poate fi localizată</td></tr>
+      <tr><td>Cibernetic</td><td>Atac asupra stațiilor de control, terminalelor, rețelei de management</td><td>De la furt de date la pierderea satelitului</td><td>Foarte dificilă</td></tr>
+    </table>
+  </div>
+
+  <h3>Testele antisatelit care au produs deșeuri</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Data</th><th>Stat</th><th>Ținta</th><th>Consecință</th></tr>
+      <tr><td class="num">ian. 2007</td><td>China</td><td>Satelitul meteo Fengyun-1C, ~865 km</td><td>Peste 3 000 de fragmente urmăribile, multe încă pe orbită</td></tr>
+      <tr><td class="num">feb. 2008</td><td>SUA</td><td>USA-193, ~250 km, cu o rachetă SM-3 de pe o navă</td><td>Altitudine joasă, deșeurile au reintrat rapid</td></tr>
+      <tr><td class="num">mar. 2019</td><td>India</td><td>Microsat-R, ~280 km (Mission Shakti)</td><td>Fragmente au urcat peste orbita ISS</td></tr>
+      <tr><td class="num">nov. 2021</td><td>Rusia</td><td>Kosmos 1408, ~480 km</td><td>Peste 1 500 de fragmente; echipajul ISS s-a adăpostit în capsule</td></tr>
+    </table>
+  </div>
+  <p>În aprilie 2022, SUA au anunțat că renunță la testele DA-ASAT distructive. În decembrie 2022, Adunarea Generală ONU a adoptat o rezoluție care cere tuturor statelor același angajament.</p>
+
+  <h3>Deșeurile și sindromul Kessler</h3>
+  <p>În 1978, Donald Kessler a arătat că, peste o anumită densitate, coliziunile produc fragmente care provoacă alte coliziuni, în lanț. În februarie 2009, sateliții Iridium 33 și Kosmos 2251 s-au ciocnit accidental la ~790 km, prima coliziune între doi sateliți întregi. La 7–8 km/s, chiar și un fragment de un centimetru poate distruge un satelit.</p>
+
+  <h3>Zona gri: amenințări sub pragul conflictului</h3>
+  <ul>
+    <li><b>Operațiuni de apropiere (RPO).</b> Sateliți care se plasează lângă sateliții altor state. Rusia a manevrat sateliții Luch (Olymp-K) în apropierea mai multor sateliți comerciali de comunicații din GEO, începând din 2015. Asta e exact tipul de activitate pe care ASR îl monitorizează în jurul sateliților armatei.</li>
+    <li><b>Bruiajul GNSS.</b> Din 2022, interferențele GPS sunt frecvente în regiunea Mării Baltice, a Mării Negre și în estul Mediteranei, cu efecte asupra aviației civile.</li>
+    <li><b>Atacuri cibernetice.</b> Pe 24 februarie 2022, la începutul invaziei Ucrainei, un atac asupra rețelei KA-SAT a scos din funcțiune zeci de mii de modemuri în Europa, inclusiv monitorizarea a circa 5 800 de turbine eoliene din Germania.</li>
+  </ul>
+
+  <h3>Testul nuclear Starfish Prime</h3>
+  <p>În iulie 1962, SUA au detonat o bombă de 1,4 megatone la ~400 km altitudine. Radiațiile prinse în centurile magnetice ale Pământului au deteriorat sau distrus mai mulți sateliți în lunile următoare. O asemenea armă ar lovi fără discriminare toți sateliții din LEO.</p>
+
+  <h3>Ce a arătat războiul din Ucraina</h3>
+  <ul>
+    <li>Serviciile comerciale au devenit infrastructură de război: Starlink pentru comunicații, imagini comerciale optice și radar (Maxar, Planet, ICEYE).</li>
+    <li>O constelație LEO cu mii de sateliți este greu de neutralizat. Proliferarea aduce reziliență.</li>
+    <li>Segmentul terestru și utilizatorii sunt puncte vulnerabile, nu doar sateliții.</li>
+  </ul>
+
+  <h3>Cum construiești reziliență</h3>
+  <div class="grid2">
+    <div class="box"><h4>Evitare</h4><p>Cunoști amenințarea la timp (SDA), manevrezi, schimbi frecvența, ascunzi semnătura.</p></div>
+    <div class="box"><h4>Robustețe</h4><p>Criptare, anti-bruiaj, salt de frecvență, antene cu anulare, componente protejate la radiații.</p></div>
+    <div class="box"><h4>Diversificare</h4><p>Mai multe benzi, orbite, furnizori (militar, aliat, comercial). Planul PACE.</p></div>
+    <div class="box"><h4>Reconstituire</h4><p>Capacitatea de a înlocui rapid un serviciu pierdut: lansare rapidă, contracte comerciale de rezervă.</p></div>
+  </div>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>Patru familii: cinetic, non-cinetic, electronic, cibernetic.</li>
+      <li>Testele cinetice creează deșeuri care amenință pe toată lumea, inclusiv pe autor.</li>
+      <li>Cea mai frecventă amenințare reală este electronică și cibernetică, nu cinetică.</li>
+      <li>Supravegherea vecinătății sateliților proprii este o funcție defensivă de bază.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 8. APLICAȚII ============ -->
+<section class="view" id="v-aplicatii" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 8</span>
+    <h2>Navigație, imagini, avertizare, vreme spațială</h2>
+    <p class="lead">Serviciile spațiale de care depinde o armată, dincolo de comunicații. Articolul pomenește explicit semnalele GPS.</p>
+  </div>
+
+  <h3>PNT: poziție, navigație, timp</h3>
+  <p>Un satelit GNSS transmite ora exactă, dată de ceasuri atomice, și poziția sa. Receptorul măsoară cât a durat semnalul de la fiecare satelit. Are nevoie de cel puțin <b>patru</b> sateliți, pentru că are patru necunoscute: x, y, z și eroarea propriului ceas. O nanosecundă de eroare înseamnă circa 30 cm.</p>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Sistem</th><th>Operator</th><th>Altitudine</th><th>Semnal guvernamental</th></tr>
+      <tr><td>GPS</td><td>SUA</td><td class="num">~20 200 km</td><td>Cod M (militar)</td></tr>
+      <tr><td>Galileo</td><td>Uniunea Europeană</td><td class="num">~23 222 km</td><td>PRS (Public Regulated Service)</td></tr>
+      <tr><td>GLONASS</td><td>Rusia</td><td class="num">~19 100 km</td><td>Semnale militare dedicate</td></tr>
+      <tr><td>BeiDou</td><td>China</td><td class="num">MEO, GEO, IGSO</td><td>Serviciu autorizat</td></tr>
+    </table>
+  </div>
+  <p><b>Vulnerabilitatea</b>: semnalul GPS ajunge la sol cu o putere de ordinul 10⁻¹⁶ W, sub nivelul zgomotului. Un bruior mic îl acoperă ușor. <b>Bruiajul</b> te lasă fără poziție. <b>Spoofing-ul</b> te face să crezi o poziție falsă, ceea ce e mai periculos. Contramăsuri: antene cu model de recepție controlat (CRPA), integrare cu navigație inerțială, recepție multi-constelație, semnale militare criptate.</p>
+  <p><b>Timpul</b> din GNSS sincronizează rețelele de telecomunicații, rețelele electrice și tranzacțiile financiare. Bruiajul GNSS are efecte mult dincolo de navigație.</p>
+
+  <h3>ISR din spațiu</h3>
+  <ul>
+    <li><b>Optic (EO)</b>: imagini ca o fotografie. Calitatea se măsoară prin GSD, adică dimensiunea pe sol a unui pixel. Copernicus Sentinel-2 oferă 10 m. Sateliții comerciali de top ajung sub 50 cm. Nu vede prin nori și noaptea.</li>
+    <li><b>Radar cu apertură sintetică (SAR)</b>: vede prin nori și noaptea. Copernicus Sentinel-1, constelațiile ICEYE și Capella.</li>
+    <li><b>Interceptarea semnalelor (SIGINT)</b>: localizează radare și emițătoare.</li>
+    <li><b>Hiperspectral</b>: identifică materiale după semnătura spectrală.</li>
+  </ul>
+  <p>Compromisul permanent este între rezoluție, frecvența revizitării și lățimea zonei acoperite. De aici vin constelațiile cu mulți sateliți mici.</p>
+
+  <h3>Avertizare timpurie</h3>
+  <p>Sateliți în GEO și HEO, cu senzori în infraroșu, detectează flacăra motoarelor unei rachete balistice la câteva zeci de secunde după lansare. Sistemele americane DSP și SBIRS au acest rol. Datele alimentează apărarea antirachetă a NATO.</p>
+
+  <h3>Vremea spațială</h3>
+  <p>Soarele emite erupții (flare-uri), ejecții de masă coronală și particule energetice. Efectele pe care trebuie să le cunoască un operator:</p>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Fenomen</th><th>Scala NOAA</th><th>Efect operațional</th></tr>
+      <tr><td>Erupție solară, radiații X</td><td>R1–R5</td><td>Blocaj HF pe partea luminată a Pământului, minute până la ore</td></tr>
+      <tr><td>Furtună de particule</td><td>S1–S5</td><td>Erori la electronica sateliților, blocaj HF la latitudini mari</td></tr>
+      <tr><td>Furtună geomagnetică</td><td>G1–G5</td><td>Erori GNSS, scintilații UHF și L, frânare atmosferică crescută în LEO</td></tr>
+    </table>
+  </div>
+  <p>Exemplu: în februarie 2022, o furtună geomagnetică moderată a crescut densitatea atmosferei și aproximativ 38 dintre cei 49 de sateliți Starlink abia lansați au reintrat în atmosferă. Pentru supraveghere, după o furtună orbitele LEO se schimbă și catalogul trebuie actualizat.</p>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>GNSS cere 4 sateliți. Semnalul e foarte slab, deci ușor de bruiat.</li>
+      <li>Spoofing-ul e mai periculos decât bruiajul, pentru că nu se observă.</li>
+      <li>Optic pentru detaliu, SAR pentru orice vreme.</li>
+      <li>Vremea spațială afectează HF, GNSS, SATCOM și orbitele LEO.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 9. DREPT ============ -->
+<section class="view" id="v-drept" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 9</span>
+    <h2>Dreptul spațial și guvernanța</h2>
+    <p class="lead">Regulile care se aplică pe orbită, inclusiv pentru militari. Orice raport despre activitatea altui stat în spațiu se citește prin aceste reguli.</p>
+  </div>
+
+  <h3>Cele cinci tratate ONU</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>An</th><th>Tratat</th><th>Ideea principală</th></tr>
+      <tr><td class="num">1967</td><td>Tratatul privind spațiul cosmic (Outer Space Treaty)</td><td>Fundamentul. Libertate de explorare, interdicția de a-și însuși spațiul, fără arme nucleare pe orbită</td></tr>
+      <tr><td class="num">1968</td><td>Acordul privind salvarea astronauților</td><td>Ajutor pentru astronauți și returnarea obiectelor spațiale</td></tr>
+      <tr><td class="num">1972</td><td>Convenția privind răspunderea</td><td>Răspundere absolută pentru daune la sol, răspundere pentru culpă în spațiu</td></tr>
+      <tr><td class="num">1975</td><td>Convenția privind înregistrarea</td><td>Fiecare obiect lansat se înregistrează la ONU</td></tr>
+      <tr><td class="num">1979</td><td>Acordul privind Luna</td><td>Puțin ratificat, fără marile puteri spațiale</td></tr>
+    </table>
+  </div>
+
+  <h3>Articolele pe care trebuie să le știi din Tratatul din 1967</h3>
+  <ul>
+    <li><b>Art. II</b>: niciun stat nu își poate însuși spațiul sau corpurile cerești.</li>
+    <li><b>Art. III</b>: dreptul internațional, inclusiv Carta ONU, se aplică în spațiu. Asta include dreptul la autoapărare.</li>
+    <li><b>Art. IV</b>: interzise armele nucleare și alte arme de distrugere în masă pe orbită. Luna și corpurile cerești se folosesc exclusiv în scopuri pașnice. Atenție: nu interzice orice activitate militară pe orbită.</li>
+    <li><b>Art. VI</b>: statul răspunde pentru toate activitățile spațiale naționale, inclusiv ale firmelor private.</li>
+    <li><b>Art. VII</b>: statul de lansare răspunde pentru pagube.</li>
+    <li><b>Art. IX</b>: „luarea în considerare a intereselor celorlalți” și consultări înaintea activităților care ar putea produce interferențe dăunătoare.</li>
+  </ul>
+
+  <h3>Spectrul și orbitele: Uniunea Internațională a Telecomunicațiilor (ITU)</h3>
+  <p>Frecvențele și pozițiile pe orbita geostaționară se coordonează prin ITU. Statele depun cereri (filing-uri), iar sistemele noi nu au voie să producă interferențe dăunătoare celor deja înregistrate. Articolul 45 din Constituția ITU interzice interferența dăunătoare. Articolul 48 lasă statelor libertate pentru instalațiile radio militare, dar le cere să evite, pe cât posibil, interferențele dăunătoare.</p>
+
+  <h3>Dreptul conflictelor armate</h3>
+  <p>Principiile dreptului internațional umanitar se aplică și în spațiu: distincția între ținte militare și civile, proporționalitatea, precauția. Problema specială a spațiului: mulți sateliți sunt cu dublă utilizare, civilă și militară, iar deșeurile unui atac lovesc orbitele tuturor. Grupuri de experți au redactat manuale de interpretare: Manualul Woomera și Manualul McGill (MILAMOS).</p>
+
+  <h3>Norme fără forță obligatorie</h3>
+  <ul>
+    <li>Ghidurile ONU pentru reducerea deșeurilor spațiale (2007).</li>
+    <li>Ghidurile COPUOS pentru sustenabilitatea pe termen lung a activităților spațiale (2019).</li>
+    <li>Discuțiile ONU despre reducerea amenințărilor spațiale prin norme de comportament responsabil.</li>
+    <li>Acordurile Artemis (conduită în explorarea Lunii). România le-a semnat în martie 2023.</li>
+  </ul>
+  <p>Instituțiile de referință: Comitetul ONU pentru Utilizarea Pașnică a Spațiului Cosmic (COPUOS, din 1959) și Biroul ONU pentru Afaceri Spațiale (UNOOSA), la Viena. La nivel european, Comisia a propus în 2025 o lege spațială a Uniunii (EU Space Act).</p>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>Tratatul din 1967 interzice armele nucleare pe orbită, nu orice activitate militară.</li>
+      <li>Statul răspunde pentru tot ce lansează, inclusiv pentru firmele private.</li>
+      <li>Frecvențele și pozițiile GEO se coordonează prin ITU.</li>
+      <li>Dreptul conflictelor armate se aplică și în spațiu.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 10. ROMÂNIA ============ -->
+<section class="view" id="v-romania" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 10</span>
+    <h2>Ecosistemul spațial românesc</h2>
+    <p class="lead">Cine sunt actorii, civili și militari, cu care lucrează sau cooperează ASR.</p>
+  </div>
+
+  <h3>Repere istorice</h3>
+  <div class="tl">
+    <div><b>secolul XVI</b>Conrad Haas, la Sibiu, descrie într-un manuscris rachete cu mai multe trepte.</div>
+    <div><b>1894</b>Se naște la Sibiu Hermann Oberth, unul dintre părinții astronauticii moderne.</div>
+    <div><b>Mai 1981</b>Dumitru Prunariu zboară cu Soiuz 40 la stația Saliut 6, primul român în spațiu.</div>
+    <div><b>1991</b>Se înființează Agenția Spațială Română (ROSA).</div>
+    <div><b>Decembrie 2011</b>România devine stat membru cu drepturi depline al Agenției Spațiale Europene (ESA).</div>
+    <div><b>Februarie 2012</b>Goliat, primul satelit românesc, un CubeSat, este lansat la zborul inaugural al rachetei Vega.</div>
+    <div><b>2017–2019</b><span class="src art">din articol</span>Arhitectura spațială militară, programul de sateliți militari de telecomunicații, Oficiul comunicații satelitare.</div>
+    <div><b>Martie 2023</b>România semnează Acordurile Artemis.</div>
+    <div><b>1 iulie</b><span class="src art">din articol</span>Se înființează ASR.</div>
+  </div>
+
+  <h3>Actorii</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Instituție</th><th>Tip</th><th>Rol</th></tr>
+      <tr><td>ASR</td><td>Militar, MApN</td><td>SATCOM militar, supravegherea spațiului, informații pentru decidenți</td></tr>
+      <tr><td>CCI · Comandamentul Comunicațiilor și Informaticii</td><td>Militar, MApN</td><td>Sistemele de comunicații și informatică ale armatei. Aici s-a născut Oficiul comunicații satelitare</td></tr>
+      <tr><td>AIGA · Agenția de Informații Geospațiale a Apărării</td><td>Militar, MApN</td><td>Topogeodezie și hărți</td></tr>
+      <tr><td>ROSA · Agenția Spațială Română</td><td>Civil</td><td>Coordonează programul spațial național, reprezintă România la ESA și în EU SST</td></tr>
+      <tr><td>Institutul Astronomic al Academiei Române</td><td>Civil, cercetare</td><td><span class="src art">din articol</span>Partener ASR</td></tr>
+      <tr><td>Facultatea de Inginerie Aerospațială, Politehnica București</td><td>Universitate</td><td><span class="src art">din articol</span>Sursă de specialiști, discuții pentru stagii de practică la ASR</td></tr>
+      <tr><td>INCAS · Institutul Național de Cercetare-Dezvoltare Aerospațială „Elie Carafoli”</td><td>Cercetare</td><td>Aeronautică și spațiu</td></tr>
+      <tr><td>Institutul de Științe Spațiale, Măgurele</td><td>Cercetare</td><td>Fizică spațială, misiuni științifice</td></tr>
+      <tr><td>Space Club</td><td>ONG</td><td><span class="src art">din articol</span>Educație spațială pentru copii și tineri, partener ASR</td></tr>
+    </table>
+  </div>
+
+  <h3>Problema identificată în articol</h3>
+  <p><span class="src art">din articol</span>Colonelul Tudor Georgian spune că domeniul spațial are „puțină consistență” în România. Absolvenții de inginerie aerospațială își găsesc greu de lucru în spațiu și se orientează spre aeronautică. În armată există academii pentru forțele terestre, aeriene și navale, dar nu și pentru spațiu. Pentru tine asta înseamnă o concurență mică și o nevoie mare.</p>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>ROSA este civilă. ASR este militară. AIGA face hărți.</li>
+      <li>România e membră ESA din 2011 și participă la EU SST.</li>
+      <li>Lipsa unei academii spațiale face ca drumul să treacă prin universități civile și academii militare clasice.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ 11. CARIERĂ ============ -->
+<section class="view" id="v-cariera" hidden>
+<article class="lesson">
+  <div class="lhead">
+    <span class="eyebrow">Capitolul 11</span>
+    <h2>Cum ajungi în domeniu</h2>
+    <p class="lead">Drumurile posibile, competențele cerute și un plan de 12 săptămâni pe care îl poți începe din seara asta.</p>
+  </div>
+
+  <h3>Ce spune ASR că caută</h3>
+  <ul>
+    <li><span class="src art">din articol</span>Pasiune pentru domeniu, pe primul loc.</li>
+    <li><span class="src art">din articol</span>Nu e obligatorie pregătirea anterioară în spațiul militar, care oricum nu se predă țintit în academiile din țară.</li>
+    <li><span class="src art">din articol</span>Studenți și absolvenți civili, în special de la inginerie aerospațială. Posibilitatea de a rămâne în sistem ca ofițeri „sau sub alte forme”.</li>
+    <li><span class="src art">din articol</span>Astronomi: telescopul e operat de o astronomă activată ca sublocotenent.</li>
+  </ul>
+
+  <h3>Trei drumuri</h3>
+  <div class="grid3">
+    <div class="box"><span class="eyebrow">Drumul A</span><h4>Student civil</h4><p>Inginerie aerospațială, electronică și telecomunicații, fizică, astronomie, informatică. Cere practică la ASR prin facultate, apoi recrutare.</p></div>
+    <div class="box"><span class="eyebrow">Drumul B</span><h4>Academie militară</h4><p>De exemplu Academia Forțelor Terestre „Nicolae Bălcescu” (comunicații și informatică, drumul căpitanului Toma), Academia Tehnică Militară „Ferdinand I”, Academia Forțelor Aeriene „Henri Coandă”.</p></div>
+    <div class="box"><span class="eyebrow">Drumul C</span><h4>Absolvent civil</h4><p>Intrare în armată ca ofițer pe baza diplomei, după un program de formare militară. Condițiile se schimbă: verifică anunțurile oficiale de recrutare ale MApN.</p></div>
+  </div>
+
+  <h3>Matricea de competențe</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Domeniu</th><th>Nivel minim util</th><th>Unde înveți</th></tr>
+      <tr><td>Matematică și fizică</td><td>Trigonometrie sferică, vectori, mecanică newtoniană</td><td>Capitolul 3 al cursului, apoi un manual de astrodinamică</td></tr>
+      <tr><td>Radio și SATCOM</td><td>Bugete de legătură, decibeli, modulații, spectru</td><td>Capitolele 4–5, examenul de radioamator</td></tr>
+      <tr><td>Astronomie observațională</td><td>Coordonate cerești, astrometrie, fotometrie</td><td>Capitolul 6, astronomie amatoare</td></tr>
+      <tr><td>Programare</td><td>Python: NumPy, Skyfield, Astropy; lucrul cu TLE</td><td>Proiecte proprii, documentația Skyfield</td></tr>
+      <tr><td>Securitate cibernetică</td><td>Rețele, criptare, igienă de securitate</td><td>Cursuri de rețelistică</td></tr>
+      <tr><td>Limba engleză</td><td>Nivel bun; NATO evaluează după standardul STANAG 6001</td><td>Lectură de rapoarte și doctrină în engleză</td></tr>
+      <tr><td>Context strategic</td><td>NATO, UE, amenințări, drept spațial</td><td>Capitolele 2, 7, 9; rapoartele anuale de mai jos</td></tr>
+    </table>
+  </div>
+  <p>Accesul la informații clasificate cere un certificat de securitate, eliberat după o verificare. Un istoric curat și discreția fac parte din profesie.</p>
+
+  <h3>Plan de 12 săptămâni</h3>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Săpt.</th><th>Obiectiv</th><th>Livrabil concret</th></tr>
+      <tr><td class="num">1</td><td>Parcurge capitolele 1–3</td><td>Calculează de mână perioada pentru 3 altitudini</td></tr>
+      <tr><td class="num">2</td><td>Instalează Stellarium, învață coordonatele cerești</td><td>Găsește centura GEO pe cerul de sud</td></tr>
+      <tr><td class="num">3</td><td>Cont pe Space-Track.org, citește documentația CelesTrak</td><td>Descarcă TLE-urile unor sateliți GEO și decodează-le</td></tr>
+      <tr><td class="num">4</td><td>Python + Skyfield</td><td>Script care prezice trecerile ISS deasupra orașului tău</td></tr>
+      <tr><td class="num">5</td><td>Capitolele 4–5, radio și SATCOM</td><td>Buget de legătură complet pentru o legătură în banda X</td></tr>
+      <tr><td class="num">6</td><td>Pregătire pentru examenul de radioamator (ANCOM)</td><td>Teste de simulare trecute</td></tr>
+      <tr><td class="num">7</td><td>Recepție practică: SatNOGS, GPredict</td><td>Primele semnale de la un satelit, recepționate sau analizate</td></tr>
+      <tr><td class="num">8</td><td>Capitolul 6, observare</td><td>Fotografiază ISS sau un satelit cu un aparat foto pe trepied</td></tr>
+      <tr><td class="num">9</td><td>Capitolele 7–8</td><td>Rezumat de o pagină din cel mai recent raport despre amenințări spațiale</td></tr>
+      <tr><td class="num">10</td><td>Capitolul 9, drept spațial</td><td>Explică cuiva articolele II, IV, VI și IX</td></tr>
+      <tr><td class="num">11</td><td>Toate scenariile din curs, quiz la 90%</td><td>Fișele de memorare în cutia 4–5</td></tr>
+      <tr><td class="num">12</td><td>Dosarul tău</td><td>CV cu proiectele de mai sus, contact cu facultatea sau cu recrutarea MApN</td></tr>
+    </table>
+  </div>
+
+  <h3>Resurse</h3>
+  <div class="grid2">
+    <div class="box">
+      <span class="eyebrow">Cărți</span>
+      <ul style="margin:0;padding-left:1.1rem;display:grid;gap:6px">
+        <li>Bate, Mueller, White: <i>Fundamentals of Astrodynamics</i></li>
+        <li>Vallado: <i>Fundamentals of Astrodynamics and Applications</i></li>
+        <li>Pratt, Allnutt: <i>Satellite Communications</i></li>
+        <li>Wertz et al.: <i>Space Mission Engineering: The New SMAD</i></li>
+      </ul>
+    </div>
+    <div class="box">
+      <span class="eyebrow">Rapoarte anuale gratuite</span>
+      <ul style="margin:0;padding-left:1.1rem;display:grid;gap:6px">
+        <li>Secure World Foundation: <i>Global Counterspace Capabilities</i></li>
+        <li>CSIS: <i>Space Threat Assessment</i></li>
+        <li>ESA: <i>Space Environment Report</i></li>
+        <li>NATO: pagina oficială despre politica spațială</li>
+      </ul>
+    </div>
+    <div class="box">
+      <span class="eyebrow">Software gratuit</span>
+      <ul style="margin:0;padding-left:1.1rem;display:grid;gap:6px">
+        <li>Stellarium: planetariu, inclusiv sateliți</li>
+        <li>Python Skyfield și Astropy: calcule orbitale și astronomice</li>
+        <li>NASA GMAT: proiectare de misiuni</li>
+        <li>GPredict și SatNOGS: urmărire și recepție radio</li>
+      </ul>
+    </div>
+    <div class="box">
+      <span class="eyebrow">Comunități</span>
+      <ul style="margin:0;padding-left:1.1rem;display:grid;gap:6px">
+        <li>Space Club, partenerul ASR</li>
+        <li>Federația Română de Radioamatorism</li>
+        <li>Rețeaua SatNOGS (stații de sol open-source)</li>
+        <li>Cluburi de astronomie amatoare din orașul tău</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="keys">
+    <h4>Ce reții</h4>
+    <ul>
+      <li>Nevoia e mare, specialiștii sunt puțini. Pasiunea demonstrată prin proiecte concrete contează.</li>
+      <li>Combinația câștigătoare: fizică orbitală + radio + programare + engleză.</li>
+      <li>Fă lucruri pe care le poți arăta: scripturi, observații, licența de radioamator.</li>
+    </ul>
+  </div>
+</article>
+</section>
+
+<!-- ============ INSTRUMENTE ============ -->
+<section class="view" id="v-instrumente" hidden>
+  <div class="lhead" style="max-width:74ch">
+    <span class="eyebrow">Practică</span>
+    <h2>Instrumente de operator</h2>
+    <p class="lead">Calculele de bază ale domeniului. Schimbă valorile și urmărește cum se mișcă rezultatele. Toate formulele sunt explicate în lecții.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="tool" id="t-orbit">
+      <h3>Calculator orbital</h3>
+      <div class="fields">
+        <label for="o-alt">Altitudine (km)<input type="number" id="o-alt" value="420" min="100" step="10"></label>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn quiet" data-alt="420" type="button">ISS</button>
+        <button class="btn quiet" data-alt="786" type="button">SSO 786</button>
+        <button class="btn quiet" data-alt="20200" type="button">GPS</button>
+        <button class="btn quiet" data-alt="23222" type="button">Galileo</button>
+        <button class="btn quiet" data-alt="35786" type="button">GEO</button>
+      </div>
+      <div class="out" id="o-out"></div>
+      <p class="hint">Orbită circulară, Pământ sferic. v = √(μ/r), T = 2π√(r³/μ).</p>
+    </div>
+
+    <div class="tool" id="t-geo">
+      <h3>Unghiuri spre un satelit GEO</h3>
+      <div class="fields">
+        <label for="g-lat">Latitudine stație (°N)<input type="number" id="g-lat" value="44.2" step="0.1"></label>
+        <label for="g-lon">Longitudine stație (°E)<input type="number" id="g-lon" value="28.6" step="0.1"></label>
+        <label for="g-sat">Longitudine satelit (°E, vest negativ)<input type="number" id="g-sat" value="13" step="0.5"></label>
+        <label for="g-min">Elevație minimă utilă (°)<input type="number" id="g-min" value="10" step="1"></label>
+      </div>
+      <div class="out" id="g-out"></div>
+      <p class="hint">Implicit: Dobrogea, aproximativ, și un satelit la 13° E. Unde îndrepți antena sau telescopul.</p>
+    </div>
+
+    <div class="tool" id="t-link">
+      <h3>Buget de legătură (downlink)</h3>
+      <div class="fields">
+        <label for="l-f">Frecvență (GHz)<input type="number" id="l-f" value="7.5" step="0.1"></label>
+        <label for="l-d">Distanță (km)<input type="number" id="l-d" value="38000" step="100"></label>
+        <label for="l-eirp">EIRP satelit (dBW)<input type="number" id="l-eirp" value="44" step="0.5"></label>
+        <label for="l-gt">G/T terminal (dB/K)<input type="number" id="l-gt" value="16" step="0.5"></label>
+        <label for="l-loss">Alte pierderi (dB)<input type="number" id="l-loss" value="2" step="0.5"></label>
+        <label for="l-b">Lățime de bandă (MHz)<input type="number" id="l-b" value="5" step="0.5"></label>
+        <label for="l-req">C/N cerut (dB)<input type="number" id="l-req" value="4" step="0.5"></label>
+      </div>
+      <div class="out" id="l-out"></div>
+      <div style="display:grid;gap:4px"><span class="hint" id="l-margin-label">Marjă</span><div class="bar"><i id="l-bar"></i></div></div>
+      <p class="hint">C/N cerut ≈ 4 dB corespunde modulației QPSK 3/4 în DVB-S2. Adaugă pierderi pentru ploaie ca să vezi cât rezistă legătura.</p>
+    </div>
+
+    <div class="tool" id="t-tel">
+      <h3>Telescop și cameră</h3>
+      <div class="fields">
+        <label for="s-d">Diametru (mm)<input type="number" id="s-d" value="400" step="10"></label>
+        <label for="s-f">Distanță focală (mm)<input type="number" id="s-f" value="1600" step="50"></label>
+        <label for="s-px">Pixel (µm)<input type="number" id="s-px" value="9" step="0.1"></label>
+        <label for="s-n">Pixeli pe latură<input type="number" id="s-n" value="4096" step="1"></label>
+        <label for="s-t">Expunere (s)<input type="number" id="s-t" value="5" step="0.5"></label>
+      </div>
+      <div class="out" id="s-out"></div>
+      <p class="hint">Dâra GEO apare când montura urmărește stelele: satelitul GEO stă pe loc față de sol, iar cerul se rotește cu ~15,04″/s.</p>
+    </div>
+
+    <div class="tool" id="t-tle" style="grid-column:1/-1">
+      <h3>Decodor TLE</h3>
+      <label for="tle-in" class="hint">Lipește două linii TLE (de pe CelesTrak sau Space-Track). Exemplul este TLE-ul clasic al ISS din documentația formatului, din 2008.</label>
+      <textarea id="tle-in" rows="3" spellcheck="false">ISS (ZARYA)
+1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927
+2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537</textarea>
+      <div class="out" id="tle-out"></div>
+      <p class="hint" id="tle-msg"></p>
+    </div>
+
+    <div class="tool" id="t-db">
+      <h3>Convertor decibeli și undă</h3>
+      <div class="fields">
+        <label for="d-w">Putere (W)<input type="number" id="d-w" value="100" step="1"></label>
+        <label for="d-mhz">Frecvență (MHz)<input type="number" id="d-mhz" value="8000" step="1"></label>
+        <label for="d-h1">Antena 1 (m)<input type="number" id="d-h1" value="10" step="1"></label>
+        <label for="d-h2">Antena 2 (m)<input type="number" id="d-h2" value="10" step="1"></label>
+      </div>
+      <div class="out" id="d-out"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENARII ============ -->
+<section class="view" id="v-scenarii" hidden>
+  <div class="lhead" style="max-width:74ch">
+    <span class="eyebrow">Practică</span>
+    <h2>Scenarii de tură</h2>
+    <p class="lead">Situații tipice pentru un operator SATCOM sau SDA. Alege ce faci. Fiecare variantă are o explicație. Scenariile sunt fictive și didactice.</p>
+  </div>
+  <div class="filters" id="sc-list"></div>
+  <div id="sc-box"></div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="view" id="v-quiz" hidden>
+  <div class="lhead" style="max-width:74ch">
+    <span class="eyebrow">Verificare</span>
+    <h2>Quiz</h2>
+    <p class="lead">Alege un capitol sau toate. Întrebările vin în ordine aleatorie, fiecare cu explicație.</p>
+  </div>
+  <div class="filters" id="qz-filters"></div>
+  <div id="qz-box"></div>
+</section>
+
+<!-- ============ FIȘE ============ -->
+<section class="view" id="v-fise" hidden>
+  <div class="lhead" style="max-width:74ch">
+    <span class="eyebrow">Memorare</span>
+    <h2>Fișe de memorare</h2>
+    <p class="lead">Repetiție în cutii (metoda Leitner). Ce știi urcă o cutie și revine mai rar. Ce nu știi coboară în cutia 1.</p>
+  </div>
+  <div class="boxes" id="fc-boxes"></div>
+  <div class="fc" id="fc-card" tabindex="0" role="button" aria-label="Întoarce fișa"></div>
+  <div class="row" id="fc-actions">
+    <button class="btn quiet" id="fc-flip" type="button">Întoarce</button>
+    <button class="btn ghost" id="fc-no" type="button" hidden>Nu știam</button>
+    <button class="btn" id="fc-yes" type="button" hidden>Știam</button>
+    <button class="btn quiet" id="fc-reset" type="button" style="margin-left:auto">Resetează cutiile</button>
+  </div>
+  <p class="hint" id="fc-reset-confirm" hidden>Toate fișele revin în cutia 1. <button class="btn quiet" id="fc-reset-yes" type="button">Confirmă resetarea</button></p>
+</section>
+
+<!-- ============ GLOSAR ============ -->
+<section class="view" id="v-glosar" hidden>
+  <div class="lhead" style="max-width:74ch">
+    <span class="eyebrow">Referință</span>
+    <h2>Glosar</h2>
+    <p class="lead">Termenii domeniului, cu explicații scurte. Multe sigle sunt în engleză, limba de lucru din NATO.</p>
+  </div>
+  <label for="gl-q" class="hint">Caută un termen</label>
+  <input type="search" id="gl-q" placeholder="ex. GEO, bruiaj, TLE" style="max-width:420px">
+  <dl class="gl" id="gl-list"></dl>
+</section>
+
+<p class="foot">Material educațional independent, construit pe baza articolului „Spațiul cosmic nu mai este ultima frontieră” (presamil.ro) și a surselor publice ale domeniului. Nu este un produs oficial al MApN sau al ASR și nu descrie proceduri interne. Verifică întotdeauna condițiile de recrutare în anunțurile oficiale.</p>
+  </main>
+</div>
+
+<script>
+const MODULES = [
+  {id:'asr', t:'Agenția ASR', d:'Ce face agenția, de unde vine, cine lucrează acolo.'},
+  {id:'domeniu', t:'Spațiul, domeniu operațional', d:'NATO 2019, spațiul ca integrator, cum s-au organizat alte state.'},
+  {id:'orbite', t:'Mecanică orbitală', d:'Viteză, perioadă, LEO-MEO-GEO, elemente orbitale, TLE.'},
+  {id:'radio', t:'Radiocomunicații', d:'Benzi, decibeli, antene, zgomot, orizont radio, război electronic.'},
+  {id:'satcom', t:'SATCOM militar', d:'Arhitectură, benzi, buget de legătură, munca operatorului.'},
+  {id:'sda', t:'Supravegherea spațiului', d:'Senzori, telescopul, astrometrie, conjuncții, cataloage.'},
+  {id:'amenintari', t:'Amenințări și reziliență', d:'ASAT, bruiaj, cibernetic, deșeuri, cum te aperi.'},
+  {id:'aplicatii', t:'PNT, ISR, vreme spațială', d:'GNSS, imagini, avertizare timpurie, furtuni solare.'},
+  {id:'drept', t:'Drept spațial', d:'Tratatele ONU, ITU, dreptul conflictelor armate.'},
+  {id:'romania', t:'Ecosistemul românesc', d:'ROSA, ESA, ASR, AIGA, institute, universități.'},
+  {id:'cariera', t:'Cariera', d:'Drumuri de intrare, competențe, plan de 12 săptămâni.'}
+];
+const PRACTICE = [
+  {id:'instrumente', t:'Instrumente'},
+  {id:'scenarii', t:'Scenarii de tură'},
+  {id:'quiz', t:'Quiz'},
+  {id:'fise', t:'Fișe de memorare'},
+  {id:'glosar', t:'Glosar'}
+];
+
+/* m = capitol, q = întrebare, o = variante, a = index corect, e = explicație */
+const QUIZ = [
+  {m:'asr', q:'Din ce structură provine ASR?', o:['Agenția Spațială Română (ROSA)','Oficiul comunicații satelitare din cadrul CCI','Agenția de Informații Geospațiale a Apărării','Statul Major al Forțelor Aeriene'], a:1, e:'În 2019 a luat ființă Oficiul comunicații satelitare în cadrul Comandamentului Comunicațiilor și Informaticii. ASR a urmat, la 1 iulie.'},
+  {m:'asr', q:'Ce senzor propriu folosește ASR pentru monitorizarea spațiului, conform articolului?', o:['Un radar cu fază în Carpați','Un telescop instalat în Dobrogea','O rețea de antene SIGINT','Un satelit de observare propriu'], a:1, e:'Telescopul din Dobrogea, operat de la distanță din sediul agenției, observă noaptea.'},
+  {m:'asr', q:'Care este diferența dintre ASR și AIGA?', o:['Sunt aceeași instituție cu nume diferite','AIGA se ocupă de topogeodezie și hărți, ASR de misiuni operativ-tactice spațiale și satelitare','ASR face hărți, AIGA face comunicații','AIGA este civilă, ASR este militară'], a:1, e:'Căpitanul Valeria Toma precizează: AIGA se ocupă în principal de topogeodezie și hărți, ASR de misiuni în spectrul operativ-tactic. Cooperarea este excelentă.'},
+  {m:'asr', q:'Ce pregătire au primit membrii echipei la NATO Space Centre?', o:['Un curs de o săptămână de drept spațial','Un stagiu de două luni, cu certificare ca operatori satelitari','Un an de doctorat','Antrenament de astronaut'], a:1, e:'Stagiul de două luni s-a încheiat cu certificarea ca operatori satelitari. Au urmat cursuri în SUA și Marea Britanie.'},
+  {m:'asr', q:'Care este principala calitate căutată la cei care vor să se alăture ASR?', o:['Experiența anterioară în spațiul militar','Pasiunea pentru domeniu','Gradul de ofițer superior','Un doctorat în astrofizică'], a:1, e:'Misiunile nu cer neapărat pregătire prealabilă strictă în spațiul militar. Calitatea principală este pasiunea.'},
+  {m:'asr', q:'Când ajung la decidenții MApN datele colectate de telescop?', o:['În timp real, pe ecranele din Statul Major','A doua zi dimineața, după observațiile de noapte','O dată pe lună, într-un raport','Doar la cerere, în caz de război'], a:1, e:'Observațiile se fac noaptea, iar dimineața datele ajung pe masa decidenților.'},
+  {m:'asr', q:'Ce rol are ASR în caz de conflict armat, potrivit articolului?', o:['Lansează sateliți de rezervă','Furnizor critic de informații strategice și baze de date despre domeniul spațial','Conduce operațiile aeriene','Coordonează apărarea cibernetică națională'], a:1, e:'În conflict, ASR acționează ca furnizor critic de informații strategice și baze de date specifice întregului domeniu spațial, pe principiul cooperării cu celelalte structuri.'},
+  {m:'domeniu', q:'Când a recunoscut NATO spațiul ca domeniu operațional?', o:['2001','2014','2019','2022'], a:2, e:'În decembrie 2019, la reuniunea liderilor de la Londra, după politica spațială adoptată în iunie același an.'},
+  {m:'domeniu', q:'Care sunt cele cinci domenii operaționale?', o:['Terestru, maritim, aerian, cibernetic, spațial','Terestru, maritim, aerian, nuclear, spațial','Uscat, apă, aer, foc, spațiu','Tactic, operativ, strategic, cibernetic, spațial'], a:0, e:'Spațiul a devenit al cincilea domeniu, alături de cel terestru, maritim, aerian și cibernetic.'},
+  {m:'domeniu', q:'Unde se află NATO Space Centre?', o:['Bruxelles','Toulouse','Ramstein, la Comandamentul Aerian Aliat','Mons'], a:2, e:'NATO Space Centre funcționează la Allied Air Command (AIRCOM), Ramstein. La Toulouse este Centrul de Excelență pentru Spațiu.'},
+  {m:'domeniu', q:'Ce înseamnă că spațiul este un „integrator global”?', o:['Că e cel mai important domeniu','Că leagă și susține operațiile din toate celelalte domenii','Că e controlat de ONU','Că integrează sateliții tuturor statelor'], a:1, e:'SATCOM, PNT, ISR, avertizarea și meteo susțin operațiile de pe uscat, mare, aer și din cibernetic. Nu e o competiție de importanță.'},
+  {m:'domeniu', q:'Ce au afirmat aliații la summitul NATO de la Bruxelles din 2021?', o:['Că NATO va lansa propriii sateliți de luptă','Că atacurile spre, din sau în spațiu pot duce la invocarea Articolului 5','Că spațiul nu poate fi apărat','Că interzic orice satelit militar'], a:1, e:'Un atac în spațiu poate fi tratat ca un atac armat împotriva Alianței, de la caz la caz.'},
+  {m:'domeniu', q:'De ce NATO are nevoie de contribuții naționale în spațiu?', o:['Pentru că NATO interzice sateliții','Pentru că Alianța nu deține o flotă proprie de sateliți militari și folosește capacitățile aliaților','Pentru că ONU a cerut asta','Nu are nevoie'], a:1, e:'NATO se bazează pe capacitățile naționale ale aliaților și pe servicii comerciale.'},
+  {m:'orbite', q:'La ce altitudine se află orbita geostaționară?', o:['~400 km','~20 200 km','~35 786 km','~384 000 km'], a:2, e:'35 786 km deasupra ecuatorului, rază orbitală de 42 164 km.'},
+  {m:'orbite', q:'Cât durează aproximativ o orbită la 400 km altitudine?', o:['~24 de minute','~92 de minute','~12 ore','~24 de ore'], a:1, e:'T = 2π√(r³/μ) cu r ≈ 6 778 km dă circa 92 de minute.'},
+  {m:'orbite', q:'Ce se întâmplă cu viteza orbitală când crește altitudinea?', o:['Crește','Scade','Rămâne constantă','Depinde de masa satelitului'], a:1, e:'v = √(μ/r): cu cât r e mai mare, cu atât viteza e mai mică. Masa satelitului nu contează.'},
+  {m:'orbite', q:'Ce element orbital descrie unghiul planului orbitei față de ecuator?', o:['Excentricitatea','Înclinarea','Semiaxa mare','Anomalia medie'], a:1, e:'Înclinarea (i). Un satelit GEO are i ≈ 0°, ISS are 51,6°, un satelit heliosincron ~98°.'},
+  {m:'orbite', q:'De ce un satelit GEO pare fix pe cer?', o:['Pentru că nu se mișcă','Pentru că se rotește în același timp cu Pământul, deasupra ecuatorului','Pentru că e prea departe','Pentru că e ancorat magnetic'], a:1, e:'Perioada sa este o zi siderală (23 h 56 min), egală cu rotația Pământului, și orbita e în planul ecuatorului.'},
+  {m:'orbite', q:'Ce este un TLE?', o:['Un tip de telescop','Un format cu două linii care conține elementele orbitale ale unui obiect','O bandă de frecvență','Un tratat internațional'], a:1, e:'Two-Line Element: elementele orbitale medii și epoca, propagate cu modelul SGP4.'},
+  {m:'orbite', q:'Care perturbație coboară treptat sateliții LEO?', o:['Presiunea radiației solare','Frânarea atmosferică','Atracția Lunii','Câmpul magnetic'], a:1, e:'Frânarea atmosferică. Crește când activitatea solară încălzește și dilată atmosfera.'},
+  {m:'orbite', q:'Ce manevră orbitală este cea mai costisitoare în combustibil?', o:['Ridicarea ușoară a apogeului','Schimbarea planului orbitei','Menținerea altitudinii','Rotirea satelitului'], a:1, e:'Δv = 2v·sin(Δi/2). La 7,7 km/s, chiar câteva grade costă sute de m/s.'},
+  {m:'radio', q:'Cât înseamnă +3 dB?', o:['De trei ori mai mult','Aproximativ dublu','De zece ori mai mult','Jumătate'], a:1, e:'10·log₁₀(2) ≈ 3,01 dB. +10 dB înseamnă de zece ori.'},
+  {m:'radio', q:'Ce lungime de undă are un semnal de 300 MHz?', o:['1 cm','10 cm','1 m','10 m'], a:2, e:'λ = c/f = 3·10⁸ / 3·10⁸ = 1 m.'},
+  {m:'radio', q:'Ce bandă poate ajunge peste orizont fără sateliți, prin reflexie pe ionosferă?', o:['HF','UHF','SHF','EHF'], a:0, e:'HF (3–30 MHz) se reflectă pe ionosferă. E rezerva clasică atunci când SATCOM nu e disponibil.'},
+  {m:'radio', q:'Ce înseamnă EIRP?', o:['Puterea emițătorului plus câștigul antenei, în direcția dorită','Eroarea de poziție a receptorului','Frecvența intermediară','Temperatura de zgomot'], a:0, e:'Effective Isotropic Radiated Power: cât de puternic „strigă” stația spre ținta ei.'},
+  {m:'radio', q:'Ce componentă a războiului electronic include saltul de frecvență?', o:['Sprijin electronic (ES)','Atac electronic (EA)','Protecție electronică (EP)','Informații geospațiale'], a:2, e:'Saltul de frecvență, spectrul împrăștiat și disciplina de emisie protejează propriile comunicații.'},
+  {m:'radio', q:'Ce spune formula lui Shannon?', o:['Capacitatea crește cu lățimea de bandă și cu raportul semnal/zgomot','Pierderea crește cu frecvența','Orizontul crește cu înălțimea antenei','Viteza scade cu altitudinea'], a:0, e:'C = B·log₂(1 + S/N): limita teoretică a debitului unei legături.'},
+  {m:'satcom', q:'Care bandă este rezervată tradițional comunicațiilor satelitare guvernamentale și militare?', o:['C','X (7,25–8,4 GHz)','Ku','Banda FM'], a:1, e:'Banda X militară: uplink 7,9–8,4 GHz, downlink 7,25–7,75 GHz. Folosită de Skynet, Syracuse, SICRAL, WGS.'},
+  {m:'satcom', q:'Cât este aproximativ pierderea în spațiul liber spre un satelit GEO în banda X?', o:['~20 dB','~100 dB','~200 dB','~2 000 dB'], a:2, e:'92,45 + 20·log₁₀(38 000) + 20·log₁₀(8) ≈ 202 dB.'},
+  {m:'satcom', q:'Toate stațiile din fasciculul unui satelit văd aceeași interferență. Ce înseamnă probabil?', o:['Interferența a intrat pe uplink, pe satelit','Fiecare stație are o defecțiune locală','E o problemă de software la o singură stație','Ploaie locală'], a:0, e:'Dacă toți o văd, semnalul străin a ajuns la satelit și e retransmis. Dacă o vede doar o stație, sursa e locală, la downlink.'},
+  {m:'satcom', q:'Ce este fenomenul „sun outage”?', o:['O pană de curent la satelit','Soarele trece prin spatele satelitului GEO văzut de la stație și acoperă semnalul cu zgomot','Eclipsa de Lună','Oprirea panourilor solare'], a:1, e:'Apare în preajma echinocțiilor, câteva minute pe zi, câteva zile la rând, și se poate prevedea exact.'},
+  {m:'satcom', q:'Ce bandă suferă cel mai mult din cauza ploii?', o:['UHF','L','X','Ka'], a:3, e:'Atenuarea în ploaie crește cu frecvența. Ka (20/30 GHz) e mult mai afectată decât X.'},
+  {m:'satcom', q:'Ce înseamnă PACE?', o:['Un tip de satelit','Planul de comunicații cu cale Primară, Alternativă, de Contingență și de Urgență','O agenție NATO','Un protocol de criptare'], a:1, e:'Orice legătură critică are patru căi pregătite, de exemplu SATCOM X, SATCOM comercial, HF, curier.'},
+  {m:'satcom', q:'Ce indică G/T?', o:['Puterea satelitului','Calitatea receptorului: câștigul antenei raportat la temperatura de zgomot','Lățimea de bandă','Latența'], a:1, e:'G/T mare (antenă mare, amplificator silențios) înseamnă că recepționezi semnale mai slabe.'},
+  {m:'satcom', q:'Care este latența aproximativă pe un singur salt sol-satelit GEO-sol?', o:['~2 ms','~25 ms','~250 ms','~2,5 s'], a:2, e:'Semnalul parcurge peste 70 000 km cu viteza luminii: circa un sfert de secundă.'},
+  {m:'sda', q:'Care este diferența dintre SSA și SDA?', o:['Niciuna','SDA adaugă la poziții analiza activităților, intențiilor și amenințărilor','SSA e militar, SDA e civil','SDA se referă doar la deșeuri'], a:1, e:'SSA: unde sunt obiectele. SDA: și ce fac, cine le controlează, ce intenții au.'},
+  {m:'sda', q:'De ce telescopul optic e senzorul potrivit pentru GEO?', o:['Pentru că radarul nu funcționează noaptea','Pentru că e precis unghiular și relativ ieftin, iar pentru un radar puterea necesară crește enorm cu distanța','Pentru că sateliții GEO emit lumină proprie','Pentru că așa cere NATO'], a:1, e:'La 36 000 km un radar ar avea nevoie de putere uriașă. Telescopul măsoară precis direcția obiectelor luminate de Soare.'},
+  {m:'sda', q:'Ce condiții trebuie îndeplinite pentru observarea optică a unui satelit?', o:['Doar cer senin','Cer întunecat la observator, satelit luminat de Soare, vreme bună','Satelitul trebuie să emită radio','Lună plină'], a:1, e:'Toate trei. Luna plină înrăutățește observațiile, pentru că luminează cerul.'},
+  {m:'sda', q:'Ce este un UCT?', o:['Un tip de orbită','O observație care nu corespunde niciunui obiect din catalog','O unitate de timp','Un satelit militar american'], a:1, e:'Uncorrelated track: poate fi un obiect nou, un fragment sau un satelit care a manevrat.'},
+  {m:'sda', q:'Ce este astrometria?', o:['Măsurarea luminozității','Măsurarea poziției pe cer față de stele de referință','Calculul masei','Studiul atmosferei'], a:1, e:'Poziția obiectului (ascensie dreaptă, declinație) e măsurată față de stele cu poziții cunoscute, de exemplu din catalogul Gaia.'},
+  {m:'sda', q:'Ce arată curba de lumină a unui satelit?', o:['Orbita sa exactă','Variația luminozității în timp: stabilizat, în rotire necontrolată, schimbare de orientare','Frecvența de emisie','Masa'], a:1, e:'Fotometria în timp caracterizează comportamentul obiectului.'},
+  {m:'sda', q:'Când intră sateliții GEO în umbra Pământului?', o:['În fiecare noapte, tot anul','În preajma echinocțiilor, în jurul miezului nopții locale','Doar iarna','Niciodată'], a:1, e:'Sezonul de eclipse GEO: în jurul echinocțiilor, până la circa 70 de minute pe noapte.'},
+  {m:'sda', q:'Ce este Pc într-un mesaj de conjuncție?', o:['Puterea de calcul','Probabilitatea de coliziune','Perioada critică','Poziția curentă'], a:1, e:'Probabilitatea de coliziune. Multe agenții iau în calcul o manevră peste aproximativ 1 la 10 000.'},
+  {m:'amenintari', q:'Care test antisatelit a produs cele mai multe deșeuri urmăribile?', o:['SUA 2008','India 2019','China 2007','Rusia 2021'], a:2, e:'Distrugerea satelitului Fengyun-1C la ~865 km a produs peste 3 000 de fragmente urmăribile, multe încă pe orbită.'},
+  {m:'amenintari', q:'Ce este sindromul Kessler?', o:['O boală a astronauților','Coliziuni în lanț care pot face o orbită inutilizabilă','Un tip de bruiaj','O eroare de software'], a:1, e:'Donald Kessler, 1978: peste o anumită densitate, fragmentele produc noi coliziuni.'},
+  {m:'amenintari', q:'Ce segment a lovit atacul cibernetic asupra KA-SAT din februarie 2022?', o:['Satelitul însuși','Terminalele utilizatorilor (modemurile)','Racheta de lansare','Stațiile radar'], a:1, e:'Zeci de mii de modemuri au fost scoase din uz. Segmentul utilizator este o țintă reală.'},
+  {m:'amenintari', q:'Ce este mai greu de detectat pentru utilizator?', o:['Bruiajul GNSS','Spoofing-ul GNSS','Pana de curent','Ploaia'], a:1, e:'La bruiaj pierzi semnalul și știi asta. La spoofing primești o poziție falsă care pare corectă.'},
+  {m:'amenintari', q:'Ce înseamnă RPO?', o:['Operațiuni de apropiere și întâlnire pe orbită','Radar de poziționare orbitală','Regulament de protecție','Rețea de puncte de observare'], a:0, e:'Rendezvous and Proximity Operations. Un satelit străin care se apropie de unul dintre sateliții tăi este o activitate de urmărit.'},
+  {m:'amenintari', q:'Ce înseamnă diversificarea, ca strategie de reziliență?', o:['Mai mulți sateliți identici','Mai multe benzi, orbite și furnizori, astfel încât pierderea unuia să nu oprească serviciul','Satelit mai mare','Ascunderea satelitului'], a:1, e:'Militar, aliat, comercial; GEO și LEO; X, Ka și UHF. Baza planului PACE.'},
+  {m:'aplicatii', q:'De câți sateliți GNSS are nevoie minim un receptor pentru o poziție 3D?', o:['2','3','4','6'], a:2, e:'Patru necunoscute: x, y, z și eroarea ceasului receptorului.'},
+  {m:'aplicatii', q:'Cum se numește serviciul guvernamental criptat al sistemului Galileo?', o:['M-code','PRS','SBAS','RTK'], a:1, e:'Public Regulated Service, pentru utilizatori guvernamentali autorizați. Echivalentul american este codul M al GPS.'},
+  {m:'aplicatii', q:'Ce avantaj are radarul cu apertură sintetică (SAR) față de imaginile optice?', o:['Culori mai bune','Funcționează prin nori și noaptea','E mai ieftin','Nu are nevoie de energie'], a:1, e:'SAR își produce propria iluminare radio, deci nu depinde de Soare sau de vreme.'},
+  {m:'aplicatii', q:'Ce efect are o erupție solară puternică (scala R) asupra comunicațiilor?', o:['Îmbunătățește HF','Blocaj HF pe partea luminată a Pământului','Oprește GEO definitiv','Niciunul'], a:1, e:'Radiațiile X ionizează puternic straturile joase ale ionosferei, care absorb undele HF.'},
+  {m:'aplicatii', q:'De ce bruiajul GNSS afectează și rețelele electrice sau bancare?', o:['Nu le afectează','Pentru că ele folosesc timpul exact din GNSS pentru sincronizare','Pentru că folosesc hărți','Pentru că folosesc radio FM'], a:1, e:'PNT înseamnă și timp. Multe infrastructuri critice se sincronizează după GNSS.'},
+  {m:'drept', q:'Ce interzice Articolul IV al Tratatului spațial din 1967?', o:['Orice satelit militar','Plasarea pe orbită a armelor nucleare și a altor arme de distrugere în masă','Comunicațiile criptate','Sateliții comerciali'], a:1, e:'Interzice armele de distrugere în masă pe orbită. Activitatea militară în general nu este interzisă.'},
+  {m:'drept', q:'Cine răspunde pentru activitatea spațială a unei firme private românești?', o:['Nimeni','Statul român','Doar firma','ONU'], a:1, e:'Art. VI: statele răspund pentru activitățile spațiale naționale, inclusiv ale entităților neguvernamentale.'},
+  {m:'drept', q:'Ce organizație coordonează frecvențele și pozițiile pe orbita geostaționară?', o:['NATO','ESA','Uniunea Internațională a Telecomunicațiilor (ITU)','UNESCO'], a:2, e:'ITU, prin Regulamentul Radiocomunicațiilor și procedurile de filing și coordonare.'},
+  {m:'drept', q:'Răspunderea pentru o daună produsă la sol de un obiect spațial este:', o:['Bazată pe culpă','Absolută','Inexistentă','Voluntară'], a:1, e:'Convenția din 1972: răspundere absolută la sol, răspundere pentru culpă în spațiu.'},
+  {m:'drept', q:'Când a semnat România Acordurile Artemis?', o:['2011','2019','2023','Nu le-a semnat'], a:2, e:'În martie 2023.'},
+  {m:'romania', q:'Din ce an este România stat membru ESA?', o:['1991','2004','2011','2020'], a:2, e:'Decembrie 2011.'},
+  {m:'romania', q:'Ce a fost Goliat?', o:['Primul satelit românesc, un CubeSat lansat în 2012','O rachetă românească','Un telescop militar','Un program NATO'], a:0, e:'Lansat la zborul inaugural al rachetei Vega, în februarie 2012.'},
+  {m:'romania', q:'Ce tip de instituție este Agenția Spațială Română (ROSA)?', o:['Militară','Civilă','Privată','Internațională'], a:1, e:'ROSA este civilă și coordonează programul spațial național. ASR este structura militară.'},
+  {m:'romania', q:'Cu ce instituție civilă are ASR un parteneriat, conform articolului?', o:['Institutul Astronomic al Academiei Române','Banca Națională','Institutul Național de Statistică','Agenția Spațială Europeană'], a:0, e:'Parteneriat cu Institutul Astronomic al Academiei Române. În agenție activează și o astronomă cu grad de sublocotenent.'},
+  {m:'cariera', q:'Ce problemă a absolvenților de inginerie aerospațială semnalează colonelul Tudor Georgian?', o:['Salarii prea mari','Își găsesc greu de lucru în spațiu și se orientează spre aeronautică','Sunt prea mulți','Nu știu engleză'], a:1, e:'Domeniul are puțină consistență în România. De aceea ASR încearcă să-i atragă spre armată.'},
+  {m:'cariera', q:'Ce standard NATO evaluează competența lingvistică?', o:['STANAG 6001','ISO 9001','ITU-R','CCSDS'], a:0, e:'STANAG 6001 definește nivelurile de competență lingvistică folosite în NATO.'},
+  {m:'cariera', q:'Care dintre aceste proiecte personale demonstrează cel mai bine pasiunea pentru domeniu?', o:['Un certificat de participare la un webinar','Un script propriu care prezice trecerile sateliților, plus licența de radioamator','Un abonament la o revistă','O poză cu o rachetă'], a:1, e:'Lucrurile pe care le-ai făcut tu și le poți arăta valorează mai mult decât declarațiile.'}
+];
+
+/* t = termen, d = definiție, m = capitol */
+const GLOSSARY = [
+  {t:'AIGA', d:'Agenția de Informații Geospațiale a Apărării. Topogeodezie și hărți. Nu trebuie confundată cu ASR.', m:'asr'},
+  {t:'ASR', d:'Agenția Spațială și de Radiocomunicații a Armatei. SATCOM militar, monitorizarea spațiului, informații pentru decidenții MApN.', m:'asr'},
+  {t:'CCI', d:'Comandamentul Comunicațiilor și Informaticii. Structura în care a apărut, în 2019, Oficiul comunicații satelitare.', m:'asr'},
+  {t:'CIS', d:'Sisteme de Comunicații și Informatică. ASR le sprijină prin gestionarea fluxurilor satelitare.', m:'asr'},
+  {t:'NATO Space Centre', d:'Centrul spațial al NATO, la Comandamentul Aerian Aliat din Ramstein. Aici au fost certificați operatorii ASR.', m:'domeniu'},
+  {t:'Domeniu operațional', d:'Mediu în care forțele acționează: terestru, maritim, aerian, cibernetic, spațial.', m:'domeniu'},
+  {t:'Integrator global', d:'Ideea că spațiul leagă și susține operațiile din toate celelalte domenii.', m:'domeniu'},
+  {t:'Articolul 5', d:'Clauza de apărare colectivă NATO. Din 2021 se poate aplica și atacurilor spre, din sau în spațiu.', m:'domeniu'},
+  {t:'LEO', d:'Low Earth Orbit, 160–2 000 km. Perioade de 88–127 min.', m:'orbite'},
+  {t:'MEO', d:'Medium Earth Orbit, între LEO și GEO. Aici sunt GPS, Galileo, GLONASS.', m:'orbite'},
+  {t:'GEO', d:'Orbită geostaționară, 35 786 km deasupra ecuatorului. Satelitul pare fix pe cer.', m:'orbite'},
+  {t:'HEO', d:'Highly Elliptical Orbit. Orbită foarte alungită, de exemplu Molniya.', m:'orbite'},
+  {t:'Orbită heliosincronă (SSO)', d:'Orbită polară (~98°) care trece peste un loc mereu la aceeași oră solară locală.', m:'orbite'},
+  {t:'Perigeu / apogeu', d:'Punctul cel mai apropiat, respectiv cel mai depărtat, al orbitei față de Pământ.', m:'orbite'},
+  {t:'Înclinare', d:'Unghiul dintre planul orbitei și planul ecuatorului.', m:'orbite'},
+  {t:'RAAN', d:'Right Ascension of the Ascending Node. Unde traversează orbita ecuatorul spre nord.', m:'orbite'},
+  {t:'TLE', d:'Two-Line Element. Format cu două linii pentru elementele orbitale ale unui obiect.', m:'orbite'},
+  {t:'SGP4', d:'Modelul matematic standard care propagă un TLE în timp.', m:'orbite'},
+  {t:'Δv (delta-v)', d:'Variația de viteză necesară unei manevre. Moneda propulsiei.', m:'orbite'},
+  {t:'Orbită cimitir', d:'Orbită cu câteva sute de km deasupra GEO, unde se mută sateliții la sfârșitul vieții.', m:'orbite'},
+  {t:'dB', d:'Decibel. Raport logaritmic de puteri. +3 dB = dublu, +10 dB = de zece ori.', m:'radio'},
+  {t:'EIRP', d:'Effective Isotropic Radiated Power. Puterea emisă plus câștigul antenei.', m:'radio'},
+  {t:'Polarizare', d:'Orientarea câmpului electric al undei: liniară sau circulară. Trebuie să coincidă la emisie și recepție.', m:'radio'},
+  {t:'HF', d:'High Frequency, 3–30 MHz. Se reflectă pe ionosferă, ajunge peste orizont.', m:'radio'},
+  {t:'Războiul electronic (EW)', d:'Sprijin electronic (ascultare), atac electronic (bruiaj), protecție electronică.', m:'radio'},
+  {t:'EMCON', d:'Emission Control. Disciplina de limitare a emisiilor pentru a nu fi detectat.', m:'radio'},
+  {t:'SATCOM', d:'Comunicații prin satelit.', m:'satcom'},
+  {t:'Uplink / downlink', d:'Legătura sol → satelit, respectiv satelit → sol, pe frecvențe diferite.', m:'satcom'},
+  {t:'Transponder', d:'Lanțul de la bordul satelitului care primește, amplifică, schimbă frecvența și retransmite.', m:'satcom'},
+  {t:'Bent pipe', d:'Transponder transparent, care nu procesează datele.', m:'satcom'},
+  {t:'Banda X', d:'7,25–8,4 GHz în SATCOM. Rezervată tradițional utilizărilor guvernamentale și militare.', m:'satcom'},
+  {t:'Banda Ka', d:'~20/30 GHz. Debit mare, sensibilă la ploaie.', m:'satcom'},
+  {t:'FSPL', d:'Free Space Path Loss. Pierderea semnalului cu distanța și frecvența.', m:'satcom'},
+  {t:'G/T', d:'Factorul de merit al receptorului: câștigul antenei raportat la temperatura de zgomot.', m:'satcom'},
+  {t:'C/N', d:'Raportul purtătoare/zgomot. Trebuie să fie peste pragul modulației.', m:'satcom'},
+  {t:'TT&C', d:'Telemetry, Tracking and Command. Controlul satelitului de la sol.', m:'satcom'},
+  {t:'Sun outage', d:'Zgomot de la Soare când acesta trece prin spatele unui satelit GEO, văzut de la stație.', m:'satcom'},
+  {t:'PACE', d:'Plan de comunicații: Primar, Alternativ, de Contingență, de Urgență.', m:'satcom'},
+  {t:'COMSEC', d:'Securitatea comunicațiilor: criptare, chei, proceduri.', m:'satcom'},
+  {t:'TDOA / FDOA', d:'Diferența de timp și de frecvență la sosire. Metode de localizare a surselor de interferență.', m:'satcom'},
+  {t:'SSA', d:'Space Situational Awareness. Cunoașterea pozițiilor obiectelor de pe orbită.', m:'sda'},
+  {t:'SDA', d:'Space Domain Awareness. SSA plus activități, intenții și amenințări.', m:'sda'},
+  {t:'Astrometrie', d:'Măsurarea poziției pe cer față de stele de referință.', m:'sda'},
+  {t:'Fotometrie', d:'Măsurarea luminozității. Curba de lumină arată comportamentul obiectului.', m:'sda'},
+  {t:'UCT', d:'Uncorrelated Track. Observație care nu corespunde niciunui obiect din catalog.', m:'sda'},
+  {t:'Conjuncție', d:'Apropiere strânsă între două obiecte pe orbită.', m:'sda'},
+  {t:'TCA', d:'Time of Closest Approach. Momentul celei mai mari apropieri.', m:'sda'},
+  {t:'Pc', d:'Probabilitatea de coliziune într-o conjuncție.', m:'sda'},
+  {t:'CDM', d:'Conjunction Data Message. Format standard CCSDS pentru avertizări de conjuncție.', m:'sda'},
+  {t:'Urmărire siderală', d:'Montura telescopului urmărește stelele. Sateliții GEO apar ca dâre.', m:'sda'},
+  {t:'Magnitudine', d:'Scară de luminozitate astronomică. Număr mai mare = obiect mai slab.', m:'sda'},
+  {t:'EU SST', d:'Serviciul Uniunii Europene de supraveghere și urmărire spațială. România participă prin ROSA.', m:'sda'},
+  {t:'DA-ASAT', d:'Direct-Ascent Anti-Satellite. Rachetă lansată de la sol pentru a distruge un satelit.', m:'amenintari'},
+  {t:'Co-orbital', d:'Armă sau satelit care manevrează pe orbită spre o țintă.', m:'amenintari'},
+  {t:'RPO', d:'Rendezvous and Proximity Operations. Apropiere deliberată de alt obiect pe orbită.', m:'amenintari'},
+  {t:'Sindromul Kessler', d:'Coliziuni în lanț provocate de deșeuri, care pot face o orbită inutilizabilă.', m:'amenintari'},
+  {t:'Bruiaj', d:'Emisie care acoperă semnalul util cu zgomot.', m:'amenintari'},
+  {t:'Spoofing', d:'Emisie falsă care imită semnalul legitim și induce în eroare receptorul.', m:'amenintari'},
+  {t:'Reziliență', d:'Capacitatea de a continua misiunea în ciuda atacurilor sau defecțiunilor.', m:'amenintari'},
+  {t:'PNT', d:'Positioning, Navigation and Timing. Poziție, navigație, timp.', m:'aplicatii'},
+  {t:'GNSS', d:'Global Navigation Satellite System. GPS, Galileo, GLONASS, BeiDou.', m:'aplicatii'},
+  {t:'PRS', d:'Public Regulated Service. Serviciul guvernamental criptat Galileo.', m:'aplicatii'},
+  {t:'CRPA', d:'Controlled Reception Pattern Antenna. Antenă GNSS care anulează direcția bruiajului.', m:'aplicatii'},
+  {t:'ISR', d:'Intelligence, Surveillance, Reconnaissance. Informații, supraveghere, recunoaștere.', m:'aplicatii'},
+  {t:'SAR', d:'Synthetic Aperture Radar. Imagini radar prin nori și noaptea.', m:'aplicatii'},
+  {t:'GSD', d:'Ground Sample Distance. Dimensiunea pe sol a unui pixel de imagine.', m:'aplicatii'},
+  {t:'Vreme spațială', d:'Efectele activității solare asupra Pământului și a sistemelor tehnice. Scalele NOAA R, S, G.', m:'aplicatii'},
+  {t:'Outer Space Treaty', d:'Tratatul spațial din 1967, fundamentul dreptului spațial.', m:'drept'},
+  {t:'ITU', d:'Uniunea Internațională a Telecomunicațiilor. Coordonează spectrul și pozițiile orbitale.', m:'drept'},
+  {t:'COPUOS', d:'Comitetul ONU pentru Utilizarea Pașnică a Spațiului Cosmic.', m:'drept'},
+  {t:'Interferență dăunătoare', d:'Interferență care degradează sau întrerupe un serviciu radio autorizat. Interzisă prin Constituția ITU.', m:'drept'},
+  {t:'Acordurile Artemis', d:'Principii de conduită pentru explorarea Lunii. Semnate de România în 2023.', m:'drept'},
+  {t:'ROSA', d:'Agenția Spațială Română, civilă, înființată în 1991.', m:'romania'},
+  {t:'ESA', d:'Agenția Spațială Europeană. România este membră din 2011.', m:'romania'},
+  {t:'Space Club', d:'ONG de educație spațială, partener ASR la evenimentele publice.', m:'romania'},
+  {t:'STANAG 6001', d:'Standardul NATO de evaluare a competenței lingvistice.', m:'cariera'}
+];
+
+/* Scenarii: s = situație, o = variante {t, ok (0 slab, 1 parțial, 2 bun), f = explicație}, p = principiul */
+const SCENARIOS = [
+  {id:'interf', t:'Interferență pe o purtătoare', m:'satcom', clock:'TURĂ DE ZI · 10:42',
+   s:'Pe analizorul de spectru, C/N-ul unei legături în banda X care deservește o unitate dislocată scade brusc cu 8 dB. Pe aceeași frecvență a apărut un semnal îngust, continuu. Celelalte purtătoare din transponder par normale. Unitatea raportează pierderi de pachete.',
+   o:[
+     {t:'Măresc imediat puterea de emisie a terminalului ca să „împing” semnalul peste interferență.', ok:0, f:'Reflex greșit. Poți perturba alți utilizatori ai transponderului, poți încălca parametrii alocați și, dacă e bruiaj, intri într-o cursă pe care nu o controlezi.'},
+     {t:'Caracterizez semnalul, verific dacă și alte stații îl văd (uplink sau downlink), anunț operatorul satelitului și mut traficul critic pe calea alternativă din planul PACE.', ok:2, f:'Corect. Menții serviciul prin PACE și începi diagnosticul metodic. Dacă toate stațiile din fascicul văd semnalul, a intrat pe uplink și se trece la geolocalizare.'},
+     {t:'Raportez imediat bruiaj ostil pe lanțul ierarhic.', ok:1, f:'Raportarea e necesară, dar nu concluzia prematură. Majoritatea interferențelor sunt accidentale. Raportează ce observi, cu nivel de încredere, și continuă diagnosticul.'}
+   ], p:'Întâi menții misiunea, apoi diagnostichezi metodic. Nu presupune bruiaj ostil fără date.'},
+  {id:'uct', t:'Obiect necunoscut lângă satelitul de comunicații', m:'sda', clock:'TURĂ DE NOAPTE · 02:15',
+   s:'În imaginile de la telescop apare un obiect slab la circa 0,3° de un satelit GEO folosit pentru comunicațiile armatei. Nu corespunde niciunei intrări din catalog (UCT). Este o singură observație.',
+   o:[
+     {t:'Raportez imediat dimineață că un satelit străin se apropie de satelitul nostru.', ok:0, f:'O singură observație nu demonstrează o apropiere și nici identitatea. Un raport fals sau exagerat afectează credibilitatea întregului lanț de informații.'},
+     {t:'Programez observații repetate în aceeași noapte și în următoarele, încerc corelarea cu catalogul și cu partenerii, iar în raportul de dimineață îl semnalez ca UCT, cu nivel de încredere scăzut.', ok:2, f:'Corect. Ai nevoie de mai multe observații pentru o orbită. Raportul onest, cu incertitudinea declarată, ajută decidentul. Partenerii (NATO, aliați, EU SST) pot avea date complementare.'},
+     {t:'Îl ignor: probabil e un artefact al camerei.', ok:0, f:'Poate fi un artefact, dar poate fi și un fragment, un obiect nou sau un satelit care a manevrat. Verificarea costă puțin, ignorarea poate costa mult.'}
+   ], p:'O observație e un indiciu, nu o concluzie. Confirmă, corelează, raportează cu incertitudinea declarată.'},
+  {id:'conj', t:'Avertizare de conjuncție', m:'sda', clock:'TURĂ DE ZI · 09:05',
+   s:'Primești un CDM pentru un satelit LEO de interes național: TCA peste 48 de ore, distanța de ratare estimată 400 m, Pc = 3 × 10⁻⁴. Celălalt obiect este un fragment de deșeu, care nu poate manevra.',
+   o:[
+     {t:'Ordon imediat o manevră de evitare.', ok:1, f:'Prea devreme. La 48 de ore incertitudinea e mare. O manevră consumă combustibil și poate crea altă conjuncție. Totuși pragul e depășit, deci pregătirea manevrei e corectă.'},
+     {t:'Cer măsurători suplimentare pentru a reduce incertitudinea, coordonez cu operatorul satelitului, pregătesc o manevră și decid la un moment-limită stabilit dacă Pc rămâne peste prag.', ok:2, f:'Corect. Pc se schimbă mult pe măsură ce se apropie TCA și se adaugă date. Planifici din timp, decizi cu cele mai bune date disponibile.'},
+     {t:'Nu fac nimic: 400 m e o distanță mare în spațiu.', ok:0, f:'Distanța singură nu spune nimic fără incertitudine. Pc de 3 × 10⁻⁴ este peste pragul folosit de multe agenții (~1 × 10⁻⁴).'}
+   ], p:'Decizia de manevră se bazează pe probabilitate și incertitudine, nu doar pe distanță.'},
+  {id:'gnss', t:'Raportări de bruiaj GNSS', m:'aplicatii', clock:'TURĂ DE ZI · 14:30',
+   s:'Mai multe unități din estul țării raportează că receptoarele GPS indică poziții care „sar” cu sute de metri, apoi pierd complet semnalul. Fenomenul durează de o oră.',
+   o:[
+     {t:'Spun unităților să repornească receptoarele.', ok:0, f:'Nu rezolvă o problemă externă și pierzi timp. Nici nu colectezi datele necesare pentru diagnostic.'},
+     {t:'Alertez unitățile să treacă pe metode alternative (navigație inerțială, hartă, alte constelații, semnale militare protejate), colectez ora, locul și simptomele, deosebesc bruiajul de spoofing și transmit datele structurilor de război electronic pentru localizare.', ok:2, f:'Corect. Pozițiile care sar sugerează spoofing sau bruiaj intermitent. Siguranța unităților vine prima, apoi datele pentru localizarea sursei.'},
+     {t:'Raportez că sistemul GPS american e defect.', ok:0, f:'Simptomele locale, într-o regiune anume, indică interferență, nu o cădere globală a sistemului. Verifică întotdeauna dacă problema e locală sau generală.'}
+   ], p:'Ai mereu un plan PNT de rezervă. Datele bune (unde, când, ce) permit localizarea sursei.'},
+  {id:'storm', t:'Furtună geomagnetică prognozată', m:'aplicatii', clock:'TURĂ DE ZI · 16:00',
+   s:'Centrul de prognoză a vremii spațiale anunță o furtună geomagnetică de nivel G4 în următoarele 24 de ore, după o ejecție de masă coronală.',
+   o:[
+     {t:'Nu mă privește: furtunile solare afectează doar astronauții.', ok:0, f:'Greșit. Afectează HF, GNSS, SATCOM în UHF și L și orbitele LEO prin frânare atmosferică.'},
+     {t:'Informez comandanții despre efectele probabile (erori GNSS, scintilații UHF, degradare HF), recomand frecvențe și căi de rezervă, mai multă marjă pe legături și anunț că pozițiile LEO din catalog vor necesita actualizare după furtună.', ok:2, f:'Corect. Prognoza îți dă timp să pregătești alternativele. Pentru SDA, după furtună orbitele LEO se schimbă mai repede decât prevede catalogul.'},
+     {t:'Opresc toate comunicațiile satelitare până trece furtuna.', ok:0, f:'Disproporționat. Benzile X și Ka în GEO sunt relativ puțin afectate. Gestionezi riscul, nu oprești misiunea.'}
+   ], p:'Vremea spațială se prognozează. Folosește timpul de avertizare pentru a pregăti alternative.'},
+  {id:'cloud', t:'Noapte înnorată, cerere urgentă', m:'sda', clock:'TURĂ DE NOAPTE · 23:50',
+   s:'Un decident cere date proaspete despre vecinătatea unui satelit GEO până dimineață. Peste Dobrogea cerul e acoperit toată noaptea. Telescopul nu poate observa.',
+   o:[
+     {t:'Trimit dimineață raportul de ieri, fără să precizez data.', ok:0, f:'Inacceptabil. Datele vechi prezentate ca noi induc în eroare decidentul. Vârsta datelor face parte din informație.'},
+     {t:'Informez transparent despre lipsa observațiilor proprii, cer date partenerilor (NATO, aliați, EU SST), folosesc cele mai recente date din catalog cu vârsta și incertitudinea declarate și programez observația pentru prima noapte senină.', ok:2, f:'Corect. Un decident informat corect despre limite ia decizii mai bune decât unul care primește certitudini false.'},
+     {t:'Scriu că situația e „fără modificări”, pentru că probabil nu s-a schimbat nimic.', ok:0, f:'Nu ai observat, deci nu știi. „Fără date” nu este „fără modificări”.'}
+   ], p:'Spune ce știi, ce nu știi și cât de vechi sunt datele.'},
+  {id:'sunout', t:'Sezonul sun outage', m:'satcom', clock:'PLANIFICARE · SEPTEMBRIE',
+   s:'Calculul arată că, timp de 6 zile în jurul echinocțiului, o stație de sol importantă va avea în fiecare zi circa 8 minute de degradare severă a legăturii cu satelitul GEO, în jurul prânzului.',
+   o:[
+     {t:'Aștept să vedem ce se întâmplă.', ok:0, f:'Fenomenul se poate prevedea la minut. A nu planifica pentru el înseamnă întreruperi evitabile.'},
+     {t:'Public ferestrele exacte către utilizatori, mut traficul critic pe cale alternativă în acele minute și evit programarea transmisiilor importante în ferestre.', ok:2, f:'Corect. Este exact genul de problemă previzibilă pe care un operator bun o face invizibilă pentru utilizatori.'},
+     {t:'Cer operatorului de satelit să mute satelitul.', ok:0, f:'Nu se poate și nici n-ar ajuta: fenomenul depinde de geometria Soare–satelit–stație, nu de o defecțiune.'}
+   ], p:'Ce e previzibil se planifică. Utilizatorul nu trebuie să observe.'}
+];
+</script>
+
+<script>
+(function(){
+const MU = 398600.4418, RE = 6378.137, C_KM = 299792.458, RGEO = 42164.17;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nf = (x, d=0) => Number.isFinite(x) ? x.toLocaleString('ro-RO', {minimumFractionDigits:d, maximumFractionDigits:d}) : '—';
+const MNAME = Object.fromEntries(MODULES.map(m => [m.id, m.t]));
+
+/* ---------- stare persistentă (doar în acest browser) ---------- */
+const KEY = 'curs-operator-spatial-v1';
+let S = {done:{}, best:{}, boxes:{}};
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e) {}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+
+/* ---------- navigație ---------- */
+const VIEWS = ['acasa', ...MODULES.map(m => m.id), ...PRACTICE.map(p => p.id)];
+function buildNav(){
+  let h = '<a href="#acasa" data-v="acasa"><span class="n">—</span><span>Start</span><span></span></a>';
+  h += '<div class="grp eyebrow">Capitole</div>';
+  MODULES.forEach((m,i) => { h += `<a href="#${m.id}" data-v="${m.id}"><span class="n">${String(i+1).padStart(2,'0')}</span><span>${esc(m.t)}</span><span class="st${S.done[m.id]?' done':''}"></span></a>`; });
+  h += '<div class="grp eyebrow">Practică</div>';
+  PRACTICE.forEach(p => { h += `<a href="#${p.id}" data-v="${p.id}"><span class="n">›</span><span>${esc(p.t)}</span><span></span></a>`; });
+  $('#side-nav').innerHTML = h;
+  let o = '<option value="acasa">Start</option><optgroup label="Capitole">';
+  MODULES.forEach((m,i) => { o += `<option value="${m.id}">${i+1}. ${esc(m.t)}${S.done[m.id]?' ✓':''}</option>`; });
+  o += '</optgroup><optgroup label="Practică">';
+  PRACTICE.forEach(p => { o += `<option value="${p.id}">${esc(p.t)}</option>`; });
+  $('#mnav-sel').innerHTML = o + '</optgroup>';
+}
+$('#mnav-sel').addEventListener('change', e => { location.hash = e.target.value; });
+
+function lessonFooters(){
+  MODULES.forEach((m,i) => {
+    const art = document.querySelector(`#v-${m.id} .lesson`);
+    if (!art || art.querySelector('.lfoot')) return;
+    const prev = MODULES[i-1], next = MODULES[i+1];
+    const f = document.createElement('div');
+    f.className = 'lfoot';
+    f.innerHTML = `${prev ? `<a class="btn quiet" href="#${prev.id}">← ${esc(prev.t)}</a>` : ''}
+      <span class="sp"></span>
+      <button class="btn ghost" type="button" data-quiz="${m.id}">Testează capitolul</button>
+      <button class="btn" type="button" data-done="${m.id}"></button>
+      ${next ? `<a class="btn quiet" href="#${next.id}">${esc(next.t)} →</a>` : `<a class="btn quiet" href="#instrumente">Instrumente →</a>`}`;
+    art.appendChild(f);
+  });
+  document.addEventListener('click', e => {
+    const d = e.target.closest('[data-done]');
+    if (d){ const id = d.dataset.done; S.done[id] = !S.done[id]; save(); refreshProgress(); }
+    const q = e.target.closest('[data-quiz]');
+    if (q){ quizFilter = q.dataset.quiz; location.hash = 'quiz'; startQuiz(); }
+  });
+}
+
+function refreshProgress(){
+  const n = MODULES.filter(m => S.done[m.id]).length;
+  $('#prog-label').textContent = `${n} / ${MODULES.length} capitole`;
+  $('#prog-bar').style.width = (100*n/MODULES.length) + '%';
+  document.querySelectorAll('[data-done]').forEach(b => {
+    const on = !!S.done[b.dataset.done];
+    b.textContent = on ? 'Parcurs ✓' : 'Marchează ca parcurs';
+    b.classList.toggle('quiet', on);
+  });
+  buildNav(); markActive();
+  // drum
+  $('#road').innerHTML = MODULES.map((m,i) => `<a href="#${m.id}"><span class="h"><span class="eyebrow">Capitolul ${i+1}</span><span class="chip${S.done[m.id]?' done':''}">${S.done[m.id]?'parcurs':(S.best[m.id]!=null?'test '+S.best[m.id]+'%':'de parcurs')}</span></span><b>${esc(m.t)}</b><span class="d">${esc(m.d)}</span></a>`).join('');
+  const learned = GLOSSARY.filter(g => (S.boxes[g.t]||1) >= 4).length;
+  const bestAll = S.best.toate;
+  $('#home-stats').innerHTML = `
+    <div class="stat"><b>${n}/${MODULES.length}</b><span>capitole parcurse</span></div>
+    <div class="stat"><b>${QUIZ.length}</b><span>întrebări de verificare</span></div>
+    <div class="stat"><b>${bestAll!=null?bestAll+'%':'—'}</b><span>cel mai bun scor, quiz complet</span></div>
+    <div class="stat"><b>${learned}/${GLOSSARY.length}</b><span>termeni în cutiile 4–5</span></div>`;
+}
+
+let current = 'acasa';
+function markActive(){
+  document.querySelectorAll('#side-nav a').forEach(a => a.classList.toggle('on', a.dataset.v === current));
+  $('#mnav-sel').value = current;
+}
+function route(){
+  let v = (location.hash || '').replace('#','');
+  if (!VIEWS.includes(v)) v = 'acasa';
+  current = v;
+  document.querySelectorAll('main > .view').forEach(s => { s.hidden = s.id !== 'v-' + v; });
+  markActive();
+  if (v === 'quiz' && !quiz) startQuiz();
+  if (v === 'fise') showCard();
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+
+/* ---------- animația orbitelor ---------- */
+function orbitCanvas(){
+  const cv = $('#orbit-canvas'); if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const orbits = [
+    {h:420, col:'--signal', ph:0.3},
+    {h:20200, col:'--ok', ph:2.1},
+    {h:35786, col:'--accent', ph:0.4887}
+  ].map(o => ({...o, r:RE+o.h, T:2*Math.PI*Math.sqrt(Math.pow(RE+o.h,3)/MU)}));
+  const TSID = 86164.09;
+  const site = 28.6*Math.PI/180;
+  orbits[2].ph = site; // satelitul GEO stă deasupra Dobrogei
+  let t0 = performance.now();
+  function frame(now){
+    const W = cv.width, H = cv.height, cx = W/2, cy = H/2;
+    const scale = (W/2 - 18) / RGEO;
+    const simT = reduce ? 0 : (now - t0)/1000 * (TSID/40); // o zi siderală în 40 s
+    ctx.clearRect(0,0,W,H);
+    // orbite
+    orbits.forEach(o => {
+      ctx.beginPath(); ctx.arc(cx, cy, o.r*scale, 0, 2*Math.PI);
+      ctx.strokeStyle = css('--orbit'); ctx.lineWidth = 1; ctx.setLineDash(o.h>30000?[]:[3,4]); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+    // Pământ
+    ctx.beginPath(); ctx.arc(cx, cy, RE*scale, 0, 2*Math.PI);
+    ctx.fillStyle = css('--earth'); ctx.fill();
+    // Dobrogea (se rotește cu Pământul)
+    const rot = site - 2*Math.PI*simT/TSID;
+    const sx = cx + Math.cos(rot)*RE*scale, sy = cy - Math.sin(rot)*RE*scale;
+    ctx.beginPath(); ctx.arc(sx, sy, 4, 0, 2*Math.PI); ctx.fillStyle = css('--surface'); ctx.fill();
+    ctx.strokeStyle = css('--ink'); ctx.lineWidth = 1.5; ctx.stroke();
+    // sateliți (rotație în același sens; desen văzut de deasupra Polului Nord, cu sens orar pentru claritate)
+    orbits.forEach((o,i) => {
+      const a = o.ph - 2*Math.PI*simT/o.T;
+      const x = cx + Math.cos(a)*o.r*scale, y = cy - Math.sin(a)*o.r*scale;
+      if (i === 2){ ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(x,y); ctx.strokeStyle = css('--accent'); ctx.globalAlpha = .35; ctx.setLineDash([2,4]); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
+      ctx.beginPath(); ctx.arc(x, y, i===2?6:5, 0, 2*Math.PI); ctx.fillStyle = css(o.col); ctx.fill();
+    });
+    ctx.font = '500 13px "IBM Plex Mono", monospace'; ctx.fillStyle = css('--muted');
+    ctx.fillText('Dobrogea', sx + 8, sy + 4);
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  if (reduce) frame(0);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { if (reduce) frame(0); });
+}
+
+/* ---------- instrumente ---------- */
+const val = id => parseFloat($('#'+id).value);
+const outHtml = rows => rows.map(([k,v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('');
+
+function calcOrbit(){
+  const h = val('o-alt'); const r = RE + h;
+  if (!(h > 0)) { $('#o-out').innerHTML = outHtml([['Eroare','Altitudinea trebuie să fie pozitivă']]); return; }
+  const v = Math.sqrt(MU/r), T = 2*Math.PI*Math.sqrt(r**3/MU), ve = Math.sqrt(2*MU/r);
+  const reg = h < 2000 ? 'LEO' : (Math.abs(h-35786) < 50 ? 'GEO' : (h < 35786 ? 'MEO' : 'peste GEO'));
+  const tStr = T < 7200 ? nf(T/60,1)+' min' : nf(T/3600,2)+' h';
+  $('#o-out').innerHTML = outHtml([
+    ['Regim', reg], ['Rază orbitală', nf(r,0)+' km'], ['Viteză', nf(v,3)+' km/s'],
+    ['Perioadă', tStr], ['Orbite pe zi', nf(86400/T,2)], ['Viteză de evadare', nf(ve,2)+' km/s'],
+    ['Ecou radar la nadir', nf(2*h/C_KM*1000,1)+' ms']
+  ]);
+}
+document.querySelectorAll('#t-orbit [data-alt]').forEach(b => b.addEventListener('click', () => { $('#o-alt').value = b.dataset.alt; calcOrbit(); }));
+
+function lookAngles(latD, lonD, satD){
+  const d2r = Math.PI/180, la = latD*d2r, lo = lonD*d2r, sl = satD*d2r;
+  const px = RE*Math.cos(la)*Math.cos(lo), py = RE*Math.cos(la)*Math.sin(lo), pz = RE*Math.sin(la);
+  const dx = RGEO*Math.cos(sl) - px, dy = RGEO*Math.sin(sl) - py, dz = -pz;
+  const e = -Math.sin(lo)*dx + Math.cos(lo)*dy;
+  const n = -Math.sin(la)*Math.cos(lo)*dx - Math.sin(la)*Math.sin(lo)*dy + Math.cos(la)*dz;
+  const u = Math.cos(la)*Math.cos(lo)*dx + Math.cos(la)*Math.sin(lo)*dy + Math.sin(la)*dz;
+  const rng = Math.hypot(dx,dy,dz);
+  return {az:(Math.atan2(e,n)/d2r+360)%360, el:Math.atan2(u,Math.hypot(e,n))/d2r, rng};
+}
+function calcGeo(){
+  const la = val('g-lat'), lo = val('g-lon'), s = val('g-sat'), mn = val('g-min');
+  if (![la,lo,s,mn].every(Number.isFinite) || Math.abs(la) > 89) { $('#g-out').innerHTML = outHtml([['Eroare','Verifică valorile introduse']]); return; }
+  const r = lookAngles(la, lo, s);
+  let w = null, east = null;
+  for (let x = lo - 90; x <= lo + 90; x += 0.1){
+    if (lookAngles(la, lo, x).el >= mn){ if (w === null) w = x; east = x; }
+  }
+  const fmtLon = x => x === null ? '—' : (x >= 0 ? nf(x,1)+'° E' : nf(-x,1)+'° V');
+  const card = ['N','NE','E','SE','S','SV','V','NV'][Math.round(r.az/45)%8];
+  $('#g-out').innerHTML = outHtml([
+    ['Azimut', nf(r.az,1)+'° ('+card+')'], ['Elevație', nf(r.el,1)+'°'+(r.el<0?' · sub orizont':(r.el<mn?' · prea jos':''))],
+    ['Distanță', nf(r.rng,0)+' km'], ['Latență sol→sat', nf(r.rng/C_KM*1000,1)+' ms'],
+    ['Arc util de la', fmtLon(w)], ['până la', fmtLon(east)]
+  ]);
+}
+
+function calcLink(){
+  const f = val('l-f'), d = val('l-d'), eirp = val('l-eirp'), gt = val('l-gt'), L = val('l-loss'), B = val('l-b')*1e6, req = val('l-req');
+  if (!(f>0 && d>0 && B>0)) { $('#l-out').innerHTML = outHtml([['Eroare','Frecvența, distanța și banda trebuie să fie pozitive']]); return; }
+  const fspl = 92.45 + 20*Math.log10(d) + 20*Math.log10(f);
+  const cn0 = eirp - fspl - L + gt + 228.6;
+  const cn = cn0 - 10*Math.log10(B);
+  const cap = B*Math.log2(1 + Math.pow(10, cn/10));
+  const margin = cn - req;
+  $('#l-out').innerHTML = outHtml([
+    ['λ', nf(C_KM*1e3/(f*1e9)*100,2)+' cm'], ['FSPL', nf(fspl,1)+' dB'], ['C/N₀', nf(cn0,1)+' dBHz'],
+    ['C/N', nf(cn,1)+' dB'], ['Limita Shannon', cap>1e6? nf(cap/1e6,1)+' Mbit/s' : nf(cap/1e3,0)+' kbit/s'], ['Marjă', (margin>=0?'+':'')+nf(margin,1)+' dB']
+  ]);
+  const bar = $('#l-bar'); const pct = Math.min(100, Math.abs(margin)/10*100);
+  bar.style.width = pct + '%'; bar.classList.toggle('neg', margin < 0);
+  $('#l-margin-label').textContent = margin >= 0 ? `Marjă ${nf(margin,1)} dB: legătura funcționează` : `Lipsesc ${nf(-margin,1)} dB: legătura cade`;
+}
+
+function calcTel(){
+  const D = val('s-d'), F = val('s-f'), px = val('s-px'), N = val('s-n'), t = val('s-t');
+  if (!(D>0 && F>0 && px>0 && N>0)) { $('#s-out').innerHTML = outHtml([['Eroare','Valorile trebuie să fie pozitive']]); return; }
+  const scale = 206.265*px/F;
+  const fov = scale*N/3600;
+  const streak = 15.041*t;
+  $('#s-out').innerHTML = outHtml([
+    ['Raport focal', 'f/'+nf(F/D,1)], ['Scara pixelului', nf(scale,2)+' ″/px'], ['Câmp de vedere', nf(fov,2)+'° × '+nf(fov,2)+'°'],
+    ['Rezoluție (Dawes)', nf(116/D,2)+' ″'], ['Dâră GEO', nf(streak,0)+' ″ = '+nf(streak/scale,0)+' px'],
+    ['1 px la distanța GEO', nf(scale/206265*35786*1000,0)+' m']
+  ]);
+}
+
+function tleChecksum(l){ let s = 0; for (const c of l.slice(0,68)){ if (c >= '0' && c <= '9') s += +c; else if (c === '-') s += 1; } return s % 10; }
+function calcTle(){
+  const lines = $('#tle-in').value.split(/\r?\n/).map(x => x.replace(/\s+$/,'')).filter(Boolean);
+  const l1 = lines.find(l => l.startsWith('1 ')), l2 = lines.find(l => l.startsWith('2 '));
+  const name = lines.find(l => !l.startsWith('1 ') && !l.startsWith('2 '));
+  const msg = $('#tle-msg');
+  if (!l1 || !l2 || l1.length < 69 || l2.length < 69){ $('#tle-out').innerHTML = ''; msg.textContent = 'Am nevoie de linia 1 și linia 2, fiecare de 69 de caractere. Copiază-le exact, cu spațiile.'; return; }
+  const yy = +l1.slice(18,20), year = yy < 57 ? 2000+yy : 1900+yy, day = +l1.slice(20,32);
+  const ep = new Date(Date.UTC(year,0,1) + (day-1)*86400000);
+  const inc = +l2.slice(8,16), raan = +l2.slice(17,25), ecc = +('0.'+l2.slice(26,33).trim()), argp = +l2.slice(34,42), ma = +l2.slice(43,51), mm = +l2.slice(52,63);
+  const n = mm*2*Math.PI/86400, a = Math.cbrt(MU/(n*n));
+  const ok1 = tleChecksum(l1) === +l1[68], ok2 = tleChecksum(l2) === +l2[68];
+  const intl = l1.slice(9,17).trim();
+  $('#tle-out').innerHTML = outHtml([
+    ['Obiect', esc((name||'—').trim())], ['Nr. catalog', l1.slice(2,7).trim()+l1[7]], ['Desemnare internațională', intl ? `${+intl.slice(0,2)<57?'20':'19'}${intl.slice(0,2)}-${intl.slice(2)}` : '—'],
+    ['Epoca (UTC)', ep.toISOString().replace('T',' ').slice(0,19)], ['Înclinare', nf(inc,4)+'°'], ['RAAN', nf(raan,4)+'°'],
+    ['Excentricitate', nf(ecc,7)], ['Arg. perigeu', nf(argp,4)+'°'], ['Anomalie medie', nf(ma,4)+'°'],
+    ['Mișcare medie', nf(mm,8)+' rot/zi'], ['Perioadă', nf(1440/mm,2)+' min'], ['Semiaxă mare', nf(a,1)+' km'],
+    ['Perigeu', nf(a*(1-ecc)-RE,1)+' km'], ['Apogeu', nf(a*(1+ecc)-RE,1)+' km'], ['Sume de control', (ok1?'L1 ✓':'L1 ✗')+' · '+(ok2?'L2 ✓':'L2 ✗')]
+  ]);
+  msg.textContent = (ok1 && ok2) ? 'Sumele de control sunt corecte. Altitudinile sunt aproximative, față de raza ecuatorială.' : 'Atenție: suma de control nu se potrivește. Linia a fost probabil copiată greșit.';
+}
+
+function calcDb(){
+  const W = val('d-w'), f = val('d-mhz'), h1 = val('d-h1'), h2 = val('d-h2');
+  $('#d-out').innerHTML = outHtml([
+    ['dBW', W>0? nf(10*Math.log10(W),2) : '—'], ['dBm', W>0? nf(10*Math.log10(W*1000),2) : '—'],
+    ['λ', f>0 ? (C_KM*1e3/(f*1e6) >= 1 ? nf(C_KM*1e3/(f*1e6),2)+' m' : nf(C_KM*1e5/(f*1e6),2)+' cm') : '—'],
+    ['Orizont radio', h1>=0&&h2>=0 ? nf(4.12*(Math.sqrt(h1)+Math.sqrt(h2)),1)+' km' : '—']
+  ]);
+}
+
+function bindTools(){
+  [['#t-orbit',calcOrbit],['#t-geo',calcGeo],['#t-link',calcLink],['#t-tel',calcTel],['#t-tle',calcTle],['#t-db',calcDb]].forEach(([s,fn]) => {
+    $(s).addEventListener('input', fn); fn();
+  });
+}
+
+/* ---------- quiz ---------- */
+let quiz = null, quizFilter = 'toate';
+function shuffle(a){ a = a.slice(); for (let i = a.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+function quizFilters(){
+  const opts = [['toate','Toate'], ...MODULES.map((m,i) => [m.id, (i+1)+'. '+m.t])];
+  $('#qz-filters').innerHTML = opts.map(([id,t]) => `<button type="button" data-qf="${id}" class="${id===quizFilter?'on':''}">${esc(t)}</button>`).join('');
+}
+$('#qz-filters').addEventListener('click', e => { const b = e.target.closest('[data-qf]'); if (!b) return; quizFilter = b.dataset.qf; startQuiz(); });
+function startQuiz(){
+  const pool = QUIZ.filter(q => quizFilter === 'toate' || q.m === quizFilter);
+  quiz = {qs: shuffle(pool).slice(0, quizFilter==='toate' ? 20 : pool.length), i:0, score:0, answered:false};
+  quizFilters(); renderQ();
+}
+function renderQ(){
+  const box = $('#qz-box');
+  if (quiz.i >= quiz.qs.length){
+    const pct = Math.round(100*quiz.score/quiz.qs.length);
+    if (S.best[quizFilter] == null || pct > S.best[quizFilter]) { S.best[quizFilter] = pct; save(); refreshProgress(); }
+    const msg = pct >= 90 ? 'Foarte bine. Treci mai departe.' : pct >= 70 ? 'Bine. Recitește punctele „Ce reții” pentru întrebările greșite.' : 'Reia capitolul și încearcă din nou. Repetiția fixează.';
+    box.innerHTML = `<div class="qcard"><span class="eyebrow">Rezultat · ${esc(quizFilter==='toate'?'toate capitolele':MNAME[quizFilter])}</span><h3 style="font-size:2rem">${quiz.score} / ${quiz.qs.length} · ${pct}%</h3><p>${msg}</p><div class="row"><button class="btn" type="button" id="qz-again">Încă o rundă</button>${quizFilter!=='toate'?`<a class="btn quiet" href="#${quizFilter}">Înapoi la capitol</a>`:''}</div></div>`;
+    $('#qz-again').onclick = startQuiz; return;
+  }
+  const q = quiz.qs[quiz.i];
+  const order = shuffle(q.o.map((t,k) => ({t,k})));
+  box.innerHTML = `<div class="qcard">
+    <div class="row" style="justify-content:space-between"><span class="eyebrow">Întrebarea ${quiz.i+1} din ${quiz.qs.length} · ${esc(MNAME[q.m])}</span><span class="eyebrow">Scor ${quiz.score}</span></div>
+    <h3>${esc(q.q)}</h3>
+    <div class="qopts">${order.map(o => `<button type="button" class="qopt" data-k="${o.k}">${esc(o.t)}</button>`).join('')}</div>
+    <div id="qz-expl"></div></div>`;
+  box.querySelectorAll('.qopt').forEach(b => b.addEventListener('click', () => {
+    if (quiz.answered) return; quiz.answered = true;
+    const k = +b.dataset.k, right = k === q.a; if (right) quiz.score++;
+    box.querySelectorAll('.qopt').forEach(x => { x.disabled = true; if (+x.dataset.k === q.a) x.classList.add('right'); });
+    if (!right) b.classList.add('wrong');
+    $('#qz-expl').innerHTML = `<div class="expl"><b class="${right?'ok':'no'}">${right?'Corect.':'Nu chiar.'}</b><span>${esc(q.e)}</span></div>
+      <div class="row" style="margin-top:12px"><button class="btn" type="button" id="qz-next">${quiz.i+1<quiz.qs.length?'Următoarea':'Vezi rezultatul'}</button></div>`;
+    $('#qz-next').onclick = () => { quiz.i++; quiz.answered = false; renderQ(); };
+    $('#qz-next').focus();
+  }));
+}
+
+/* ---------- scenarii ---------- */
+let scId = SCENARIOS[0].id;
+function renderScList(){
+  $('#sc-list').innerHTML = SCENARIOS.map(s => `<button type="button" data-sc="${s.id}" class="${s.id===scId?'on':''}">${esc(s.t)}</button>`).join('');
+}
+$('#sc-list').addEventListener('click', e => { const b = e.target.closest('[data-sc]'); if (!b) return; scId = b.dataset.sc; renderScList(); renderSc(); });
+function renderSc(){
+  const s = SCENARIOS.find(x => x.id === scId);
+  const box = $('#sc-box');
+  box.innerHTML = `<div class="qcard">
+    <span class="eyebrow">${esc(MNAME[s.m])}</span>
+    <h3>${esc(s.t)}</h3>
+    <div class="sit"><span class="clock">${esc(s.clock)}</span><p>${esc(s.s)}</p></div>
+    <p class="hint">Ce faci?</p>
+    <div class="qopts">${s.o.map((o,k) => `<button type="button" class="qopt" data-k="${k}">${esc(o.t)}</button>`).join('')}</div>
+    <div id="sc-expl"></div></div>`;
+  box.querySelectorAll('.qopt').forEach(b => b.addEventListener('click', () => {
+    const o = s.o[+b.dataset.k];
+    box.querySelectorAll('.qopt').forEach(x => { x.classList.remove('right','wrong'); });
+    b.classList.add(o.ok === 2 ? 'right' : 'wrong');
+    const lbl = o.ok === 2 ? '<b class="ok">Decizie bună.</b>' : o.ok === 1 ? '<b class="no">Parțial.</b>' : '<b class="no">Decizie slabă.</b>';
+    const idx = SCENARIOS.findIndex(x => x.id === s.id), nxt = SCENARIOS[idx+1];
+    $('#sc-expl').innerHTML = `<div class="expl">${lbl}<span>${esc(o.f)}</span>${o.ok===2?`<span><b>Principiul:</b> ${esc(s.p)}</span>`:'<span class="muted">Încearcă și celelalte variante.</span>'}</div>
+      ${o.ok===2 && nxt ? `<div class="row" style="margin-top:12px"><button type="button" class="btn" id="sc-next">Scenariul următor</button></div>` : ''}`;
+    const n = $('#sc-next'); if (n) n.onclick = () => { scId = nxt.id; renderScList(); renderSc(); };
+  }));
+}
+
+/* ---------- fișe Leitner ---------- */
+let card = null, flipped = false;
+const box = t => S.boxes[t] || 1;
+function pickCard(){
+  const min = Math.min(...GLOSSARY.map(g => box(g.t)));
+  // cutiile mici apar mai des: ponderi 16, 8, 4, 2, 1
+  const weights = GLOSSARY.map(g => Math.pow(2, 5 - box(g.t)) * (box(g.t) === min ? 2 : 1));
+  let r = Math.random() * weights.reduce((a,b) => a+b, 0);
+  for (let i = 0; i < GLOSSARY.length; i++){ r -= weights[i]; if (r <= 0 && (!card || GLOSSARY[i].t !== card.t)) return GLOSSARY[i]; }
+  return GLOSSARY[Math.floor(Math.random()*GLOSSARY.length)];
+}
+function renderBoxes(){
+  const c = [0,0,0,0,0]; GLOSSARY.forEach(g => c[box(g.t)-1]++);
+  $('#fc-boxes').innerHTML = c.map((n,i) => `<span>Cutia ${i+1}: ${n}</span>`).join('');
+}
+function showCard(next){
+  if (!card || next) card = pickCard();
+  flipped = false; renderBoxes();
+  $('#fc-card').innerHTML = `<span class="eyebrow">${esc(MNAME[card.m])} · cutia ${box(card.t)}</span><div class="term">${esc(card.t)}</div><span class="hint">Spune definiția cu voce tare, apoi întoarce fișa.</span>`;
+  $('#fc-flip').hidden = false; $('#fc-yes').hidden = true; $('#fc-no').hidden = true;
+}
+function flip(){
+  if (flipped) return; flipped = true;
+  $('#fc-card').innerHTML = `<span class="eyebrow">${esc(card.t)}</span><div class="def">${esc(card.d)}</div>`;
+  $('#fc-flip').hidden = true; $('#fc-yes').hidden = false; $('#fc-no').hidden = false; $('#fc-yes').focus();
+}
+$('#fc-card').addEventListener('click', flip);
+$('#fc-card').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+$('#fc-flip').addEventListener('click', flip);
+$('#fc-yes').addEventListener('click', () => { S.boxes[card.t] = Math.min(5, box(card.t)+1); save(); refreshProgress(); showCard(true); });
+$('#fc-no').addEventListener('click', () => { S.boxes[card.t] = 1; save(); refreshProgress(); showCard(true); });
+$('#fc-reset').addEventListener('click', () => { $('#fc-reset-confirm').hidden = false; });
+$('#fc-reset-yes').addEventListener('click', () => { S.boxes = {}; save(); $('#fc-reset-confirm').hidden = true; refreshProgress(); showCard(true); });
+
+/* ---------- glosar ---------- */
+function renderGlossary(){
+  const q = $('#gl-q').value.trim().toLowerCase();
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const nq = norm(q);
+  const list = GLOSSARY.filter(g => !nq || norm(g.t).includes(nq) || norm(g.d).includes(nq)).sort((a,b) => a.t.localeCompare(b.t,'ro'));
+  $('#gl-list').innerHTML = list.length ? list.map(g => `<div><dt>${esc(g.t)}<span class="tag">${esc(MNAME[g.m])}</span></dt><dd>${esc(g.d)}</dd></div>`).join('') : '<div><dt>Niciun rezultat</dt><dd>Încearcă alt cuvânt sau o siglă, de exemplu SATCOM.</dd></div>';
+}
+$('#gl-q').addEventListener('input', renderGlossary);
+
+/* ---------- pornire ---------- */
+buildNav(); lessonFooters(); refreshProgress(); bindTools(); renderScList(); renderSc(); renderGlossary(); orbitCanvas(); route();
+})();
+</script>
