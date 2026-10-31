@@ -1,0 +1,290 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Liniște",
+    "theme_version": "1.0.0",
+    "theme_author": "PAC Funerare Fetești",
+    "theme_documentation_url": "https://github.com/flavianvalentinmoisa-sys/claude",
+    "theme_support_url": "https://www.facebook.com/VasyPetre75"
+  },
+  {
+    "name": "Datele firmei",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Aceste date se folosesc automat peste tot: în bara de sus, la butoanele de apel, în Contact, în subsol și în datele pentru Google."
+      },
+      {
+        "type": "text",
+        "id": "nume_firma",
+        "label": "Numele firmei",
+        "default": "PAC Funerare Fetești"
+      },
+      {
+        "type": "text",
+        "id": "telefon_principal",
+        "label": "Telefon principal",
+        "default": "0760 396 402",
+        "info": "Folosit de butonul de apel de pe telefon și de butoanele „Sună la numărul principal”."
+      },
+      {
+        "type": "text",
+        "id": "telefon_secundar",
+        "label": "Al doilea telefon",
+        "default": "0760 522 022",
+        "info": "Lăsați gol dacă nu există."
+      },
+      {
+        "type": "text",
+        "id": "email",
+        "label": "Email",
+        "default": "pacfunerare@gmail.com"
+      },
+      {
+        "type": "text",
+        "id": "facebook",
+        "label": "Adresa paginii de Facebook",
+        "default": "https://www.facebook.com/VasyPetre75"
+      },
+      {
+        "type": "header",
+        "content": "Adresa"
+      },
+      {
+        "type": "text",
+        "id": "adresa_strada",
+        "label": "Strada",
+        "default": "Str. Călărași"
+      },
+      {
+        "type": "text",
+        "id": "adresa_localitate",
+        "label": "Localitatea",
+        "default": "Fetești"
+      },
+      {
+        "type": "text",
+        "id": "adresa_judet",
+        "label": "Județul",
+        "default": "Ialomița"
+      },
+      {
+        "type": "text",
+        "id": "adresa_reper",
+        "label": "Reper",
+        "default": "stația Policlinică, vis-à-vis de Liceul Teoretic „Carol I”"
+      },
+      {
+        "type": "text",
+        "id": "program",
+        "label": "Program",
+        "default": "NON-STOP – 24 de ore din 24, 7 zile din 7, inclusiv în sărbători"
+      },
+      {
+        "type": "textarea",
+        "id": "zona_deservita",
+        "label": "Zona deservită (pentru Google)",
+        "default": "Fetești-Oraș\nFetești-Gară\nBuliga\nVlașca\nLocalitățile din jurul Feteștiului, județul Ialomița\nTransport funerar în alte județe și repatrieri",
+        "info": "Câte o localitate pe rând."
+      }
+    ]
+  },
+  {
+    "name": "Sigla",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Sigla",
+        "info": "Recomandat: PNG cu fundal transparent. Dacă nu alegeți nimic, apare sigla provizorie."
+      },
+      {
+        "type": "range",
+        "id": "latime_logo",
+        "label": "Lățimea siglei în bara de sus",
+        "min": 50,
+        "max": 200,
+        "step": 10,
+        "unit": "px",
+        "default": 70
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Iconița din fila browserului",
+        "info": "Pătrată, de exemplu 64 × 64 px."
+      }
+    ]
+  },
+  {
+    "name": "Culori",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Fiecare secțiune alege una dintre schemele: Închis (antracit), Deschis (crem) sau Negru."
+      },
+      {
+        "type": "header",
+        "content": "Fundaluri"
+      },
+      {
+        "type": "color",
+        "id": "culoare_negru",
+        "label": "Negru (bara de sus, subsol, schema Negru)",
+        "default": "#0c0c0d"
+      },
+      {
+        "type": "color",
+        "id": "culoare_antracit",
+        "label": "Antracit (schema Închis)",
+        "default": "#1a1b1e"
+      },
+      {
+        "type": "color",
+        "id": "culoare_antracit_card",
+        "label": "Carduri pe fundal închis",
+        "default": "#24252a"
+      },
+      {
+        "type": "color",
+        "id": "culoare_crem",
+        "label": "Crem (schema Deschis)",
+        "default": "#f6f2ea"
+      },
+      {
+        "type": "color",
+        "id": "culoare_crem_card",
+        "label": "Carduri pe fundal deschis",
+        "default": "#fffdf9"
+      },
+      {
+        "type": "color",
+        "id": "culoare_crem_linie",
+        "label": "Linii fine pe fundal deschis",
+        "default": "#e3d9c7"
+      },
+      {
+        "type": "header",
+        "content": "Text"
+      },
+      {
+        "type": "color",
+        "id": "culoare_scris_inchis",
+        "label": "Text pe fundal deschis",
+        "default": "#1c1c1f"
+      },
+      {
+        "type": "color",
+        "id": "culoare_scris_inchis_2",
+        "label": "Text secundar pe fundal deschis",
+        "default": "#4a4945"
+      },
+      {
+        "type": "color",
+        "id": "culoare_scris_deschis",
+        "label": "Text pe fundal închis",
+        "default": "#f3f1ec"
+      },
+      {
+        "type": "color",
+        "id": "culoare_scris_deschis_2",
+        "label": "Text secundar pe fundal închis",
+        "default": "#bdbcb7"
+      },
+      {
+        "type": "header",
+        "content": "Accent"
+      },
+      {
+        "type": "color",
+        "id": "culoare_auriu",
+        "label": "Accent (butoane, linii fine)",
+        "default": "#c9b787"
+      },
+      {
+        "type": "color",
+        "id": "culoare_auriu_inchis",
+        "label": "Accent pe fundal deschis",
+        "default": "#76612f"
+      },
+      {
+        "type": "color",
+        "id": "culoare_argintiu",
+        "label": "Argintiu (porumbel)",
+        "default": "#c8cbd0"
+      }
+    ]
+  },
+  {
+    "name": "Forme",
+    "settings": [
+      {
+        "type": "range",
+        "id": "raza_carduri",
+        "label": "Rotunjirea colțurilor",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "default": 16
+      },
+      {
+        "type": "checkbox",
+        "id": "butoane_rotunde",
+        "label": "Butoane complet rotunjite",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Google și partajare",
+    "settings": [
+      {
+        "type": "text",
+        "id": "seo_titlu_acasa",
+        "label": "Titlul paginii principale",
+        "default": "Servicii funerare Fetești, NON-STOP | PAC Funerare Fetești"
+      },
+      {
+        "type": "textarea",
+        "id": "seo_descriere_acasa",
+        "label": "Descrierea din Google",
+        "default": "PAC Funerare Fetești, județul Ialomița: servicii funerare complete, transport funerar local și național, repatrieri, acte și organizarea slujbei. Disponibili NON-STOP: 0760 396 402."
+      },
+      {
+        "type": "image_picker",
+        "id": "imagine_partajare",
+        "label": "Imaginea pentru Facebook / WhatsApp",
+        "info": "1200 × 630 px."
+      }
+    ]
+  },
+  {
+    "name": "Buton de apel pe telefon",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "arata_buton_apel_mobil",
+        "label": "Arată butonul de apel fixat jos, pe telefon",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "text_buton_apel_mobil",
+        "label": "Textul butonului",
+        "default": "Sunați NON-STOP"
+      }
+    ]
+  },
+  {
+    "name": "Accesibilitate",
+    "settings": [
+      {
+        "type": "text",
+        "id": "text_sari_la_continut",
+        "label": "Textul legăturii „sari la conținut” (pentru tastatură)",
+        "default": "Sari la conținutul principal"
+      }
+    ]
+  }
+]

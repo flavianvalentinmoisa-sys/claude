@@ -1,0 +1,24 @@
+{%- comment -%} Sigla: imaginea aleasă în Setări temă, sau sigla provizorie. Parametri: marime ('mic' / 'mare'), cu_nume {%- endcomment -%}
+{%- liquid
+  assign nume_firma = settings.nume_firma | default: shop.name
+  if marime == 'mare'
+    assign clasa = 'logo__poza logo__poza--mare'
+  else
+    assign clasa = 'logo__poza'
+  endif
+  if cu_nume
+    assign text_alt = ''
+  else
+    assign text_alt = nume_firma
+  endif
+-%}
+<span class="logo">
+  {%- if settings.logo != blank -%}
+    {{ settings.logo | image_url: width: 400 | image_tag: class: clasa, alt: text_alt, widths: '120, 200, 300, 400', sizes: '200px' }}
+  {%- else -%}
+    <img src="{{ 'logo.png' | asset_url }}" alt="{{ text_alt | escape }}" class="{{ clasa }}" width="600" height="400">
+  {%- endif -%}
+  {%- if cu_nume -%}
+    <span class="logo__nume">{{ nume_firma | escape }}</span>
+  {%- endif -%}
+</span>

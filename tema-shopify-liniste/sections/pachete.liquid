@@ -1,0 +1,248 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign id_titlu = 'titlu-' | append: section.id
+-%}
+<section id="{{ ancora }}" class="sectiune culori-{{ s.culori }}"{% if s.titlu != blank %} aria-labelledby="{{ id_titlu }}"{% endif %}>
+  <div class="pagina">
+    {%- render 'antet-sectiune', eticheta: s.eticheta, titlu: s.titlu, introducere: s.introducere, id_titlu: id_titlu -%}
+
+    <ul class="pachete pachete--{{ section.blocks.size }}">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="card pachet{% if b.recomandat %} pachet--recomandat{% endif %}" {{ block.shopify_attributes }}>
+          {%- if b.recomandat and s.eticheta_recomandat != blank -%}
+            <span class="pachet__insigna">{{ s.eticheta_recomandat | escape }}</span>
+          {%- endif -%}
+          <h3 class="pachet__nume">{{ b.nume | escape }}</h3>
+          <p class="pachet__pret">
+            <span class="text-secundar">{{ s.text_de_la | escape }}</span>
+            <span class="pachet__suma">{{ b.pret | escape }}</span>
+            <span class="text-secundar">{{ s.moneda | escape }}</span>
+          </p>
+          {%- if b.descriere != blank -%}
+            <p class="text-secundar">{{ b.descriere | escape }}</p>
+          {%- endif -%}
+          {%- if b.include != blank -%}
+            <p class="pachet__include">{{ s.titlu_include | escape }}</p>
+            {%- assign linii = b.include | newline_to_br | split: '<br />' -%}
+            <ul class="lista-bife">
+              {%- for linie in linii -%}
+                {%- assign l = linie | strip -%}
+                {%- if l != blank -%}
+                  <li>{%- render 'pictograma', nume: 'bifa' -%}<span>{{ l | escape }}</span></li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    <div class="pachete__final">
+      {%- if s.mentiune != blank -%}
+        <p class="nota-centrata">{{ s.mentiune | escape }}</p>
+      {%- endif -%}
+      <div class="grup-butoane grup-butoane--centru">
+        {%- render 'buton', text: s.buton_1_text, actiune: s.buton_1_actiune, link: s.buton_1_link, stil: s.buton_1_stil -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pachete și prețuri",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "pachete",
+      "info": "Fără spații sau diacritice. Un link „#pachete” duce aici."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "inchis"
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Pachete de servicii"
+    },
+    {
+      "type": "textarea",
+      "id": "introducere",
+      "label": "Introducere"
+    },
+    {
+      "type": "text",
+      "id": "text_de_la",
+      "label": "Textul dinaintea prețului",
+      "default": "de la"
+    },
+    {
+      "type": "text",
+      "id": "moneda",
+      "label": "Moneda",
+      "default": "lei"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_recomandat",
+      "label": "Eticheta pachetului evidențiat",
+      "default": "Cel mai ales"
+    },
+    {
+      "type": "text",
+      "id": "titlu_include",
+      "label": "Textul dinaintea listei",
+      "default": "Include:"
+    },
+    {
+      "type": "textarea",
+      "id": "mentiune",
+      "label": "Mențiune sub pachete",
+      "default": "Prețurile sunt orientative, vă oferim o ofertă exactă la telefon."
+    },
+    {
+      "type": "header",
+      "content": "Butonul 1"
+    },
+    {
+      "type": "text",
+      "id": "buton_1_text",
+      "label": "Text (gol = fără buton)",
+      "default": "Cereți o ofertă exactă"
+    },
+    {
+      "type": "select",
+      "id": "buton_1_actiune",
+      "label": "Ce face",
+      "options": [
+        {
+          "value": "telefon",
+          "label": "Sună la numărul principal"
+        },
+        {
+          "value": "telefon_2",
+          "label": "Sună la al doilea număr"
+        },
+        {
+          "value": "email",
+          "label": "Deschide emailul"
+        },
+        {
+          "value": "facebook",
+          "label": "Deschide Facebook"
+        },
+        {
+          "value": "link",
+          "label": "Link scris mai jos"
+        }
+      ],
+      "default": "telefon"
+    },
+    {
+      "type": "text",
+      "id": "buton_1_link",
+      "label": "Link (doar pentru „Link scris mai jos”)",
+      "info": "De exemplu #servicii sau /pages/contact"
+    },
+    {
+      "type": "select",
+      "id": "buton_1_stil",
+      "label": "Aspect",
+      "options": [
+        {
+          "value": "plin",
+          "label": "Plin"
+        },
+        {
+          "value": "contur",
+          "label": "Doar contur"
+        }
+      ],
+      "default": "plin"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pachet",
+      "name": "Pachet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nume",
+          "label": "Numele pachetului",
+          "default": "Pachet"
+        },
+        {
+          "type": "text",
+          "id": "pret",
+          "label": "Prețul (doar cifra)",
+          "default": "3.000",
+          "info": "De exemplu 4.500 – pe site apare „de la 4.500 lei”."
+        },
+        {
+          "type": "textarea",
+          "id": "descriere",
+          "label": "Descriere scurtă"
+        },
+        {
+          "type": "textarea",
+          "id": "include",
+          "label": "Ce include",
+          "default": "primul serviciu\nal doilea serviciu",
+          "info": "Câte un serviciu pe rând."
+        },
+        {
+          "type": "checkbox",
+          "id": "recomandat",
+          "label": "Evidențiază acest pachet",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Pachete și prețuri",
+      "blocks": [
+        {
+          "type": "pachet"
+        },
+        {
+          "type": "pachet"
+        },
+        {
+          "type": "pachet"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+{%- comment -%}
+  O imagine aleasă în editor sau, dacă lipsește, o imagine provizorie din tema.
+  Parametri: poza, rezerva (fișierul provizoriu din assets), alt, clasa,
+  latime / inaltime (ale imaginii provizorii), incarcare ('lazy' sau 'eager'), sizes
+{%- endcomment -%}
+{%- liquid
+  assign text_alt = alt
+  if text_alt == blank and poza != blank
+    assign text_alt = poza.alt
+  endif
+  assign mod_incarcare = incarcare | default: 'lazy'
+  assign marimi = sizes | default: '100vw'
+-%}
+{%- if poza != blank -%}
+  {{
+    poza
+    | image_url: width: 1920
+    | image_tag:
+      class: clasa,
+      alt: text_alt,
+      loading: mod_incarcare,
+      sizes: marimi,
+      widths: '400, 600, 800, 1000, 1200, 1600, 1920'
+  }}
+{%- elsif rezerva != blank -%}
+  <img
+    src="{{ rezerva | asset_url }}"
+    alt="{{ text_alt | escape }}"
+    class="{{ clasa }}"
+    loading="{{ mod_incarcare }}"
+    width="{{ latime | default: 1000 }}"
+    height="{{ inaltime | default: 1000 }}"
+  >
+{%- endif -%}

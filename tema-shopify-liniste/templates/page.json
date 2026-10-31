@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "principal": {
+      "type": "pagina",
+      "settings": {
+        "culori": "deschis"
+      }
+    }
+  },
+  "order": [
+    "principal"
+  ]
+}

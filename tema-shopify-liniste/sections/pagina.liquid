@@ -1,0 +1,42 @@
+<section class="sectiune culori-{{ section.settings.culori }}" aria-labelledby="titlu-pagina">
+  <div class="pagina pagina--ingusta">
+    <header class="sectiune__antet">
+      <h1 class="sectiune__titlu" id="titlu-pagina">{{ page.title | escape }}</h1>
+      <span class="linie-fina" aria-hidden="true"></span>
+    </header>
+    <div class="text-bogat">{{ page.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Conținutul paginii",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Textul se scrie în Shopify: Magazin online → Pagini."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "deschis"
+    }
+  ]
+}
+{% endschema %}

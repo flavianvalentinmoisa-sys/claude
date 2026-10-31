@@ -1,0 +1,220 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign id_titlu = 'titlu-' | append: section.id
+-%}
+<section id="{{ ancora }}" class="sectiune culori-{{ s.culori }}"{% if s.titlu != blank %} aria-labelledby="{{ id_titlu }}"{% endif %}>
+  <div class="pagina">
+    {%- render 'antet-sectiune', eticheta: s.eticheta, titlu: s.titlu, introducere: s.introducere, id_titlu: id_titlu -%}
+
+    {%- if section.blocks.size == 0 -%}
+      <p class="nota-centrata">{{ s.text_fara_anunturi | escape }}</p>
+    {%- else -%}
+      <ul class="anunturi">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          <li {{ block.shopify_attributes }}>
+            <article class="card anunt{% if b.poza != blank or b.exemplu %} anunt--cu-poza{% endif %}">
+              {%- if b.poza != blank -%}
+                {%- render 'imagine', poza: b.poza, alt: b.nume, clasa: 'anunt__poza', sizes: '(min-width: 768px) 200px, 100vw' -%}
+              {%- elsif b.exemplu -%}
+                {%- render 'imagine', rezerva: 'anunt-exemplu.jpg', latime: 600, inaltime: 800, alt: 'Lumânare aprinsă', clasa: 'anunt__poza' -%}
+              {%- endif -%}
+              <div class="anunt__text">
+                {%- if b.exemplu -%}
+                  <p class="insigna-contur">{{ s.eticheta_exemplu | escape }}</p>
+                {%- endif -%}
+                <h3 class="anunt__nume">{{ b.nume | escape }}</h3>
+                {%- if b.perioada != blank -%}
+                  <p class="anunt__perioada">{{ b.perioada | escape }}</p>
+                {%- endif -%}
+                <span class="linie-fina linie-fina--stanga" aria-hidden="true"></span>
+                {%- if b.mesaj != blank -%}
+                  <p class="anunt__mesaj">{{ b.mesaj | escape }}</p>
+                {%- endif -%}
+                <dl class="anunt__detalii">
+                  {%- if b.slujba_data != blank or b.slujba_loc != blank -%}
+                    <div>
+                      <dt>{{ s.eticheta_slujba | escape }}</dt>
+                      <dd>
+                        {{ b.slujba_data | escape }}{% if b.slujba_ora != blank %}, {{ s.eticheta_ora | escape }} {{ b.slujba_ora | escape }}{% endif %}
+                        {%- if b.slujba_loc != blank -%}<br>{{ b.slujba_loc | escape }}{%- endif -%}
+                      </dd>
+                    </div>
+                  {%- endif -%}
+                  {%- if b.inmormantare != blank -%}
+                    <div>
+                      <dt>{{ s.eticheta_inmormantare | escape }}</dt>
+                      <dd>{{ b.inmormantare | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                </dl>
+              </div>
+            </article>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Anunțuri și condoleanțe",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "anunturi",
+      "info": "Fără spații sau diacritice. Un link „#anunturi” duce aici."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "deschis"
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Anunțuri și condoleanțe"
+    },
+    {
+      "type": "textarea",
+      "id": "introducere",
+      "label": "Introducere"
+    },
+    {
+      "type": "paragraph",
+      "content": "Fiecare anunț este un bloc. Trageți anunțul cel mai nou primul. Ștergeți anunțurile exemplu când adăugați unul real."
+    },
+    {
+      "type": "text",
+      "id": "eticheta_exemplu",
+      "label": "Eticheta anunțurilor exemplu",
+      "default": "Anunț exemplu"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_slujba",
+      "label": "Eticheta slujbei",
+      "default": "Slujba de înmormântare"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_ora",
+      "label": "Cuvântul dinaintea orei",
+      "default": "ora"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_inmormantare",
+      "label": "Eticheta înmormântării",
+      "default": "Înmormântarea"
+    },
+    {
+      "type": "text",
+      "id": "text_fara_anunturi",
+      "label": "Text când nu există anunțuri",
+      "default": "Momentan nu există anunțuri."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "anunt",
+      "name": "Anunț",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "exemplu",
+          "label": "Este anunț exemplu",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "nume",
+          "label": "Numele persoanei",
+          "default": "Nume și prenume"
+        },
+        {
+          "type": "text",
+          "id": "perioada",
+          "label": "Anii",
+          "default": "1950 – 2026"
+        },
+        {
+          "type": "textarea",
+          "id": "mesaj",
+          "label": "Mesajul",
+          "default": "Cu adâncă durere anunțăm trecerea la cele veșnice a celui drag. Dumnezeu să-l odihnească!"
+        },
+        {
+          "type": "header",
+          "content": "Slujba"
+        },
+        {
+          "type": "text",
+          "id": "slujba_data",
+          "label": "Data",
+          "default": "Sâmbătă, 7 noiembrie 2026"
+        },
+        {
+          "type": "text",
+          "id": "slujba_ora",
+          "label": "Ora",
+          "default": "11:00"
+        },
+        {
+          "type": "text",
+          "id": "slujba_loc",
+          "label": "Locul",
+          "default": "Biserica din Fetești"
+        },
+        {
+          "type": "text",
+          "id": "inmormantare",
+          "label": "Locul înmormântării (opțional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "poza",
+          "label": "Poză (opțional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "Anunțuri și condoleanțe",
+      "blocks": [
+        {
+          "type": "anunt"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

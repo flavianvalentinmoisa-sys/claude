@@ -1,0 +1,15 @@
+{%- comment -%} Eticheta, titlul și introducerea de deasupra unei secțiuni. {%- endcomment -%}
+{%- if eticheta != blank or titlu != blank or introducere != blank -%}
+  <header class="sectiune__antet">
+    {%- if eticheta != blank -%}
+      <p class="eticheta">{{ eticheta | escape }}</p>
+    {%- endif -%}
+    {%- if titlu != blank -%}
+      <h2 class="sectiune__titlu" id="{{ id_titlu }}">{{ titlu | escape }}</h2>
+      <span class="linie-fina" aria-hidden="true"></span>
+    {%- endif -%}
+    {%- if introducere != blank -%}
+      <p class="sectiune__introducere">{{ introducere | escape }}</p>
+    {%- endif -%}
+  </header>
+{%- endif -%}

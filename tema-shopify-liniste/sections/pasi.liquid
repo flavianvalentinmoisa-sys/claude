@@ -1,0 +1,138 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign id_titlu = 'titlu-' | append: section.id
+-%}
+<section id="{{ ancora }}" class="sectiune culori-{{ s.culori }}"{% if s.titlu != blank %} aria-labelledby="{{ id_titlu }}"{% endif %}>
+  <div class="pagina">
+    {%- render 'antet-sectiune', eticheta: s.eticheta, titlu: s.titlu, introducere: s.introducere, id_titlu: id_titlu -%}
+
+    <ol class="pasi">
+      {%- for block in section.blocks -%}
+        <li class="card pasi__pas" {{ block.shopify_attributes }}>
+          <span class="pasi__numar" aria-hidden="true">{{ forloop.index }}</span>
+          <div class="pasi__text">
+            <h3 class="titlu-card">{{ block.settings.titlu | escape }}</h3>
+            {%- if block.settings.text != blank -%}
+              <p class="text-secundar">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.lista != blank -%}
+              {%- assign linii = block.settings.lista | newline_to_br | split: '<br />' -%}
+              <ul class="lista-puncte">
+                {%- for linie in linii -%}
+                  {%- assign l = linie | strip -%}
+                  {%- if l != blank -%}
+                    <li>{{ l | escape }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+    {%- if s.nota_finala != blank -%}
+      <p class="nota">{{ s.nota_finala | escape }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pași numerotați",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "primii-pasi",
+      "info": "Fără spații sau diacritice. Un link „#primii-pasi” duce aici."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "deschis"
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Ce faceți în primele ore"
+    },
+    {
+      "type": "textarea",
+      "id": "introducere",
+      "label": "Introducere"
+    },
+    {
+      "type": "textarea",
+      "id": "nota_finala",
+      "label": "Notă la final"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pas",
+      "name": "Pas",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titlu",
+          "label": "Titlu",
+          "default": "Titlul pasului"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Ce trebuie făcut."
+        },
+        {
+          "type": "textarea",
+          "id": "lista",
+          "label": "Listă (opțional)",
+          "info": "Câte un punct pe rând."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Pași numerotați",
+      "blocks": [
+        {
+          "type": "pas"
+        },
+        {
+          "type": "pas"
+        },
+        {
+          "type": "pas"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

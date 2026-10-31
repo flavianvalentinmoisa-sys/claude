@@ -1,0 +1,103 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<header class="antet culori-negru">
+  <div class="pagina antet__rand">
+    <a href="{{ routes.root_url }}" class="antet__logo" aria-label="{{ settings.nume_firma | default: shop.name | escape }}">
+      {%- render 'logo', cu_nume: s.arata_nume -%}
+    </a>
+
+    {%- if section.blocks.size > 0 -%}
+      <nav class="antet__meniu" aria-label="{{ 'general.meniu' | t }}">
+        <ul>
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <a href="{% render 'href-link', catre: block.settings.catre %}">{{ block.settings.text | escape }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    {%- if s.arata_telefon and settings.telefon_principal != blank -%}
+      <a href="{% render 'link-telefon', numar: settings.telefon_principal %}" class="buton buton--plin antet__telefon">
+        {%- render 'pictograma', nume: 'telefon' -%}<span>{{ settings.telefon_principal | escape }}</span>
+      </a>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <details class="meniu-mobil">
+        <summary class="buton buton--contur meniu-mobil__buton" aria-label="{{ 'general.deschide_meniul' | t }}">
+          <span class="meniu-mobil__deschis">{%- render 'pictograma', nume: 'meniu' -%}</span>
+          <span class="meniu-mobil__inchis">{%- render 'pictograma', nume: 'inchide' -%}</span>
+          <span>{{ 'general.meniu' | t }}</span>
+        </summary>
+        <nav class="meniu-mobil__panou" aria-label="{{ 'general.meniu' | t }}">
+          <ul>
+            {%- for block in section.blocks -%}
+              <li><a href="{% render 'href-link', catre: block.settings.catre %}">{{ block.settings.text | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      </details>
+    {%- endif -%}
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Antet",
+  "tag": "div",
+  "class": "sectiune-antet",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "arata_nume",
+      "label": "Arată numele firmei lângă siglă",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_telefon",
+      "label": "Arată butonul cu telefonul principal",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "Legăturile din meniu se adaugă mai jos, ca blocuri."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Servicii"
+        },
+        {
+          "type": "text",
+          "id": "catre",
+          "label": "Duce la",
+          "default": "#servicii",
+          "info": "#numele-sectiunii (de ex. #servicii), /pages/... sau https://..."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Antet"
+    }
+  ]
+}
+{% endschema %}

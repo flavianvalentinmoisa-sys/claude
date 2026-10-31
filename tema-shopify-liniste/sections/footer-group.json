@@ -1,0 +1,57 @@
+{
+  "type": "footer",
+  "name": "Subsol",
+  "sections": {
+    "subsol": {
+      "type": "subsol",
+      "blocks": {
+        "link-1": {
+          "type": "link",
+          "settings": {
+            "text": "Primii pași",
+            "catre": "#primii-pasi"
+          }
+        },
+        "link-2": {
+          "type": "link",
+          "settings": {
+            "text": "Servicii",
+            "catre": "#servicii"
+          }
+        },
+        "link-3": {
+          "type": "link",
+          "settings": {
+            "text": "Pachete",
+            "catre": "#pachete"
+          }
+        },
+        "link-4": {
+          "type": "link",
+          "settings": {
+            "text": "Anunțuri",
+            "catre": "#anunturi"
+          }
+        },
+        "link-5": {
+          "type": "link",
+          "settings": {
+            "text": "Contact",
+            "catre": "#contact"
+          }
+        }
+      },
+      "block_order": [
+        "link-1",
+        "link-2",
+        "link-3",
+        "link-4",
+        "link-5"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "subsol"
+  ]
+}

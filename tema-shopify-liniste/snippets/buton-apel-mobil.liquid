@@ -1,0 +1,9 @@
+{%- comment -%} Butonul de apel fixat jos, doar pe telefon. {%- endcomment -%}
+{%- if settings.arata_buton_apel_mobil and settings.telefon_principal != blank -%}
+  <div class="apel-mobil culori-negru">
+    <a href="{% render 'link-telefon', numar: settings.telefon_principal %}" class="buton buton--plin apel-mobil__buton">
+      {%- render 'pictograma', nume: 'telefon' -%}
+      <span>{{ settings.text_buton_apel_mobil | escape }}: <span class="fara-rupere">{{ settings.telefon_principal | escape }}</span></span>
+    </a>
+  </div>
+{%- endif -%}

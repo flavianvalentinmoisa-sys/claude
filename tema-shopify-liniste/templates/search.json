@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "mesaj": {
+      "type": "text",
+      "settings": {
+        "ancora": "mesaj",
+        "culori": "deschis",
+        "eticheta": "",
+        "titlu": "Rezultatele căutării",
+        "introducere": "",
+        "text": "<p>Site-ul nostru este doar informativ. Pentru servicii și prețuri, vă rugăm să ne sunați, oricând, zi și noapte.</p>",
+        "buton_1_text": "Înapoi la pagina principală",
+        "buton_1_actiune": "link",
+        "buton_1_link": "/",
+        "buton_1_stil": "plin",
+        "buton_2_text": "Sunați NON-STOP",
+        "buton_2_actiune": "telefon",
+        "buton_2_link": "",
+        "buton_2_stil": "contur",
+        "arata_porumbel": true
+      }
+    }
+  },
+  "order": [
+    "mesaj"
+  ]
+}

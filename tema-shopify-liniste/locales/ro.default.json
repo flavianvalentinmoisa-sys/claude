@@ -1,0 +1,12 @@
+{
+  "general": {
+    "meniu": "Meniu",
+    "deschide_meniul": "Deschide meniul",
+    "fila_noua": "(se deschide într-o filă nouă)"
+  },
+  "parola": {
+    "titlu": "Site-ul se deschide în curând",
+    "eticheta": "Parola",
+    "buton": "Intrați"
+  }
+}

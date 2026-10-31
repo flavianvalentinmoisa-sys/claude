@@ -1,0 +1,9 @@
+{%- comment -%} Adresa unui link din meniu: „#servicii” merge și de pe alte pagini. {%- endcomment -%}
+{%- liquid
+  assign h = catre | strip
+  assign primul_caracter = h | slice: 0
+  if primul_caracter == '#' and template.name != 'index'
+    assign h = routes.root_url | append: h
+  endif
+  echo h
+-%}

@@ -1,0 +1,284 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign id_titlu = 'titlu-' | append: section.id
+-%}
+<section id="{{ ancora }}" class="sectiune culori-{{ s.culori }}"{% if s.titlu != blank %} aria-labelledby="{{ id_titlu }}"{% endif %}>
+  <div class="pagina">
+    {%- render 'antet-sectiune', eticheta: s.eticheta, titlu: s.titlu, introducere: s.introducere, id_titlu: id_titlu -%}
+
+    <div class="contact{% if s.arata_formular %} contact--cu-formular{% endif %}">
+      <div class="contact__date">
+        <h3 class="titlu-card">{{ s.titlu_telefoane | escape }}</h3>
+        <div class="contact__telefoane">
+          {%- if settings.telefon_principal != blank -%}
+            <a href="{% render 'link-telefon', numar: settings.telefon_principal %}" class="buton buton--plin buton--mare">
+              {%- render 'pictograma', nume: 'telefon' -%}<span class="buton__numar-mare">{{ settings.telefon_principal | escape }}</span>
+            </a>
+          {%- endif -%}
+          {%- if settings.telefon_secundar != blank -%}
+            <a href="{% render 'link-telefon', numar: settings.telefon_secundar %}" class="buton buton--contur buton--mare">
+              {%- render 'pictograma', nume: 'telefon' -%}<span class="buton__numar-mare">{{ settings.telefon_secundar | escape }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+
+        <dl class="contact__lista">
+          <div class="contact__rand">
+            {%- render 'pictograma', nume: 'locatie', clasa: 'contact__pictograma' -%}
+            <div>
+              <dt>{{ s.eticheta_adresa | escape }}</dt>
+              <dd class="text-secundar">
+                <address>
+                  {{ settings.adresa_strada | escape }}, {{ settings.adresa_localitate | escape }}, jud. {{ settings.adresa_judet | escape }}
+                  {%- if settings.adresa_reper != blank -%}<br>{{ settings.adresa_reper | escape }}{%- endif -%}
+                </address>
+              </dd>
+            </div>
+          </div>
+          {%- if settings.email != blank -%}
+            <div class="contact__rand">
+              {%- render 'pictograma', nume: 'email', clasa: 'contact__pictograma' -%}
+              <div>
+                <dt>{{ s.eticheta_email | escape }}</dt>
+                <dd><a href="mailto:{{ settings.email }}" class="link-subliniat rupe-oriunde">{{ settings.email | escape }}</a></dd>
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if settings.program != blank -%}
+            <div class="contact__rand">
+              {%- render 'pictograma', nume: 'ceas', clasa: 'contact__pictograma' -%}
+              <div>
+                <dt>{{ s.eticheta_program | escape }}</dt>
+                <dd class="text-secundar">{{ settings.program | escape }}</dd>
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if settings.facebook != blank -%}
+            <div class="contact__rand">
+              {%- render 'pictograma', nume: 'facebook', clasa: 'contact__pictograma' -%}
+              <div>
+                <dt class="ascuns-vizual">Facebook</dt>
+                <dd>
+                  <a href="{{ settings.facebook }}" target="_blank" rel="noopener" class="link-subliniat text-ingrosat">
+                    {{- s.text_facebook | escape -}}<span class="ascuns-vizual"> (se deschide într-o filă nouă)</span>
+                  </a>
+                </dd>
+              </div>
+            </div>
+          {%- endif -%}
+        </dl>
+
+        {%- if s.arata_harta and s.cautare_harta != blank -%}
+          <iframe
+            class="contact__harta"
+            title="{{ s.titlu_harta | escape }}"
+            src="https://www.google.com/maps?q={{ s.cautare_harta | url_encode }}&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        {%- endif -%}
+      </div>
+
+      {%- if s.arata_formular -%}
+        <div class="card contact__formular">
+          <h3 class="titlu-formular">{{ s.formular_titlu | escape }}</h3>
+          {%- if s.formular_explicatie != blank -%}
+            <p class="text-secundar">{{ s.formular_explicatie | escape }}</p>
+          {%- endif -%}
+          {%- form 'contact', id: 'formular-contact', class: 'formular' -%}
+            {%- if form.posted_successfully? -%}
+              <p class="formular__succes" role="status">{{ s.mesaj_succes | escape }}</p>
+            {%- endif -%}
+            {%- if form.errors -%}
+              <div class="formular__eroare" role="alert">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+            <label for="contact-nume">{{ s.eticheta_nume | escape }}</label>
+            <input id="contact-nume" type="text" name="contact[name]" autocomplete="name" required value="{{ form.name }}">
+            <label for="contact-telefon">{{ s.eticheta_telefon | escape }}</label>
+            <input id="contact-telefon" type="tel" name="contact[phone]" autocomplete="tel" value="{{ form.phone }}">
+            <label for="contact-email">{{ s.eticheta_email_formular | escape }}</label>
+            <input id="contact-email" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+            <label for="contact-mesaj">{{ s.eticheta_mesaj | escape }}</label>
+            <textarea id="contact-mesaj" name="contact[body]" rows="5" required>{{ form.body }}</textarea>
+            <button type="submit" class="buton buton--plin formular__buton">
+              {%- render 'pictograma', nume: 'email' -%}<span>{{ s.buton_formular | escape }}</span>
+            </button>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "contact",
+      "info": "Fără spații sau diacritice. Un link „#contact” duce aici."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "deschis"
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Contact"
+    },
+    {
+      "type": "textarea",
+      "id": "introducere",
+      "label": "Introducere"
+    },
+    {
+      "type": "paragraph",
+      "content": "Telefoanele, adresa, emailul și programul se schimbă din Setări temă → Datele firmei."
+    },
+    {
+      "type": "text",
+      "id": "titlu_telefoane",
+      "label": "Titlul telefoanelor",
+      "default": "Telefon NON-STOP"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_adresa",
+      "label": "Eticheta adresei",
+      "default": "Adresa"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_email",
+      "label": "Eticheta emailului",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_program",
+      "label": "Eticheta programului",
+      "default": "Program"
+    },
+    {
+      "type": "text",
+      "id": "text_facebook",
+      "label": "Textul linkului de Facebook",
+      "default": "Urmăriți-ne pe Facebook"
+    },
+    {
+      "type": "header",
+      "content": "Harta"
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_harta",
+      "label": "Arată harta Google",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cautare_harta",
+      "label": "Ce caută harta",
+      "default": "Strada Călărași, Fetești, Ialomița"
+    },
+    {
+      "type": "text",
+      "id": "titlu_harta",
+      "label": "Descrierea hărții (pentru nevăzători)",
+      "default": "Harta: sediul firmei"
+    },
+    {
+      "type": "header",
+      "content": "Formular"
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_formular",
+      "label": "Arată formularul",
+      "default": true,
+      "info": "Mesajele ajung pe emailul magazinului (Setări → Informații magazin)."
+    },
+    {
+      "type": "text",
+      "id": "formular_titlu",
+      "label": "Titlul formularului",
+      "default": "Scrieți-ne un mesaj"
+    },
+    {
+      "type": "textarea",
+      "id": "formular_explicatie",
+      "label": "Explicație",
+      "default": "Vă răspundem cât mai repede. Pentru situații urgente, vă rugăm să ne sunați."
+    },
+    {
+      "type": "text",
+      "id": "eticheta_nume",
+      "label": "Eticheta: nume",
+      "default": "Numele dumneavoastră"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_telefon",
+      "label": "Eticheta: telefon",
+      "default": "Telefonul dumneavoastră"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_email_formular",
+      "label": "Eticheta: email",
+      "default": "Emailul dumneavoastră"
+    },
+    {
+      "type": "text",
+      "id": "eticheta_mesaj",
+      "label": "Eticheta: mesaj",
+      "default": "Mesajul"
+    },
+    {
+      "type": "text",
+      "id": "buton_formular",
+      "label": "Textul butonului",
+      "default": "Trimiteți mesajul"
+    },
+    {
+      "type": "text",
+      "id": "mesaj_succes",
+      "label": "Mesaj după trimitere",
+      "default": "Vă mulțumim! Mesajul a fost trimis. Vă vom contacta cât mai curând."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact"
+    }
+  ]
+}
+{% endschema %}

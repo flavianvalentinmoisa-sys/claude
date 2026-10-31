@@ -1,0 +1,17 @@
+{%- comment -%}
+  Transformă un număr ca „0760 396 402” în „tel:+40760396402”.
+  Folosire: {% render 'link-telefon', numar: settings.telefon_principal %}
+{%- endcomment -%}
+{%- liquid
+  assign cifre = numar | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')' | remove: '+'
+  assign prima = cifre | slice: 0
+  assign primele_doua = cifre | slice: 0, 2
+  if primele_doua == '40'
+    echo 'tel:+' | append: cifre
+  elsif prima == '0'
+    assign rest = cifre | slice: 1, 30
+    echo 'tel:+40' | append: rest
+  else
+    echo 'tel:+' | append: cifre
+  endif
+-%}

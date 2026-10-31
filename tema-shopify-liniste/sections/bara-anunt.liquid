@@ -1,0 +1,57 @@
+{%- liquid
+  assign s = section.settings
+-%}
+{%- if s.text != blank or s.arata_telefoane -%}
+  <div class="bara-anunt culori-negru">
+    <p>
+      <span>{{ s.text | escape }}</span>
+      {%- if s.arata_telefoane -%}
+        {%- if settings.telefon_principal != blank %}
+          <a href="{% render 'link-telefon', numar: settings.telefon_principal %}" class="bara-anunt__telefon">{{ settings.telefon_principal | escape }}</a>
+        {%- endif -%}
+        {%- if settings.telefon_secundar != blank %}
+          {{ s.text_sau | escape }}
+          <a href="{% render 'link-telefon', numar: settings.telefon_secundar %}" class="bara-anunt__telefon">{{ settings.telefon_secundar | escape }}</a>
+        {%- endif -%}
+      {%- endif -%}
+    </p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bara de anunț",
+  "tag": "div",
+  "class": "sectiune-bara-anunt",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Disponibili NON-STOP, inclusiv în sărbători:"
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_telefoane",
+      "label": "Arată ambele telefoane după text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_sau",
+      "label": "Cuvântul dintre telefoane",
+      "default": "sau"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Bara de anunț"
+    }
+  ]
+}
+{% endschema %}

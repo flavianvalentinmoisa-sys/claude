@@ -1,0 +1,61 @@
+{%- comment -%}
+  Un buton. Parametri:
+  - text: textul de pe buton
+  - actiune: 'telefon', 'telefon_2', 'email', 'facebook' sau 'link'
+  - link: adresa, când actiune = 'link' (de ex. '#servicii' sau '/pages/contact')
+  - stil: 'plin' sau 'contur'
+  - mare: true pentru butoane mari
+{%- endcomment -%}
+{%- liquid
+  assign href = ''
+  assign numar = ''
+  assign extern = false
+  case actiune
+    when 'telefon'
+      assign numar = settings.telefon_principal
+    when 'telefon_2'
+      assign numar = settings.telefon_secundar
+    when 'email'
+      if settings.email != blank
+        assign href = 'mailto:' | append: settings.email
+      endif
+    when 'facebook'
+      assign href = settings.facebook
+      assign extern = true
+    else
+      assign href = link | strip
+      assign primul_caracter = href | slice: 0
+      if href contains 'http'
+        assign extern = true
+      elsif primul_caracter == '#' and template.name != 'index'
+        assign href = routes.root_url | append: href
+      endif
+  endcase
+  if numar != blank
+    capture href
+      render 'link-telefon', numar: numar
+    endcapture
+  endif
+-%}
+{%- if href != blank and text != blank -%}
+  <a
+    href="{{ href }}"
+    class="buton buton--{{ stil | default: 'plin' }}{% if mare %} buton--mare{% endif %}"
+    {% if extern %}
+      target="_blank" rel="noopener"
+    {% endif %}
+  >
+    {%- if numar != blank -%}
+      {%- render 'pictograma', nume: 'telefon' -%}
+      <span class="buton__text">
+        <span>{{ text | escape }}</span>
+        <span class="buton__numar">{{ numar | escape }}</span>
+      </span>
+    {%- else -%}
+      <span>{{ text | escape }}</span>
+    {%- endif -%}
+    {%- if extern -%}
+      <span class="ascuns-vizual"> (se deschide într-o filă nouă)</span>
+    {%- endif -%}
+  </a>
+{%- endif -%}

@@ -1,0 +1,279 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign opacitate = s.intunecare | divided_by: 100.0
+-%}
+<section id="{{ ancora }}" class="banner banner--{{ s.inaltime }} culori-inchis"{% if s.titlu != blank %} aria-labelledby="titlu-{{ section.id }}"{% endif %}>
+  {%- if section.index == 1 -%}
+    {%- assign incarcare = 'eager' -%}
+  {%- else -%}
+    {%- assign incarcare = 'lazy' -%}
+  {%- endif -%}
+  {%- render 'imagine', poza: s.poza, rezerva: 'banner-provizoriu.jpg', latime: 1920, inaltime: 1080, alt: s.descriere_poza, clasa: 'banner__poza', incarcare: incarcare -%}
+  <div class="banner__umbra" style="opacity: {{ opacitate }};" aria-hidden="true"></div>
+
+  <div class="banner__continut aparitie">
+    {%- if s.arata_logo -%}
+      <div class="banner__logo">{%- render 'logo', marime: 'mare', cu_nume: false -%}</div>
+    {%- endif -%}
+    {%- if s.arata_porumbel -%}
+      {%- render 'porumbel', clasa: 'banner__porumbel' -%}
+    {%- endif -%}
+    {%- if s.eticheta != blank -%}
+      <p class="eticheta">{{ s.eticheta | escape }}</p>
+    {%- endif -%}
+    {%- if s.titlu != blank -%}
+      {%- if section.index == 1 -%}
+        <h1 class="banner__titlu" id="titlu-{{ section.id }}">{{ s.titlu | escape }}</h1>
+      {%- else -%}
+        <h2 class="banner__titlu" id="titlu-{{ section.id }}">{{ s.titlu | escape }}</h2>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if s.text != blank -%}
+      <p class="banner__text">{{ s.text | escape }}</p>
+    {%- endif -%}
+
+    <div class="grup-butoane grup-butoane--centru banner__butoane">
+      {%- render 'buton', text: s.buton_1_text, actiune: s.buton_1_actiune, link: s.buton_1_link, stil: s.buton_1_stil, mare: true -%}
+      {%- render 'buton', text: s.buton_2_text, actiune: s.buton_2_actiune, link: s.buton_2_link, stil: s.buton_2_stil, mare: true -%}
+    </div>
+
+    {%- if s.arata_al_doilea_telefon and settings.telefon_secundar != blank -%}
+      <p class="banner__sau">
+        {{ s.text_sau | escape }}
+        <a href="{% render 'link-telefon', numar: settings.telefon_secundar %}" class="link-subliniat fara-rupere">{{ settings.telefon_secundar | escape }}</a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner cu poză",
+  "tag": "div",
+  "class": "sectiune-shopify",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "acasa",
+      "info": "Fără spații sau diacritice. Un link „#acasa” duce aici."
+    },
+    {
+      "type": "image_picker",
+      "id": "poza",
+      "label": "Poza de fundal",
+      "info": "Orizontală, minimum 1920 × 1080 px. Dacă nu alegeți, apare o poză provizorie."
+    },
+    {
+      "type": "text",
+      "id": "descriere_poza",
+      "label": "Ce se vede în poză (pentru nevăzători și Google)",
+      "default": "Mașinile funerare ale firmei"
+    },
+    {
+      "type": "select",
+      "id": "inaltime",
+      "label": "Înălțime",
+      "options": [
+        {
+          "value": "mica",
+          "label": "Mică"
+        },
+        {
+          "value": "mare",
+          "label": "Mare"
+        },
+        {
+          "value": "ecran",
+          "label": "Tot ecranul"
+        }
+      ],
+      "default": "ecran"
+    },
+    {
+      "type": "range",
+      "id": "intunecare",
+      "label": "Cât de întunecată e poza",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 75
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_logo",
+      "label": "Arată sigla",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_porumbel",
+      "label": "Arată porumbelul",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului",
+      "default": "Servicii funerare"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Suntem alături de dumneavoastră, cu respect și grijă"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Preluăm toate grijile, de la acte până la slujbă. Răspundem la telefon zi și noapte."
+    },
+    {
+      "type": "header",
+      "content": "Butonul 1"
+    },
+    {
+      "type": "text",
+      "id": "buton_1_text",
+      "label": "Text (gol = fără buton)",
+      "default": "Sunați acum, NON-STOP"
+    },
+    {
+      "type": "select",
+      "id": "buton_1_actiune",
+      "label": "Ce face",
+      "options": [
+        {
+          "value": "telefon",
+          "label": "Sună la numărul principal"
+        },
+        {
+          "value": "telefon_2",
+          "label": "Sună la al doilea număr"
+        },
+        {
+          "value": "email",
+          "label": "Deschide emailul"
+        },
+        {
+          "value": "facebook",
+          "label": "Deschide Facebook"
+        },
+        {
+          "value": "link",
+          "label": "Link scris mai jos"
+        }
+      ],
+      "default": "telefon"
+    },
+    {
+      "type": "text",
+      "id": "buton_1_link",
+      "label": "Link (doar pentru „Link scris mai jos”)",
+      "info": "De exemplu #servicii sau /pages/contact"
+    },
+    {
+      "type": "select",
+      "id": "buton_1_stil",
+      "label": "Aspect",
+      "options": [
+        {
+          "value": "plin",
+          "label": "Plin"
+        },
+        {
+          "value": "contur",
+          "label": "Doar contur"
+        }
+      ],
+      "default": "plin"
+    },
+    {
+      "type": "header",
+      "content": "Butonul 2"
+    },
+    {
+      "type": "text",
+      "id": "buton_2_text",
+      "label": "Text (gol = fără buton)",
+      "default": "Vedeți serviciile"
+    },
+    {
+      "type": "select",
+      "id": "buton_2_actiune",
+      "label": "Ce face",
+      "options": [
+        {
+          "value": "telefon",
+          "label": "Sună la numărul principal"
+        },
+        {
+          "value": "telefon_2",
+          "label": "Sună la al doilea număr"
+        },
+        {
+          "value": "email",
+          "label": "Deschide emailul"
+        },
+        {
+          "value": "facebook",
+          "label": "Deschide Facebook"
+        },
+        {
+          "value": "link",
+          "label": "Link scris mai jos"
+        }
+      ],
+      "default": "link"
+    },
+    {
+      "type": "text",
+      "id": "buton_2_link",
+      "label": "Link (doar pentru „Link scris mai jos”)",
+      "default": "#servicii",
+      "info": "De exemplu #servicii sau /pages/contact"
+    },
+    {
+      "type": "select",
+      "id": "buton_2_stil",
+      "label": "Aspect",
+      "options": [
+        {
+          "value": "plin",
+          "label": "Plin"
+        },
+        {
+          "value": "contur",
+          "label": "Doar contur"
+        }
+      ],
+      "default": "contur"
+    },
+    {
+      "type": "header",
+      "content": "Al doilea telefon"
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_al_doilea_telefon",
+      "label": "Arată sub butoane „sau” + al doilea număr",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_sau",
+      "label": "Cuvântul dinainte",
+      "default": "sau"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner cu poză"
+    }
+  ]
+}
+{% endschema %}

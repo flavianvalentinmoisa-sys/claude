@@ -1,0 +1,111 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign id_titlu = 'titlu-' | append: section.id
+-%}
+<section id="{{ ancora }}" class="sectiune culori-{{ s.culori }}"{% if s.titlu != blank %} aria-labelledby="{{ id_titlu }}"{% endif %}>
+  <div class="pagina">
+    {%- render 'antet-sectiune', eticheta: s.eticheta, titlu: s.titlu, introducere: s.introducere, id_titlu: id_titlu -%}
+
+    <div class="intrebari">
+      {%- for block in section.blocks -%}
+        <details class="card intrebare" {{ block.shopify_attributes }}>
+          <summary class="intrebare__titlu">
+            <span>{{ block.settings.intrebare | escape }}</span>
+            <span class="intrebare__semn" aria-hidden="true">+</span>
+          </summary>
+          <div class="intrebare__raspuns text-secundar">{{ block.settings.raspuns }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Întrebări frecvente",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "intrebari",
+      "info": "Fără spații sau diacritice. Un link „#intrebari” duce aici."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "inchis"
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Întrebări frecvente"
+    },
+    {
+      "type": "textarea",
+      "id": "introducere",
+      "label": "Introducere"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "intrebare",
+      "name": "Întrebare",
+      "settings": [
+        {
+          "type": "text",
+          "id": "intrebare",
+          "label": "Întrebarea",
+          "default": "Întrebarea?"
+        },
+        {
+          "type": "richtext",
+          "id": "raspuns",
+          "label": "Răspunsul",
+          "default": "<p>Răspunsul.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "Întrebări frecvente",
+      "blocks": [
+        {
+          "type": "intrebare"
+        },
+        {
+          "type": "intrebare"
+        },
+        {
+          "type": "intrebare"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

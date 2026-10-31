@@ -1,0 +1,236 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign id_titlu = 'titlu-' | append: section.id
+-%}
+<section id="{{ ancora }}" class="sectiune culori-{{ s.culori }}"{% if s.titlu != blank %} aria-labelledby="{{ id_titlu }}"{% endif %}>
+  <div class="pagina">
+    {%- render 'antet-sectiune', eticheta: s.eticheta, titlu: s.titlu, introducere: s.introducere, id_titlu: id_titlu -%}
+
+    <ul class="grila grila--{{ s.coloane_pe_rand }} coloane coloane--{{ s.stil }}">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="coloana{% if s.stil == 'carduri' %} card{% endif %}" {{ block.shopify_attributes }}>
+          {%- if b.poza != blank -%}
+            {%- render 'imagine', poza: b.poza, clasa: 'coloana__poza', sizes: '(min-width: 990px) 25vw, (min-width: 640px) 50vw, 100vw' -%}
+          {%- endif -%}
+          <div class="coloana__continut">
+            {%- if b.poza == blank and b.pictograma != 'niciuna' -%}
+              <span class="cerc-pictograma">{%- render 'pictograma', nume: b.pictograma -%}</span>
+            {%- endif -%}
+            <h3 class="titlu-card">{{ b.titlu | escape }}</h3>
+            {%- if b.text != blank -%}
+              <p class="text-secundar">{{ b.text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coloane cu pictograme",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "servicii",
+      "info": "Fără spații sau diacritice. Un link „#servicii” duce aici."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "inchis"
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Serviciile noastre"
+    },
+    {
+      "type": "textarea",
+      "id": "introducere",
+      "label": "Introducere"
+    },
+    {
+      "type": "select",
+      "id": "coloane_pe_rand",
+      "label": "Coloane pe rând (pe calculator)",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "stil",
+      "label": "Aspect",
+      "options": [
+        {
+          "value": "carduri",
+          "label": "Carduri cu chenar"
+        },
+        {
+          "value": "simplu",
+          "label": "Simplu, centrat"
+        }
+      ],
+      "default": "carduri"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "coloana",
+      "name": "Coloană",
+      "settings": [
+        {
+          "type": "select",
+          "id": "pictograma",
+          "label": "Pictogramă",
+          "options": [
+            {
+              "value": "niciuna",
+              "label": "Fără pictogramă"
+            },
+            {
+              "value": "masina",
+              "label": "Mașină"
+            },
+            {
+              "value": "glob",
+              "label": "Glob (repatrieri)"
+            },
+            {
+              "value": "maini",
+              "label": "Inimă cu mâini"
+            },
+            {
+              "value": "sicriu",
+              "label": "Sicriu"
+            },
+            {
+              "value": "flori",
+              "label": "Coroană de flori"
+            },
+            {
+              "value": "acte",
+              "label": "Acte"
+            },
+            {
+              "value": "lumanare",
+              "label": "Lumânare"
+            },
+            {
+              "value": "masa",
+              "label": "Masă (pomană)"
+            },
+            {
+              "value": "telefon",
+              "label": "Telefon"
+            },
+            {
+              "value": "ceas",
+              "label": "Ceas (non-stop)"
+            },
+            {
+              "value": "inima",
+              "label": "Inimă"
+            },
+            {
+              "value": "scut",
+              "label": "Scut"
+            },
+            {
+              "value": "verificat",
+              "label": "Bifă în cerc"
+            },
+            {
+              "value": "locatie",
+              "label": "Locație"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "porumbel",
+              "label": "Porumbel"
+            }
+          ],
+          "default": "verificat"
+        },
+        {
+          "type": "image_picker",
+          "id": "poza",
+          "label": "Poză (în locul pictogramei)"
+        },
+        {
+          "type": "text",
+          "id": "titlu",
+          "label": "Titlu",
+          "default": "Titlul coloanei"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "O scurtă descriere."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "Coloane cu pictograme",
+      "blocks": [
+        {
+          "type": "coloana"
+        },
+        {
+          "type": "coloana"
+        },
+        {
+          "type": "coloana"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

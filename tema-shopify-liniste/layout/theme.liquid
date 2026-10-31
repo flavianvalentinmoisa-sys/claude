@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'ro' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="{{ settings.culoare_negru }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- liquid
+      assign nume_firma = settings.nume_firma | default: shop.name
+      assign titlu_pagina = page_title
+      if template.name == 'index' and settings.seo_titlu_acasa != blank
+        assign titlu_pagina = settings.seo_titlu_acasa
+      elsif titlu_pagina == blank
+        assign titlu_pagina = nume_firma
+      else
+        unless titlu_pagina contains nume_firma
+          assign titlu_pagina = titlu_pagina | append: ' | ' | append: nume_firma
+        endunless
+      endif
+      assign descriere = page_description
+      if template.name == 'index' and settings.seo_descriere_acasa != blank
+        assign descriere = settings.seo_descriere_acasa
+      endif
+    -%}
+
+    <title>{{ titlu_pagina | escape }}</title>
+    {%- if descriere != blank %}
+      <meta name="description" content="{{ descriere | escape }}">
+    {%- endif %}
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ro_RO">
+    <meta property="og:site_name" content="{{ nume_firma | escape }}">
+    <meta property="og:title" content="{{ titlu_pagina | escape }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    {%- if descriere != blank %}
+      <meta property="og:description" content="{{ descriere | escape }}">
+    {%- endif %}
+    {%- if settings.imagine_partajare != blank %}
+      <meta property="og:image" content="https:{{ settings.imagine_partajare | image_url: width: 1200 }}">
+    {%- endif %}
+    <meta name="twitter:card" content="summary_large_image">
+
+    {%- if settings.favicon != blank %}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- else %}
+      <link rel="icon" type="image/png" href="{{ 'logo.png' | asset_url }}">
+    {%- endif %}
+
+    {%- render 'fonturi' -%}
+
+    <style>
+      :root {
+        --negru: {{ settings.culoare_negru }};
+        --antracit: {{ settings.culoare_antracit }};
+        --antracit-card: {{ settings.culoare_antracit_card }};
+        --crem: {{ settings.culoare_crem }};
+        --crem-card: {{ settings.culoare_crem_card }};
+        --crem-linie: {{ settings.culoare_crem_linie }};
+        --scris-inchis: {{ settings.culoare_scris_inchis }};
+        --scris-inchis-2: {{ settings.culoare_scris_inchis_2 }};
+        --scris-deschis: {{ settings.culoare_scris_deschis }};
+        --scris-deschis-2: {{ settings.culoare_scris_deschis_2 }};
+        --argintiu: {{ settings.culoare_argintiu }};
+        --auriu: {{ settings.culoare_auriu }};
+        --auriu-inchis: {{ settings.culoare_auriu_inchis }};
+        --auriu-transparent: {{ settings.culoare_auriu | color_modify: 'alpha', 0.28 }};
+        --auriu-fundal: {{ settings.culoare_auriu | color_modify: 'alpha', 0.12 }};
+        --raza-card: {{ settings.raza_carduri }}px;
+        --raza-buton: {% if settings.butoane_rotunde %}999px{% else %}{{ settings.raza_carduri }}px{% endif %};
+        --latime-logo: {{ settings.latime_logo }}px;
+        --font-titluri: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+        --font-text: 'Source Sans 3', 'Segoe UI', Roboto, Arial, sans-serif;
+      }
+    </style>
+
+    {{ 'tema.css' | asset_url | stylesheet_tag }}
+
+    {{ content_for_header }}
+
+    {%- if template.name == 'index' -%}
+      {%- render 'date-structurate' -%}
+    {%- endif -%}
+  </head>
+
+  <body class="sablon-{{ template.name | handle }}{% if settings.arata_buton_apel_mobil %} are-apel-mobil{% endif %}">
+    <a class="sari-la-continut" href="#continut">{{ settings.text_sari_la_continut | escape }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="continut" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- render 'buton-apel-mobil' -%}
+
+    <script>
+      // Închide meniul de pe telefon după ce se apasă o legătură.
+      document.addEventListener('click', function (e) {
+        var link = e.target.closest('.meniu-mobil a');
+        if (link) {
+          var d = link.closest('details');
+          if (d) d.removeAttribute('open');
+        }
+      });
+    </script>
+  </body>
+</html>

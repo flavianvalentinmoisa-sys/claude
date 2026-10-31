@@ -1,0 +1,162 @@
+{%- liquid
+  assign s = section.settings
+  assign ancora = s.ancora | default: section.id | handleize
+  assign id_titlu = 'titlu-' | append: section.id
+-%}
+<section id="{{ ancora }}" class="sectiune culori-{{ s.culori }}"{% if s.titlu != blank %} aria-labelledby="{{ id_titlu }}"{% endif %}>
+  <div class="pagina">
+    {%- render 'antet-sectiune', eticheta: s.eticheta, titlu: s.titlu, introducere: s.introducere, id_titlu: id_titlu -%}
+
+    <ul class="galerie galerie--{{ s.forma }}{% if s.forma == 'dreptunghi' %} grila grila--{{ s.coloane_pe_rand }}{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        <li class="galerie__element{% if s.forma == 'dreptunghi' %} card{% endif %}" {{ block.shopify_attributes }}>
+          <figure>
+            {%- render 'imagine', poza: b.poza, rezerva: 'poza-provizorie.jpg', latime: 1000, inaltime: 1000, alt: b.descriere_poza, clasa: 'galerie__poza', sizes: '(min-width: 990px) 33vw, (min-width: 640px) 50vw, 100vw' -%}
+            <figcaption class="galerie__text">
+              <h3 class="titlu-card">{{ b.titlu | escape }}</h3>
+              {%- if b.text != blank -%}
+                <p class="text-secundar">{{ b.text | escape }}</p>
+              {%- endif -%}
+            </figcaption>
+          </figure>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Galerie de poze",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancora",
+      "label": "Numele secțiunii (pentru linkuri)",
+      "default": "flota",
+      "info": "Fără spații sau diacritice. Un link „#flota” duce aici."
+    },
+    {
+      "type": "select",
+      "id": "culori",
+      "label": "Schema de culori",
+      "options": [
+        {
+          "value": "inchis",
+          "label": "Închis (antracit)"
+        },
+        {
+          "value": "deschis",
+          "label": "Deschis (crem)"
+        },
+        {
+          "value": "negru",
+          "label": "Negru"
+        }
+      ],
+      "default": "deschis"
+    },
+    {
+      "type": "text",
+      "id": "eticheta",
+      "label": "Text mic deasupra titlului"
+    },
+    {
+      "type": "text",
+      "id": "titlu",
+      "label": "Titlu",
+      "default": "Flota noastră"
+    },
+    {
+      "type": "textarea",
+      "id": "introducere",
+      "label": "Introducere"
+    },
+    {
+      "type": "select",
+      "id": "forma",
+      "label": "Forma pozelor",
+      "options": [
+        {
+          "value": "dreptunghi",
+          "label": "Dreptunghi (mașini, locuri)"
+        },
+        {
+          "value": "rotund",
+          "label": "Rotund (portrete)"
+        }
+      ],
+      "default": "dreptunghi"
+    },
+    {
+      "type": "select",
+      "id": "coloane_pe_rand",
+      "label": "Coloane pe rând (pentru dreptunghi)",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "element",
+      "name": "Poză",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "poza",
+          "label": "Poza"
+        },
+        {
+          "type": "text",
+          "id": "descriere_poza",
+          "label": "Ce se vede în poză",
+          "default": "Fotografie"
+        },
+        {
+          "type": "text",
+          "id": "titlu",
+          "label": "Titlu",
+          "default": "Titlu"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 24,
+  "presets": [
+    {
+      "name": "Galerie de poze",
+      "blocks": [
+        {
+          "type": "element"
+        },
+        {
+          "type": "element"
+        },
+        {
+          "type": "element"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

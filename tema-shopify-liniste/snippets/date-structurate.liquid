@@ -1,0 +1,70 @@
+{%- comment -%} Date structurate pentru Google (FuneralHome), generate din Setări temă. {%- endcomment -%}
+{%- liquid
+  assign nume_firma = settings.nume_firma | default: shop.name
+  assign zile = '["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]'
+  capture tel1
+    render 'link-telefon', numar: settings.telefon_principal
+  endcapture
+  capture tel2
+    render 'link-telefon', numar: settings.telefon_secundar
+  endcapture
+  assign tel1 = tel1 | remove: 'tel:'
+  assign tel2 = tel2 | remove: 'tel:'
+  assign strada = settings.adresa_strada
+  if settings.adresa_reper != blank
+    assign strada = strada | append: ' (' | append: settings.adresa_reper | append: ')'
+  endif
+  assign zone = settings.zona_deservita | newline_to_br | split: '<br />'
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["FuneralHome", "LocalBusiness"],
+    "name": {{ nume_firma | json }},
+    "url": {{ shop.url | append: '/' | json }},
+    {%- if settings.logo != blank %}
+      "logo": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }},
+    {%- else %}
+      "logo": {{ 'logo.png' | asset_url | prepend: 'https:' | json }},
+    {%- endif %}
+    {%- if settings.seo_descriere_acasa != blank %}
+      "description": {{ settings.seo_descriere_acasa | json }},
+    {%- endif %}
+    {%- if settings.telefon_principal != blank %}
+      "telephone": {{ tel1 | json }},
+    {%- endif %}
+    {%- if settings.email != blank %}
+      "email": {{ settings.email | json }},
+    {%- endif %}
+    {%- if settings.facebook != blank %}
+      "sameAs": [{{ settings.facebook | json }}],
+    {%- endif %}
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": {{ strada | json }},
+      "addressLocality": {{ settings.adresa_localitate | json }},
+      "addressRegion": {{ settings.adresa_judet | json }},
+      "addressCountry": "RO"
+    },
+    "contactPoint": [
+      {%- if settings.telefon_principal != blank %}
+        { "@type": "ContactPoint", "telephone": {{ tel1 | json }}, "contactType": "customer service", "availableLanguage": "ro", "hoursAvailable": { "@type": "OpeningHoursSpecification", "dayOfWeek": {{ zile }}, "opens": "00:00", "closes": "23:59" } }
+      {%- endif -%}
+      {%- if settings.telefon_secundar != blank %}
+        {%- if settings.telefon_principal != blank %},{% endif %}
+        { "@type": "ContactPoint", "telephone": {{ tel2 | json }}, "contactType": "customer service", "availableLanguage": "ro", "hoursAvailable": { "@type": "OpeningHoursSpecification", "dayOfWeek": {{ zile }}, "opens": "00:00", "closes": "23:59" } }
+      {%- endif %}
+    ],
+    "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": {{ zile }}, "opens": "00:00", "closes": "23:59" },
+    "areaServed": [
+      {%- assign separator = '' -%}
+      {%- for zona in zone -%}
+        {%- assign z = zona | strip -%}
+        {%- if z != blank -%}
+          {{ separator }}{ "@type": "Place", "name": {{ z | json }} }
+          {%- assign separator = ', ' -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  }
+</script>

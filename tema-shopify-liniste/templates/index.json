@@ -1,0 +1,536 @@
+{
+  "sections": {
+    "acasa": {
+      "type": "banner",
+      "settings": {
+        "ancora": "acasa",
+        "descriere_poza": "Mașinile funerare ale firmei PAC Funerare Fetești",
+        "inaltime": "ecran",
+        "intunecare": 75,
+        "arata_logo": true,
+        "arata_porumbel": true,
+        "eticheta": "Servicii funerare în Fetești și în județul Ialomița",
+        "titlu": "Suntem alături de dumneavoastră, cu respect și grijă",
+        "text": "Preluăm toate grijile, de la acte până la slujbă, ca să puteți fi lângă cei dragi. Răspundem la telefon zi și noapte.",
+        "buton_1_text": "Sunați acum, NON-STOP",
+        "buton_1_actiune": "telefon",
+        "buton_1_link": "",
+        "buton_1_stil": "plin",
+        "buton_2_text": "Vedeți serviciile",
+        "buton_2_actiune": "link",
+        "buton_2_link": "#servicii",
+        "buton_2_stil": "contur",
+        "arata_al_doilea_telefon": true,
+        "text_sau": "sau"
+      }
+    },
+    "primii-pasi": {
+      "type": "pasi",
+      "settings": {
+        "ancora": "primii-pasi",
+        "culori": "deschis",
+        "eticheta": "",
+        "titlu": "Ce faceți în primele ore",
+        "introducere": "Știm cât de greu este acest moment. Nu trebuie să rezolvați totul singuri. Iată pașii, pe scurt:",
+        "nota_finala": "Dacă nu aveți toate actele, nu vă îngrijorați. Sunați-ne și găsim împreună o soluție."
+      },
+      "blocks": {
+        "pas-1": {
+          "type": "pas",
+          "settings": {
+            "titlu": "Sunați-ne, la orice oră",
+            "text": "Un singur telefon este de ajuns. Vă ascultăm, vă explicăm ce urmează și venim acolo unde este nevoie, oricând, inclusiv noaptea și în sărbători.",
+            "lista": ""
+          }
+        },
+        "pas-2": {
+          "type": "pas",
+          "settings": {
+            "titlu": "Anunțați medicul",
+            "text": "Dacă decesul a avut loc acasă, medicul de familie constată decesul și eliberează certificatul medical constatator al decesului. Dacă a avut loc în spital, acest act îl eliberează spitalul. Vă putem ajuta să luați legătura cu medicul.",
+            "lista": ""
+          }
+        },
+        "pas-3": {
+          "type": "pas",
+          "settings": {
+            "titlu": "Pregătiți actele",
+            "text": "Puneți deoparte, dacă le aveți la îndemână:",
+            "lista": "buletinul (cartea de identitate) persoanei decedate\ncertificatul de naștere și, dacă este cazul, certificatul de căsătorie\nbuletinul dumneavoastră (al persoanei care declară decesul)\nultimul cupon de pensie, pentru ajutorul de deces\nlivretul militar, dacă există"
+          }
+        },
+        "pas-4": {
+          "type": "pas",
+          "settings": {
+            "titlu": "Noi ne ocupăm de rest",
+            "text": "Preluăm persoana decedată, o pregătim cu grijă, obținem certificatul de deces de la Starea Civilă, organizăm slujba după tradiția ortodoxă, transportul și tot ce ține de înmormântare. Vă ținem la curent la fiecare pas.",
+            "lista": ""
+          }
+        }
+      },
+      "block_order": [
+        "pas-1",
+        "pas-2",
+        "pas-3",
+        "pas-4"
+      ]
+    },
+    "servicii": {
+      "type": "coloane",
+      "settings": {
+        "ancora": "servicii",
+        "culori": "inchis",
+        "eticheta": "",
+        "titlu": "Serviciile noastre",
+        "introducere": "Oferim servicii funerare complete, pentru ca familia să aibă un singur sprijin, de la primul telefon până la ultimul drum.",
+        "coloane_pe_rand": "4",
+        "stil": "carduri"
+      },
+      "blocks": {
+        "coloana-1": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "masina",
+            "titlu": "Transport funerar local și național",
+            "text": "Transport în Fetești, în tot județul Ialomița și oriunde în țară, cu mașini funerare proprii."
+          }
+        },
+        "coloana-2": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "glob",
+            "titlu": "Repatrieri",
+            "text": "Aducem acasă persoanele decedate în străinătate și ne ocupăm de actele necesare."
+          }
+        },
+        "coloana-3": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "maini",
+            "titlu": "Preluare și îmbălsămare",
+            "text": "Preluare de la domiciliu sau de la spital, pregătire, îmbălsămare și îmbrăcare cu toată grija."
+          }
+        },
+        "coloana-4": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "sicriu",
+            "titlu": "Sicrie și accesorii",
+            "text": "Sicrie pentru orice buget, cruci, lumânări, prosoape și toate accesoriile necesare."
+          }
+        },
+        "coloana-5": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "flori",
+            "titlu": "Coroane și aranjamente florale",
+            "text": "Coroane, jerbe și aranjamente florale, realizate la comandă."
+          }
+        },
+        "coloana-6": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "acte",
+            "titlu": "Acte și certificat de deces",
+            "text": "Obținem în locul dumneavoastră certificatul de deces și vă îndrumăm pentru ajutorul de deces."
+          }
+        },
+        "coloana-7": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "lumanare",
+            "titlu": "Slujbă după tradiția ortodoxă",
+            "text": "Organizăm slujba de înmormântare împreună cu preotul și biserica, după rânduiala creștin-ortodoxă."
+          }
+        },
+        "coloana-8": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "masa",
+            "titlu": "Pomană și parastase",
+            "text": "Vă ajutăm cu organizarea mesei de pomenire și a parastaselor de 3 zile, 9 zile, 40 de zile și mai departe."
+          }
+        }
+      },
+      "block_order": [
+        "coloana-1",
+        "coloana-2",
+        "coloana-3",
+        "coloana-4",
+        "coloana-5",
+        "coloana-6",
+        "coloana-7",
+        "coloana-8"
+      ]
+    },
+    "flota": {
+      "type": "galerie",
+      "settings": {
+        "ancora": "flota",
+        "culori": "deschis",
+        "eticheta": "",
+        "titlu": "Flota noastră",
+        "introducere": "Avem mașini funerare proprii, curate și îngrijite, pregătite oricând pentru drumuri scurte sau lungi.",
+        "forma": "dreptunghi",
+        "coloane_pe_rand": "3"
+      },
+      "blocks": {
+        "element-1": {
+          "type": "element",
+          "settings": {
+            "descriere_poza": "Mașină funerară de ceremonie",
+            "titlu": "Mașină funerară de ceremonie",
+            "text": "Pentru cortegiul funerar din Fetești și din localitățile apropiate. Interior sobru, îngrijit."
+          }
+        },
+        "element-2": {
+          "type": "element",
+          "settings": {
+            "descriere_poza": "Mașină funerară pentru transport național",
+            "titlu": "Mașină pentru transport național",
+            "text": "Pentru drumuri lungi în alte județe, cu echipare pentru transport în condiții corespunzătoare."
+          }
+        },
+        "element-3": {
+          "type": "element",
+          "settings": {
+            "descriere_poza": "Mașină funerară pentru repatrieri",
+            "titlu": "Mașină pentru repatrieri",
+            "text": "Pentru preluarea de la aeroport sau de la graniță și aducerea acasă a celor dragi."
+          }
+        }
+      },
+      "block_order": [
+        "element-1",
+        "element-2",
+        "element-3"
+      ]
+    },
+    "pachete": {
+      "type": "pachete",
+      "settings": {
+        "ancora": "pachete",
+        "culori": "inchis",
+        "eticheta": "",
+        "titlu": "Pachete de servicii",
+        "introducere": "Am pregătit trei pachete orientative. Fiecare poate fi adaptat după dorințele și posibilitățile familiei.",
+        "text_de_la": "de la",
+        "moneda": "lei",
+        "eticheta_recomandat": "Cel mai ales",
+        "titlu_include": "Include:",
+        "mentiune": "Prețurile sunt orientative, vă oferim o ofertă exactă la telefon.",
+        "buton_1_text": "Cereți o ofertă exactă",
+        "buton_1_actiune": "telefon",
+        "buton_1_link": "",
+        "buton_1_stil": "plin"
+      },
+      "blocks": {
+        "pachet-1": {
+          "type": "pachet",
+          "settings": {
+            "nume": "Pachetul Esențial",
+            "pret": "2.500",
+            "descriere": "Serviciile de bază, făcute cu aceeași grijă.",
+            "include": "preluarea persoanei decedate\nsicriu simplu și accesorii de bază\npregătirea și îmbrăcarea\ntransport funerar în Fetești\najutor pentru obținerea actelor",
+            "recomandat": false
+          }
+        },
+        "pachet-2": {
+          "type": "pachet",
+          "settings": {
+            "nume": "Pachetul Tradițional",
+            "pret": "4.500",
+            "descriere": "Tot ce este necesar pentru o înmormântare după tradiție.",
+            "include": "tot ce include Pachetul Esențial\nsicriu de calitate superioară\nîmbălsămare\ncoroană de flori\norganizarea slujbei cu preotul\nobținerea certificatului de deces",
+            "recomandat": true
+          }
+        },
+        "pachet-3": {
+          "type": "pachet",
+          "settings": {
+            "nume": "Pachetul Complet",
+            "pret": "7.500",
+            "descriere": "Ne ocupăm de absolut tot, de la acte până la pomană.",
+            "include": "tot ce include Pachetul Tradițional\nsicriu premium și accesorii complete\naranjamente florale suplimentare\ntransport în tot județul Ialomița\norganizarea mesei de pomenire\nun coordonator alături de familie toată ziua",
+            "recomandat": false
+          }
+        }
+      },
+      "block_order": [
+        "pachet-1",
+        "pachet-2",
+        "pachet-3"
+      ]
+    },
+    "de-ce-noi": {
+      "type": "coloane",
+      "settings": {
+        "ancora": "de-ce-noi",
+        "culori": "deschis",
+        "eticheta": "",
+        "titlu": "De ce PAC Funerare",
+        "introducere": "Familiile din Fetești ne aleg pentru că știu că se pot baza pe noi.",
+        "coloane_pe_rand": "4",
+        "stil": "simplu"
+      },
+      "blocks": {
+        "coloana-1": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "ceas",
+            "titlu": "Disponibili NON-STOP",
+            "text": "Răspundem la telefon zi și noapte, în weekend și în sărbători. Nu sunteți niciodată singuri."
+          }
+        },
+        "coloana-2": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "masina",
+            "titlu": "Flotă proprie",
+            "text": "Mașinile funerare sunt ale noastre, așa că plecăm imediat, fără să așteptăm pe nimeni."
+          }
+        },
+        "coloana-3": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "verificat",
+            "titlu": "Ne ocupăm de tot",
+            "text": "De la acte și certificatul de deces până la slujbă și pomană, totul printr-un singur telefon."
+          }
+        },
+        "coloana-4": {
+          "type": "coloana",
+          "settings": {
+            "pictograma": "inima",
+            "titlu": "Respect și discreție",
+            "text": "Tratăm fiecare familie și fiecare persoană decedată cu demnitate, răbdare și discreție."
+          }
+        }
+      },
+      "block_order": [
+        "coloana-1",
+        "coloana-2",
+        "coloana-3",
+        "coloana-4"
+      ]
+    },
+    "despre-noi": {
+      "type": "imagine-cu-text",
+      "settings": {
+        "ancora": "despre-noi",
+        "culori": "inchis",
+        "descriere_poza": "Sediul PAC Funerare Fetești",
+        "pozitie_poza": "stanga",
+        "eticheta": "Despre noi",
+        "titlu": "O firmă din Fetești, pentru oamenii din Fetești",
+        "text": "<p>Suntem o firmă locală de servicii funerare și cunoaștem obiceiurile, bisericile și cimitirele din zonă.</p><p>Lucrăm cu răbdare și discreție, ca familia să se poată ocupa de ce contează cu adevărat.</p>",
+        "buton_1_text": "Sunați-ne",
+        "buton_1_actiune": "telefon",
+        "buton_1_link": "",
+        "buton_1_stil": "plin",
+        "buton_2_text": "",
+        "buton_2_actiune": "link",
+        "buton_2_link": "",
+        "buton_2_stil": "contur"
+      },
+      "disabled": true
+    },
+    "echipa": {
+      "type": "galerie",
+      "settings": {
+        "ancora": "echipa",
+        "culori": "inchis",
+        "eticheta": "",
+        "titlu": "Echipa noastră",
+        "introducere": "Oameni din comunitate, care vă cunosc și vă înțeleg. Ne puteți suna direct pe oricare dintre noi.",
+        "forma": "rotund",
+        "coloane_pe_rand": "3"
+      },
+      "blocks": {
+        "element-1": {
+          "type": "element",
+          "settings": {
+            "descriere_poza": "Fotografia administratorului",
+            "titlu": "Nume și prenume",
+            "text": "Administrator, coordonator servicii funerare"
+          }
+        },
+        "element-2": {
+          "type": "element",
+          "settings": {
+            "descriere_poza": "Fotografia consilierului funerar",
+            "titlu": "Nume și prenume",
+            "text": "Consilier funerar, acte și organizare"
+          }
+        },
+        "element-3": {
+          "type": "element",
+          "settings": {
+            "descriere_poza": "Fotografia colegului de la transport",
+            "titlu": "Nume și prenume",
+            "text": "Transport funerar și repatrieri"
+          }
+        }
+      },
+      "block_order": [
+        "element-1",
+        "element-2",
+        "element-3"
+      ]
+    },
+    "anunturi": {
+      "type": "anunturi",
+      "settings": {
+        "ancora": "anunturi",
+        "culori": "deschis",
+        "eticheta": "",
+        "titlu": "Anunțuri și condoleanțe",
+        "introducere": "Aici anunțăm, cu acordul familiilor, trecerea la cele veșnice a celor dragi și programul slujbelor.",
+        "eticheta_exemplu": "Anunț exemplu",
+        "eticheta_slujba": "Slujba de înmormântare",
+        "eticheta_ora": "ora",
+        "eticheta_inmormantare": "Înmormântarea",
+        "text_fara_anunturi": "Momentan nu există anunțuri."
+      },
+      "blocks": {
+        "anunt-1": {
+          "type": "anunt",
+          "settings": {
+            "exemplu": true,
+            "nume": "Ion Popescu",
+            "perioada": "1941 – 2026",
+            "mesaj": "Cu adâncă durere anunțăm trecerea la cele veșnice a celui care a fost un tată și bunic iubit. Dumnezeu să-l odihnească în pace!",
+            "slujba_data": "Sâmbătă, 7 noiembrie 2026",
+            "slujba_ora": "11:00",
+            "slujba_loc": "Biserica „Sfântul Nicolae”, Fetești",
+            "inmormantare": "Cimitirul din Fetești-Oraș"
+          }
+        },
+        "anunt-2": {
+          "type": "anunt",
+          "settings": {
+            "exemplu": true,
+            "nume": "Maria Ionescu",
+            "perioada": "1950 – 2026",
+            "mesaj": "Familia îndurerată anunță plecarea dintre noi a unei mame și bunici devotate. Sincere condoleanțe familiei!",
+            "slujba_data": "Duminică, 8 noiembrie 2026",
+            "slujba_ora": "12:00",
+            "slujba_loc": "Biserica din Buliga",
+            "inmormantare": ""
+          }
+        }
+      },
+      "block_order": [
+        "anunt-1",
+        "anunt-2"
+      ]
+    },
+    "intrebari": {
+      "type": "intrebari",
+      "settings": {
+        "ancora": "intrebari",
+        "culori": "inchis",
+        "eticheta": "",
+        "titlu": "Întrebări frecvente",
+        "introducere": "Răspunsuri scurte la întrebările pe care ni le pun cel mai des familiile."
+      },
+      "blocks": {
+        "intrebare-1": {
+          "type": "intrebare",
+          "settings": {
+            "intrebare": "Ce fac imediat după ce a decedat cineva drag?",
+            "raspuns": "<p>Sunați-ne la orice oră. Vă explicăm pas cu pas ce trebuie făcut, anunțăm împreună medicul și venim noi să preluăm persoana decedată.</p>"
+          }
+        },
+        "intrebare-2": {
+          "type": "intrebare",
+          "settings": {
+            "intrebare": "Cât costă o înmormântare?",
+            "raspuns": "<p>Depinde de serviciile alese. Prețurile orientative sunt la secțiunea Pachete, iar la telefon vă facem o ofertă exactă, fără costuri ascunse.</p>"
+          }
+        },
+        "intrebare-3": {
+          "type": "intrebare",
+          "settings": {
+            "intrebare": "Ce acte sunt necesare?",
+            "raspuns": "<p>De regulă: buletinul persoanei decedate, certificatul de naștere și de căsătorie, buletinul dumneavoastră și certificatul medical constatator al decesului. Noi obținem certificatul de deces de la Starea Civilă.</p>"
+          }
+        },
+        "intrebare-4": {
+          "type": "intrebare",
+          "settings": {
+            "intrebare": "Faceți transport în alte județe sau din străinătate?",
+            "raspuns": "<p>Da. Facem transport funerar în toată țara și repatrieri din străinătate, cu mașini proprii, și ne ocupăm de actele necesare.</p>"
+          }
+        },
+        "intrebare-5": {
+          "type": "intrebare",
+          "settings": {
+            "intrebare": "Vă ocupați și de slujbă și de preot?",
+            "raspuns": "<p>Da. Organizăm slujba după tradiția ortodoxă, ne înțelegem cu preotul și cu biserica și pregătim tot ce este nevoie, inclusiv pomana.</p>"
+          }
+        },
+        "intrebare-6": {
+          "type": "intrebare",
+          "settings": {
+            "intrebare": "Pot primi ajutorul de deces?",
+            "raspuns": "<p>Dacă persoana decedată era pensionară sau asigurată, familia poate primi ajutorul de deces. Vă spunem ce acte trebuie depuse și unde.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "intrebare-1",
+        "intrebare-2",
+        "intrebare-3",
+        "intrebare-4",
+        "intrebare-5",
+        "intrebare-6"
+      ]
+    },
+    "apel-final": {
+      "type": "text",
+      "settings": {
+        "ancora": "apel",
+        "culori": "negru",
+        "eticheta": "",
+        "titlu": "Suntem aici, oricând aveți nevoie",
+        "introducere": "",
+        "text": "<p>Un singur telefon și ne ocupăm noi de tot. Zi și noapte, inclusiv în sărbători.</p>",
+        "buton_1_text": "Sunați acum",
+        "buton_1_actiune": "telefon",
+        "buton_1_link": "",
+        "buton_1_stil": "plin",
+        "buton_2_text": "Al doilea număr",
+        "buton_2_actiune": "telefon_2",
+        "buton_2_link": "",
+        "buton_2_stil": "contur",
+        "arata_porumbel": true
+      },
+      "disabled": true
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "ancora": "contact",
+        "culori": "deschis",
+        "eticheta": "",
+        "titlu": "Contact",
+        "introducere": "Ne puteți suna oricând, zi și noapte. Dacă preferați, ne puteți scrie sau ne puteți găsi la sediu."
+      }
+    }
+  },
+  "order": [
+    "acasa",
+    "primii-pasi",
+    "servicii",
+    "flota",
+    "pachete",
+    "de-ce-noi",
+    "despre-noi",
+    "echipa",
+    "anunturi",
+    "intrebari",
+    "apel-final",
+    "contact"
+  ]
+}

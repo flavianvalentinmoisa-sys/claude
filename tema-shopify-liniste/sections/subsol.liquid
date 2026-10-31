@@ -1,0 +1,141 @@
+{%- liquid
+  assign s = section.settings
+  assign nume_firma = settings.nume_firma | default: shop.name
+-%}
+<footer class="subsol culori-negru">
+  <div class="pagina subsol__grila">
+    <div>
+      {%- render 'logo', cu_nume: true -%}
+      {%- if s.descriere != blank -%}
+        <p class="text-secundar subsol__descriere">{{ s.descriere | escape }}</p>
+      {%- endif -%}
+      {%- if s.arata_porumbel -%}
+        {%- render 'porumbel', clasa: 'porumbel--subsol' -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <nav aria-label="{{ s.titlu_linkuri | escape }}">
+        <h2 class="subsol__titlu">{{ s.titlu_linkuri | escape }}</h2>
+        <ul class="subsol__lista">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <a href="{% render 'href-link', catre: block.settings.catre %}" class="text-secundar">{{ block.settings.text | escape }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- else -%}
+      <div></div>
+    {%- endif -%}
+
+    <div>
+      <h2 class="subsol__titlu">{{ s.titlu_contact | escape }}</h2>
+      <ul class="subsol__lista">
+        {%- if settings.telefon_principal != blank -%}
+          <li><a href="{% render 'link-telefon', numar: settings.telefon_principal %}" class="link-subliniat subsol__telefon">{{ settings.telefon_principal | escape }}</a></li>
+        {%- endif -%}
+        {%- if settings.telefon_secundar != blank -%}
+          <li><a href="{% render 'link-telefon', numar: settings.telefon_secundar %}" class="link-subliniat subsol__telefon">{{ settings.telefon_secundar | escape }}</a></li>
+        {%- endif -%}
+        <li class="text-secundar">
+          <address>
+            {{ settings.adresa_strada | escape }}, {{ settings.adresa_localitate | escape }}, jud. {{ settings.adresa_judet | escape }}
+            {%- if settings.adresa_reper != blank -%}<br>{{ settings.adresa_reper | escape }}{%- endif -%}
+          </address>
+        </li>
+        {%- if settings.email != blank -%}
+          <li><a href="mailto:{{ settings.email }}" class="link-subliniat rupe-oriunde">{{ settings.email | escape }}</a></li>
+        {%- endif -%}
+        {%- if settings.facebook != blank -%}
+          <li>
+            <a href="{{ settings.facebook }}" target="_blank" rel="noopener" class="link-subliniat">
+              {{- s.text_facebook | escape -}}<span class="ascuns-vizual"> (se deschide într-o filă nouă)</span>
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+  <p class="pagina subsol__drepturi text-secundar">
+    &copy; {{ 'now' | date: '%Y' }} {{ nume_firma | escape }}. {{ s.text_drepturi | escape }}
+  </p>
+</footer>
+
+{% schema %}
+{
+  "name": "Subsol",
+  "tag": "div",
+  "class": "sectiune-subsol",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "descriere",
+      "label": "Descriere scurtă",
+      "default": "Servicii funerare complete în Fetești și în județul Ialomița. Suntem alături de familiile îndoliate, zi și noapte."
+    },
+    {
+      "type": "checkbox",
+      "id": "arata_porumbel",
+      "label": "Arată porumbelul",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "titlu_linkuri",
+      "label": "Titlul legăturilor",
+      "default": "Legături rapide"
+    },
+    {
+      "type": "text",
+      "id": "titlu_contact",
+      "label": "Titlul coloanei de contact",
+      "default": "Contact NON-STOP"
+    },
+    {
+      "type": "text",
+      "id": "text_facebook",
+      "label": "Textul linkului de Facebook",
+      "default": "Urmăriți-ne pe Facebook"
+    },
+    {
+      "type": "text",
+      "id": "text_drepturi",
+      "label": "Text drepturi",
+      "default": "Toate drepturile rezervate."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Servicii"
+        },
+        {
+          "type": "text",
+          "id": "catre",
+          "label": "Duce la",
+          "default": "#servicii",
+          "info": "#numele-sectiunii (de ex. #servicii), /pages/... sau https://..."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "enabled_on": {
+    "groups": [
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Subsol"
+    }
+  ]
+}
+{% endschema %}
