@@ -1,0 +1,29 @@
+{
+  "name": "pac-funerare-fetesti",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Site de prezentare PAC Funerare Fetești",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "verificare": "tsc --noEmit -p tsconfig.json",
+    "build": "npm run verificare && vite build && vite build --ssr src/pregenerare-server.tsx --outDir dist-server && node scripts/pregenerare.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/source-sans-3": "^5.3.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}

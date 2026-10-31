@@ -1,0 +1,225 @@
+/*
+ * ==================================================================
+ *   TEMA SITE-ULUI: CULORI ȘI FONTURI
+ * ==================================================================
+ *   Toate culorile și fonturile sunt definite AICI, o singură dată.
+ *   Pentru a schimba o culoare, schimbați codul ei (ex: #c9b787).
+ * ==================================================================
+ */
+@import "tailwindcss";
+
+@theme {
+  /* --- Paleta de bază --- */
+  --color-negru: #0c0c0d;          /* negru profund: subsol, bara de sus */
+  --color-antracit: #1a1b1e;       /* secțiunile închise */
+  --color-antracit-card: #24252a;  /* cardurile din secțiunile închise */
+  --color-crem: #f6f2ea;           /* secțiunile deschise */
+  --color-crem-card: #fffdf9;      /* cardurile din secțiunile deschise */
+  --color-crem-linie: #e3d9c7;     /* liniile fine pe fundal deschis */
+  --color-scris-inchis: #1c1c1f;   /* textul pe fundal deschis */
+  --color-scris-inchis-2: #4a4945; /* textul secundar pe fundal deschis */
+  --color-scris-deschis: #f3f1ec;  /* textul pe fundal închis */
+  --color-scris-deschis-2: #bdbcb7;/* textul secundar pe fundal închis */
+  --color-argintiu: #c8cbd0;       /* argintiul din siglă, porumbel */
+  --color-auriu: #c9b787;          /* accent discret: butoane, linii fine */
+  --color-auriu-inchis: #76612f;   /* accentul folosit ca text pe fundal deschis */
+
+  /* --- Fonturi --- */
+  --font-titluri: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-text: "Source Sans 3", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/*
+ * Culorile „de lucru” ale fiecărei secțiuni. Fiecare secțiune primește
+ * automat tonul închis sau deschis (alternativ), iar componentele
+ * folosesc numele de mai jos (bg-fundal, text-scris, border-linie...).
+ */
+@theme inline {
+  --color-fundal: var(--ton-fundal);
+  --color-card: var(--ton-card);
+  --color-scris: var(--ton-scris);
+  --color-scris-2: var(--ton-scris-2);
+  --color-linie: var(--ton-linie);
+  --color-accent: var(--ton-accent);
+  --color-buton: var(--ton-buton);
+  --color-buton-scris: var(--ton-buton-scris);
+}
+
+.ton-inchis {
+  --ton-fundal: var(--color-antracit);
+  --ton-card: var(--color-antracit-card);
+  --ton-scris: var(--color-scris-deschis);
+  --ton-scris-2: var(--color-scris-deschis-2);
+  --ton-linie: rgb(201 183 135 / 0.28);
+  --ton-accent: var(--color-auriu);
+  --ton-buton: var(--color-auriu);
+  --ton-buton-scris: var(--color-negru);
+}
+
+.ton-deschis {
+  --ton-fundal: var(--color-crem);
+  --ton-card: var(--color-crem-card);
+  --ton-scris: var(--color-scris-inchis);
+  --ton-scris-2: var(--color-scris-inchis-2);
+  --ton-linie: var(--color-crem-linie);
+  --ton-accent: var(--color-auriu-inchis);
+  --ton-buton: var(--color-negru);
+  --ton-buton-scris: var(--color-scris-deschis);
+}
+
+.ton-negru {
+  --ton-fundal: var(--color-negru);
+  --ton-card: var(--color-antracit);
+  --ton-scris: var(--color-scris-deschis);
+  --ton-scris-2: var(--color-scris-deschis-2);
+  --ton-linie: rgb(201 183 135 / 0.25);
+  --ton-accent: var(--color-auriu);
+  --ton-buton: var(--color-auriu);
+  --ton-buton-scris: var(--color-negru);
+}
+
+/* ------------------------------------------------------------------
+ *  Reguli generale
+ * ------------------------------------------------------------------ */
+@layer base {
+  html {
+    /* Text puțin mai mare decât de obicei: mulți vizitatori sunt în vârstă. */
+    font-size: 112.5%;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-negru);
+    color: var(--color-scris-inchis);
+    font-family: var(--font-text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-titluri);
+    font-weight: 600;
+    line-height: 1.15;
+    text-wrap: balance;
+    font-variant-numeric: lining-nums;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-auriu);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-auriu);
+    color: var(--color-negru);
+  }
+}
+
+@layer components {
+  /* Buton principal (umplut) */
+  .buton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .buton-plin {
+    background-color: var(--ton-buton);
+    color: var(--ton-buton-scris);
+    border: 1px solid var(--ton-buton);
+  }
+
+  .buton-plin:hover {
+    filter: brightness(1.08);
+  }
+
+  .buton-contur {
+    background-color: transparent;
+    color: var(--ton-scris);
+    border: 1px solid var(--ton-accent);
+  }
+
+  .buton-contur:hover {
+    background-color: rgb(201 183 135 / 0.12);
+  }
+
+  /* Cifre drepte (1, 2, 3) în fontul pentru titluri */
+  .cifre-drepte {
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1;
+  }
+
+  /* Linie fină decorativă sub titluri */
+  .linie-fina {
+    display: block;
+    width: 3.5rem;
+    height: 1px;
+    background-color: var(--ton-accent);
+  }
+
+  .link-subliniat {
+    text-decoration: underline;
+    text-decoration-color: var(--ton-accent);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  .link-subliniat:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* Acordeonul de la Întrebări frecvente */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] .semn-acordeon {
+  transform: rotate(45deg);
+}
+
+/* Apariție discretă a primului ecran */
+@media (prefers-reduced-motion: no-preference) {
+  .aparitie {
+    animation: aparitie 0.9s ease-out both;
+  }
+
+  @keyframes aparitie {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
