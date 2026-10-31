@@ -1,14 +1,14 @@
-import { intrebari } from "../content/site";
-import Sectiune, { type Ton } from "../componente/Sectiune";
+import type { SectiuneIntrebari } from "../content/tipuri.ts";
+import Sectiune, { type PropsSectiune } from "../componente/Sectiune";
 
-/** Întrebări frecvente, sub formă de acordeon (funcționează și din tastatură). */
-export default function Intrebari({ ton }: { ton: Ton }) {
+/** Întrebări frecvente, ca acordeon (funcționează și din tastatură). */
+export default function Intrebari({ id, culori, date }: PropsSectiune<SectiuneIntrebari>) {
   return (
-    <Sectiune id="intrebari" ton={ton} titlu={intrebari.titlu} introducere={intrebari.introducere}>
+    <Sectiune id={id} culori={culori} eticheta={date.eticheta} titlu={date.titlu} introducere={date.introducere}>
       <div className="mx-auto max-w-3xl space-y-4">
-        {intrebari.lista.map((q) => (
-          <details key={q.intrebare} className="bg-card border-linie group rounded-2xl border">
-            <summary className="flex items-center justify-between gap-4 rounded-2xl p-5 text-lg font-semibold md:p-6 md:text-xl">
+        {date.elemente.map((q, i) => (
+          <details key={`${q.intrebare}-${i}`} className="bg-card border-linie rounded-card border">
+            <summary className="rounded-card flex items-center justify-between gap-4 p-5 text-lg font-semibold md:p-6 md:text-xl">
               <span>{q.intrebare}</span>
               <span
                 aria-hidden="true"

@@ -5,7 +5,13 @@
  *  • datele structurate JSON-LD (FuneralHome) cu ambele telefoane și adresa.
  * Nu conține texte proprii: totul vine din site.ts.
  */
-import { firma, pachete, seo, servicii } from "../src/content/site.ts";
+import { ordine, sectiuni, setari } from "../src/content/site.ts";
+import type { Sectiune } from "../src/content/tipuri.ts";
+
+const { firma, seo } = setari;
+
+/** Doar secțiunile vizibile, ca să nu apară în Google ce e ascuns pe site. */
+const vizibile: Sectiune[] = ordine.filter((r) => r.vizibil).map((r) => sectiuni[r.id]);
 import { formatPret, telefonInternational, toateTelefoanele } from "../src/content/ajutoare.ts";
 
 const escapa = (t: string) =>
@@ -18,7 +24,10 @@ function adresaCompleta(cale: string): string {
 
 export function dateStructurate() {
   const telefoane = toateTelefoanele().map(telefonInternational);
-  const preturi = pachete.lista.map((p) => p.pretDeLa);
+  const preturi = vizibile.flatMap((s) => (s.tip === "pachete" ? s.elemente.map((p) => p.pretDeLa) : []));
+  // Serviciile: toate coloanele cu pictograme din secțiunea „servicii”, dacă e vizibilă.
+  const servicii = vizibile.find((s) => s === sectiuni.servicii);
+  const listaServicii = servicii && servicii.tip === "coloane" ? servicii.elemente : [];
   const a = firma.adresa;
 
   return {
@@ -63,14 +72,18 @@ export function dateStructurate() {
     ...(preturi.length
       ? { priceRange: `de la ${formatPret(Math.min(...preturi))} lei`, currenciesAccepted: "RON" }
       : {}),
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: servicii.titlu,
-      itemListElement: servicii.lista.map((s) => ({
-        "@type": "Offer",
-        itemOffered: { "@type": "Service", name: s.titlu, description: s.descriere },
-      })),
-    },
+    ...(listaServicii.length
+      ? {
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: servicii?.titlu ?? firma.nume,
+            itemListElement: listaServicii.map((s) => ({
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: s.titlu, description: s.text },
+            })),
+          },
+        }
+      : {}),
   };
 }
 

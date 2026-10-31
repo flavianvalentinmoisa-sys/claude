@@ -24,15 +24,21 @@
   --color-auriu: #c9b787;          /* accent discret: butoane, linii fine */
   --color-auriu-inchis: #76612f;   /* accentul folosit ca text pe fundal deschis */
 
+  /* --- Forme --- */
+  --radius-card: 1rem;             /* colțurile cardurilor (0 = drepte) */
+  --radius-buton: 999px;           /* colțurile butoanelor (999px = rotunde) */
+  --container-pagina: 72rem;       /* lățimea maximă a conținutului */
+
   /* --- Fonturi --- */
   --font-titluri: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-text: "Source Sans 3", "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 /*
- * Culorile „de lucru” ale fiecărei secțiuni. Fiecare secțiune primește
- * automat tonul închis sau deschis (alternativ), iar componentele
- * folosesc numele de mai jos (bg-fundal, text-scris, border-linie...).
+ * SCHEME DE CULORI (ca în tema Dawn). Fiecare secțiune folosește una:
+ * „inchis”, „deschis” sau „negru” (câmpul „culori” din site.ts).
+ * Fără „culori”, secțiunile alternează automat închis / deschis.
+ * Componentele folosesc doar numele de mai jos (bg-fundal, text-scris...).
  */
 @theme inline {
   --color-fundal: var(--ton-fundal);
@@ -45,7 +51,7 @@
   --color-buton-scris: var(--ton-buton-scris);
 }
 
-.ton-inchis {
+.culori-inchis {
   --ton-fundal: var(--color-antracit);
   --ton-card: var(--color-antracit-card);
   --ton-scris: var(--color-scris-deschis);
@@ -56,7 +62,7 @@
   --ton-buton-scris: var(--color-negru);
 }
 
-.ton-deschis {
+.culori-deschis {
   --ton-fundal: var(--color-crem);
   --ton-card: var(--color-crem-card);
   --ton-scris: var(--color-scris-inchis);
@@ -67,7 +73,7 @@
   --ton-buton-scris: var(--color-scris-deschis);
 }
 
-.ton-negru {
+.culori-negru {
   --ton-fundal: var(--color-negru);
   --ton-card: var(--color-antracit);
   --ton-scris: var(--color-scris-deschis);
@@ -134,7 +140,7 @@
     gap: 0.6rem;
     min-height: 3.25rem;
     padding: 0.8rem 1.6rem;
-    border-radius: 999px;
+    border-radius: var(--radius-buton);
     font-weight: 600;
     font-size: 1.05rem;
     letter-spacing: 0.01em;

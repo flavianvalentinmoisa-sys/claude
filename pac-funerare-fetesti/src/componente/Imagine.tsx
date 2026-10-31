@@ -1,4 +1,4 @@
-import type { Poza } from "../content/tipuri";
+import type { Poza } from "../content/tipuri.ts";
 
 interface Props {
   poza: Poza;

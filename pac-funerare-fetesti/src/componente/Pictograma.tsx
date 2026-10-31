@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { NumePictograma } from "../content/tipuri";
+import type { NumePictograma } from "../content/tipuri.ts";
 
 /*
  * Pictograme simple, desenate cu linii subțiri.
@@ -96,6 +96,9 @@ const desene: Record<NumePictograma, ReactNode> = {
       <rect x="3" y="5.5" width="18" height="13" rx="1.5" />
       <path d="m3.5 6.5 8.5 6.5 8.5-6.5" />
     </>
+  ),
+  porumbel: (
+    <path d="M2 15.5 6 14c2-.6 4-.4 6 .1 2.2.5 4.4.2 6.2-1.3 1-.8 1.8-1.4 3-1.3l1.3.9-2 .6c-.6 2.3-2.8 4.3-6.1 4.8-3.3.5-6.2-.4-8.5-1.3-1.9-.7-4-1-6.6-1.5ZM9.6 14C9 10.7 7.4 7.3 4.6 4.3c4 .7 7.9 3.7 9.7 8.4M12.4 13.2c.9-3 3.1-5.7 7-7.3-1.5 2.1-2.4 4.3-2.8 6.7" />
   ),
   facebook: (
     <path d="M14 21.5v-8h2.8l.4-3.2H14V8.4c0-.9.3-1.6 1.6-1.6h1.7V4a22 22 0 0 0-2.5-.1c-2.5 0-4.2 1.5-4.2 4.3v2.1H7.8v3.2h2.8v8" />

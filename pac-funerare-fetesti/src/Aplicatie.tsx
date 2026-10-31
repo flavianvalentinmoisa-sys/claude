@@ -1,35 +1,31 @@
-import { sectiuniVizibile } from "./content/ajutoare";
-import { interfata } from "./content/site";
+import { sectiuniAfisate } from "./content/ajutoare.ts";
+import { setari } from "./content/site.ts";
 import Antet from "./componente/Antet";
+import BaraAnunt from "./componente/BaraAnunt";
 import ButonApelMobil from "./componente/ButonApelMobil";
-import type { Ton } from "./componente/Sectiune";
-import { componenteSectiuni } from "./sections";
-import Subsol from "./sections/Subsol";
+import Subsol from "./componente/Subsol";
+import { DeseneazaSectiunea } from "./sections";
 
 /**
- * Pagina întreagă. Secțiunile apar în ordinea din site.ts,
- * iar fundalurile se alternează automat (închis / deschis).
+ * Pagina întreagă: bara de anunț, antetul, secțiunile din site.ts
+ * (în ordinea de acolo) și subsolul.
  */
 export default function Aplicatie() {
-  const vizibile = sectiuniVizibile();
-  // Dacă pagina începe cu Hero (închis), următoarea secțiune e deschisă.
-  const decalaj = vizibile[0]?.id === "hero" ? 0 : 1;
-
+  const sectiuni = sectiuniAfisate();
   return (
     <>
       <a
         href="#continut"
         className="bg-auriu text-negru sr-only z-[60] rounded-full px-5 py-3 font-semibold focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
       >
-        {interfata.sariLaContinut}
+        {setari.texte.sariLaContinut}
       </a>
+      <BaraAnunt />
       <Antet />
       <main id="continut" tabIndex={-1} className="outline-none">
-        {vizibile.map((s, i) => {
-          const Componenta = componenteSectiuni[s.id];
-          const ton: Ton = (i + decalaj) % 2 === 0 ? "inchis" : "deschis";
-          return <Componenta key={s.id} ton={ton} />;
-        })}
+        {sectiuni.map((s, i) => (
+          <DeseneazaSectiunea key={s.id} sectiune={s} primul={i === 0} />
+        ))}
       </main>
       <Subsol />
       <ButonApelMobil />

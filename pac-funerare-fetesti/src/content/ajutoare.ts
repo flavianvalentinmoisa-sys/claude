@@ -1,9 +1,11 @@
 /*
- * Funcții mici, folosite de componente. Nu conțin texte.
+ * Funcții mici folosite de temă. Nu conțin texte.
  * De regulă NU trebuie modificat.
  */
-import { firma, sectiuni } from "./site.ts";
-import type { IdSectiune } from "./tipuri.ts";
+import { ordine, sectiuni, setari } from "./site.ts";
+import type { SchemaCulori, Sectiune } from "./tipuri.ts";
+
+const { firma } = setari;
 
 /** "0760 396 402" -> "tel:+40760396402" */
 export function linkTelefon(numar: string): string {
@@ -34,23 +36,71 @@ export function adresaScurta(): string {
   return `${a.strada}, ${a.localitate}, jud. ${a.judet}`;
 }
 
-export function linkEmail(): string {
-  return `mailto:${firma.email}`;
+export const linkEmail = () => `mailto:${firma.email}`;
+
+export const linkHarta = (cautare: string) =>
+  `https://www.google.com/maps?q=${encodeURIComponent(cautare)}&output=embed`;
+
+/* ------------------------------------------------------------------
+ *  Secțiuni
+ * ------------------------------------------------------------------ */
+
+export interface SectiuneAfisata {
+  id: string;
+  date: Sectiune;
+  culori: SchemaCulori;
 }
 
-export function linkHarta(cautare: string): string {
-  return `https://www.google.com/maps?q=${encodeURIComponent(cautare)}&output=embed`;
+/**
+ * Secțiunile vizibile, în ordine, fiecare cu schema de culori finală.
+ * Fără „culori” setat, secțiunile alternează: deschis, închis, deschis...
+ * Bannerul e mereu închis (are poză), iar după el urmează una deschisă.
+ */
+export function sectiuniAfisate(): SectiuneAfisata[] {
+  let anterioara: SchemaCulori = "inchis"; // bara de sus e închisă
+  return ordine
+    .filter((r) => r.vizibil)
+    .map((r) => {
+      const date: Sectiune = sectiuni[r.id];
+      const implicita: SchemaCulori =
+        date.tip === "banner" ? "inchis" : anterioara === "deschis" ? "inchis" : "deschis";
+      const culori = date.culori ?? implicita;
+      anterioara = culori;
+      return { id: r.id, date, culori };
+    });
 }
 
-export function linkHartaMare(cautare: string): string {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cautare)}`;
+/** true dacă secțiunea există și e vizibilă. */
+export function esteVizibila(id: string): boolean {
+  return ordine.some((r) => r.id === id && r.vizibil);
 }
 
-/** Secțiunile vizibile, în ordinea din site.ts. */
-export function sectiuniVizibile() {
-  return sectiuni.filter((s) => s.vizibil);
+/* ------------------------------------------------------------------
+ *  Butoane și legături (câmpul „catre”)
+ * ------------------------------------------------------------------ */
+
+export interface LegaturaRezolvata {
+  href: string;
+  /** true = se deschide într-o filă nouă */
+  extern: boolean;
+  /** numărul de telefon, dacă e un buton de apel */
+  telefon?: string;
 }
 
-export function esteVizibila(id: IdSectiune): boolean {
-  return sectiuni.some((s) => s.id === id && s.vizibil);
+/**
+ * Transformă „catre” într-o adresă reală.
+ * Întoarce null dacă legătura duce spre o secțiune ascunsă sau lipsă.
+ */
+export function rezolvaLegatura(catre: string): LegaturaRezolvata | null {
+  const c = catre.trim();
+  if (c === "telefon") return { href: linkTelefon(firma.telefonPrincipal), extern: false, telefon: firma.telefonPrincipal };
+  if (c === "telefon-2") {
+    if (!firma.telefonSecundar.trim()) return null;
+    return { href: linkTelefon(firma.telefonSecundar), extern: false, telefon: firma.telefonSecundar };
+  }
+  if (c === "email") return { href: linkEmail(), extern: false };
+  if (c === "facebook") return firma.facebook ? { href: firma.facebook, extern: true } : null;
+  if (c.startsWith("#")) return esteVizibila(c.slice(1)) ? { href: c, extern: false } : null;
+  if (/^https?:\/\//.test(c)) return { href: c, extern: true };
+  return { href: c, extern: false };
 }

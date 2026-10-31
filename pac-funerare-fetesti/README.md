@@ -1,14 +1,22 @@
-# PAC Funerare Fetești – site de prezentare
+# Tema „Liniște” – site informativ pentru servicii funerare
 
-React + Vite + TypeScript + Tailwind CSS v4, fără backend.
+Temă React + Vite + TypeScript + Tailwind CSS v4, inspirată de structura temei Dawn
+(setări de temă, secțiuni refolosibile, ordine separată de conținut), dar mult mai simplă.
+Doar informativ: fără produse, coș sau checkout. Fără backend.
 
-- **Tot conținutul:** `src/content/site.ts` (tipurile în `src/content/tipuri.ts`).
-- **Secțiunile:** `src/sections/` – ordinea și vizibilitatea din lista `sectiuni` din `site.ts`.
-- **Culori și fonturi:** `src/stiluri/tema.css` (blocul `@theme`).
-- **SEO + JSON-LD (FuneralHome):** generate din `site.ts` de `scripts/seo.ts`, injectate în `<head>`.
-- **Pregenerare:** `npm run build` scrie conținutul paginii direct în `dist/index.html`.
+Conținutul implicit: PAC Funerare Fetești.
 
-Ghid pentru editare fără cunoștințe tehnice: [EDITARE.md](./EDITARE.md).
+| Ce | Unde |
+|----|------|
+| Conținut (ordine, setări, secțiuni) | `src/content/site.ts` |
+| Schema tipurilor de secțiuni | `src/content/tipuri.ts` |
+| Tipurile de secțiuni (banner, pasi, coloane, galerie, pachete, anunturi, intrebari, contact, imagine-cu-text, text) | `src/sections/` |
+| Antet, bară de anunț, subsol, butoane, pictograme | `src/componente/` |
+| Culori, scheme de culori, forme, fonturi | `src/stiluri/tema.css` |
+| SEO + JSON-LD (FuneralHome), generate din conținut | `scripts/seo.ts` |
+| Pregenerare HTML la build | `src/pregenerare-server.tsx`, `scripts/pregenerare.mjs` |
+
+Ghid de editare fără cunoștințe tehnice, cu modele pentru fiecare tip: [EDITARE.md](./EDITARE.md).
 
 ```bash
 npm install
