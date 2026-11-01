@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Servicii Funerare Non-Stop</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Servicii funerare complete, non-stop: transport funerar, acte și formalități, pregătirea defunctului, capelă, sicrie și accesorii, incinerare și repatriere.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: o bandă de antet sobră cu numărul de telefon mereu la vedere, apoi secțiuni liniștite pe fond de piatră rece; accentul de alamă marchează doar acțiunile. */
+:root {
+  --stone: #F2F3F1;
+  --paper: #FFFFFF;
+  --ink: #1C252C;
+  --muted: #56616A;
+  --line: #D6DAD8;
+  --night: #18232B;
+  --night-fg: #E9ECEA;
+  --night-muted: #A9B4BA;
+  --brass: #8A6B37;
+  --brass-strong: #6F5328;
+  --brass-soft: #EFE7D8;
+  --on-brass: #FFFFFF;
+  --ph: #E3E6E4;
+  --ph-line: #CBD1CE;
+  --font-display: "Marcellus", "Trajan Pro", Georgia, "Times New Roman", serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(1.9rem, 4vw, 2.6rem);
+  --step-4: clamp(2.3rem, 5.4vw, 3.6rem);
+  --radius: 4px;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --stone: #11181D; --paper: #172128; --ink: #E6EAE8; --muted: #9EAAB1; --line: #2A363E;
+    --night: #0B1115; --night-fg: #E6EAE8; --night-muted: #93A0A7;
+    --brass: #C9A96B; --brass-strong: #DCBE85; --brass-soft: #2A251B; --on-brass: #17120A;
+    --ph: #1D2830; --ph-line: #2C3943;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --stone: #11181D; --paper: #172128; --ink: #E6EAE8; --muted: #9EAAB1; --line: #2A363E;
+  --night: #0B1115; --night-fg: #E6EAE8; --night-muted: #93A0A7;
+  --brass: #C9A96B; --brass-strong: #DCBE85; --brass-soft: #2A251B; --on-brass: #17120A;
+  --ph: #1D2830; --ph-line: #2C3943;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--stone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--night);
+}
+img, video { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1160px; margin: 0 auto;
+  padding-left: var(--gutter-l); padding-right: var(--gutter-r);
+}
+.section { padding-block: clamp(56px, 8vw, 96px); }
+.eyebrow {
+  font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--brass); font-weight: 600;
+}
+.section-head { display: grid; gap: 12px; max-width: 62ch; margin-bottom: clamp(28px, 4vw, 44px); }
+.section-head h2 { font-size: var(--step-3); }
+.section-head p { color: var(--muted); }
+
+/* Butoane */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 22px; border-radius: var(--radius);
+  font: 600 var(--step-0)/1 var(--font-body); text-decoration: none; cursor: pointer;
+  border: 1px solid transparent; transition: background-color .2s, border-color .2s, color .2s;
+}
+.btn-primary { background: var(--brass); color: var(--on-brass); }
+.btn-primary:hover { background: var(--brass-strong); }
+.btn-ghost { border-color: currentColor; color: inherit; background: transparent; }
+.btn-ghost:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+
+/* Antet */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--night); color: var(--night-fg);
+  border-bottom: 1px solid color-mix(in srgb, var(--night-fg) 12%, transparent);
+}
+.topbar .wrap { display: flex; align-items: center; gap: 24px; min-height: 72px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+.brand-mark { width: 34px; height: 34px; flex: none; color: var(--brass); }
+.brand-name { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav { display: flex; gap: 22px; margin-left: auto; }
+.nav a { text-decoration: none; color: var(--night-muted); font-size: 0.98rem; }
+.nav a:hover { color: var(--night-fg); }
+.topbar .btn { min-height: 42px; padding: 0 16px; white-space: nowrap; }
+@media (max-width: 980px) { .nav { display: none; } .topbar .btn { margin-left: auto; } }
+@media (max-width: 420px) { .topbar .btn .label-long { display: none; } }
+
+/* Hero */
+.hero { background: var(--night); color: var(--night-fg); }
+.hero .wrap {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px); padding-block: clamp(48px, 7vw, 88px); align-items: start;
+}
+.hero-copy { display: grid; gap: 22px; min-width: 0; }
+.hero h1 { font-size: var(--step-4); }
+.hero-lead { color: var(--night-muted); font-size: var(--step-1); max-width: 46ch; }
+.hero-phone { display: grid; gap: 4px; }
+.hero-phone small { color: var(--night-muted); letter-spacing: 0.12em; text-transform: uppercase; font-size: var(--step--1); }
+.hero-phone a { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); text-decoration: none; color: var(--brass); font-variant-numeric: tabular-nums; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.firststeps {
+  background: color-mix(in srgb, var(--night-fg) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--night-fg) 14%, transparent);
+  border-radius: var(--radius); padding: clamp(22px, 3vw, 32px); display: grid; gap: 16px; min-width: 0;
+}
+.firststeps h2 { font-size: var(--step-2); }
+.firststeps ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; counter-reset: s; }
+.firststeps li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 12px; color: var(--night-muted); }
+.firststeps li::before {
+  content: counter(s); font-family: var(--font-display); color: var(--brass);
+  border: 1px solid currentColor; border-radius: 50%; width: 28px; height: 28px;
+  display: grid; place-items: center; font-size: 0.95rem;
+}
+.firststeps li b { color: var(--night-fg); font-weight: 600; }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
+
+/* Bandă de încredere */
+.assure { background: var(--paper); border-bottom: 1px solid var(--line); }
+.assure ul {
+  list-style: none; margin: 0 auto; padding-block: 22px;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 28px;
+}
+.assure li { display: grid; gap: 2px; min-width: 0; }
+.assure b { font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; }
+.assure span { color: var(--muted); font-size: var(--step--1); }
+@media (max-width: 860px) { .assure ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Servicii */
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.service { background: var(--paper); padding: 28px 26px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.service h3 { font-size: var(--step-1); }
+.service p { color: var(--muted); font-size: 1rem; }
+.service ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.95rem; }
+@media (max-width: 900px) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 580px) { .services { grid-template-columns: 1fr; } }
+
+/* Pași + acte */
+.steps-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: t; }
+.timeline li { counter-increment: t; display: grid; grid-template-columns: 56px 1fr; gap: 18px; padding-bottom: 28px; position: relative; }
+.timeline li::before {
+  content: counter(t); font-family: var(--font-display); font-size: 1.4rem; color: var(--brass);
+  width: 56px; height: 56px; border: 1px solid var(--brass); border-radius: 50%;
+  display: grid; place-items: center; background: var(--stone); position: relative; z-index: 1;
+}
+.timeline li:not(:last-child)::after {
+  content: ""; position: absolute; left: 27.5px; top: 56px; bottom: 0; width: 1px; background: var(--line);
+}
+.timeline h3 { font-size: var(--step-1); margin-top: 12px; margin-bottom: 6px; }
+.timeline p { color: var(--muted); }
+.docs { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: grid; gap: 14px; }
+.docs h3 { font-size: var(--step-2); }
+.docs ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.docs li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.docs li::before { content: ""; width: 14px; height: 14px; margin-top: 6px; border: 1.5px solid var(--brass); border-radius: 2px; }
+.docs .note { color: var(--muted); font-size: var(--step--1); border-top: 1px solid var(--line); padding-top: 14px; }
+@media (max-width: 860px) { .steps-grid { grid-template-columns: 1fr; } }
+
+/* Pachete */
+.band-alt { background: var(--paper); border-block: 1px solid var(--line); }
+.packages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.package { border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 26px; display: flex; flex-direction: column; gap: 16px; background: var(--stone); min-width: 0; }
+.package.featured { border-color: var(--brass); background: var(--brass-soft); }
+.package .tag { font-size: var(--step--1); letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); font-weight: 600; min-height: 1.4em; }
+.package h3 { font-size: var(--step-2); }
+.package p { color: var(--muted); }
+.package ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; flex: 1; }
+.package .price { font-family: var(--font-display); font-size: var(--step-1); border-top: 1px solid var(--line); padding-top: 14px; }
+.package .btn { width: 100%; }
+@media (max-width: 900px) { .packages { grid-template-columns: 1fr; } }
+
+/* Galerie */
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.gallery figure { margin: 0; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; border-radius: var(--radius); background: var(--ph); position: relative; }
+.gallery figure.wide { grid-column: span 2; aspect-ratio: 8 / 5; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.gallery button { all: unset; display: block; width: 100%; height: 100%; cursor: zoom-in; }
+.gallery button:focus-visible { outline: 2px solid var(--brass); outline-offset: -4px; }
+.gallery button:hover img { transform: scale(1.03); }
+.ph {
+  width: 100%; height: 100%; display: grid; place-items: center; text-align: center; padding: 16px;
+  color: var(--muted); font-size: var(--step--1);
+  background-image: repeating-linear-gradient(135deg, transparent 0 14px, var(--ph-line) 14px 15px);
+}
+.ph span { background: var(--ph); padding: 6px 10px; border-radius: var(--radius); }
+.videos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+.videos figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+.videos .frame { aspect-ratio: 9 / 16; max-width: 100%; background: var(--ph); border-radius: var(--radius); overflow: hidden; }
+.videos video { width: 100%; height: 100%; object-fit: cover; background: #000; }
+.videos figcaption { color: var(--muted); font-size: var(--step--1); }
+.fb-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.fb-row p { color: var(--muted); }
+@media (max-width: 860px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } .videos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .videos { grid-template-columns: 1fr; } .videos .frame { aspect-ratio: 4 / 5; } }
+
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(8, 12, 15, 0.92); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) var(--gutter-r) max(16px, env(safe-area-inset-bottom, 0px)) var(--gutter-l); }
+.lightbox img { max-height: 86vh; border-radius: var(--radius); }
+.lightbox button { position: absolute; top: calc(12px + env(safe-area-inset-top, 0px)); right: calc(12px + env(safe-area-inset-right, 0px)); background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: var(--radius); min-height: 42px; padding: 0 14px; font: inherit; cursor: pointer; }
+
+/* Întrebări */
+.faq { display: grid; gap: 0; border-top: 1px solid var(--line); max-width: 860px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 20px 40px 20px 0; position: relative; font-family: var(--font-display); font-size: var(--step-1); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 6px; top: 16px; font-size: 1.6rem; color: var(--brass); font-family: var(--font-body); }
+.faq details[open] summary::after { content: "−"; }
+.faq details > div { padding: 0 0 22px; color: var(--muted); max-width: 68ch; display: grid; gap: 10px; }
+
+/* Contact */
+.contact { background: var(--night); color: var(--night-fg); }
+.contact .section-head p { color: var(--night-muted); }
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 64px); }
+.contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.contact-list li { display: grid; gap: 2px; }
+.contact-list small { text-transform: uppercase; letter-spacing: 0.12em; color: var(--night-muted); font-size: var(--step--1); }
+.contact-list .big { font-family: var(--font-display); font-size: var(--step-2); color: var(--brass); text-decoration: none; font-variant-numeric: tabular-nums; }
+.contact-list .row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.copy { background: transparent; color: var(--night-muted); border: 1px solid color-mix(in srgb, var(--night-fg) 25%, transparent); border-radius: var(--radius); min-height: 34px; padding: 0 12px; font: 600 var(--step--1) var(--font-body); cursor: pointer; }
+.copy:hover { color: var(--night-fg); }
+form.request { display: grid; gap: 14px; background: color-mix(in srgb, var(--night-fg) 5%, transparent); border: 1px solid color-mix(in srgb, var(--night-fg) 14%, transparent); border-radius: var(--radius); padding: clamp(20px, 3vw, 30px); min-width: 0; }
+form.request h3 { font-size: var(--step-2); }
+.field { display: grid; gap: 6px; }
+.field label { font-size: var(--step--1); color: var(--night-muted); }
+.field input, .field select, .field textarea {
+  width: 100%; font: inherit; color: var(--night-fg); background: var(--night);
+  border: 1px solid color-mix(in srgb, var(--night-fg) 22%, transparent); border-radius: var(--radius);
+  padding: 12px 14px; min-height: 48px;
+}
+.field textarea { min-height: 110px; resize: vertical; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.form-out { display: grid; gap: 10px; border-top: 1px solid color-mix(in srgb, var(--night-fg) 14%, transparent); padding-top: 14px; color: var(--night-muted); font-size: 0.98rem; }
+.form-out .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
+
+footer { background: var(--night); color: var(--night-muted); border-top: 1px solid color-mix(in srgb, var(--night-fg) 12%, transparent); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 24px; font-size: var(--step--1); }
+footer a { color: var(--night-muted); }
+
+/* Bară de apel pe telefon */
+.callbar { display: none; }
+@media (max-width: 720px) {
+  .callbar {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: var(--night); border-top: 1px solid color-mix(in srgb, var(--night-fg) 14%, transparent);
+    padding: 10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gutter-l);
+  }
+  .callbar .btn-ghost { color: var(--night-fg); }
+  footer .wrap { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#acasa" aria-label="Pagina principală">
+      <svg class="brand-mark" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <circle cx="17" cy="17" r="16"/>
+        <path d="M17 7v20M11 13h12"/>
+      </svg>
+      <span class="brand-name" data-cfg="nume">Servicii Funerare Non-Stop</span>
+    </a>
+    <nav class="nav" aria-label="Meniu">
+      <a href="#servicii">Servicii</a>
+      <a href="#pasi">Ce faceți acum</a>
+      <a href="#pachete">Pachete</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#intrebari">Întrebări</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" data-tel href="tel:+40700000000">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      <span><span class="label-long">Sunați </span><span data-cfg="telefon">07xx xxx xxx</span></span>
+    </a>
+  </div>
+</header>
+
+<main id="acasa">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">Non-stop, 24 de ore din 24 · <span data-cfg="zona">[zona deservită]</span></span>
+        <h1>Suntem alături de familia dumneavoastră, zi și noapte.</h1>
+        <p class="hero-lead">Preluăm toată organizarea înmormântării: transportul, actele, pregătirea, capela și ceremonia. Vă spunem de la început ce costă și ce urmează, ca să vă puteți ocupa de cei dragi.</p>
+        <div class="hero-phone">
+          <small>Dispecerat non-stop</small>
+          <a data-tel href="tel:+40700000000" data-cfg="telefon">07xx xxx xxx</a>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" data-tel href="tel:+40700000000">Sunați acum</a>
+          <a class="btn btn-ghost" data-wa href="#contact">Scrieți pe WhatsApp</a>
+        </div>
+      </div>
+      <aside class="firststeps" aria-labelledby="primii-pasi">
+        <span class="eyebrow">În primele ore</span>
+        <h2 id="primii-pasi">Ce faceți acum</h2>
+        <ol>
+          <li><span><b>Sunați-ne.</b> Un consultant vă răspunde imediat și vă spune exact ce urmează.</span></li>
+          <li><span><b>Chemați medicul</b> pentru constatarea decesului. Dacă decesul a avut loc acasă, vă îndrumăm noi.</span></li>
+          <li><span><b>Pregătiți actul de identitate</b> al persoanei decedate și pe al dumneavoastră. Restul actelor le rezolvăm noi.</span></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section class="assure" aria-label="Pe scurt">
+    <ul class="wrap">
+      <li><b>Non-stop</b><span>inclusiv nopți, weekend și sărbători</span></li>
+      <li><b>Acte rezolvate</b><span>certificat de deces, ajutor de deces</span></li>
+      <li><b>Transport</b><span>local, în toată țara și din străinătate</span></li>
+      <li><b>Preț stabilit de la început</b><span>discutat cu familia înainte de orice</span></li>
+    </ul>
+  </section>
+
+  <section class="section" id="servicii">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Servicii</span>
+        <h2>Tot ce ține de înmormântare, într-un singur loc</h2>
+        <p>Puteți alege un pachet complet sau doar serviciile de care aveți nevoie.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <h3>Ridicare și transport funerar</h3>
+          <p>Preluăm persoana decedată de acasă, din spital sau de la morgă, cu autospecială funerară.</p>
+        </article>
+        <article class="service">
+          <h3>Acte și formalități</h3>
+          <p>Ne ocupăm de certificatul de deces de la Starea Civilă, adeverința de înhumare și dosarul pentru ajutorul de deces.</p>
+        </article>
+        <article class="service">
+          <h3>Îmbălsămare și pregătire</h3>
+          <p>Toaletare, îmbălsămare, îmbrăcare și cosmetizare, făcute cu grijă și respect.</p>
+        </article>
+        <article class="service">
+          <h3>Sicrie și accesorii</h3>
+          <p>Sicrie din lemn masiv sau furnir, cruce, lumânări, prosoape, batiste, colaci și tot ce este necesar slujbei.</p>
+        </article>
+        <article class="service">
+          <h3>Capelă și priveghi</h3>
+          <p>Capelă de priveghi sau amenajare la domiciliu, cu catafalc, sfeșnice și aranjamente.</p>
+        </article>
+        <article class="service">
+          <h3>Coroane și aranjamente florale</h3>
+          <p>Coroane, jerbe și buchete realizate la comandă, cu panglică personalizată.</p>
+        </article>
+        <article class="service">
+          <h3>Incinerare</h3>
+          <p>Programare la crematoriu, transport, urnă și toate actele necesare.</p>
+        </article>
+        <article class="service">
+          <h3>Repatriere</h3>
+          <p>Aducem acasă persoana decedată din străinătate și ne ocupăm de actele din ambele țări.</p>
+        </article>
+        <article class="service">
+          <h3>Pomană și parastas</h3>
+          <p>Organizăm masa de pomenire, coliva, colacii și pachetele pentru pomană.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-alt" id="pasi">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Pas cu pas</span>
+        <h2>Cum decurge totul după ce ne sunați</h2>
+        <p>Vă spunem la fiecare pas ce s-a făcut și ce urmează. Nu trebuie să mergeți singuri pe la instituții.</p>
+      </div>
+      <div class="steps-grid">
+        <ol class="timeline">
+          <li><div><h3>Primul telefon</h3><p>Ne spuneți unde se află persoana decedată și ce doriți. Stabilim împreună serviciile și prețul.</p></div></li>
+          <li><div><h3>Constatarea decesului</h3><p>Medicul de familie sau medicul spitalului emite certificatul medical constatator al decesului. Dacă e nevoie, vă îndrumăm.</p></div></li>
+          <li><div><h3>Ridicarea și pregătirea</h3><p>Echipa noastră vine la adresă, preia persoana decedată și se ocupă de pregătire.</p></div></li>
+          <li><div><h3>Certificatul de deces</h3><p>Declarăm decesul la Starea Civilă și obținem certificatul de deces și adeverința de înhumare.</p></div></li>
+          <li><div><h3>Slujba și înmormântarea</h3><p>Asigurăm capela sau priveghiul, transportul la biserică și la cimitir și tot ce ține de ceremonie.</p></div></li>
+        </ol>
+        <aside class="docs" aria-labelledby="acte">
+          <span class="eyebrow">Acte necesare</span>
+          <h3 id="acte">Ce documente pregătiți</h3>
+          <ul>
+            <li><span>Actul de identitate al persoanei decedate</span></li>
+            <li><span>Actul de identitate al celui care declară decesul</span></li>
+            <li><span>Certificatul de naștere al persoanei decedate</span></li>
+            <li><span>Certificatul de căsătorie, dacă este cazul</span></li>
+            <li><span>Livretul militar, dacă este cazul</span></li>
+            <li><span>Certificatul medical constatator al decesului</span></li>
+          </ul>
+          <p class="note">Dacă vă lipsește un document, sunați-ne. De cele mai multe ori găsim împreună o soluție.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pachete">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Pachete</span>
+        <h2>Pachete funerare</h2>
+        <p>Fiecare pachet poate fi adaptat. Vă comunicăm prețul exact la telefon, înainte să începem.</p>
+      </div>
+      <div class="packages">
+        <article class="package">
+          <span class="tag">&nbsp;</span>
+          <h3>Esențial</h3>
+          <p>Serviciile de bază pentru o înmormântare demnă.</p>
+          <ul>
+            <li>Ridicare și transport în localitate</li>
+            <li>Sicriu standard și cruce</li>
+            <li>Toaletare și îmbrăcare</li>
+            <li>Acte: certificat de deces</li>
+            <li>Lumânări și accesorii de bază</li>
+          </ul>
+          <div class="price">Preț la cerere</div>
+          <a class="btn btn-ghost" href="#contact" data-pachet="Esențial">Cereți oferta</a>
+        </article>
+        <article class="package featured">
+          <span class="tag">Cel mai ales</span>
+          <h3>Tradițional</h3>
+          <p>Tot ce ține de o înmormântare creștin-ortodoxă.</p>
+          <ul>
+            <li>Tot ce include pachetul Esențial</li>
+            <li>Îmbălsămare</li>
+            <li>Sicriu din lemn masiv</li>
+            <li>Capelă sau priveghi la domiciliu</li>
+            <li>Transport la biserică și cimitir</li>
+            <li>Coroană și set complet pentru slujbă</li>
+          </ul>
+          <div class="price">Preț la cerere</div>
+          <a class="btn btn-primary" href="#contact" data-pachet="Tradițional">Cereți oferta</a>
+        </article>
+        <article class="package">
+          <span class="tag">&nbsp;</span>
+          <h3>Complet</h3>
+          <p>Ne ocupăm de absolut tot, inclusiv pomenirea.</p>
+          <ul>
+            <li>Tot ce include pachetul Tradițional</li>
+            <li>Dosarul pentru ajutorul de deces</li>
+            <li>Aranjamente florale suplimentare</li>
+            <li>Masa de pomenire și coliva</li>
+            <li>Coordonator dedicat familiei</li>
+          </ul>
+          <div class="price">Preț la cerere</div>
+          <a class="btn btn-ghost" href="#contact" data-pachet="Complet">Cereți oferta</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-alt" id="galerie">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Galerie</span>
+        <h2>Din activitatea noastră</h2>
+        <p>Imagini și filmări de pe pagina noastră de Facebook.</p>
+      </div>
+      <div class="gallery" id="gallery"></div>
+      <div class="videos" id="videos"></div>
+      <div class="fb-row">
+        <p>Mai multe imagini și noutăți găsiți pe pagina noastră de Facebook.</p>
+        <a class="btn btn-ghost" data-fb href="https://www.facebook.com/VasyPetre75" target="_blank" rel="noopener">Vedeți pagina de Facebook</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="intrebari">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Întrebări frecvente</span>
+        <h2>Răspunsuri la ce ne întreabă familiile</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Ce fac dacă decesul a avut loc acasă?</summary>
+          <div><p>Sunați-ne și sunați medicul de familie, care trebuie să constate decesul și să emită certificatul medical constatator. Dacă decesul are loc noaptea sau în weekend, vă spunem pe cine să contactați. Nu mutați persoana decedată până nu vorbiți cu noi.</p></div>
+        </details>
+        <details>
+          <summary>În cât timp trebuie obținut certificatul de deces?</summary>
+          <div><p>Decesul trebuie declarat la Starea Civilă în cel mult 3 zile. De obicei obținem certificatul de deces chiar în ziua declarării. Ne ocupăm noi de acest drum.</p></div>
+        </details>
+        <details>
+          <summary>Mă ajutați cu ajutorul de deces?</summary>
+          <div><p>Da. Vă spunem ce acte sunt necesare și vă ajutăm să pregătiți dosarul. Ajutorul de deces se acordă, în funcție de situație, prin casa de pensii sau prin alte instituții.</p></div>
+        </details>
+        <details>
+          <summary>Lucrați și noaptea, în weekend și de sărbători?</summary>
+          <div><p>Da. Dispeceratul nostru răspunde non-stop, în orice zi a anului.</p></div>
+        </details>
+        <details>
+          <summary>Puteți aduce acasă o persoană decedată în străinătate?</summary>
+          <div><p>Da. Ne ocupăm de repatriere: actele din țara respectivă, transportul și formalitățile la sosire.</p></div>
+        </details>
+        <details>
+          <summary>Când aflu cât costă?</summary>
+          <div><p>Înainte să începem. Stabilim împreună serviciile și vă spunem prețul total. Nu adăugăm nimic fără acordul familiei.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Contact</span>
+        <h2>Sunați-ne oricând</h2>
+        <p>Cel mai rapid ne găsiți la telefon. Dacă preferați, lăsați-ne un mesaj și vă sunăm noi.</p>
+      </div>
+      <div class="contact-grid">
+        <ul class="contact-list">
+          <li>
+            <small>Telefon non-stop</small>
+            <div class="row">
+              <a class="big" data-tel href="tel:+40700000000" data-cfg="telefon">07xx xxx xxx</a>
+              <button class="copy" type="button" id="copy-phone">Copiați numărul</button>
+            </div>
+          </li>
+          <li><small>WhatsApp</small><a class="big" data-wa href="#contact" data-cfg="telefon">07xx xxx xxx</a></li>
+          <li><small>Adresă</small><span data-cfg="adresa">[adresa sediului]</span></li>
+          <li><small>Program</small><span>Non-stop, 24 de ore din 24, 7 zile din 7</span></li>
+          <li><small>Facebook</small><a data-fb href="https://www.facebook.com/VasyPetre75" target="_blank" rel="noopener">facebook.com/VasyPetre75</a></li>
+        </ul>
+        <form class="request" id="request" novalidate>
+          <h3>Vă sunăm noi</h3>
+          <div class="two">
+            <div class="field"><label for="f-nume">Numele dumneavoastră</label><input id="f-nume" name="nume" autocomplete="name" required></div>
+            <div class="field"><label for="f-tel">Telefon</label><input id="f-tel" name="telefon" type="tel" autocomplete="tel" required></div>
+          </div>
+          <div class="field">
+            <label for="f-serviciu">De ce aveți nevoie</label>
+            <select id="f-serviciu" name="serviciu">
+              <option>Organizare înmormântare</option>
+              <option>Pachet Esențial</option>
+              <option>Pachet Tradițional</option>
+              <option>Pachet Complet</option>
+              <option>Transport funerar</option>
+              <option>Incinerare</option>
+              <option>Repatriere</option>
+              <option>Altceva</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-mesaj">Mesaj (opțional)</label><textarea id="f-mesaj" name="mesaj" placeholder="Localitatea, unde se află persoana decedată, ce doriți"></textarea></div>
+          <button class="btn btn-primary" type="submit">Pregătiți mesajul</button>
+          <div class="form-out" id="form-out" hidden aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="an">2026</span> <span data-cfg="nume">Servicii Funerare Non-Stop</span></span>
+    <span><span data-cfg="zona">[zona deservită]</span> · <a data-fb href="https://www.facebook.com/VasyPetre75" target="_blank" rel="noopener">Facebook</a></span>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a class="btn btn-primary" data-tel href="tel:+40700000000">Sunați acum</a>
+  <a class="btn btn-ghost" data-wa href="#contact">WhatsApp</a>
+</div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button type="button" id="lb-close">Închideți</button>
+  <img id="lb-img" alt="">
+</div>
+
+<script>
+/* ============================================================
+   DATELE FIRMEI — modificați doar aici.
+   ============================================================ */
+const CONFIG = {
+  nume: "Servicii Funerare Non-Stop",   // numele firmei, ca pe Facebook
+  telefon: "07xx xxx xxx",               // cum se afișează
+  telefonIntl: "40700000000",            // același număr, format internațional fără + (pentru apel și WhatsApp)
+  zona: "[zona deservită]",              // ex.: București și Ilfov
+  adresa: "[adresa sediului]",
+  facebook: "https://www.facebook.com/VasyPetre75"
+};
+
+/* Pozele și videourile de pe Facebook: puneți fișierele în folderul media/
+   și adăugați câte un rând aici. "lat: true" face poza dublă pe lățime. */
+const MEDIA = [
+  // { tip: "foto",  src: "media/foto-01.jpg", alt: "Capelă pregătită pentru priveghi", lat: true },
+  // { tip: "foto",  src: "media/foto-02.jpg", alt: "Coroană de flori albe" },
+  // { tip: "video", src: "media/video-01.mp4", poster: "media/video-01.jpg", text: "Autospeciala funerară" },
+];
+
+/* ============================================================ */
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  $$("[data-cfg]").forEach(el => { const v = CONFIG[el.dataset.cfg]; if (v) el.textContent = v; });
+  $$("[data-tel]").forEach(a => a.href = "tel:+" + CONFIG.telefonIntl);
+  const waBase = "https://wa.me/" + CONFIG.telefonIntl;
+  $$("[data-wa]").forEach(a => { a.href = waBase; a.target = "_blank"; a.rel = "noopener"; });
+  $$("[data-fb]").forEach(a => a.href = CONFIG.facebook);
+  document.title = CONFIG.nume;
+  $("#an").textContent = new Date().getFullYear();
+
+  /* Galerie */
+  const gallery = $("#gallery"), videos = $("#videos");
+  const fotos = MEDIA.filter(m => m.tip === "foto");
+  const clips = MEDIA.filter(m => m.tip === "video");
+  if (fotos.length) {
+    fotos.forEach(m => {
+      const f = document.createElement("figure");
+      if (m.lat) f.className = "wide";
+      const b = document.createElement("button");
+      b.type = "button"; b.setAttribute("aria-label", "Măriți: " + (m.alt || "fotografie"));
+      const img = document.createElement("img");
+      img.src = m.src; img.alt = m.alt || ""; img.loading = "lazy";
+      b.appendChild(img); f.appendChild(b); gallery.appendChild(f);
+      b.addEventListener("click", () => openLb(m));
+    });
+  } else {
+    ["wide", "", "", "", "", "wide"].forEach((cls, i) => {
+      const f = document.createElement("figure");
+      if (cls) f.className = cls;
+      f.innerHTML = '<div class="ph"><span>Fotografie ' + (i + 1) + ' de pe Facebook</span></div>';
+      gallery.appendChild(f);
+    });
+  }
+  if (clips.length) {
+    clips.forEach(m => {
+      const f = document.createElement("figure");
+      f.innerHTML = '<div class="frame"><video controls preload="metadata" playsinline></video></div>' + (m.text ? "<figcaption></figcaption>" : "");
+      const v = f.querySelector("video"); v.src = m.src; if (m.poster) v.poster = m.poster;
+      if (m.text) f.querySelector("figcaption").textContent = m.text;
+      videos.appendChild(f);
+    });
+  } else {
+    [1, 2, 3].forEach(i => {
+      const f = document.createElement("figure");
+      f.innerHTML = '<div class="frame"><div class="ph"><span>Video ' + i + ' de pe Facebook</span></div></div>';
+      videos.appendChild(f);
+    });
+  }
+
+  /* Lightbox */
+  const lb = $("#lightbox"), lbImg = $("#lb-img");
+  let lastFocus = null;
+  function openLb(m) { lastFocus = document.activeElement; lbImg.src = m.src; lbImg.alt = m.alt || ""; lb.hidden = false; $("#lb-close").focus(); }
+  function closeLb() { lb.hidden = true; if (lastFocus) lastFocus.focus(); }
+  $("#lb-close").addEventListener("click", closeLb);
+  lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+
+  /* Copiere număr */
+  const copyBtn = $("#copy-phone");
+  copyBtn.addEventListener("click", () => {
+    const done = () => { copyBtn.textContent = "Număr copiat"; setTimeout(() => copyBtn.textContent = "Copiați numărul", 2000); };
+    try {
+      navigator.clipboard.writeText(CONFIG.telefon).then(done, selectPhone);
+    } catch (e) { selectPhone(); }
+  });
+  function selectPhone() {
+    const el = $(".contact-list .big");
+    const r = document.createRange(); r.selectNodeContents(el);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    copyBtn.textContent = "Numărul e selectat";
+  }
+
+  /* Butoanele „Cereți oferta” precompletează formularul */
+  $$("[data-pachet]").forEach(a => a.addEventListener("click", () => {
+    const sel = $("#f-serviciu");
+    const opt = Array.from(sel.options).find(o => o.text === "Pachet " + a.dataset.pachet);
+    if (opt) sel.value = opt.text;
+  }));
+
+  /* Formular: pregătește mesajul pentru WhatsApp */
+  const form = $("#request"), out = $("#form-out");
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const nume = $("#f-nume").value.trim(), tel = $("#f-tel").value.trim();
+    out.hidden = false;
+    if (!nume || !tel) {
+      out.textContent = "Completați numele și numărul de telefon, ca să vă putem suna înapoi.";
+      (!nume ? $("#f-nume") : $("#f-tel")).focus();
+      return;
+    }
+    const text = "Bună ziua, sunt " + nume + " (tel. " + tel + "). Am nevoie de: " + $("#f-serviciu").value + "." +
+      ($("#f-mesaj").value.trim() ? " " + $("#f-mesaj").value.trim() : "") + " Vă rog să mă sunați.";
+    out.innerHTML = "";
+    const p = document.createElement("p");
+    p.textContent = "Mesajul este gata. Trimiteți-l pe WhatsApp sau, dacă e urgent, sunați-ne direct.";
+    const actions = document.createElement("div"); actions.className = "actions";
+    const wa = document.createElement("a");
+    wa.className = "btn btn-primary"; wa.target = "_blank"; wa.rel = "noopener";
+    wa.href = waBase + "?text=" + encodeURIComponent(text); wa.textContent = "Trimiteți pe WhatsApp";
+    const call = document.createElement("a");
+    call.className = "btn btn-ghost"; call.href = "tel:+" + CONFIG.telefonIntl; call.textContent = "Sunați " + CONFIG.telefon;
+    actions.append(wa, call);
+    out.append(p, actions);
+  });
+})();
+</script>
+</body>
+</html>
