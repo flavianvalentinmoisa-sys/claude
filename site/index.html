@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
-/* Layout: structura unui site funerar clasic (bandă de contact, hero cu două oferte, carduri de servicii, configurator, repatriere, recenzii, formular), pe ardezie adâncă și nisip, cu alamă doar pe acțiuni. */
+/* Layout: structura unui site funerar clasic (bandă de contact, hero cu două oferte, carduri de servicii, configurator, sfaturi, recenzii, formular), pe ardezie adâncă și nisip, cu alamă doar pe acțiuni. */
 :root {
   --paper: #FFFFFF;
   --stone: #F5F4F1;
@@ -109,11 +109,11 @@ p { margin: 0; }
 .strip .wrap { padding-block: 8px; }
 .strip a { font-weight: 700; font-variant-numeric: tabular-nums; }
 .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--night); color: var(--night-fg); border-bottom: 1px solid color-mix(in srgb, var(--night-fg) 10%, transparent); }
-.topbar .wrap { display: flex; align-items: center; gap: 24px; min-height: 72px; }
+.topbar .wrap { display: flex; align-items: center; gap: 24px; min-height: 76px; padding-block: 8px; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
-.brand-mark { width: 64px; height: auto; flex: none; }
+.brand-logo { height: 58px; width: auto; flex: none; display: block; }
+.hero-logo { width: clamp(150px, 22vw, 210px); height: auto; margin-bottom: 4px; }
 .foot-logo { width: 170px; height: auto; margin-bottom: 18px; }
-.brand-name { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nav { display: flex; gap: 22px; margin-left: auto; }
 .nav a { text-decoration: none; color: var(--night-muted); font-size: 0.98rem; }
 .nav a:hover { color: var(--night-fg); }
@@ -180,20 +180,6 @@ p { margin: 0; }
 @media (max-width: 960px) { .config { grid-template-columns: 1fr; } .config-copy { order: -1; } }
 @media (max-width: 560px) { .toggles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* Repatriere */
-.repat { background: var(--night); color: var(--night-fg); }
-.repat .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-.repat h2 { font-size: var(--step-3); margin-bottom: 28px; }
-.rsteps { list-style: none; margin: 0; padding: 0; display: grid; counter-reset: r; }
-.rsteps li { counter-increment: r; display: grid; grid-template-columns: 34px 1fr; gap: 16px; padding-bottom: 24px; position: relative; }
-.rsteps li::before { content: "0" counter(r); width: 32px; height: 32px; border-radius: 50%; background: var(--cta); color: var(--on-cta); display: grid; place-items: center; font-weight: 700; font-size: var(--step--1); position: relative; z-index: 1; }
-.rsteps li:not(:last-child)::after { content: ""; position: absolute; left: 16px; top: 36px; bottom: 4px; border-left: 1.5px dashed color-mix(in srgb, var(--night-fg) 40%, transparent); }
-.rsteps b { display: block; font-weight: 600; margin-bottom: 4px; }
-.rsteps span { color: var(--night-muted); }
-.routes { width: 100%; height: auto; max-width: 100%; }
-.routes text { font-family: var(--font-body); font-size: 13px; fill: var(--night-muted); }
-.routes .home { fill: var(--cta); font-family: var(--font-display); font-size: 17px; }
-@media (max-width: 860px) { .repat .wrap { grid-template-columns: 1fr; } }
 
 /* Sfaturi */
 .tips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
@@ -292,7 +278,7 @@ form.request .btn-cta { width: 100%; }
 .fb-post header small { display: block; color: var(--muted); font-size: 0.8rem; }
 .fb-post .media { aspect-ratio: 16 / 9; max-width: 100%; border-radius: 4px; overflow: hidden; background: var(--ph); }
 .fb-av { background: var(--night); }
-.fb-av img { width: 30px; height: auto; }
+.fb-av img { width: 32px; height: auto; }
 .fb-post .media img { width: 100%; height: 100%; object-fit: cover; }
 .fb-copy { display: grid; gap: 14px; justify-items: start; }
 .fb-copy h2 { font-size: var(--step-2); }
@@ -350,14 +336,12 @@ footer.site { background: var(--night); color: var(--night-muted); }
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#acasa" aria-label="Pagina principală">
-      <img class="brand-mark" src="media/aripi-alb.png" alt="" width="240" height="77">
-      <span class="brand-name">PAC Funerare</span>
+    <a class="brand" href="#acasa" aria-label="PAC Funerare Nonstop, pagina principală">
+      <img class="brand-logo" src="media/logo-alb.png" alt="PAC Funerare Nonstop" width="700" height="664">
     </a>
     <nav class="nav" aria-label="Meniu">
       <a href="#servicii">Servicii</a>
       <a href="#costuri">Ofertă de preț</a>
-      <a href="#repatriere">Repatrieri</a>
       <a href="#sfaturi">Sfaturi și ajutor</a>
       <a href="#galerie">Galerie</a>
       <a href="#contact">Contact</a>
@@ -370,13 +354,14 @@ footer.site { background: var(--night); color: var(--night-muted); }
   <section class="hero">
     <div class="hero-bg empty" id="hero-bg"></div>
     <div class="wrap">
-      <span class="eyebrow">PAC Funerare Nonstop · 15 ani de experiență<span data-zona> · <span data-cfg="zona"></span></span></span>
+      <img class="hero-logo" src="media/logo-alb.png" alt="PAC Funerare Nonstop" width="700" height="664">
+      <span class="eyebrow">15 ani de experiență<span data-zona> · <span data-cfg="zona"></span></span></span>
       <h1>Alături de familia dumneavoastră, în cele mai grele clipe</h1>
       <p class="sub">„Cinstim viața, respectăm plecarea.”</p>
       <p class="lead">Ne ocupăm de tot ce ține de înmormântare: transportul, actele, pregătirea, capela și ceremonia. Vă spunem de la început ce costă și ce urmează, ca să vă puteți ocupa de cei dragi.</p>
       <div class="hero-actions">
         <a class="btn btn-cta" href="#costuri">Cereți ofertă servicii funerare <small>· 2 minute</small></a>
-        <a class="btn btn-ghost" href="#repatriere" data-prefill="Repatriere">Cereți ofertă repatriere</a>
+        <a class="btn btn-ghost" data-tel href="tel:+40760396402">Sunați acum</a>
       </div>
       <div class="nonstop">
         <svg aria-hidden="true"><use href="#i-clock"/></svg>
@@ -415,14 +400,14 @@ footer.site { background: var(--night); color: var(--night-muted); }
         </article>
         <article class="help-card">
           <span class="icon"><svg aria-hidden="true"><use href="#i-route"/></svg></span>
-          <h3>Repatriere din străinătate</h3>
-          <p>Aducem acasă persoana dragă care a decedat în altă țară.</p>
+          <h3>Transport funerar și ceremonie</h3>
+          <p>Cu autospecialele noastre, de acasă sau de la spital până la cimitir.</p>
           <ul class="checks">
-            <li>Întocmirea și traducerea actelor</li>
-            <li>Transportul în România</li>
-            <li>Îmbălsămare și pregătire</li>
+            <li>Ridicarea persoanei decedate, la orice oră</li>
+            <li>Transport la capelă, biserică și cimitir</li>
+            <li>Coroane și aranjamente pe autospecială</li>
           </ul>
-          <a class="more" href="#repatriere">Cum funcționează</a>
+          <a class="more" href="#galerie">Vedeți autospecialele</a>
         </article>
       </div>
     </div>
@@ -462,44 +447,6 @@ footer.site { background: var(--night); color: var(--night-muted); }
         <a class="btn btn-dark" href="#contact" id="config-go">Cereți ofertă de servicii funerare</a>
         <span class="config-count" id="config-count" aria-live="polite">Niciun serviciu ales încă.</span>
       </div>
-    </div>
-  </section>
-
-  <section class="repat section" id="repatriere">
-    <div class="wrap">
-      <div>
-        <span class="eyebrow">Repatriere</span>
-        <h2>Aducem acasă persoana dragă, din orice țară din Europa</h2>
-        <ol class="rsteps">
-          <li><div><b>Vă ajutăm cu actele</b><span>Vă explicăm pașii pentru repatriere și ne ocupăm de obținerea și traducerea documentelor.</span></div></li>
-          <li><div><b>Mergem în țara respectivă</b><span>Echipa noastră preia persoana decedată și o aduce în România cât mai repede.</span></div></li>
-          <li><div><b>Pregătire și ceremonie</b><span>Alegeți sicriul și serviciile dorite, iar noi asigurăm transportul până la capelă sau acasă.</span></div></li>
-        </ol>
-        <a class="btn btn-cta" href="#contact" data-prefill="Repatriere">Cereți ofertă pentru repatriere</a>
-      </div>
-      <svg class="routes" viewBox="0 0 520 380" role="img" aria-label="Trasee de repatriere din Europa către România">
-        <g fill="none" stroke="var(--night-muted)" stroke-width="1.2" stroke-dasharray="4 6" opacity=".8">
-          <path d="M70 120 Q 250 60 430 230"/><path d="M60 300 Q 250 330 430 230"/><path d="M180 70 Q 320 90 430 230"/>
-          <path d="M150 230 Q 300 200 430 230"/><path d="M270 330 Q 360 300 430 230"/><path d="M300 120 Q 390 150 430 230"/>
-        </g>
-        <g fill="var(--night-fg)">
-          <circle cx="70" cy="120" r="4"/><circle cx="60" cy="300" r="4"/><circle cx="180" cy="70" r="4"/>
-          <circle cx="150" cy="230" r="4"/><circle cx="270" cy="330" r="4"/><circle cx="300" cy="120" r="4"/>
-        </g>
-        <g fill="none" stroke="var(--night-fg)" stroke-width="1" opacity=".25">
-          <circle cx="70" cy="120" r="26"/><circle cx="60" cy="300" r="22"/><circle cx="180" cy="70" r="22"/>
-          <circle cx="150" cy="230" r="30"/><circle cx="270" cy="330" r="22"/><circle cx="300" cy="120" r="24"/>
-        </g>
-        <text x="70" y="160" text-anchor="middle">Anglia</text>
-        <text x="60" y="338" text-anchor="middle">Spania</text>
-        <text x="180" y="44" text-anchor="middle">Belgia</text>
-        <text x="150" y="276" text-anchor="middle">Franța</text>
-        <text x="270" y="368" text-anchor="middle">Italia</text>
-        <text x="300" y="94" text-anchor="middle">Germania</text>
-        <circle cx="430" cy="230" r="9" fill="var(--cta)"/>
-        <circle cx="430" cy="230" r="22" fill="none" stroke="var(--cta)" stroke-width="1.2"/>
-        <text class="home" x="430" y="276" text-anchor="middle">România</text>
-      </svg>
     </div>
   </section>
 
@@ -572,7 +519,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
       <div>
         <h2>Completați formularul și lăsați-ne pe noi să ne ocupăm de rest</h2>
         <ul class="benefits">
-          <li><span class="icon"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><b>Transport funerar în țară și din străinătate</b><span>Ne ocupăm de tot drumul, inclusiv de repatriere.</span></div></li>
+          <li><span class="icon"><svg aria-hidden="true"><use href="#i-route"/></svg></span><div><b>Autospeciale funerare proprii</b><span>De acasă sau de la spital, la biserică și la cimitir.</span></div></li>
           <li><span class="icon"><svg aria-hidden="true"><use href="#i-coin"/></svg></span><div><b>Prețuri corecte și transparente</b><span>Vă spunem exact ce costă, fără costuri ascunse.</span></div></li>
           <li><span class="icon"><svg aria-hidden="true"><use href="#i-heart"/></svg></span><div><b>Alături de familie până la final</b><span>De la primul telefon până după înmormântare.</span></div></li>
         </ul>
@@ -597,7 +544,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
         <div class="field"><label for="f-loc">Localitatea</label><input id="f-loc" autocomplete="address-level2" placeholder="Unde se află persoana decedată"></div>
         <div class="two">
           <div class="field"><label for="f-serviciu">Cu ce vă putem ajuta?</label>
-            <select id="f-serviciu"><option>Servicii complete</option><option>Doar transport funerar</option><option>Acte și ajutor de deces</option><option>Repatriere</option><option>Altceva</option></select></div>
+            <select id="f-serviciu"><option>Servicii complete</option><option>Doar transport funerar</option><option>Acte și ajutor de deces</option><option>Altceva</option></select></div>
           <div class="field"><label for="f-tip">Tip de înhumare</label>
             <select id="f-tip"><option>Înmormântare tradițională</option><option>Incinerare</option><option>Încă nu știu</option></select></div>
         </div>
@@ -612,7 +559,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
     <div class="wrap">
       <div class="fb-band">
         <div class="fb-post" aria-hidden="true">
-          <header><span class="avatar fb-av"><img src="media/aripi-alb.png" alt=""></span><div><b>PAC Funerare Nonstop</b><small>Pagina noastră de Facebook</small></div></header>
+          <header><span class="avatar fb-av"><img src="media/logo-alb.png" alt=""></span><div><b>PAC Funerare Nonstop</b><small>Pagina noastră de Facebook</small></div></header>
           <div class="media" id="fb-media"><div class="ph"><span>Ultima postare de pe Facebook</span></div></div>
         </div>
         <div class="fb-copy">
@@ -630,7 +577,6 @@ footer.site { background: var(--night); color: var(--night-muted); }
       <div class="faq">
         <details><summary>Vă pot suna la orice oră?</summary><div><p>Da. Răspundem non-stop, inclusiv noaptea, în weekend și de sărbători.</p></div></details>
         <details><summary>Care este primul pas în cazul unui deces?</summary><div><p>Sunați-ne și sunați medicul de familie sau medicul de gardă, care constată decesul și emite certificatul medical constatator. Nu mutați persoana decedată până nu vorbiți cu noi. Vă spunem exact ce urmează.</p></div></details>
-        <details><summary>Care este primul pas în cazul unei repatrieri?</summary><div><p>Sunați-ne și spuneți-ne țara și orașul unde se află persoana decedată. Vă explicăm ce acte sunt necesare acolo și ne ocupăm noi de rest.</p></div></details>
         <details><summary>De ce documente am nevoie în cazul unui deces?</summary><div><p>Actul de identitate al persoanei decedate și al dumneavoastră, certificatul de naștere și de căsătorie ale persoanei decedate, livretul militar (dacă e cazul) și certificatul medical constatator al decesului. Decesul se declară la Starea Civilă în cel mult 3 zile.</p></div></details>
         <details><summary>Cum pot obține ajutorul de deces?</summary><div><p>Ajutorul de deces se cere, în funcție de situație, de la casa de pensii sau de la alte instituții. Vă spunem ce acte trebuie și vă ajutăm să pregătiți dosarul.</p></div></details>
         <details><summary>Oferiți servicii funerare complete?</summary><div><p>Da. Puteți alege toate serviciile, de la transport și acte până la capelă, ceremonie și pomană, sau doar pe cele de care aveți nevoie.</p></div></details>
@@ -650,7 +596,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
         <li>Non-stop, 7 zile din 7</li>
       </ul>
     </div>
-    <div><h4>Servicii funerare</h4><ul><li><a href="#servicii">Servicii funerare complete</a></li><li><a href="#repatriere">Repatriere</a></li><li><a href="#costuri">Ofertă de preț</a></li></ul></div>
+    <div><h4>Servicii funerare</h4><ul><li><a href="#servicii">Servicii funerare complete</a></li><li><a href="#acte">Acte și ajutor de deces</a></li><li><a href="#costuri">Ofertă de preț</a></li></ul></div>
     <div><h4>Sfaturi și ajutor</h4><ul><li><a href="#acte">Documente necesare</a></li><li><a href="#intrebari">Ce faceți în cazul unui deces</a></li><li><a href="#intrebari">Întrebări frecvente</a></li></ul></div>
     <div><h4>Despre noi</h4><ul><li><a href="#echipa">Echipa</a></li><li><a href="#galerie">Galerie</a></li><li><a href="#contact">Contact</a></li><li><a data-fb href="https://www.facebook.com/VasyPetre75" target="_blank" rel="noopener">Facebook</a></li></ul></div>
   </div>
@@ -789,7 +735,6 @@ const RECENZII = [
     if (c.includes("Incinerare")) $("#f-tip").value = "Incinerare";
     $("#f-mesaj").value = "Servicii dorite: " + c.join(", ") + ".";
   });
-  $$("[data-prefill]").forEach(a => a.addEventListener("click", () => { $("#f-serviciu").value = a.dataset.prefill; }));
 
   /* Copiere număr */
   const copyBtn = $("#copy-phone");

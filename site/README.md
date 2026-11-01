@@ -35,6 +35,6 @@ const MEDIA = [
 ];
 ```
 
-Pozele și videourile primite (14 fotografii, logo-ul și 2 videouri) sunt deja în `media/`, micșorate și fără metadate (fără locație GPS). Logo-ul e în `media/logo-alb.png` și `media/aripi-alb.png` (alb pe transparent).
+Pozele și videourile primite (14 fotografii, logo-ul și 2 videouri) sunt deja în `media/`, micșorate și fără metadate (fără locație GPS). Logo-ul e în `media/logo-alb.png` (alb pe transparent).
 
 Recomandat: poze micșorate la max. 1600 px pe latura lungă, videouri MP4 (H.264) sub 20 MB.
