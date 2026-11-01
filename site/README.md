@@ -13,14 +13,14 @@ Toate datele firmei sunt în blocul `CONFIG` de la începutul scriptului din `in
 | `telefon2` / `telefon2Intl` | `0760 522 022` / `40760522022` |
 | `zona`        | `județul Ialomița` — de confirmat |
 | `adresa`      | gol = nu se afișează; completați adresa sediului |
-| `pozaHero`    | `media/hero.jpg` (fundalul de sus) |
-| `pozaEchipa`  | `media/echipa.jpg`          |
+| `pozaHero`    | `media/biserica-doua-autospeciale.jpg` (fundalul de sus) |
+| `pozaEchipa` / `textEchipa` | `media/echipa-expo.jpg` / legenda pozei |
 
 Recenziile se adaugă în lista `RECENZII` (doar recenzii reale, de pe Facebook sau Google). Cât timp lista e goală, secțiunea de recenzii nu apare.
 
 Structura paginii urmează site-ul exemplu funero.ro: bandă de contact, hero cu două oferte, „Vă ajutăm cu”, configurator de costuri, repatriere, sfaturi, recenzii, echipă, galerie Facebook, formular, comunitate Facebook, întrebări frecvente, footer pe coloane.
 
-Prețurile pachetelor apar ca „Preț la cerere”. Conținutul pachetelor și al serviciilor se modifică direct în HTML.
+Textele serviciilor, ale pașilor de repatriere și ale întrebărilor frecvente se modifică direct în HTML.
 
 ## Poze și videouri de pe Facebook
 
@@ -35,6 +35,6 @@ const MEDIA = [
 ];
 ```
 
-Pozele și videourile primite (17 poze, 2 videouri) sunt deja în `media/`, micșorate și fără metadate (fără locație GPS). Logo-ul e în `media/logo-alb.png` și `media/aripi-alb.png` (alb pe transparent).
+Pozele și videourile primite (14 fotografii, logo-ul și 2 videouri) sunt deja în `media/`, micșorate și fără metadate (fără locație GPS). Logo-ul e în `media/logo-alb.png` și `media/aripi-alb.png` (alb pe transparent).
 
 Recomandat: poze micșorate la max. 1600 px pe latura lungă, videouri MP4 (H.264) sub 20 MB.
