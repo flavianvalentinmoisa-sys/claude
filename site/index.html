@@ -326,7 +326,16 @@ p { margin: 0; }
 .rating-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 99px; background: color-mix(in srgb, var(--night-fg) 8%, transparent); border: 1px solid color-mix(in srgb, var(--night-fg) 16%, transparent); color: var(--night-fg); text-decoration: none; font-size: var(--step--1); }
 .rating-badge .stars { color: var(--cta); font-size: .95rem; letter-spacing: 2px; }
 .rating-badge:hover { background: color-mix(in srgb, var(--night-fg) 14%, transparent); }
-@media (max-width: 900px) { .testi-top { grid-template-columns: 1fr; } }
+.spot { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0; background: var(--night-2); border: 1px solid color-mix(in srgb, var(--night-fg) 10%, transparent); border-radius: var(--radius); overflow: hidden; }
+.spot .frame-p { border-radius: 0; min-height: 320px; }
+.spot-copy { padding: clamp(24px, 4vw, 48px); display: grid; gap: 20px; align-content: center; }
+.spot-copy blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.15rem, 1.9vw, 1.45rem); line-height: 1.55; }
+.spot-copy blockquote::before { content: "„"; color: var(--cta); }
+.spot-copy blockquote::after { content: "”"; color: var(--cta); }
+.spot-who { display: flex; align-items: center; gap: 14px; }
+.spot-who b { display: block; font-weight: 600; }
+.spot-who small { display: block; color: var(--night-muted); font-size: var(--step--1); }
+@media (max-width: 900px) { .testi-top { grid-template-columns: 1fr; } .spot { grid-template-columns: 1fr; } .spot .frame-p { min-height: 0; aspect-ratio: 16 / 9; } }
 
 /* Galerie */
 .ph { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; padding: 16px; color: var(--muted); font-size: var(--step--1); background-image: repeating-linear-gradient(135deg, transparent 0 14px, var(--ph-line) 14px 15px); }
@@ -534,6 +543,14 @@ footer.site { background: var(--night); color: var(--night-muted); }
           <div class="tf-dots" id="tf-dots" role="group" aria-label="Alegeți recenzia"></div>
         </figure>
       </div>
+      <article class="spot" id="spot" hidden>
+        <div class="frame-p"><img id="spot-img" alt="" loading="lazy"></div>
+        <div class="spot-copy">
+          <span class="idx">Povestea unei familii</span>
+          <blockquote id="spot-text"></blockquote>
+          <div class="spot-who"><span class="avatar" id="spot-av" aria-hidden="true"></span><span><b id="spot-name"></b><small id="spot-meta"></small></span></div>
+        </div>
+      </article>
       <div class="testi-reel" id="reviews" tabindex="0" aria-label="Toate recenziile, derulați lateral"></div>
     </div>
   </section>
@@ -801,7 +818,16 @@ const MEDIA = [
    Numele se afișează automat ca prenume + inițiala numelui (ex.: "Maria Popescu" devine "Maria P.").
    Dacă pe Google numele apare cu numele de familie primul, scrieți-l aici direct în forma dorită. */
 const RECENZII = [
-  // { nume: "Maria Popescu", text: "Textul recenziei, exact ca pe Google.", data: "octombrie 2026", stele: 5 },
+  { nume: "Ionel Ionel", stele: 5, data: "2026", evidentiat: true, foto: "media/recenzie-ionel.jpg",
+    text: "Am avut un eveniment in familie ce a presupus sa mergem la București sa cautam un dr legist si sa ne întoarcem acasă, fapt ce a durat aproape toata ziua. Au fost gata pentru drum foarte repede .Totul s a rezolvat exemplar, am gasit la dânșii absolut tot ceea ce a ținut de pregătirea pentru înmormântare si la un preț decent! Recomand si le mulțumesc pentru ajutor!" },
+  { nume: "andreea funaru", stele: 5, data: "2026", text: "Servicii oferite cu mult profesionalism, respect și empatie. Totul a fost organizat impecabil, iar personalul ne-a sprijinit sincer într-un moment dificil. Recomand cu încredere." },
+  { nume: "nicoleta stoian", stele: 5, data: "2026", text: "Servicii de calitate, personal serios și prompt, disponibil la orice oră. Oferă sprijin complet, inclusiv transport. Recomand!" },
+  { nume: "Elena Scripcaru", stele: 5, data: "2026", text: "Seriozitate și multă atenție din partea personalului. Recomand cu încredere!" },
+  { nume: "Cristi Tudor", stele: 5, data: "2026", text: "Recomand cu încredere! Personal amabil și profesionist!" },
+  { nume: "Diana Nadoleanu", stele: 5, data: "2026", text: "Recomand cu încredere! Servicii de calitate" },
+  { nume: "Andy Zamfir", stele: 5, data: "2026", text: "Servicii de calitate și personal amabil!! Recomand!" },
+  { nume: "Razvan Dumitru", stele: 5, data: "2026", text: "Promptitudine si seriozitate. Recomand" },
+  { nume: "Cătălin", stele: 5, data: "2026", text: "Recomand! Cele mai bune servicii!" },
 ];
 
 /* ============================================================ */
@@ -863,30 +889,41 @@ const RECENZII = [
   }
 
   /* Recenzii */
-  const scurt = n => { const p = String(n || "").trim().split(/\s+/).filter(Boolean); if (!p.length) return "Client Google"; if (p.length === 1 || /\.$/.test(p[p.length - 1])) return p.join(" "); return p[0] + " " + p[p.length - 1][0].toUpperCase() + "."; };
-  const initiala = n => (String(n || "?").trim()[0] || "?").toUpperCase();
+  const mare = w => w.charAt(0).toLocaleUpperCase("ro") + w.slice(1);
+  const scurt = n => { const p = String(n || "").trim().split(/\s+/).filter(Boolean); if (!p.length) return "Client Google"; if (p.length === 1 || /\.$/.test(p[p.length - 1])) return p.map(mare).join(" "); return mare(p[0]) + " " + p[p.length - 1][0].toLocaleUpperCase("ro") + "."; };
+  const initiala = n => (String(n || "?").trim()[0] || "?").toLocaleUpperCase("ro");
   const deRecenzii = n => n === 1 ? "o recenzie" : (n % 100 >= 1 && n % 100 <= 19 ? n + " recenzii" : n + " de recenzii");
   const rv = $("#reviews");
   if (!RECENZII.length) { $("#recenzii").hidden = true; $$('a[href="#recenzii"]').forEach(a => { (a.closest("li") || a).hidden = true; }); }
   else {
-    RECENZII.forEach(r => {
+    RECENZII.filter(r => !r.evidentiat).forEach(r => {
       const c = el("article", "review"), h = el("header"), who = el("span");
       who.append(el("b", "", scurt(r.nume)), el("small", "", r.data || ""));
       h.append(el("span", "avatar", initiala(r.nume)), who);
       const st = el("span", "stars", "★".repeat(r.stele || 5)); st.setAttribute("aria-label", (r.stele || 5) + " din 5 stele");
       c.append(h, st, el("p", "", r.text), el("span", "src", "Recenzie Google")); rv.appendChild(c);
     });
-    if (CONFIG.notaGoogle) {
-      $("#score").hidden = false; $("#score-val").textContent = CONFIG.notaGoogle;
-      $("#score-count").textContent = CONFIG.numarRecenzii ? "din " + deRecenzii(CONFIG.numarRecenzii) + " pe Google" : "pe Google";
-      const hb = $("#hero-rating"); hb.hidden = false;
-      hb.innerHTML = '<span class="stars" aria-hidden="true">★★★★★</span>';
-      hb.append(document.createTextNode(CONFIG.notaGoogle + (CONFIG.numarRecenzii ? " · " + deRecenzii(CONFIG.numarRecenzii) : "") + " pe Google"));
+    /* Nota: cea oficială din CONFIG; altfel media recenziilor afișate aici */
+    const medie = (RECENZII.reduce((t, r) => t + (r.stele || 5), 0) / RECENZII.length).toFixed(1).replace(".", ",");
+    const nota = CONFIG.notaGoogle || medie;
+    const total = CONFIG.numarRecenzii || RECENZII.length;
+    $("#score").hidden = false; $("#score-val").textContent = nota;
+    $("#score-count").textContent = "din " + deRecenzii(total) + " pe Google";
+    const hb = $("#hero-rating"); hb.hidden = false;
+    hb.innerHTML = '<span class="stars" aria-hidden="true">★★★★★</span>';
+    hb.append(document.createTextNode(nota + " · " + deRecenzii(total) + " pe Google"));
+    /* Recenzia evidențiată, cu fotografie */
+    const sp = RECENZII.find(r => r.evidentiat);
+    if (sp) {
+      $("#spot").hidden = false; $("#spot-text").textContent = sp.text; $("#spot-name").textContent = scurt(sp.nume);
+      $("#spot-meta").textContent = "★".repeat(sp.stele || 5) + " · Recenzie Google" + (sp.data ? " · " + sp.data : "");
+      $("#spot-av").textContent = initiala(sp.nume);
+      if (sp.foto) { const si = $("#spot-img"); si.src = sp.foto; si.alt = "Fotografie trimisă de " + scurt(sp.nume); } else $("#spot .frame-p").hidden = true;
     }
     if (CONFIG.familiiAjutate) { $("#families").hidden = false; $("#fam-val").textContent = CONFIG.familiiAjutate; }
     /* Recenzia principală se schimbă singură (doar dacă vizitatorul nu a cerut mai puțină animație) */
-    const featured = RECENZII.filter(r => (r.text || "").length >= 60);
-    const pool = featured.length ? featured : RECENZII;
+    const featured = RECENZII.filter(r => !r.evidentiat && (r.text || "").length >= 60);
+    const pool = featured.length ? featured : RECENZII.filter(r => !r.evidentiat).concat(RECENZII.filter(r => r.evidentiat)).slice(0, Math.max(1, RECENZII.length));
     const fig = $("#testi-feature"), dots = $("#tf-dots");
     let cur = 0, timer = null;
     const show = i => {
