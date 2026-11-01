@@ -40,13 +40,13 @@ Recomandat: poze micșorate la max. 1600 px pe latura lungă, videouri MP4 (H.26
 
 ## Videoul principal (sus)
 
-`media/hero.mp4` este videoul de la biserică, mărit la 720×1292 cu reducere de zgomot și accentuarea clarității, recodat pentru web: H.264, fără sunet, 5,2 MB, cu `faststart` (pornește înainte să se descarce tot). Imaginea `media/hero-poster.jpg` apare instantaneu până pornește videoul, iar `media/hero-blur.jpg` este fundalul estompat.
+`media/hero.mp4` este videoul de la biserică exact cum a fost trimis (464×832, fără recodare, doar fără sunet și cu `faststart`, 2,5 MB). O recodare sau o mărire nu adaugă detalii și strică imaginea; pentru calitate mai bună e nevoie de fișierul original din telefon. Imaginea `media/hero-poster.jpg` apare instantaneu până pornește videoul.
 
 Videoul pornește singur, fără sunet, și se oprește când iese din ecran. Nu pornește singur dacă vizitatorul a cerut în telefon mai puțină animație sau economie de date. Butonul din colț îl oprește și îl pornește.
 
-Pentru a schimba videoul principal:
+Pentru a schimba videoul principal, fără a-i strica calitatea:
 
 ```bash
-ffmpeg -i video-nou.mp4 -an -map_metadata -1 -vf "hqdn3d=1.2:1.2:4:4,scale=720:-2:flags=lanczos,unsharp=5:5:0.9:3:3:0.0,eq=contrast=1.04:saturation=1.05" -c:v libx264 -profile:v high -preset slower -tune film -crf 21 -maxrate 1800k -bufsize 3600k -pix_fmt yuv420p -g 30 -movflags +faststart media/hero.mp4
-ffmpeg -i media/hero.mp4 -frames:v 1 -q:v 3 media/hero-poster.jpg
+ffmpeg -i video-nou.mp4 -an -map_metadata -1 -c:v copy -movflags +faststart media/hero.mp4
+ffmpeg -i media/hero.mp4 -frames:v 1 -q:v 2 media/hero-poster.jpg
 ```
