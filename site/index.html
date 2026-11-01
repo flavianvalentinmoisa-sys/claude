@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Servicii Funerare Non-Stop</title>
+<title>PAC Funerare Nonstop</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Servicii funerare complete, non-stop: transport funerar, acte și ajutor de deces, îmbălsămare, sicrie, capelă, incinerare și repatriere din Europa.">
+<meta name="description" content="PAC Funerare Nonstop: servicii funerare complete, non-stop, de 15 ani. Transport funerar, acte și ajutor de deces, îmbălsămare, sicrie, capelă și coroane. Tel. 0760 396 402.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
@@ -13,24 +13,24 @@
 /* Layout: structura unui site funerar clasic (bandă de contact, hero cu două oferte, carduri de servicii, configurator, repatriere, recenzii, formular), pe ardezie adâncă și nisip, cu alamă doar pe acțiuni. */
 :root {
   --paper: #FFFFFF;
-  --stone: #F4F3EF;
-  --sand: #ECE7DC;
-  --sand-deep: #D9CFBC;
-  --ink: #1F262B;
-  --muted: #5A6369;
-  --line: #DCD8CF;
-  --night: #1A242C;
-  --night-2: #223039;
-  --night-fg: #ECEEEC;
-  --night-muted: #A7B2B8;
-  --brass: #8A6B37;
-  --brass-strong: #6F5328;
-  --cta: #EBD3A4;
-  --cta-strong: #E0C385;
-  --on-cta: #2A2112;
-  --star: #B08A3E;
-  --ph: #E4E1DA;
-  --ph-line: #CFCAC0;
+  --stone: #F5F4F1;
+  --sand: #EFECE6;
+  --sand-deep: #DED5C3;
+  --ink: #1A1A1B;
+  --muted: #5E5E61;
+  --line: #DEDBD4;
+  --night: #0F0F10;
+  --night-2: #1B1B1D;
+  --night-fg: #F1F0EC;
+  --night-muted: #A9A7A1;
+  --brass: #94743A;
+  --brass-strong: #765A27;
+  --cta: #D3B06C;
+  --cta-strong: #C49E55;
+  --on-cta: #1A1407;
+  --star: #B48E43;
+  --ph: #E6E3DD;
+  --ph-line: #D0CBC1;
   --font-display: "Marcellus", "Trajan Pro", Georgia, "Times New Roman", serif;
   --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
   --step--1: 0.875rem;
@@ -45,20 +45,20 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #141B20; --stone: #10161A; --sand: #1E2529; --sand-deep: #3A3A33;
-    --ink: #E7EAE8; --muted: #A0AAB0; --line: #2B353C;
-    --night: #0B1115; --night-2: #121B21; --night-fg: #E7EAE8; --night-muted: #95A2A9;
-    --brass: #CDAE70; --brass-strong: #DDC28C; --cta: #E3C68E; --cta-strong: #EED6A6; --on-cta: #21190B;
-    --star: #D7B66F; --ph: #1E262B; --ph-line: #2F3940;
+    --paper: #121213; --stone: #0C0C0D; --sand: #1C1C1E; --sand-deep: #38342C;
+    --ink: #EDECE8; --muted: #A4A29C; --line: #2B2B2E;
+    --night: #070708; --night-2: #141415; --night-fg: #EDECE8; --night-muted: #9C9A94;
+    --brass: #D3B06C; --brass-strong: #E2C487; --cta: #D3B06C; --cta-strong: #E2C487; --on-cta: #1A1407;
+    --star: #D9B670; --ph: #1C1C1E; --ph-line: #2E2E31;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #141B20; --stone: #10161A; --sand: #1E2529; --sand-deep: #3A3A33;
-  --ink: #E7EAE8; --muted: #A0AAB0; --line: #2B353C;
-  --night: #0B1115; --night-2: #121B21; --night-fg: #E7EAE8; --night-muted: #95A2A9;
-  --brass: #CDAE70; --brass-strong: #DDC28C; --cta: #E3C68E; --cta-strong: #EED6A6; --on-cta: #21190B;
-  --star: #D7B66F; --ph: #1E262B; --ph-line: #2F3940;
+  --paper: #121213; --stone: #0C0C0D; --sand: #1C1C1E; --sand-deep: #38342C;
+    --ink: #EDECE8; --muted: #A4A29C; --line: #2B2B2E;
+    --night: #070708; --night-2: #141415; --night-fg: #EDECE8; --night-muted: #9C9A94;
+    --brass: #D3B06C; --brass-strong: #E2C487; --cta: #D3B06C; --cta-strong: #E2C487; --on-cta: #1A1407;
+    --star: #D9B670; --ph: #1C1C1E; --ph-line: #2E2E31;
   color-scheme: dark;
 }
 
@@ -111,7 +111,8 @@ p { margin: 0; }
 .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--night); color: var(--night-fg); border-bottom: 1px solid color-mix(in srgb, var(--night-fg) 10%, transparent); }
 .topbar .wrap { display: flex; align-items: center; gap: 24px; min-height: 72px; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
-.brand-mark { width: 38px; height: 38px; flex: none; }
+.brand-mark { width: 64px; height: auto; flex: none; }
+.foot-logo { width: 170px; height: auto; margin-bottom: 18px; }
 .brand-name { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nav { display: flex; gap: 22px; margin-left: auto; }
 .nav a { text-decoration: none; color: var(--night-muted); font-size: 0.98rem; }
@@ -154,6 +155,9 @@ p { margin: 0; }
 /* Îndrumare + citat */
 .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
 .intro h2 { font-size: var(--step-2); margin-bottom: 12px; }
+.years { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.years b { font-family: var(--font-display); font-weight: 400; font-size: clamp(3rem, 7vw, 4.4rem); line-height: 1; color: var(--brass); }
+.years span { color: var(--muted); font-size: var(--step--1); text-transform: uppercase; letter-spacing: .1em; line-height: 1.4; }
 .intro p { color: var(--muted); }
 .intro blockquote { margin: 0; font-family: var(--font-display); font-size: var(--step-1); line-height: 1.5; border-left: 2px solid var(--brass); padding-left: 22px; display: grid; gap: 14px; }
 .intro blockquote footer { font-family: var(--font-body); font-size: var(--step--1); color: var(--muted); }
@@ -221,7 +225,9 @@ p { margin: 0; }
 .team-card p { color: var(--muted); font-size: 1rem; }
 .team-photo { aspect-ratio: 4 / 3; max-width: 100%; border-radius: var(--radius); overflow: hidden; background: var(--ph); }
 .team-photo img { width: 100%; height: 100%; object-fit: cover; }
-@media (max-width: 860px) { .team { grid-template-columns: 1fr; } .team-photo { order: -1; } }
+.team-fig { margin: 0; display: grid; gap: 8px; min-width: 0; }
+.team-fig figcaption { color: var(--muted); font-size: var(--step--1); }
+@media (max-width: 860px) { .team { grid-template-columns: 1fr; } .team-fig { order: -1; } }
 
 /* Galerie */
 .gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -233,13 +239,16 @@ p { margin: 0; }
 .gallery button:hover img { transform: scale(1.03); }
 .ph { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; padding: 16px; color: var(--muted); font-size: var(--step--1); background-image: repeating-linear-gradient(135deg, transparent 0 14px, var(--ph-line) 14px 15px); }
 .ph span { background: var(--ph); padding: 6px 10px; border-radius: var(--radius); }
-.videos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.video-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(24px, 4vw, 56px); align-items: center; margin-top: clamp(40px, 6vw, 64px); }
+.video-row h3 { font-size: var(--step-2); margin-bottom: 10px; }
+.video-row p { color: var(--muted); }
+.videos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .videos figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
 .videos .frame { aspect-ratio: 9 / 16; max-width: 100%; background: var(--ph); border-radius: var(--radius); overflow: hidden; }
 .videos video { width: 100%; height: 100%; object-fit: cover; background: #000; }
 .videos figcaption { color: var(--muted); font-size: var(--step--1); }
-@media (max-width: 860px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } .videos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 480px) { .videos { grid-template-columns: 1fr; } .videos .frame { aspect-ratio: 4 / 5; } }
+@media (max-width: 860px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } .video-row { grid-template-columns: 1fr; } }
+
 .lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(8, 12, 15, 0.92); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) var(--gutter-r) max(16px, env(safe-area-inset-bottom, 0px)) var(--gutter-l); }
 .lightbox img { max-height: 86vh; border-radius: var(--radius); }
 .lightbox button { position: absolute; top: calc(12px + env(safe-area-inset-top, 0px)); right: calc(12px + env(safe-area-inset-right, 0px)); background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: var(--radius); min-height: 42px; padding: 0 14px; font: inherit; cursor: pointer; }
@@ -257,6 +266,9 @@ p { margin: 0; }
 .direct small { text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-size: var(--step--1); }
 .direct .row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .direct .big { font-family: var(--font-display); font-size: var(--step-2); color: var(--brass); text-decoration: none; font-variant-numeric: tabular-nums; }
+.sediu { margin: 24px 0 0; display: grid; gap: 8px; }
+.sediu img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 40%; border-radius: var(--radius); }
+.sediu figcaption { color: var(--muted); font-size: var(--step--1); }
 .copy { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: var(--radius); min-height: 34px; padding: 0 12px; font: 600 var(--step--1) var(--font-body); cursor: pointer; }
 .copy:hover { color: var(--ink); }
 form.request { display: grid; gap: 14px; min-width: 0; }
@@ -279,6 +291,8 @@ form.request .btn-cta { width: 100%; }
 .fb-post header b { font-size: 0.98rem; }
 .fb-post header small { display: block; color: var(--muted); font-size: 0.8rem; }
 .fb-post .media { aspect-ratio: 16 / 9; max-width: 100%; border-radius: 4px; overflow: hidden; background: var(--ph); }
+.fb-av { background: var(--night); }
+.fb-av img { width: 30px; height: auto; }
 .fb-post .media img { width: 100%; height: 100%; object-fit: cover; }
 .fb-copy { display: grid; gap: 14px; justify-items: start; }
 .fb-copy h2 { font-size: var(--step-2); }
@@ -332,13 +346,13 @@ footer.site { background: var(--night); color: var(--night-muted); }
   <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M7 17L17 7M9 7h8v8"/></symbol>
 </svg>
 
-<div class="strip"><div class="wrap">Contactați-ne non-stop la <a data-tel data-cfg="telefon" href="tel:+40700000000">07xx xxx xxx</a></div></div>
+<div class="strip"><div class="wrap">Contactați-ne non-stop: <a data-tel data-cfg="telefon" href="tel:+40760396402">0760 396 402</a> · <a data-tel2 data-cfg="telefon2" href="tel:+40760522022">0760 522 022</a></div></div>
 
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#acasa" aria-label="Pagina principală">
-      <svg class="brand-mark" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="19" fill="var(--night-fg)"/><path d="M19 8v22M13 14h12" stroke="var(--night)" stroke-width="3" stroke-linecap="round"/></svg>
-      <span class="brand-name" data-cfg="nume">Servicii Funerare Non-Stop</span>
+      <img class="brand-mark" src="media/aripi-alb.png" alt="" width="240" height="77">
+      <span class="brand-name">PAC Funerare</span>
     </a>
     <nav class="nav" aria-label="Meniu">
       <a href="#servicii">Servicii</a>
@@ -356,9 +370,9 @@ footer.site { background: var(--night); color: var(--night-muted); }
   <section class="hero">
     <div class="hero-bg empty" id="hero-bg"></div>
     <div class="wrap">
-      <span class="eyebrow">Servicii funerare · <span data-cfg="zona">[zona deservită]</span></span>
+      <span class="eyebrow">PAC Funerare Nonstop · 15 ani de experiență<span data-zona> · <span data-cfg="zona"></span></span></span>
       <h1>Alături de familia dumneavoastră, în cele mai grele clipe</h1>
-      <p class="sub">Servicii funerare complete, la un singur telefon.</p>
+      <p class="sub">„Cinstim viața, respectăm plecarea.”</p>
       <p class="lead">Ne ocupăm de tot ce ține de înmormântare: transportul, actele, pregătirea, capela și ceremonia. Vă spunem de la început ce costă și ce urmează, ca să vă puteți ocupa de cei dragi.</p>
       <div class="hero-actions">
         <a class="btn btn-cta" href="#costuri">Cereți ofertă servicii funerare <small>· 2 minute</small></a>
@@ -366,7 +380,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
       </div>
       <div class="nonstop">
         <svg aria-hidden="true"><use href="#i-clock"/></svg>
-        <div><small>Program non-stop</small><a data-tel data-cfg="telefon" href="tel:+40700000000">07xx xxx xxx</a></div>
+        <div><small>Program non-stop</small><a data-tel data-cfg="telefon" href="tel:+40760396402">0760 396 402</a> · <a data-tel2 data-cfg="telefon2" href="tel:+40760522022">0760 522 022</a></div>
       </div>
     </div>
     <svg class="curve" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V40Q720 -30 1440 40V70Z" fill="currentColor"/></svg>
@@ -416,13 +430,14 @@ footer.site { background: var(--night); color: var(--night-muted); }
 
   <section class="section" style="padding-top: 0">
     <div class="wrap intro">
-      <div>
+      <div class="intro-left">
+        <div class="years"><b>15</b><span>ani alături de familii<br>în cele mai grele clipe</span></div>
         <h2>Vă îndrumăm la fiecare pas</h2>
-        <p>Suntem alături de dumneavoastră cu servicii făcute cu grijă și cu sprijin moral, ca să treceți cât mai ușor prin aceste momente.</p>
+        <p>De 15 ani, echipa PAC Funerare este alături de familii cu servicii făcute cu grijă și cu sprijin moral, ca să treceți cât mai ușor prin aceste momente.</p>
       </div>
       <blockquote id="intro-quote">
         <p>Vă răspundem la telefon la orice oră, vă spunem clar ce urmează și cât costă, și nu vă lăsăm singuri până la final.</p>
-        <footer>Echipa <span data-cfg="nume">Servicii Funerare Non-Stop</span></footer>
+        <footer>Echipa PAC Funerare Nonstop</footer>
       </blockquote>
     </div>
   </section>
@@ -536,7 +551,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
           <article class="team-card"><h3>Ajutor cu actele și ajutorul de deces</h3><p>Suntem alături de dumneavoastră de la declararea decesului până la depunerea dosarului pentru ajutorul de deces.</p></article>
           <article class="team-card"><h3>Servicii pentru orice buget</h3><p>Vă punem la dispoziție servicii și produse funerare de toate categoriile de preț, pentru o înmormântare demnă.</p></article>
         </div>
-        <div class="team-photo" id="team-photo"><div class="ph"><span>Fotografie cu echipa, de pe Facebook</span></div></div>
+        <figure class="team-fig"><div class="team-photo" id="team-photo"><div class="ph"><span>Fotografie cu echipa</span></div></div><figcaption id="team-cap"></figcaption></figure>
       </div>
     </div>
   </section>
@@ -545,7 +560,10 @@ footer.site { background: var(--night); color: var(--night-muted); }
     <div class="wrap">
       <div class="section-head"><span class="eyebrow">Galerie</span><h2>Din activitatea noastră</h2><p>Imagini și filmări de pe pagina noastră de Facebook.</p></div>
       <div class="gallery" id="gallery"></div>
-      <div class="videos" id="videos"></div>
+      <div class="video-row">
+        <div><h3>Filmări de la ceremonii</h3><p>Autospecialele noastre la biserică și la cimitir. Avem grijă ca totul să decurgă liniștit, de la slujbă până la ultimul drum.</p></div>
+        <div class="videos" id="videos"></div>
+      </div>
     </div>
   </section>
 
@@ -561,11 +579,13 @@ footer.site { background: var(--night); color: var(--night-muted); }
         <div class="direct">
           <small>Telefon non-stop</small>
           <div class="row">
-            <a class="big" data-tel data-cfg="telefon" href="tel:+40700000000">07xx xxx xxx</a>
+            <a class="big" data-tel data-cfg="telefon" href="tel:+40760396402">0760 396 402</a>
             <button class="copy" type="button" id="copy-phone">Copiați numărul</button>
           </div>
-          <span data-cfg="adresa">[adresa sediului]</span>
+          <div class="row"><a class="big" data-tel2 data-cfg="telefon2" href="tel:+40760522022">0760 522 022</a></div>
+          <span data-cfg="adresa" data-hide-empty>[adresa sediului]</span>
         </div>
+        <figure class="sediu"><img src="media/sediu.jpg" alt="Sediul PAC Funerare, cu firma luminoasă și numerele de telefon" loading="lazy" width="1199" height="1600"><figcaption>Sediul nostru</figcaption></figure>
       </div>
       <form class="request" id="request" novalidate>
         <h3>Contactați-ne</h3>
@@ -592,7 +612,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
     <div class="wrap">
       <div class="fb-band">
         <div class="fb-post" aria-hidden="true">
-          <header><span class="avatar">f</span><div><b data-cfg="nume">Servicii Funerare Non-Stop</b><small>Pagina noastră de Facebook</small></div></header>
+          <header><span class="avatar fb-av"><img src="media/aripi-alb.png" alt=""></span><div><b>PAC Funerare Nonstop</b><small>Pagina noastră de Facebook</small></div></header>
           <div class="media" id="fb-media"><div class="ph"><span>Ultima postare de pe Facebook</span></div></div>
         </div>
         <div class="fb-copy">
@@ -622,13 +642,11 @@ footer.site { background: var(--night); color: var(--night-muted); }
 <footer class="site">
   <div class="wrap foot">
     <div>
-      <a class="brand" href="#acasa">
-        <svg class="brand-mark" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="19" fill="var(--night-fg)"/><path d="M19 8v22M13 14h12" stroke="var(--night)" stroke-width="3" stroke-linecap="round"/></svg>
-        <span class="brand-name" data-cfg="nume">Servicii Funerare Non-Stop</span>
-      </a>
+      <a href="#acasa"><img class="foot-logo" src="media/logo-alb.png" alt="PAC Funerare Nonstop" width="700" height="664"></a>
       <ul>
-        <li data-cfg="adresa">[adresa sediului]</li>
-        <li><a data-tel data-cfg="telefon" href="tel:+40700000000">07xx xxx xxx</a></li>
+        <li data-cfg="adresa" data-hide-empty>[adresa sediului]</li>
+        <li><a data-tel data-cfg="telefon" href="tel:+40760396402">0760 396 402</a></li>
+        <li><a data-tel2 data-cfg="telefon2" href="tel:+40760522022">0760 522 022</a></li>
         <li>Non-stop, 7 zile din 7</li>
       </ul>
     </div>
@@ -637,13 +655,13 @@ footer.site { background: var(--night); color: var(--night-muted); }
     <div><h4>Despre noi</h4><ul><li><a href="#echipa">Echipa</a></li><li><a href="#galerie">Galerie</a></li><li><a href="#contact">Contact</a></li><li><a data-fb href="https://www.facebook.com/VasyPetre75" target="_blank" rel="noopener">Facebook</a></li></ul></div>
   </div>
   <div class="wrap legal">
-    <span>© <span id="an">2026</span> <span data-cfg="nume">Servicii Funerare Non-Stop</span></span>
+    <span>© <span id="an">2026</span> PAC Funerare Nonstop · „Cinstim viața, respectăm plecarea.”</span>
     <span><a href="https://anpc.ro/" target="_blank" rel="noopener">ANPC</a> · <a href="https://consumer-redress.ec.europa.eu/" target="_blank" rel="noopener">Soluționarea online a litigiilor</a></span>
   </div>
 </footer>
 
 <div class="callbar">
-  <a class="btn btn-cta" data-tel href="tel:+40700000000">Sunați acum</a>
+  <a class="btn btn-cta" data-tel href="tel:+40760396402">Sunați acum</a>
   <a class="btn btn-ghost" data-wa href="#contact">WhatsApp</a>
 </div>
 
@@ -657,20 +675,35 @@ footer.site { background: var(--night); color: var(--night-muted); }
    DATELE FIRMEI — modificați doar aici.
    ============================================================ */
 const CONFIG = {
-  nume: "Servicii Funerare Non-Stop",   // numele firmei, ca pe Facebook
-  telefon: "07xx xxx xxx",               // cum se afișează
-  telefonIntl: "40700000000",            // același număr, fără + (pentru apel și WhatsApp)
-  zona: "[zona deservită]",              // ex.: Baia Mare și Satu Mare
-  adresa: "[adresa sediului]",
+  nume: "PAC Funerare Nonstop",
+  telefon: "0760 396 402",               // cum se afișează
+  telefonIntl: "40760396402",            // același număr, fără + (pentru apel și WhatsApp)
+  telefon2: "0760 522 022",
+  telefon2Intl: "40760522022",
+  zona: "județul Ialomița",              // DE CONFIRMAT (dedus din numerele de înmatriculare IL)
+  adresa: "",                            // adresa sediului; dacă e gol, nu se afișează
   facebook: "https://www.facebook.com/VasyPetre75",
-  pozaHero: "",                          // ex.: "media/hero.jpg" — fundalul de sus
-  pozaEchipa: ""                         // ex.: "media/echipa.jpg"
+  pozaHero: "media/biserica-doua-autospeciale.jpg",
+  pozaEchipa: "media/echipa-expo.jpg",
+  textEchipa: "Echipa noastră la ASF Expo Funerar",
+  pozaFacebook: "media/echipa-autospeciala.jpg"
 };
 
 /* Pozele și videourile de pe Facebook (fișierele merg în folderul media/). */
 const MEDIA = [
-  // { tip: "foto",  src: "media/foto-01.jpg", alt: "Capelă pregătită pentru priveghi", lat: true },
-  // { tip: "video", src: "media/video-01.mp4", poster: "media/video-01.jpg", text: "Autospeciala funerară" },
+  { tip: "foto", src: "media/biserica-doua-autospeciale.jpg", alt: "Două autospeciale funerare în fața bisericii", lat: true },
+  { tip: "foto", src: "media/biserica-autospeciala.jpg", alt: "Autospeciala funerară cu coroane în fața bisericii" },
+  { tip: "foto", src: "media/slujba-biserica.jpg", alt: "Slujba de înmormântare în biserică" },
+  { tip: "foto", src: "media/autospeciala-coroane-cimitir.jpg", alt: "Autospeciala cu coroane de flori la cimitir" },
+  { tip: "foto", src: "media/autospeciala-coroane.jpg", alt: "Coroane funerare pe autospecială" },
+  { tip: "foto", src: "media/inmormantare.jpg", alt: "Familia la înmormântare, în cimitir" },
+  { tip: "foto", src: "media/biserica-autospeciala-2.jpg", alt: "Autospeciala parcată la biserică" },
+  { tip: "foto", src: "media/clopotnita-autospeciala.jpg", alt: "Autospeciala în fața clopotniței" },
+  { tip: "foto", src: "media/autospeciala-cimitir.jpg", alt: "Autospeciala PAC Funerare la cimitir" },
+  { tip: "foto", src: "media/autospeciale-oras.jpg", alt: "Autospecialele PAC Funerare în oraș" },
+  { tip: "foto", src: "media/flota-mercedes.jpg", alt: "Autospecialele funerare Mercedes ale firmei" },
+  { tip: "video", src: "media/video-biserica.mp4", poster: "media/video-biserica.jpg", text: "La biserică, înainte de cortegiu" },
+  { tip: "video", src: "media/video-cimitir.mp4", poster: "media/video-cimitir.jpg", text: "La cimitir" },
 ];
 
 /* Recenzii reale (de pe Facebook sau Google). Nu inventați recenzii. */
@@ -686,6 +719,9 @@ const RECENZII = [
 
   $$("[data-cfg]").forEach(n => { const v = CONFIG[n.dataset.cfg]; if (v) n.textContent = v; });
   $$("[data-tel]").forEach(a => a.href = "tel:+" + CONFIG.telefonIntl);
+  $$("[data-tel2]").forEach(a => a.href = "tel:+" + CONFIG.telefon2Intl);
+  $$("[data-hide-empty]").forEach(n => { if (!CONFIG[n.dataset.cfg]) n.hidden = true; });
+  if (!CONFIG.zona) $$("[data-zona]").forEach(n => n.hidden = true);
   const waBase = "https://wa.me/" + CONFIG.telefonIntl;
   $$("[data-wa]").forEach(a => { a.href = waBase; a.target = "_blank"; a.rel = "noopener"; });
   $$("[data-fb]").forEach(a => a.href = CONFIG.facebook);
@@ -693,7 +729,7 @@ const RECENZII = [
   $("#an").textContent = new Date().getFullYear();
 
   if (CONFIG.pozaHero) { const bg = $("#hero-bg"); bg.classList.remove("empty"); bg.style.backgroundImage = "url('" + CONFIG.pozaHero + "')"; }
-  if (CONFIG.pozaEchipa) { const t = $("#team-photo"); t.innerHTML = ""; const i = el("img"); i.src = CONFIG.pozaEchipa; i.alt = "Echipa " + CONFIG.nume; t.appendChild(i); }
+  if (CONFIG.pozaEchipa) { const t = $("#team-photo"); t.innerHTML = ""; const i = el("img"); i.src = CONFIG.pozaEchipa; i.alt = CONFIG.textEchipa || "Echipa " + CONFIG.nume; t.appendChild(i); $("#team-cap").textContent = CONFIG.textEchipa || ""; }
 
   /* Galerie */
   const fotos = MEDIA.filter(m => m.tip === "foto"), clips = MEDIA.filter(m => m.tip === "video");
@@ -706,7 +742,7 @@ const RECENZII = [
       b.appendChild(img); f.appendChild(b); gallery.appendChild(f);
       b.addEventListener("click", () => openLb(m));
     });
-    const fbm = $("#fb-media"); fbm.innerHTML = ""; const i = el("img"); i.src = fotos[0].src; i.alt = ""; fbm.appendChild(i);
+    const fbm = $("#fb-media"); fbm.innerHTML = ""; const i = el("img"); i.src = CONFIG.pozaFacebook || fotos[0].src; i.alt = ""; fbm.appendChild(i);
   } else {
     ["wide", "", "", "", "", "wide"].forEach((c, i) => { const f = el("figure", c); f.innerHTML = '<div class="ph"><span>Fotografie ' + (i + 1) + ' de pe Facebook</span></div>'; gallery.appendChild(f); });
   }
@@ -722,9 +758,9 @@ const RECENZII = [
 
   /* Recenzii */
   const rv = $("#reviews");
-  const list = RECENZII.length ? RECENZII : [1, 2, 3, 4].map(i => ({ nume: "Recenzie " + i, text: "Aici apare o recenzie reală de pe pagina de Facebook.", data: "", stele: 5, ph: true }));
-  list.forEach(r => {
-    const c = el("article", "review" + (r.ph ? " ph-card" : "")), h = el("header");
+  if (!RECENZII.length) $("#recenzii").hidden = true;
+  RECENZII.forEach(r => {
+    const c = el("article", "review"), h = el("header");
     h.append(el("span", "avatar", (r.nume || "?").trim()[0].toUpperCase()), el("b", "", r.nume));
     const meta = el("div", "meta"); meta.append(el("span", "", r.data || ""), el("span", "stars", "★".repeat(r.stele || 5)));
     meta.lastChild.setAttribute("aria-label", (r.stele || 5) + " din 5 stele");
