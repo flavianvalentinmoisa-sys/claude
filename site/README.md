@@ -15,7 +15,7 @@ Toate datele firmei sunt în blocul `CONFIG` de la începutul scriptului din `in
 | `adresa`      | gol = nu se afișează; completați adresa sediului |
 | `pozaEchipa` / `textEchipa` | `media/echipa-expo.jpg` / legenda pozei |
 
-Recenziile se adaugă în lista `RECENZII` (doar recenzii reale, de pe Facebook sau Google). Cât timp lista e goală, secțiunea de recenzii nu apare.
+Recenziile se adaugă în lista `RECENZII` (doar recenzii reale, de pe Google). Numele se afișează automat ca prenume + inițiala numelui („Maria Popescu” devine „Maria P.”). În `CONFIG` se completează `notaGoogle`, `numarRecenzii` și, doar dacă e o cifră reală, `familiiAjutate`. Cât timp lista e goală, secțiunea de recenzii, insigna cu stele din hero și linkurile „Recenzii” nu apar.
 
 Structura paginii: video principal, „Despre noi” cu colaj foto, servicii în rânduri alternante imagine-text, bandă foto cu motto, sfaturi ilustrate, recenzii, echipă, galerie derulantă, contact cu butoane de apel, Facebook, întrebări frecvente, footer. Pagina nu are formular: toate butoanele sună direct la unul dintre cele două numere.
 
