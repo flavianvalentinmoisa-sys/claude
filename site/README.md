@@ -9,7 +9,7 @@ Toate datele firmei sunt în blocul `CONFIG` de la începutul scriptului din `in
 | Câmp          | Exemplu                     |
 |---------------|-----------------------------|
 | `nume`        | `PAC Funerare Nonstop`      |
-| `telefon` / `telefonIntl`   | `0760 396 402` / `40760396402` (apel și WhatsApp) |
+| `telefon` / `telefonIntl`   | `0760 396 402` / `40760396402` (apel direct) |
 | `telefon2` / `telefon2Intl` | `0760 522 022` / `40760522022` |
 | `zona`        | `județul Ialomița` — de confirmat |
 | `adresa`      | gol = nu se afișează; completați adresa sediului |
@@ -17,7 +17,7 @@ Toate datele firmei sunt în blocul `CONFIG` de la începutul scriptului din `in
 
 Recenziile se adaugă în lista `RECENZII` (doar recenzii reale, de pe Facebook sau Google). Cât timp lista e goală, secțiunea de recenzii nu apare.
 
-Structura paginii urmează site-ul exemplu funero.ro: bandă de contact, hero cu două oferte, „Vă ajutăm cu”, configurator de costuri, repatriere, sfaturi, recenzii, echipă, galerie Facebook, formular, comunitate Facebook, întrebări frecvente, footer pe coloane.
+Structura paginii: video principal, „Despre noi” cu colaj foto, servicii în rânduri alternante imagine-text, bandă foto cu motto, sfaturi ilustrate, recenzii, echipă, galerie derulantă, contact cu butoane de apel, Facebook, întrebări frecvente, footer. Pagina nu are formular: toate butoanele sună direct la unul dintre cele două numere.
 
 Textele serviciilor, ale pașilor de repatriere și ale întrebărilor frecvente se modifică direct în HTML.
 
