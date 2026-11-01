@@ -40,7 +40,7 @@ Recomandat: poze micșorate la max. 1600 px pe latura lungă, videouri MP4 (H.26
 
 ## Videoul principal (sus)
 
-`media/hero.mp4` este videoul de la biserică exact cum a fost trimis (464×832, fără recodare, doar fără sunet și cu `faststart`, 2,5 MB). O recodare sau o mărire nu adaugă detalii și strică imaginea; pentru calitate mai bună e nevoie de fișierul original din telefon. Imaginea `media/hero-poster.jpg` apare instantaneu până pornește videoul.
+`media/hero.mp4` este videoul de la biserică, mărit cu inteligență artificială la 928×1664 (Knight Media, mărire 2×), apoi comprimat pentru web fără pierdere vizibilă (H.264, 3,4 Mbps, fără sunet, cu `faststart`, 9,5 MB). Imaginea `media/hero-poster.jpg` apare instantaneu până pornește videoul.
 
 Videoul pornește singur, fără sunet, și se oprește când iese din ecran. Nu pornește singur dacă vizitatorul a cerut în telefon mai puțină animație sau economie de date. Butonul din colț îl oprește și îl pornește.
 
