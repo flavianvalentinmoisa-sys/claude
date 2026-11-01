@@ -13,6 +13,12 @@ Toate datele firmei sunt în blocul `CONFIG` de la începutul scriptului din `in
 | `telefonIntl` | `40722123456` (pentru apel și WhatsApp, fără `+`) |
 | `zona`        | `București și Ilfov`        |
 | `adresa`      | adresa sediului             |
+| `pozaHero`    | `media/hero.jpg` (fundalul de sus) |
+| `pozaEchipa`  | `media/echipa.jpg`          |
+
+Recenziile se adaugă în lista `RECENZII` (doar recenzii reale, de pe Facebook sau Google). Cât timp lista e goală, secțiunea arată chenare-substitut.
+
+Structura paginii urmează site-ul exemplu funero.ro: bandă de contact, hero cu două oferte, „Vă ajutăm cu”, configurator de costuri, repatriere, sfaturi, recenzii, echipă, galerie Facebook, formular, comunitate Facebook, întrebări frecvente, footer pe coloane.
 
 Prețurile pachetelor apar ca „Preț la cerere”. Conținutul pachetelor și al serviciilor se modifică direct în HTML.
 
