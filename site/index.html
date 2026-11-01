@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PAC Funerare Nonstop</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="PAC Funerare Nonstop: servicii funerare complete, non-stop, de 15 ani. Transport funerar, acte și ajutor de deces, îmbălsămare, sicrie, capelă și coroane. Tel. 0760 396 402.">
+<meta name="description" content="PAC Funerare Nonstop: consultanță și îndrumare non-stop pentru familii, de 15 ani. Transport funerar, îmbălsămare, sicrie și coroane. Tel. 0760 396 402.">
 <link rel="preload" as="image" href="media/hero-poster.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,7 +133,7 @@ p { margin: 0; }
 .hero-copy { grid-column: 1; grid-row: 1; display: grid; justify-items: start; gap: 18px; min-width: 0; }
 .hero-media {
   grid-column: 2; grid-row: 1; position: relative; justify-self: center; overflow: hidden; border-radius: 10px;
-  width: min(100%, 380px, calc((100vh - 220px) * 0.5577)); min-width: 240px; aspect-ratio: 464 / 832; max-width: 100%;
+  width: min(100%, 380px, calc((100vh - 220px) * 0.5573)); min-width: 240px; aspect-ratio: 720 / 1292; max-width: 100%;
   background: var(--night-2) url("media/hero-poster.jpg") center / cover no-repeat;
   box-shadow: 0 30px 60px rgba(0,0,0,.45), 0 0 0 1px color-mix(in srgb, var(--night-fg) 14%, transparent);
   contain: layout paint;
@@ -200,8 +200,8 @@ p { margin: 0; }
 
 /* Configurator costuri */
 .config { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
-.toggles { background: var(--sand); border-radius: var(--radius); padding: clamp(16px, 2.4vw, 28px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.toggle { all: unset; box-sizing: border-box; background: var(--paper); border: 1px solid transparent; border-radius: var(--radius); padding: 16px 14px; min-height: 84px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start; cursor: pointer; font-weight: 600; line-height: 1.3; font-size: 0.98rem; }
+.toggles { background: var(--sand); border-radius: var(--radius); padding: clamp(16px, 2.4vw, 28px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.toggle { all: unset; box-sizing: border-box; background: var(--paper); border: 1px solid transparent; border-radius: var(--radius); padding: 16px 14px; min-height: 64px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start; cursor: pointer; font-weight: 600; line-height: 1.3; font-size: 0.98rem; }
 .toggle:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
 .toggle .sw { width: 34px; height: 18px; border-radius: 99px; background: var(--line); position: relative; transition: background-color .2s; }
 .toggle .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--muted); transition: transform .2s, background-color .2s; }
@@ -359,7 +359,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-cross" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 3v18M7 8h10"/></symbol>
-  <symbol id="i-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 5h16v11H9l-5 4zM8 9h8M8 12h5"/></symbol>
   <symbol id="i-route" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8 17c6 0 2-9 8-10" stroke-dasharray="2 2.5"/></g></symbol>
   <symbol id="i-coin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></g></symbol>
   <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
@@ -378,7 +378,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
     <nav class="nav" aria-label="Meniu">
       <a href="#servicii">Servicii</a>
       <a href="#costuri">Ofertă de preț</a>
-      <a href="#sfaturi">Sfaturi și ajutor</a>
+      <a href="#sfaturi">Sfaturi și îndrumare</a>
       <a href="#galerie">Galerie</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -391,7 +391,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="wrap">
       <div class="hero-media">
-        <video id="hero-video" src="media/hero.mp4" poster="media/hero-poster.jpg" width="464" height="832" muted loop playsinline autoplay preload="auto" disablepictureinpicture aria-label="Autospecialele PAC Funerare cu coroane, la biserică"></video>
+        <video id="hero-video" src="media/hero.mp4" poster="media/hero-poster.jpg" width="720" height="1292" muted loop playsinline autoplay preload="auto" disablepictureinpicture aria-label="Autospecialele PAC Funerare cu coroane, la biserică"></video>
         <button class="vid-toggle" type="button" id="vid-toggle" aria-pressed="true" aria-label="Opriți videoul">
           <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
           <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5l11 7-11 7z"/></svg>
@@ -402,7 +402,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
       <span class="eyebrow">15 ani de experiență<span data-zona> · <span data-cfg="zona"></span></span></span>
       <h1>Alături de familia dumneavoastră, în cele mai grele clipe</h1>
       <p class="sub">„Cinstim viața, respectăm plecarea.”</p>
-      <p class="lead">Ne ocupăm de tot ce ține de înmormântare: transportul, actele, pregătirea, capela și ceremonia. Vă spunem de la început ce costă și ce urmează, ca să vă puteți ocupa de cei dragi.</p>
+      <p class="lead">Vă oferim consultanță și îndrumare de la primul telefon: vă explicăm pașii, variantele și costurile, iar noi ne ocupăm de transportul funerar și de pregătire, ca să vă puteți ocupa de cei dragi.</p>
       <div class="hero-actions">
         <a class="btn btn-cta" href="#costuri">Cereți ofertă servicii funerare <small>· 2 minute</small></a>
         <a class="btn btn-ghost" data-tel href="tel:+40760396402">Sunați acum</a>
@@ -428,28 +428,28 @@ footer.site { background: var(--night); color: var(--night-muted); }
             <li>Înmormântare tradițională sau incinerare</li>
             <li>Îmbălsămare și pregătirea defunctului</li>
             <li>Sicrie, coroane, cruce și accesorii</li>
-            <li>Capelă, priveghi și transport funerar</li>
+            <li>Transport funerar cu autospeciale proprii</li>
           </ul>
           <a class="more" href="#costuri">Alegeți serviciile</a>
         </article>
         <article class="help-card">
-          <span class="icon"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>
-          <h3>Acte și ajutorul de deces</h3>
-          <p>Nu trebuie să mergeți singuri pe la instituții.</p>
+          <span class="icon"><svg aria-hidden="true"><use href="#i-chat"/></svg></span>
+          <h3>Consultanță și îndrumare</h3>
+          <p>Nu rămâneți singuri cu întrebările. Vă spunem clar ce urmează.</p>
           <ul class="checks">
-            <li>Consultanță gratuită pentru actele necesare</li>
-            <li>Certificatul de deces și adeverința de înhumare</li>
-            <li>Dosarul pentru ajutorul de deces</li>
+            <li>Vă răspundem la orice oră, inclusiv noaptea</li>
+            <li>Vă explicăm pașii, în ordinea corectă</li>
+            <li>Vă ajutăm să alegeți serviciile potrivite bugetului</li>
           </ul>
-          <a class="more" href="#acte">Ce acte vă trebuie</a>
+          <a class="more" href="#sfaturi">Sfaturi utile</a>
         </article>
         <article class="help-card">
           <span class="icon"><svg aria-hidden="true"><use href="#i-route"/></svg></span>
-          <h3>Transport funerar și ceremonie</h3>
+          <h3>Transport funerar</h3>
           <p>Cu autospecialele noastre, de acasă sau de la spital până la cimitir.</p>
           <ul class="checks">
             <li>Ridicarea persoanei decedate, la orice oră</li>
-            <li>Transport la capelă, biserică și cimitir</li>
+            <li>Transport până la locul de veci</li>
             <li>Coroane și aranjamente pe autospecială</li>
           </ul>
           <a class="more" href="#galerie">Vedeți autospecialele</a>
@@ -476,13 +476,12 @@ footer.site { background: var(--night); color: var(--night-muted); }
     <div class="wrap config">
       <div class="toggles" role="group" aria-label="Alegeți serviciile">
         <button type="button" class="toggle" aria-pressed="false"><span>Transport funerar</span><span class="sw"></span></button>
-        <button type="button" class="toggle" aria-pressed="false"><span>Acte și ajutor de deces</span><span class="sw"></span></button>
+        <button type="button" class="toggle" aria-pressed="false"><span>Consultanță și îndrumare</span><span class="sw"></span></button>
         <button type="button" class="toggle" aria-pressed="false"><span>Înmormântare tradițională</span><span class="sw"></span></button>
         <button type="button" class="toggle" aria-pressed="false"><span>Incinerare</span><span class="sw"></span></button>
         <button type="button" class="toggle" aria-pressed="false"><span>Îmbălsămare</span><span class="sw"></span></button>
         <button type="button" class="toggle" aria-pressed="false"><span>Sicriu</span><span class="sw"></span></button>
         <button type="button" class="toggle" aria-pressed="false"><span>Coroane funerare</span><span class="sw"></span></button>
-        <button type="button" class="toggle" aria-pressed="false"><span>Capelă sau priveghi</span><span class="sw"></span></button>
         <button type="button" class="toggle" aria-pressed="false"><span>Pomană și catering</span><span class="sw"></span></button>
       </div>
       <div class="config-copy">
@@ -498,26 +497,26 @@ footer.site { background: var(--night); color: var(--night-muted); }
   <section class="section tint" id="sfaturi">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Sfaturi și ajutor</span>
+        <span class="eyebrow">Sfaturi și îndrumare</span>
         <h2>Informații utile atunci când pierdeți pe cineva drag</h2>
       </div>
       <div class="tips">
         <article class="tip">
           <span class="chip">Primii pași</span>
-          <h3>Ce faceți în cazul unui deces</h3>
-          <p>Sunați-ne, chemați medicul pentru constatarea decesului și pregătiți actul de identitate. Restul îl preluăm noi.</p>
+          <h3>Ce faceți în primele ore</h3>
+          <p>Sunați-ne, la orice oră. Vă spunem, pas cu pas, ce trebuie făcut și în ce ordine, ca să nu vă scape nimic.</p>
           <a class="more" href="#intrebari">Află mai multe</a>
         </article>
-        <article class="tip" id="acte">
-          <span class="chip">Documente necesare</span>
-          <h3>Ce acte vă trebuie</h3>
-          <p>Actul de identitate al persoanei decedate și al declarantului, certificatul de naștere, de căsătorie (dacă e cazul), livretul militar (dacă e cazul) și certificatul medical constatator al decesului.</p>
-          <a class="more" href="#contact">Întrebați-ne</a>
+        <article class="tip">
+          <span class="chip">Consultanță</span>
+          <h3>Cum alegeți serviciile potrivite</h3>
+          <p>Vă prezentăm variantele și costurile pe înțelesul tuturor, ca să alegeți ce se potrivește familiei și bugetului, fără presiune.</p>
+          <a class="more" href="#costuri">Vedeți serviciile</a>
         </article>
         <article class="tip">
           <span class="chip">Sfaturi funerare</span>
           <h3>Incinerare sau înhumare</h3>
-          <p>Vă explicăm ce presupune fiecare variantă, ce acte sunt necesare și cât costă, ca să alegeți în liniște.</p>
+          <p>Vă explicăm ce presupune fiecare variantă și cât costă, ca să alegeți în liniște.</p>
           <a class="more" href="#contact">Cereți îndrumare</a>
         </article>
       </div>
@@ -540,7 +539,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
       <div class="team">
         <div class="team-cards">
           <article class="team-card"><h3>Sprijinul moral de care aveți nevoie</h3><p>Înțelegem prin ce treceți. Vă ghidăm cu răbdare și facem tot ce ne stă în putință să vă ușurăm aceste momente.</p></article>
-          <article class="team-card"><h3>Ajutor cu actele și ajutorul de deces</h3><p>Suntem alături de dumneavoastră de la declararea decesului până la depunerea dosarului pentru ajutorul de deces.</p></article>
+          <article class="team-card"><h3>Consultanță și îndrumare la fiecare pas</h3><p>Vă explicăm ce urmează, răspundem la orice întrebare și vă ajutăm să luați deciziile potrivite, fără grabă.</p></article>
           <article class="team-card"><h3>Servicii pentru orice buget</h3><p>Vă punem la dispoziție servicii și produse funerare de toate categoriile de preț, pentru o înmormântare demnă.</p></article>
         </div>
         <figure class="team-fig"><div class="team-photo" id="team-photo"><div class="ph"><span>Fotografie cu echipa</span></div></div><figcaption id="team-cap"></figcaption></figure>
@@ -553,7 +552,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
       <div class="section-head"><span class="eyebrow">Galerie</span><h2>Din activitatea noastră</h2><p>Imagini și filmări de pe pagina noastră de Facebook.</p></div>
       <div class="gallery" id="gallery"></div>
       <div class="video-row">
-        <div><h3>Filmări de la ceremonii</h3><p>Autospeciala noastră la cimitir. Avem grijă ca totul să decurgă liniștit, de la slujbă până la ultimul drum.</p></div>
+        <div><h3>Filmări din activitatea noastră</h3><p>Autospeciala noastră la cimitir. Avem grijă ca totul să decurgă liniștit, până la ultimul drum.</p></div>
         <div class="videos" id="videos"></div>
       </div>
     </div>
@@ -589,7 +588,7 @@ footer.site { background: var(--night); color: var(--night-muted); }
         <div class="field"><label for="f-loc">Localitatea</label><input id="f-loc" autocomplete="address-level2" placeholder="Unde se află persoana decedată"></div>
         <div class="two">
           <div class="field"><label for="f-serviciu">Cu ce vă putem ajuta?</label>
-            <select id="f-serviciu"><option>Servicii complete</option><option>Doar transport funerar</option><option>Acte și ajutor de deces</option><option>Altceva</option></select></div>
+            <select id="f-serviciu"><option>Servicii complete</option><option>Doar transport funerar</option><option>Consultanță și îndrumare</option><option>Altceva</option></select></div>
           <div class="field"><label for="f-tip">Tip de înhumare</label>
             <select id="f-tip"><option>Înmormântare tradițională</option><option>Incinerare</option><option>Încă nu știu</option></select></div>
         </div>
@@ -621,10 +620,9 @@ footer.site { background: var(--night); color: var(--night-muted); }
       <h2>Întrebări frecvente</h2>
       <div class="faq">
         <details><summary>Vă pot suna la orice oră?</summary><div><p>Da. Răspundem non-stop, inclusiv noaptea, în weekend și de sărbători.</p></div></details>
-        <details><summary>Care este primul pas în cazul unui deces?</summary><div><p>Sunați-ne și sunați medicul de familie sau medicul de gardă, care constată decesul și emite certificatul medical constatator. Nu mutați persoana decedată până nu vorbiți cu noi. Vă spunem exact ce urmează.</p></div></details>
-        <details><summary>De ce documente am nevoie în cazul unui deces?</summary><div><p>Actul de identitate al persoanei decedate și al dumneavoastră, certificatul de naștere și de căsătorie ale persoanei decedate, livretul militar (dacă e cazul) și certificatul medical constatator al decesului. Decesul se declară la Starea Civilă în cel mult 3 zile.</p></div></details>
-        <details><summary>Cum pot obține ajutorul de deces?</summary><div><p>Ajutorul de deces se cere, în funcție de situație, de la casa de pensii sau de la alte instituții. Vă spunem ce acte trebuie și vă ajutăm să pregătiți dosarul.</p></div></details>
-        <details><summary>Oferiți servicii funerare complete?</summary><div><p>Da. Puteți alege toate serviciile, de la transport și acte până la capelă, ceremonie și pomană, sau doar pe cele de care aveți nevoie.</p></div></details>
+        <details><summary>Care este primul pas în cazul unui deces?</summary><div><p>Sunați-ne. Vă spunem exact ce trebuie făcut, în ordinea corectă, și vă îndrumăm la fiecare pas. Nu mutați persoana decedată până nu vorbiți cu noi.</p></div></details>
+        <details><summary>Ce înseamnă consultanța pe care o oferiți?</summary><div><p>Vă explicăm pașii, variantele și costurile, răspundem la întrebările familiei și vă ajutăm să organizați totul în liniște, de la primul telefon până la final.</p></div></details>
+        <details><summary>Oferiți servicii funerare complete?</summary><div><p>Da. Puteți alege toate serviciile, de la consultanță și transport funerar până la îmbălsămare, sicriu, coroane și pomană, sau doar pe cele de care aveți nevoie.</p></div></details>
       </div>
     </div>
   </section>
@@ -641,8 +639,8 @@ footer.site { background: var(--night); color: var(--night-muted); }
         <li>Non-stop, 7 zile din 7</li>
       </ul>
     </div>
-    <div><h4>Servicii funerare</h4><ul><li><a href="#servicii">Servicii funerare complete</a></li><li><a href="#acte">Acte și ajutor de deces</a></li><li><a href="#costuri">Ofertă de preț</a></li></ul></div>
-    <div><h4>Sfaturi și ajutor</h4><ul><li><a href="#acte">Documente necesare</a></li><li><a href="#intrebari">Ce faceți în cazul unui deces</a></li><li><a href="#intrebari">Întrebări frecvente</a></li></ul></div>
+    <div><h4>Servicii funerare</h4><ul><li><a href="#servicii">Servicii funerare complete</a></li><li><a href="#servicii">Consultanță și îndrumare</a></li><li><a href="#costuri">Ofertă de preț</a></li></ul></div>
+    <div><h4>Sfaturi și îndrumare</h4><ul><li><a href="#sfaturi">Cum alegeți serviciile</a></li><li><a href="#intrebari">Ce faceți în cazul unui deces</a></li><li><a href="#intrebari">Întrebări frecvente</a></li></ul></div>
     <div><h4>Despre noi</h4><ul><li><a href="#echipa">Echipa</a></li><li><a href="#galerie">Galerie</a></li><li><a href="#contact">Contact</a></li><li><a data-fb href="https://www.facebook.com/VasyPetre75" target="_blank" rel="noopener">Facebook</a></li></ul></div>
   </div>
   <div class="wrap legal">
@@ -683,7 +681,7 @@ const CONFIG = {
 const MEDIA = [
   { tip: "foto", src: "media/biserica-doua-autospeciale.jpg", alt: "Două autospeciale funerare în fața bisericii", lat: true },
   { tip: "foto", src: "media/biserica-autospeciala.jpg", alt: "Autospeciala funerară cu coroane în fața bisericii" },
-  { tip: "foto", src: "media/slujba-biserica.jpg", alt: "Slujba de înmormântare în biserică" },
+  { tip: "foto", src: "media/echipa-autospeciala.jpg", alt: "Membru al echipei PAC Funerare lângă autospecială" },
   { tip: "foto", src: "media/autospeciala-coroane-cimitir.jpg", alt: "Autospeciala cu coroane de flori la cimitir" },
   { tip: "foto", src: "media/autospeciala-coroane.jpg", alt: "Coroane funerare pe autospecială" },
   { tip: "foto", src: "media/inmormantare.jpg", alt: "Familia la înmormântare, în cimitir" },
