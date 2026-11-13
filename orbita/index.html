@@ -1,0 +1,703 @@
+<title>Orbita 12</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: o consolă de misiune calmă — antet fix cu file, o coloană de lucru de ~960px, pe telefon navigarea coboară jos ca o bară de tab-uri. */
+:root{
+  --bg:#EEF1F6; --surface:#FFFFFF; --sunk:#E4E9F1; --ink:#101A33; --muted:#5A6681; --line:#D3DAE6;
+  --accent:#D45E15; --accent-ink:#FFFFFF; --soft:#FBE8DA; --sky:#2B5BD7; --sky-soft:#E0E8FB;
+  --good:#1D8456; --good-soft:#DDF2E7; --bad:#BF3434; --bad-soft:#F8E1E1;
+  --f-display:"Sora","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A0F1E; --surface:#121A2E; --sunk:#0E1527; --ink:#E6EBF5; --muted:#8F9AB5; --line:#25314F;
+  --accent:#F08A3E; --accent-ink:#1A0E05; --soft:#2C1E14; --sky:#86A6FF; --sky-soft:#18234A;
+  --good:#4CC38A; --good-soft:#123326; --bad:#F07878; --bad-soft:#3A1717; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A0F1E; --surface:#121A2E; --sunk:#0E1527; --ink:#E6EBF5; --muted:#8F9AB5; --line:#25314F;
+  --accent:#F08A3E; --accent-ink:#1A0E05; --soft:#2C1E14; --sky:#86A6FF; --sky-soft:#18234A;
+  --good:#4CC38A; --good-soft:#123326; --bad:#F07878; --bad-soft:#3A1717; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg)}
+body{color:var(--ink);font:16px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(26px,4.5vw,36px);line-height:1.15}
+h2{font-size:22px;line-height:1.25}
+h3{font-size:17px;line-height:1.3}
+p{margin:0}
+a{color:var(--sky)}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font:500 12px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:20px;padding-block:12px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;font:700 18px var(--f-display);white-space:nowrap}
+.brand svg{flex:none}
+.brand small{font:500 12px var(--f-mono);color:var(--muted);letter-spacing:.06em}
+nav.tabs{display:flex;gap:4px;margin-left:auto}
+nav.tabs a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;padding:8px 12px;border-radius:10px;font-size:15px}
+nav.tabs a:hover{color:var(--ink);background:var(--sunk)}
+nav.tabs a[aria-current="page"]{color:var(--ink);background:var(--soft)}
+nav.tabs a[aria-current="page"] svg{color:var(--accent)}
+nav.tabs svg{width:18px;height:18px}
+
+main{max-width:1000px;margin:0 auto;padding-block:28px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section.view{display:grid;gap:24px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);padding:9px 16px;border-radius:10px;cursor:pointer;font-weight:500;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.good{background:var(--good-soft);border-color:transparent;color:var(--good)}
+.btn.bad{background:var(--bad-soft);border-color:transparent;color:var(--bad)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.btn.ghost:hover{color:var(--ink);background:var(--sunk)}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill{font:500 12px var(--f-mono);padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.pill.now{background:var(--accent);color:var(--accent-ink)}
+.pill.done{background:var(--good-soft);color:var(--good)}
+
+/* PLAN */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.hero .orbit{width:170px;height:170px}
+.hero-txt{display:grid;gap:12px;min-width:0}
+.stats{display:flex;gap:28px;flex-wrap:wrap}
+.stat b{display:block;font:600 24px var(--f-mono);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.startrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.startrow input{border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:5px 8px}
+
+.weeks{display:grid;gap:10px}
+.week{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.week.current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.week-head{display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center;padding:14px 16px;cursor:pointer;width:100%;text-align:left;background:none;border:0}
+.wnum{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:600 16px var(--f-mono);background:var(--sunk);position:relative}
+.wnum svg{position:absolute;inset:0}
+.week.complete .wnum{background:var(--good-soft);color:var(--good)}
+.week-title{min-width:0}
+.week-title h3{font-size:16px}
+.week-title p{font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.week-body{padding:0 16px 18px 82px;display:grid;gap:12px}
+.check{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;cursor:pointer;padding:10px 12px;border-radius:10px;background:var(--sunk)}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--good);cursor:pointer}
+.check .lbl{font-size:12px;font-family:var(--f-mono);color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:block}
+.check.on .txt{text-decoration:line-through;text-decoration-color:var(--muted);color:var(--muted)}
+.week-body textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px 12px;resize:vertical;font-size:15px}
+.tip{font-size:14px;color:var(--muted);border-left:3px solid var(--sky);padding-left:12px}
+
+/* FISE */
+.boxes{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.box{background:var(--sunk);border-radius:10px;padding:10px;display:grid;gap:6px}
+.box .bar{height:56px;display:flex;align-items:flex-end}
+.box .bar i{display:block;width:100%;border-radius:6px 6px 2px 2px;background:var(--sky);min-height:3px;transition:height .3s}
+.box.goal .bar i{background:var(--good)}
+.box span{font:500 12px var(--f-mono);color:var(--muted);display:flex;justify-content:space-between}
+.flash-wrap{perspective:1400px}
+.flash{position:relative;min-height:260px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.flash.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px}
+.face.back{transform:rotateY(180deg);background:var(--soft);border-color:transparent}
+.face .q{font:600 clamp(19px,3vw,24px)/1.35 var(--f-display);margin:auto 0;text-wrap:balance}
+.face .a{font-size:17px;line-height:1.6;margin:auto 0}
+.face .hint{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
+.answer-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.answer-row .btn{justify-content:center;padding:12px}
+
+/* QUIZ */
+.qopts{display:grid;gap:8px}
+.qopt{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:13px 16px;cursor:pointer;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.qopt:hover:not([disabled]){border-color:var(--accent)}
+.qopt .k{font:500 13px var(--f-mono);width:24px;height:24px;border-radius:6px;background:var(--sunk);display:grid;place-items:center}
+.qopt.right{background:var(--good-soft);border-color:var(--good)}
+.qopt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qopt[disabled]{cursor:default}
+.progress{height:6px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.expl{font-size:15px;padding:12px 14px;border-radius:10px;background:var(--sky-soft)}
+.score-big{font:700 64px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* UNELTE */
+.tools-nav{display:flex;gap:8px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.field{display:grid;gap:4px}
+.field label{font-size:13px;color:var(--muted)}
+.field input,.field select,textarea.tle{border:1px solid var(--line);background:var(--sunk);border-radius:9px;padding:9px 11px;width:100%;min-width:0}
+textarea.tle{font:14px/1.5 var(--f-mono);min-height:84px;white-space:pre;overflow-x:auto;resize:vertical}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.out div{background:var(--surface);padding:12px 14px;min-width:0}
+.out span{display:block;font-size:12px;color:var(--muted)}
+.out b{font:600 18px var(--f-mono);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.out .hl b{color:var(--accent)}
+.out .ok b{color:var(--good)}
+.out .ko b{color:var(--bad)}
+.formula{font:14px var(--f-mono);background:var(--sunk);padding:10px 12px;border-radius:9px;overflow-x:auto;white-space:nowrap}
+pre.code{margin:0;font:13.5px/1.6 var(--f-mono);background:var(--sunk);border-radius:12px;padding:16px;overflow-x:auto}
+.tle-table{overflow-x:auto}
+.tle-table table{border-collapse:collapse;width:100%;font-size:14px}
+.tle-table td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tle-table td:first-child{color:var(--muted);white-space:nowrap}
+.tle-table td:nth-child(2){font-family:var(--f-mono);white-space:nowrap}
+.tle-table td:nth-child(3){font-family:var(--f-mono);color:var(--muted);font-size:12px}
+
+/* RESURSE */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.res-grid .panel{display:grid;gap:12px;align-content:start}
+.res-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.res-list li{display:grid;gap:1px}
+.res-list b{font-weight:600}
+.res-list span{font-size:14px;color:var(--muted)}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;transition:.25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.sync{font:500 12px var(--f-mono);color:var(--muted)}
+
+@media (max-width:720px){
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;margin:0;background:var(--surface);border-top:1px solid var(--line);justify-content:space-around;
+    padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+  nav.tabs a{flex-direction:column;gap:2px;font-size:11px;padding:6px 8px}
+  nav.tabs svg{width:22px;height:22px}
+  main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .hero{grid-template-columns:1fr;justify-items:start}
+  .hero .orbit{width:130px;height:130px}
+  .week-body{padding-left:16px}
+  .week-head{grid-template-columns:44px 1fr auto;gap:10px}
+  .face{padding:20px}
+  .toast{bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="6" fill="var(--sky)"/><ellipse cx="14" cy="14" rx="12.5" ry="5" fill="none" stroke="var(--muted)" stroke-width="1.2" transform="rotate(-25 14 14)"/><circle cx="24.6" cy="9.2" r="2.4" fill="var(--accent)"/></svg>
+      <div>Orbita 12 <small id="sync" class="sync"></small></div>
+    </div>
+    <nav class="tabs" aria-label="Secțiuni">
+      <a href="#plan" data-v="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Plan</a>
+      <a href="#fise" data-v="fise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="15" height="13" rx="2"/><path d="M7 3h13a2 2 0 0 1 2 2v11"/></svg>Fișe</a>
+      <a href="#quiz" data-v="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></svg>Quiz</a>
+      <a href="#unelte" data-v="unelte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)"/></svg>Unelte</a>
+      <a href="#resurse" data-v="resurse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4zM20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></svg>Resurse</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- PLAN -->
+  <section class="view" id="v-plan">
+    <div class="panel hero">
+      <svg class="orbit" viewBox="0 0 170 170" aria-hidden="true">
+        <circle cx="85" cy="85" r="70" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+        <circle id="orbArc" cx="85" cy="85" r="70" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="0 440"/>
+        <circle cx="85" cy="85" r="34" fill="var(--sky-soft)"/>
+        <circle cx="85" cy="85" r="34" fill="none" stroke="var(--sky)" stroke-width="1.5"/>
+        <text id="orbPct" x="85" y="91" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="19" fill="var(--ink)">0%</text>
+        <g id="orbSat"><circle r="7" fill="var(--accent)"/><circle r="12" fill="none" stroke="var(--accent)" stroke-opacity=".35"/></g>
+      </svg>
+      <div class="hero-txt">
+        <div class="eyebrow" id="weekEyebrow">Săptămâna 1 din 12</div>
+        <h1 id="heroTitle">Parcurge capitolele 1–3</h1>
+        <p class="muted" id="heroSub"></p>
+        <div class="stats">
+          <div class="stat"><b id="stDone">0/24</b><span>pași bifați</span></div>
+          <div class="stat"><b id="stCards">0%</b><span>fișe în cutia 4–5</span></div>
+          <div class="stat"><b id="stQuiz">–</b><span>cel mai bun quiz</span></div>
+        </div>
+        <div class="startrow"><label for="startDate">Am început pe</label><input type="date" id="startDate"><button class="btn ghost" id="todayBtn" type="button">Azi</button></div>
+      </div>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <h2>Cele 12 săptămâni</h2>
+      <span class="muted" style="font-size:14px">Atinge o săptămână ca s-o deschizi</span>
+    </div>
+    <div class="weeks" id="weeks"></div>
+  </section>
+
+  <!-- FISE -->
+  <section class="view" id="v-fise" hidden>
+    <div class="row" style="justify-content:space-between;align-items:flex-end">
+      <div style="display:grid;gap:6px"><div class="eyebrow">Sistemul Leitner</div><h1>Fișe de memorare</h1></div>
+      <p class="muted" style="max-width:420px;font-size:15px">Știi răspunsul? Fișa urcă o cutie. Nu-l știi? Coboară în cutia 1. Ținta din săptămâna 11: toate fișele în cutiile 4–5.</p>
+    </div>
+    <div class="boxes" id="boxes"></div>
+    <div class="row" id="topicChips"></div>
+    <div class="flash-wrap"><div class="flash" id="flash" tabindex="0" role="button" aria-label="Întoarce fișa">
+      <div class="face front"><div class="hint"><span id="fTag"></span><span id="fBox"></span></div><div class="q" id="fQ"></div><div class="hint"><span>Atinge sau apasă Spațiu ca să vezi răspunsul</span></div></div>
+      <div class="face back"><div class="hint"><span>Răspuns</span></div><div class="a" id="fA"></div></div>
+    </div></div>
+    <div class="answer-row">
+      <button class="btn bad" id="noBtn" type="button">Nu știam <span class="mono muted">1</span></button>
+      <button class="btn good" id="yesBtn" type="button">Știam <span class="mono muted">2</span></button>
+    </div>
+    <p class="muted" style="font-size:14px;text-align:center" id="fCount"></p>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="view" id="v-quiz" hidden>
+    <div style="display:grid;gap:6px"><div class="eyebrow">Ținta: 90%</div><h1>Quiz de verificare</h1></div>
+    <div class="panel" id="quizBox" style="display:grid;gap:18px"></div>
+  </section>
+
+  <!-- UNELTE -->
+  <section class="view" id="v-unelte" hidden>
+    <div style="display:grid;gap:6px"><div class="eyebrow">Calcule pentru livrabile</div><h1>Unelte</h1></div>
+    <div class="tools-nav" id="toolsNav">
+      <button class="chip" data-t="perioada" aria-pressed="true" type="button">Perioada orbitală · S1</button>
+      <button class="chip" data-t="tle" aria-pressed="false" type="button">Decodor TLE · S3</button>
+      <button class="chip" data-t="skyfield" aria-pressed="false" type="button">Script ISS · S4</button>
+      <button class="chip" data-t="buget" aria-pressed="false" type="button">Buget de legătură · S5</button>
+    </div>
+
+    <div class="panel tool" id="t-perioada" style="display:grid;gap:16px">
+      <div style="display:grid;gap:6px"><h2>Perioada orbitală</h2><p class="muted">Pentru o orbită circulară: introdu altitudinea și verifică ce ai calculat de mână.</p></div>
+      <div class="formula">T = 2π · √(a³ / μ) &nbsp;·&nbsp; a = R⊕ + h &nbsp;·&nbsp; μ = 398 600,4418 km³/s² &nbsp;·&nbsp; R⊕ = 6 378,137 km</div>
+      <div class="row">
+        <button class="chip" data-alt="400" type="button">ISS · 400 km</button>
+        <button class="chip" data-alt="20200" type="button">GPS · 20 200 km</button>
+        <button class="chip" data-alt="35786" type="button">GEO · 35 786 km</button>
+      </div>
+      <div class="grid2"><div class="field"><label for="alt">Altitudine (km)</label><input id="alt" type="number" value="400" min="100" step="1"></div></div>
+      <div class="out" id="perOut"></div>
+    </div>
+
+    <div class="panel tool" id="t-tle" hidden style="display:grid;gap:16px">
+      <div style="display:grid;gap:6px"><h2>Decodor TLE</h2><p class="muted">Lipește cele două linii de pe CelesTrak sau Space-Track. Exemplul de mai jos este TLE-ul ISS din 2008, folosit ca model în documentații.</p></div>
+      <textarea class="tle" id="tleIn" spellcheck="false" aria-label="TLE">1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927
+2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537</textarea>
+      <div class="out" id="tleSum"></div>
+      <div class="tle-table" id="tleOut"></div>
+    </div>
+
+    <div class="panel tool" id="t-skyfield" hidden style="display:grid;gap:16px">
+      <div style="display:grid;gap:6px"><h2>Trecerile ISS deasupra orașului tău</h2><p class="muted">Instalează cu <span class="mono">pip install skyfield</span>, schimbă coordonatele și rulează. Scriptul descarcă TLE-ul actual de pe CelesTrak.</p></div>
+      <div class="grid2">
+        <div class="field"><label for="city">Oraș</label><select id="city">
+          <option value="44.4268,26.1025,București">București</option>
+          <option value="46.7712,23.6236,Cluj-Napoca">Cluj-Napoca</option>
+          <option value="47.1585,27.6014,Iași">Iași</option>
+          <option value="45.7489,21.2087,Timișoara">Timișoara</option>
+          <option value="44.1598,28.6348,Constanța">Constanța</option>
+          <option value="45.6427,25.5887,Brașov">Brașov</option>
+          <option value="44.3302,23.7949,Craiova">Craiova</option>
+        </select></div>
+      </div>
+      <pre class="code" id="pyCode"></pre>
+      <div><button class="btn" id="copyPy" type="button">Copiază scriptul</button></div>
+    </div>
+
+    <div class="panel tool" id="t-buget" hidden style="display:grid;gap:16px">
+      <div style="display:grid;gap:6px"><h2>Buget de legătură în banda X</h2><p class="muted">Valori implicite: downlink de la un satelit GEO către o stație terestră cu antenă de 1,8 m, la 8 Mbit/s. Schimbă orice câmp; rezultatele se recalculează.</p></div>
+      <div class="formula">C/N₀ = EIRP − FSPL − L_atm + G/T + 228,6 &nbsp;·&nbsp; FSPL = 92,45 + 20·log(d km) + 20·log(f GHz)</div>
+      <div class="grid2" id="lbIn">
+        <div class="field"><label for="lbP">Putere emițător (W)</label><input id="lbP" type="number" value="20" step="any"></div>
+        <div class="field"><label for="lbGt">Câștig antenă emisie (dBi)</label><input id="lbGt" type="number" value="30" step="any"></div>
+        <div class="field"><label for="lbLt">Pierderi în emițător (dB)</label><input id="lbLt" type="number" value="1.5" step="any"></div>
+        <div class="field"><label for="lbF">Frecvență (GHz)</label><input id="lbF" type="number" value="7.5" step="any"></div>
+        <div class="field"><label for="lbD">Distanță oblică (km)</label><input id="lbD" type="number" value="38500" step="any"></div>
+        <div class="field"><label for="lbLa">Pierderi atmosferă + ploaie (dB)</label><input id="lbLa" type="number" value="1" step="any"></div>
+        <div class="field"><label for="lbGr">Câștig antenă recepție (dBi)</label><input id="lbGr" type="number" value="33" step="any"></div>
+        <div class="field"><label for="lbTs">Temperatura sistemului (K)</label><input id="lbTs" type="number" value="200" step="any"></div>
+        <div class="field"><label for="lbR">Debit de date (kbit/s)</label><input id="lbR" type="number" value="8000" step="any"></div>
+        <div class="field"><label for="lbReq">Eb/N₀ necesar (dB)</label><input id="lbReq" type="number" value="4.5" step="any"></div>
+      </div>
+      <div class="out" id="lbOut"></div>
+    </div>
+  </section>
+
+  <!-- RESURSE -->
+  <section class="view" id="v-resurse" hidden>
+    <div style="display:grid;gap:6px"><div class="eyebrow">Biblioteca ta</div><h1>Resurse</h1></div>
+    <div class="res-grid" id="resGrid"></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ---------- DATE ---------- */
+const WEEKS=[
+ {o:"Parcurge capitolele 1–3",d:"Calculează de mână perioada pentru 3 altitudini",tip:"Verifică rezultatele în Unelte → Perioada orbitală.",tool:"perioada"},
+ {o:"Instalează Stellarium, învață coordonatele cerești",d:"Găsește centura GEO pe cerul de sud",tip:"Din România, centura GEO apare ca un arc jos spre sud, la o declinație de aproximativ −6°."},
+ {o:"Cont pe Space-Track.org, citește documentația CelesTrak",d:"Descarcă TLE-urile unor sateliți GEO și decodează-le",tip:"Lipește TLE-urile în Unelte → Decodor TLE.",tool:"tle"},
+ {o:"Python + Skyfield",d:"Script care prezice trecerile ISS deasupra orașului tău",tip:"Ai un script gata de pornire în Unelte → Script ISS.",tool:"skyfield"},
+ {o:"Capitolele 4–5, radio și SATCOM",d:"Buget de legătură complet pentru o legătură în banda X",tip:"Construiește bugetul în Unelte → Buget de legătură.",tool:"buget"},
+ {o:"Pregătire pentru examenul de radioamator (ANCOM)",d:"Teste de simulare trecute",tip:"Fă testele de simulare de mai multe ori, până treci constant."},
+ {o:"Recepție practică: SatNOGS, GPredict",d:"Primele semnale de la un satelit, recepționate sau analizate",tip:"Rețeaua SatNOGS publică înregistrări pe care le poți analiza chiar fără stație proprie."},
+ {o:"Capitolul 6, observare",d:"Fotografiază ISS sau un satelit cu un aparat foto pe trepied",tip:"Expunere lungă de 10–30 s, ISO 400–800, focalizare manuală pe infinit."},
+ {o:"Capitolele 7–8",d:"Rezumat de o pagină din cel mai recent raport despre amenințări spațiale",tip:"Pornește de la Secure World Foundation sau CSIS, în Resurse."},
+ {o:"Capitolul 9, drept spațial",d:"Explică cuiva articolele II, IV, VI și IX",tip:"Fișele cu eticheta „Drept” acoperă exact aceste articole."},
+ {o:"Toate scenariile din curs, quiz la 90%",d:"Fișele de memorare în cutia 4–5",tip:"Lucrează zilnic în Fișe și Quiz până atingi ambele ținte.",tool:"quiz"},
+ {o:"Dosarul tău",d:"CV cu proiectele de mai sus, contact cu facultatea sau cu recrutarea MApN",tip:"Notițele de la fiecare săptămână sunt materia primă pentru CV."}
+];
+const CARDS=[
+ ["Orbite","Formula perioadei pentru o orbită circulară sau eliptică?","T = 2π·√(a³/μ), unde a este semiaxa mare (pentru orbită circulară: raza Pământului + altitudinea) și μ = 398 600 km³/s²."],
+ ["Orbite","Ce este μ (parametrul gravitațional) al Pământului?","μ = G·M ≈ 398 600,4418 km³/s². Îl folosești în aproape toate formulele orbitale."],
+ ["Orbite","Altitudinea și perioada orbitei geostaționare?","35 786 km deasupra ecuatorului; perioada este o zi siderală, 23 h 56 min 4 s. Înclinația ≈ 0°."],
+ ["Orbite","Viteza și perioada aproximativă ale ISS?","≈ 7,66 km/s și ≈ 92–93 minute, la circa 400–420 km altitudine, înclinație 51,6°."],
+ ["Orbite","Ce înseamnă înclinația orbitei?","Unghiul dintre planul orbitei și planul ecuatorului. 0° = ecuatorială, 90° = polară, peste 90° = retrogradă."],
+ ["Orbite","Ce este RAAN?","Ascensiunea dreaptă a nodului ascendent: unghiul, măsurat în planul ecuatorului, de la direcția punctului vernal până la locul unde satelitul traversează ecuatorul spre nord."],
+ ["Orbite","Ce este o orbită heliosincronă?","O orbită aproape polară (≈ 97–99°) al cărei plan se rotește ≈ 1°/zi, astfel că satelitul trece la aceeași oră locală. Tipică pentru observarea Pământului."],
+ ["Orbite","Ce este orbita Molniya?","Orbită foarte eliptică, înclinată la 63,4°, perioadă ≈ 12 h, cu apogeul deasupra latitudinilor nordice. Acoperă zone pe care GEO le vede prost."],
+ ["TLE","Ce este un TLE?","Two-Line Element set: formatul NORAD cu elementele medii ale unei orbite, folosit cu modelul de propagare SGP4."],
+ ["TLE","Unde este mișcarea medie în TLE și ce înseamnă?","Linia 2, coloanele 53–63: numărul de rotații pe zi. ≈ 15,5 pentru ISS, ≈ 1,0027 pentru GEO."],
+ ["TLE","Cum se scrie excentricitatea în TLE?","Linia 2, coloanele 27–33, fără „0,” în față: 0006703 înseamnă 0,0006703."],
+ ["TLE","Cum se calculează suma de control a unei linii TLE?","Aduni toate cifrele din primele 68 de caractere, semnul „−” valorează 1, restul 0. Ultima cifră a sumei (mod 10) trebuie să fie egală cu caracterul 69."],
+ ["SATCOM","Ce frecvențe are banda X în comunicațiile militare prin satelit?","Uplink ≈ 7,9–8,4 GHz, downlink ≈ 7,25–7,75 GHz. Banda X în general: 8–12 GHz (definiția radar)."],
+ ["SATCOM","Formula pierderii în spațiul liber (FSPL)?","FSPL [dB] = 92,45 + 20·log₁₀(d km) + 20·log₁₀(f GHz). Pentru GEO în banda X: ≈ 201–202 dB."],
+ ["SATCOM","Ce este EIRP?","Puterea izotropă radiată echivalentă: EIRP [dBW] = P_tx [dBW] + G_tx [dBi] − pierderi. Arată cât de „tare” emite sistemul pe direcția antenei."],
+ ["SATCOM","Ce este G/T?","Factorul de calitate al recepției: câștigul antenei de recepție minus 10·log₁₀(T_sistem). Se măsoară în dB/K. Cu cât e mai mare, cu atât stația e mai sensibilă."],
+ ["SATCOM","Ce valoare are constanta Boltzmann în dB?","k = −228,6 dBW/(K·Hz). De aici apare „+ 228,6” în formula C/N₀."],
+ ["SATCOM","Care este legătura dintre C/N₀ și Eb/N₀?","Eb/N₀ = C/N₀ − 10·log₁₀(R), unde R este debitul în bit/s. Marja = Eb/N₀ obținut − Eb/N₀ necesar."],
+ ["Radio","Pe ce frecvență transmite ISS în fonie către radioamatori?","145,800 MHz FM (downlink). Pachetele APRS trec prin ISS pe 145,825 MHz."],
+ ["Radio","Ce este efectul Doppler la un satelit LEO?","Frecvența recepționată crește când satelitul se apropie și scade când se depărtează. În VHF poate ajunge la ± 3–4 kHz. GPredict îl corectează automat."],
+ ["Amenințări","Care sunt marile categorii de arme antisatelit?","Cinetice cu ascensiune directă, co-orbitale, energie dirijată (laser, microunde), război electronic (bruiaj, spoofing) și atacuri cibernetice."],
+ ["Amenințări","Ce este sindromul Kessler?","O reacție în lanț în care coliziunile produc resturi care provoacă alte coliziuni, făcând anumite orbite greu de folosit."],
+ ["Amenințări","Ce este Space Domain Awareness?","Capacitatea de a detecta, urmări, identifica și caracteriza obiectele din spațiu și intențiile din spatele lor. Este mai larg decât simpla urmărire a resturilor (SSA)."],
+ ["Amenințări","Când a recunoscut NATO spațiul ca domeniu operațional?","În decembrie 2019, la reuniunea de la Londra. În 2021 a stabilit că un atac în spațiu poate declanșa Articolul 5."],
+ ["Drept","Tratatul spațiului cosmic (1967), articolul II?","Spațiul cosmic, inclusiv Luna și celelalte corpuri cerești, nu poate fi supus apropierii naționale prin revendicare de suveranitate, folosire, ocupare sau alt mijloc."],
+ ["Drept","Tratatul spațiului cosmic, articolul IV?","Interzice plasarea pe orbită a armelor nucleare sau a altor arme de distrugere în masă. Luna și corpurile cerești se folosesc exclusiv în scopuri pașnice, fără baze militare."],
+ ["Drept","Tratatul spațiului cosmic, articolul VI?","Statele răspund internațional pentru activitățile lor naționale în spațiu, inclusiv cele ale firmelor private, pe care trebuie să le autorizeze și să le supravegheze."],
+ ["Drept","Tratatul spațiului cosmic, articolul IX?","Cooperare și atenție la interesele celorlalte state, evitarea contaminării dăunătoare și consultări internaționale înaintea activităților care ar putea interfera cu ale altora."],
+ ["Drept","Ce stabilește Convenția privind răspunderea (1972)?","Răspundere absolută pentru pagubele produse pe suprafața Pământului sau aeronavelor în zbor; răspundere bazată pe culpă pentru pagubele produse în spațiu."],
+ ["Drept","Ce cere Convenția de înregistrare (1975)?","Statul de lansare înregistrează obiectul spațial într-un registru național și transmite datele Secretarului General al ONU."]
+].map(([t,q,a],i)=>({id:"c"+i,t,q,a}));
+
+const QUIZ=[
+ {q:"Un satelit pe orbită circulară la 400 km are perioada aproximativă de:",o:["≈ 45 min","≈ 92 min","≈ 12 h","≈ 24 h"],a:1,e:"a = 6 778 km → T = 2π·√(6778³/398600) ≈ 5 554 s ≈ 92,6 min."},
+ {q:"Altitudinea orbitei geostaționare este:",o:["20 200 km","35 786 km","42 164 km","384 400 km"],a:1,e:"42 164 km este raza orbitei, măsurată din centrul Pământului. Altitudinea este 42 164 − 6 378 = 35 786 km."},
+ {q:"În TLE, mișcarea medie (rotații pe zi) se află în:",o:["Linia 1, coloanele 19–32","Linia 2, coloanele 9–16","Linia 2, coloanele 53–63","Linia 1, coloanele 54–61"],a:2,e:"Linia 2, coloanele 9–16 conțin înclinația; linia 1, coloanele 19–32, epoca."},
+ {q:"O valoare de excentricitate „0006703” în TLE înseamnă:",o:["6 703","0,6703","0,0006703","6,703 × 10³"],a:2,e:"Virgula zecimală este implicită în fața celor 7 cifre."},
+ {q:"Dacă dublezi distanța, FSPL crește cu:",o:["3 dB","6 dB","10 dB","20 dB"],a:1,e:"FSPL conține 20·log₁₀(d); 20·log₁₀(2) ≈ 6 dB."},
+ {q:"EIRP se calculează ca:",o:["P_tx + G_tx − pierderi","P_tx − G_rx","G/T + 228,6","C/N₀ − 10·log R"],a:0,e:"EIRP combină puterea emițătorului și câștigul antenei de emisie, minus pierderile."},
+ {q:"Banda de downlink X folosită de SATCOM-ul militar este în jur de:",o:["1,5 GHz","4 GHz","7,25–7,75 GHz","20 GHz"],a:2,e:"Uplink-ul este 7,9–8,4 GHz, downlink-ul 7,25–7,75 GHz."},
+ {q:"Pe ce frecvență poți asculta fonia ISS?",o:["137,100 MHz","145,800 MHz","435,000 MHz","1 575,42 MHz"],a:1,e:"137 MHz este folosit de sateliții meteo, 1 575,42 MHz este GPS L1."},
+ {q:"Ce articol din Tratatul spațiului cosmic interzice revendicarea suveranității asupra Lunii?",o:["Articolul II","Articolul IV","Articolul VI","Articolul IX"],a:0,e:"Articolul II interzice apropierea națională a spațiului și a corpurilor cerești."},
+ {q:"Cine răspunde internațional pentru un satelit lansat de o firmă privată românească?",o:["Firma, exclusiv","ONU","Statul român","Nimeni, dacă orbita e internațională"],a:2,e:"Articolul VI: statul răspunde pentru activitățile naționale, inclusiv ale entităților neguvernamentale."},
+ {q:"Plasarea unei arme nucleare pe orbită este interzisă de:",o:["Articolul II","Articolul IV","Articolul IX","Convenția de înregistrare"],a:1,e:"Articolul IV interzice armele nucleare și alte arme de distrugere în masă pe orbită."},
+ {q:"Un test ASAT cinetic cu ascensiune directă este îngrijorător mai ales pentru că:",o:["Bruiază GPS-ul","Creează nori de resturi pe termen lung","E invizibil pentru radare","Încalcă articolul II"],a:1,e:"Testele cinetice au produs mii de resturi urmăribile, unele pe orbită zeci de ani."},
+ {q:"Bruiajul unui downlink de satelit face parte din categoria:",o:["Cinetică","Co-orbitală","Război electronic","Energie dirijată"],a:2,e:"Bruiajul și spoofing-ul sunt forme de război electronic, reversibile."},
+ {q:"O orbită heliosincronă are de obicei o înclinație de:",o:["0°","28,5°","51,6°","≈ 98°"],a:3,e:"Ușor retrogradă, pentru ca turtirea Pământului să-i rotească planul ≈ 1° pe zi."},
+ {q:"Eb/N₀ obținut este 9,2 dB, iar cel necesar este 4,5 dB. Marja legăturii este:",o:["−4,7 dB","4,7 dB","13,7 dB","2,0 dB"],a:1,e:"Marja = 9,2 − 4,5 = 4,7 dB. O marjă de 3 dB sau mai mult este de obicei confortabilă."}
+];
+
+const RES=[
+ {h:"Cărți",items:[["Fundamentals of Astrodynamics","Bate, Mueller, White"],["Fundamentals of Astrodynamics and Applications","Vallado"],["Satellite Communications","Pratt, Allnutt"],["Space Mission Engineering: The New SMAD","Wertz et al."]]},
+ {h:"Rapoarte anuale gratuite",items:[["Global Counterspace Capabilities","Secure World Foundation","https://swfound.org/counterspace/"],["Space Threat Assessment","CSIS Aerospace Security Project","https://aerospace.csis.org/"],["Space Environment Report","ESA Space Safety","https://www.esa.int/Space_Safety/Space_Debris"],["Politica spațială NATO","Pagina oficială","https://www.nato.int/cps/en/natohq/topics_175419.htm"]]},
+ {h:"Software gratuit",items:[["Stellarium","Planetariu, inclusiv sateliți","https://stellarium.org"],["Skyfield","Calcule orbitale în Python","https://rhodesmill.org/skyfield/"],["Astropy","Calcule astronomice în Python","https://www.astropy.org"],["NASA GMAT","Proiectare de misiuni","https://sourceforge.net/projects/gmat/"],["GPredict","Urmărirea sateliților","https://github.com/csete/gpredict"],["SatNOGS","Rețea de stații de sol open-source","https://network.satnogs.org"]]},
+ {h:"Date orbitale",items:[["Space-Track.org","Catalogul oficial, necesită cont","https://www.space-track.org"],["CelesTrak","TLE-uri și documentație","https://celestrak.org"]]},
+ {h:"Comunități",items:[["Space Club","Partenerul ASR"],["Agenția Spațială Română","ROSA","https://www.rosa.ro"],["Federația Română de Radioamatorism","Pregătire și examene"],["ANCOM","Examenul de radioamator","https://www.ancom.ro"],["Rețeaua SatNOGS","Stații de sol open-source","https://satnogs.org"],["Cluburi de astronomie amatoare","Din orașul tău"]]}
+];
+
+/* ---------- STARE ---------- */
+const LS="orbita12-v1";
+let S={start:null,done:{},notes:{},boxes:{},quizBest:null,quizRuns:0};
+let dbRef=null, saveT=null;
+function lsRead(){try{return JSON.parse(localStorage.getItem(LS)||"null")}catch(e){return null}}
+function lsWrite(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+function merge(o){if(o&&typeof o==="object")S=Object.assign({start:null,done:{},notes:{},boxes:{},quizBest:null,quizRuns:0},o)}
+merge(lsRead());
+function setSync(t){document.getElementById("sync").textContent=t}
+function save(){
+  S.updated=Date.now(); lsWrite();
+  clearTimeout(saveT);
+  saveT=setTimeout(async()=>{
+    if(!dbRef){setSync("· salvat local");return}
+    try{await dbRef.set(JSON.parse(JSON.stringify(S)));setSync("· salvat")}catch(e){setSync("· salvat local")}
+  },700);
+}
+async function connect(){
+  try{
+    if(!window.claude||!window.claude.use)return;
+    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
+    if(!db||!user)return;
+    const id=await user.id(); if(!id)return;
+    dbRef=db.collection("data/users/"+id).doc("progres");
+    const snap=await dbRef.get();
+    if(snap.exists){const r=snap.data();if(!S.updated||(r.updated||0)>=S.updated){merge(r);lsWrite();renderAll()}}
+    else if(S.updated){dbRef.set(JSON.parse(JSON.stringify(S))).catch(()=>{})}
+    setSync("· sincronizat");
+  }catch(e){}
+}
+
+/* ---------- UTIL ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=(n,d=2)=>Number(n).toLocaleString("ro-RO",{minimumFractionDigits:d,maximumFractionDigits:d});
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("show"),1800)}
+function todayISO(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function currentWeek(){
+  if(!S.start)return 1;
+  const d=Math.floor((new Date(todayISO())-new Date(S.start))/864e5);
+  return Math.min(12,Math.max(1,Math.floor(d/7)+1));
+}
+
+/* ---------- PLAN ---------- */
+let openWeek=null;
+function weekDone(i){return (S.done[i+"o"]?1:0)+(S.done[i+"d"]?1:0)}
+function renderPlan(){
+  const cw=currentWeek(); if(openWeek===null)openWeek=cw;
+  const total=WEEKS.reduce((s,_,i)=>s+weekDone(i+1),0);
+  const pct=Math.round(total/24*100);
+  const C=2*Math.PI*70, arc=C*pct/100;
+  $("#orbArc").setAttribute("stroke-dasharray",arc+" "+C);
+  const ang=(pct/100)*2*Math.PI-Math.PI/2;
+  $("#orbSat").setAttribute("transform","translate("+(85+70*Math.cos(ang))+","+(85+70*Math.sin(ang))+")");
+  $("#orbPct").textContent=pct+"%";
+  const w=WEEKS[cw-1];
+  $("#weekEyebrow").textContent="Săptămâna "+cw+" din 12"+(S.start?"":" · alege data de start");
+  $("#heroTitle").textContent=w.o;
+  $("#heroSub").textContent="Livrabil: "+w.d;
+  $("#stDone").textContent=total+"/24";
+  $("#stCards").textContent=cardGoalPct()+"%";
+  $("#stQuiz").textContent=S.quizBest==null?"–":S.quizBest+"%";
+  $("#startDate").value=S.start||"";
+  $("#weeks").innerHTML=WEEKS.map((w,i)=>{
+    const n=i+1,dn=weekDone(n),open=openWeek===n;
+    const pill=dn===2?'<span class="pill done">gata</span>':n===cw?'<span class="pill now">acum</span>':dn===1?'<span class="pill">1/2</span>':'';
+    const ring=dn===1?'<svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--good)" stroke-width="3" stroke-dasharray="64.4 200" transform="rotate(-90 22 22)"/></svg>':'';
+    return `<div class="week${n===cw?" current":""}${dn===2?" complete":""}">
+      <button class="week-head" type="button" data-w="${n}" aria-expanded="${open}">
+        <span class="wnum">${ring}${dn===2?"✓":n}</span>
+        <span class="week-title"><h3>${esc(w.o)}</h3><p>${esc(w.d)}</p></span>${pill}
+      </button>
+      <div class="week-body" ${open?"":"hidden"}>
+        <label class="check${S.done[n+"o"]?" on":""}"><input type="checkbox" data-k="${n}o" ${S.done[n+"o"]?"checked":""}><span><span class="lbl">Obiectiv</span><span class="txt">${esc(w.o)}</span></span></label>
+        <label class="check${S.done[n+"d"]?" on":""}"><input type="checkbox" data-k="${n}d" ${S.done[n+"d"]?"checked":""}><span><span class="lbl">Livrabil concret</span><span class="txt">${esc(w.d)}</span></span></label>
+        <p class="tip">${esc(w.tip)}</p>
+        ${w.tool?`<div><button class="btn" type="button" data-go="${w.tool}">${w.tool==="quiz"?"Deschide quiz-ul":"Deschide unealta"} →</button></div>`:""}
+        <textarea id="note${n}" data-note="${n}" placeholder="Notițe: ce ai învățat, ce ai rezolvat, linkuri…">${esc(S.notes[n]||"")}</textarea>
+      </div></div>`}).join("");
+}
+$("#weeks").addEventListener("click",e=>{
+  const h=e.target.closest(".week-head");
+  if(h){const n=+h.dataset.w;openWeek=openWeek===n?0:n;renderPlan();return}
+  const g=e.target.closest("[data-go]");
+  if(g){const t=g.dataset.go;if(t==="quiz")location.hash="quiz";else{location.hash="unelte";showTool(t)}}
+});
+$("#weeks").addEventListener("change",e=>{
+  const k=e.target.dataset.k; if(!k)return;
+  S.done[k]=e.target.checked;
+  if(!S.start){S.start=todayISO()}
+  save(); renderPlan();
+  if(e.target.checked){const n=parseInt(k);toast(weekDone(n)===2?"Săptămâna "+n+" e gata. Bravo!":"Bifat")}
+});
+$("#weeks").addEventListener("input",e=>{const n=e.target.dataset.note;if(n){S.notes[n]=e.target.value;save()}});
+$("#startDate").addEventListener("change",e=>{S.start=e.target.value||null;openWeek=null;save();renderPlan()});
+$("#todayBtn").addEventListener("click",()=>{S.start=todayISO();openWeek=null;save();renderPlan();toast("Plan pornit de azi")});
+
+/* ---------- FISE ---------- */
+let topic="Toate", current=null, flipped=false, sessionN=0;
+function box(c){return S.boxes[c.id]||1}
+function cardGoalPct(){return Math.round(CARDS.filter(c=>box(c)>=4).length/CARDS.length*100)}
+function pool(){return CARDS.filter(c=>topic==="Toate"||c.t===topic)}
+function pick(){
+  const p=pool(); if(!p.length)return null;
+  const min=Math.min(...p.map(box));
+  // favorizează cutiile mici: 70% din cea mai joasă, altfel oricare
+  let cand=Math.random()<.7?p.filter(c=>box(c)===min):p;
+  if(current&&cand.length>1)cand=cand.filter(c=>c.id!==current.id);
+  return cand[Math.floor(Math.random()*cand.length)];
+}
+function renderBoxes(){
+  const p=pool(),max=Math.max(1,...[1,2,3,4,5].map(b=>p.filter(c=>box(c)===b).length));
+  $("#boxes").innerHTML=[1,2,3,4,5].map(b=>{const n=p.filter(c=>box(c)===b).length;
+    return `<div class="box${b>=4?" goal":""}"><div class="bar"><i style="height:${Math.max(4,n/max*100)}%"></i></div><span><b>Cutia ${b}</b><b>${n}</b></span></div>`}).join("");
+}
+function renderChips(){
+  const topics=["Toate",...new Set(CARDS.map(c=>c.t))];
+  $("#topicChips").innerHTML=topics.map(t=>`<button class="chip" type="button" data-topic="${t}" aria-pressed="${t===topic}">${t}</button>`).join("");
+}
+function showCard(){
+  if(!current)current=pick();
+  flipped=false;$("#flash").classList.remove("flipped");
+  $("#fTag").textContent=current.t;$("#fBox").textContent="Cutia "+box(current);
+  $("#fQ").textContent=current.q;
+  setTimeout(()=>{$("#fA").textContent=current.a},flipped?0:150);
+  $("#fCount").textContent=sessionN?`${sessionN} fișe repetate în sesiunea asta · ${cardGoalPct()}% din toate sunt în cutiile 4–5`:`${pool().length} fișe în pachet · ${cardGoalPct()}% din toate sunt în cutiile 4–5`;
+}
+function renderFise(){renderChips();renderBoxes();showCard()}
+function flip(){flipped=!flipped;$("#flash").classList.toggle("flipped",flipped)}
+function grade(ok){
+  if(!current)return;
+  if(!flipped){flip();return}
+  S.boxes[current.id]=ok?Math.min(5,box(current)+1):1;
+  sessionN++;save();current=pick();renderBoxes();showCard();
+}
+$("#flash").addEventListener("click",flip);
+$("#yesBtn").addEventListener("click",()=>grade(true));
+$("#noBtn").addEventListener("click",()=>grade(false));
+$("#topicChips").addEventListener("click",e=>{const t=e.target.dataset.topic;if(t){topic=t;current=null;renderFise()}});
+
+/* ---------- QUIZ ---------- */
+let Q=null;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function quizIntro(){
+  $("#quizBox").innerHTML=`<div style="display:grid;gap:10px"><h2>${QUIZ.length} întrebări din tot cursul</h2>
+  <p class="muted">Orbite, TLE, SATCOM, radio, amenințări și drept spațial. După fiecare răspuns vezi explicația. Ținta din săptămâna 11 este 90%.</p>
+  ${S.quizBest!=null?`<p>Cel mai bun scor: <b class="mono">${S.quizBest}%</b> din ${S.quizRuns} încercări.</p>`:""}</div>
+  <div><button class="btn primary" id="qStart" type="button">Începe quiz-ul</button></div>`;
+  $("#qStart").onclick=()=>{Q={list:shuffle(QUIZ),i:0,score:0,answered:false};quizQ()};
+}
+function quizQ(){
+  const it=Q.list[Q.i];
+  $("#quizBox").innerHTML=`<div class="row" style="justify-content:space-between"><span class="eyebrow">Întrebarea ${Q.i+1} din ${Q.list.length}</span><span class="mono muted">${Q.score} corecte</span></div>
+  <div class="progress"><i style="width:${Q.i/Q.list.length*100}%"></i></div>
+  <h2>${esc(it.q)}</h2>
+  <div class="qopts">${it.o.map((o,k)=>`<button class="qopt" type="button" data-k="${k}"><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`).join("")}</div>
+  <div id="qFeed"></div>`;
+  Q.answered=false;
+  $("#quizBox").querySelectorAll(".qopt").forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+}
+function answer(k){
+  if(Q.answered)return; Q.answered=true;
+  const it=Q.list[Q.i],ok=k===it.a; if(ok)Q.score++;
+  $("#quizBox").querySelectorAll(".qopt").forEach(b=>{b.disabled=true;const j=+b.dataset.k;if(j===it.a)b.classList.add("right");else if(j===k)b.classList.add("wrong")});
+  const last=Q.i===Q.list.length-1;
+  $("#qFeed").innerHTML=`<div style="display:grid;gap:12px"><p class="expl"><b>${ok?"Corect.":"Greșit."}</b> ${esc(it.e)}</p><div><button class="btn primary" id="qNext" type="button">${last?"Vezi rezultatul":"Următoarea"} →</button></div></div>`;
+  $("#qNext").onclick=()=>{if(last)quizEnd();else{Q.i++;quizQ()}};
+  $("#qNext").focus();
+}
+function quizEnd(){
+  const pct=Math.round(Q.score/Q.list.length*100);
+  S.quizRuns=(S.quizRuns||0)+1; if(S.quizBest==null||pct>S.quizBest)S.quizBest=pct; save();
+  const pass=pct>=90;
+  $("#quizBox").innerHTML=`<div class="eyebrow">Rezultat</div>
+  <div class="row" style="gap:20px;align-items:flex-end"><span class="score-big" style="color:${pass?"var(--good)":"var(--accent)"}">${pct}%</span><span class="muted" style="padding-bottom:8px">${Q.score} din ${Q.list.length} corecte</span></div>
+  <div class="progress"><i style="width:${pct}%;background:${pass?"var(--good)":"var(--accent)"}"></i></div>
+  <p>${pass?"Ai atins ținta de 90%. Bifează obiectivul din săptămâna 11.":"Mai ai "+(90-pct)+" puncte până la 90%. Repetă fișele pe temele unde ai greșit, apoi încearcă din nou."}</p>
+  <div class="row"><button class="btn primary" id="qAgain" type="button">Încearcă din nou</button><a class="btn" href="#fise" style="text-decoration:none">Mergi la fișe</a></div>`;
+  $("#qAgain").onclick=()=>{Q={list:shuffle(QUIZ),i:0,score:0,answered:false};quizQ()};
+}
+
+/* ---------- UNELTE ---------- */
+const MU=398600.4418, RE=6378.137;
+function showTool(t){
+  document.querySelectorAll("#toolsNav .chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.t===t));
+  document.querySelectorAll(".tool").forEach(el=>el.hidden=el.id!=="t-"+t);
+}
+$("#toolsNav").addEventListener("click",e=>{const t=e.target.closest("[data-t]");if(t)showTool(t.dataset.t)});
+function hms(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=Math.round(s%60);return (h?h+" h ":"")+m+" min "+x+" s"}
+function calcPer(){
+  const h=parseFloat($("#alt").value);
+  if(!(h>0)){$("#perOut").innerHTML='<div><span>Eroare</span><b>Introdu o altitudine pozitivă</b></div>';return}
+  const a=RE+h,T=2*Math.PI*Math.sqrt(a**3/MU),v=Math.sqrt(MU/a);
+  $("#perOut").innerHTML=`<div><span>Semiaxa mare a</span><b>${fmt(a,1)} km</b></div><div class="hl"><span>Perioada T</span><b>${hms(T)}</b></div><div><span>În minute</span><b>${fmt(T/60,2)}</b></div><div><span>Viteza orbitală</span><b>${fmt(v,3)} km/s</b></div><div><span>Orbite pe zi</span><b>${fmt(86400/T,3)}</b></div>`;
+}
+$("#alt").addEventListener("input",calcPer);
+document.querySelectorAll("[data-alt]").forEach(b=>b.addEventListener("click",()=>{$("#alt").value=b.dataset.alt;calcPer()}));
+
+function cks(line){let s=0;for(const ch of line.slice(0,68)){if(ch>="0"&&ch<="9")s+=+ch;else if(ch==="-")s+=1}return s%10}
+function expNot(s){s=s.trim();if(!s)return 0;const m=s.match(/^([+-]?)(\d+)([+-]\d)$/);if(!m)return NaN;return parseFloat(m[1]+"0."+m[2])*Math.pow(10,+m[3])}
+function decodeTLE(){
+  const lines=$("#tleIn").value.split(/\r?\n/).map(l=>l.replace(/\s+$/,"")).filter(l=>/^[12] /.test(l));
+  const l1=lines.find(l=>l[0]==="1"),l2=lines.find(l=>l[0]==="2");
+  if(!l1||!l2||l1.length<68||l2.length<68){$("#tleSum").innerHTML='<div class="ko"><span>Eroare</span><b>Lipsește linia 1 sau 2, ori are sub 69 de caractere</b></div>';$("#tleOut").innerHTML="";return}
+  const g=(l,a,b)=>l.slice(a-1,b);
+  const yy=+g(l1,19,20),year=yy<57?2000+yy:1900+yy,doy=parseFloat(g(l1,21,32));
+  const ep=new Date(Date.UTC(year,0,1)+(doy-1)*864e5);
+  const inc=parseFloat(g(l2,9,16)),raan=parseFloat(g(l2,18,25)),ecc=parseFloat("0."+g(l2,27,33).trim()),argp=parseFloat(g(l2,35,42)),M=parseFloat(g(l2,44,51)),n=parseFloat(g(l2,53,63)),rev=g(l2,64,68).trim();
+  const nr=n*2*Math.PI/86400,a=Math.cbrt(MU/(nr*nr)),per=86400/n;
+  const c1=cks(l1)===+l1[68],c2=cks(l2)===+l2[68];
+  $("#tleSum").innerHTML=`<div class="hl"><span>Satelit NORAD</span><b>${g(l1,3,7).trim()}</b></div><div><span>Perioadă</span><b>${fmt(per/60,2)} min</b></div><div><span>Perigeu / apogeu</span><b>${fmt(a*(1-ecc)-RE,0)} / ${fmt(a*(1+ecc)-RE,0)} km</b></div><div class="${c1&&c2?"ok":"ko"}"><span>Sume de control</span><b>${c1&&c2?"valide":"greșite: L"+(c1?"":"1")+(c2?"":"2")}</b></div>`;
+  const rows=[
+   ["Număr catalog NORAD",g(l1,3,7).trim(),"L1 · 3–7"],
+   ["Clasificare",g(l1,8,8)==="U"?"U (neclasificat)":g(l1,8,8),"L1 · 8"],
+   ["Indicativ internațional",g(l1,10,17).trim()+"  (lansat în "+(+g(l1,10,11)<57?"20":"19")+g(l1,10,11)+", lansarea "+(+g(l1,12,14))+")","L1 · 10–17"],
+   ["Epoca",ep.toISOString().replace("T"," ").slice(0,19)+" UTC","L1 · 19–32"],
+   ["Derivata 1 a mișcării medii",g(l1,34,43).trim()+" rot/zi²","L1 · 34–43"],
+   ["Termen de frânare B*",String(expNot(g(l1,54,61))),"L1 · 54–61"],
+   ["Înclinație",fmt(inc,4)+"°","L2 · 9–16"],
+   ["RAAN",fmt(raan,4)+"°","L2 · 18–25"],
+   ["Excentricitate",ecc.toFixed(7),"L2 · 27–33"],
+   ["Argumentul perigeului",fmt(argp,4)+"°","L2 · 35–42"],
+   ["Anomalia medie",fmt(M,4)+"°","L2 · 44–51"],
+   ["Mișcarea medie",n.toFixed(8)+" rot/zi","L2 · 53–63"],
+   ["Număr de revoluții la epocă",rev,"L2 · 64–68"],
+   ["Semiaxa mare (calculată)",fmt(a,1)+" km","din n și μ"]
+  ];
+  $("#tleOut").innerHTML="<table><tbody>"+rows.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td>${r[2]}</td></tr>`).join("")+"</tbody></table>";
+}
+$("#tleIn").addEventListener("input",decodeTLE);
+
+function pyScript(){
+  const [lat,lon,name]=$("#city").value.split(",");
+  return `from skyfield.api import load, wgs84
+
+ts = load.timescale()
+url = "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE"
+iss = load.tle_file(url, reload=True)[0]
+print(iss, "| epoca TLE:", iss.epoch.utc_strftime("%Y-%m-%d %H:%M"))
+
+oras = wgs84.latlon(${lat}, ${lon})   # ${name}
+t0 = ts.now()
+t1 = ts.tt_jd(t0.tt + 3)               # următoarele 3 zile
+
+times, events = iss.find_events(oras, t0, t1, altitude_degrees=10.0)
+nume = ("răsare", "culminează", "apune")
+for t, ev in zip(times, events):
+    alt, az, dist = (iss - oras).at(t).altaz()
+    print(f"{t.utc_strftime('%Y-%m-%d %H:%M:%S')} UTC  {nume[ev]:<11}"
+          f"  alt {alt.degrees:5.1f}°  az {az.degrees:5.1f}°  {dist.km:7.0f} km")`;
+}
+function renderPy(){$("#pyCode").textContent=pyScript()}
+$("#city").addEventListener("change",renderPy);
+$("#copyPy").addEventListener("click",()=>{
+  const txt=pyScript();
+  try{navigator.clipboard.writeText(txt).then(()=>toast("Script copiat"),()=>selectPy())}catch(e){selectPy()}
+});
+function selectPy(){const r=document.createRange();r.selectNodeContents($("#pyCode"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Textul e selectat: copiază-l manual")}
+
+function calcLB(){
+  const v=id=>parseFloat($("#"+id).value);
+  const P=v("lbP"),Gt=v("lbGt"),Lt=v("lbLt"),f=v("lbF"),d=v("lbD"),La=v("lbLa"),Gr=v("lbGr"),Ts=v("lbTs"),R=v("lbR")*1000,req=v("lbReq");
+  if([P,Gt,Lt,f,d,La,Gr,Ts,R,req].some(x=>!isFinite(x))||P<=0||f<=0||d<=0||Ts<=0||R<=0){$("#lbOut").innerHTML='<div class="ko"><span>Eroare</span><b>Completează toate câmpurile cu valori pozitive</b></div>';return}
+  const Pdb=10*Math.log10(P),eirp=Pdb+Gt-Lt,fspl=92.45+20*Math.log10(d)+20*Math.log10(f),gt=Gr-10*Math.log10(Ts);
+  const cn0=eirp-fspl-La+gt+228.6,ebn0=cn0-10*Math.log10(R),m=ebn0-req;
+  const cls=m>=3?"ok":m>=0?"hl":"ko";
+  $("#lbOut").innerHTML=`<div><span>P emițător</span><b>${fmt(Pdb,1)} dBW</b></div><div><span>EIRP</span><b>${fmt(eirp,1)} dBW</b></div><div><span>FSPL</span><b>${fmt(fspl,1)} dB</b></div><div><span>G/T</span><b>${fmt(gt,1)} dB/K</b></div><div><span>C/N₀</span><b>${fmt(cn0,1)} dBHz</b></div><div><span>Eb/N₀</span><b>${fmt(ebn0,1)} dB</b></div><div class="${cls}"><span>Marja legăturii</span><b>${m>=0?"+":""}${fmt(m,1)} dB · ${m>=3?"confortabilă":m>=0?"la limită":"insuficientă"}</b></div>`;
+}
+$("#lbIn").addEventListener("input",calcLB);
+
+/* ---------- RESURSE ---------- */
+function renderRes(){
+  $("#resGrid").innerHTML=RES.map(g=>`<div class="panel"><h3>${g.h}</h3><ul class="res-list">${g.items.map(([t,s,u])=>`<li>${u?`<a href="${u}" target="_blank" rel="noopener"><b>${esc(t)}</b></a>`:`<b>${esc(t)}</b>`}<span>${esc(s)}</span></li>`).join("")}</ul></div>`).join("");
+}
+
+/* ---------- RUTARE ---------- */
+const VIEWS=["plan","fise","quiz","unelte","resurse"];
+function route(){
+  const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"plan";
+  VIEWS.forEach(x=>$("#v-"+x).hidden=x!==v);
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.toggleAttribute("aria-current",false)||a.dataset.v===v&&a.setAttribute("aria-current","page"));
+  if(v==="plan")renderPlan();
+  if(v==="fise")renderFise();
+  if(v==="quiz"&&!Q)quizIntro();
+  window.scrollTo(0,0);
+}
+document.addEventListener("keydown",e=>{
+  if($("#v-fise").hidden||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
+  if(e.key===" "){e.preventDefault();flip()}
+  if(e.key==="1")grade(false);
+  if(e.key==="2")grade(true);
+});
+function renderAll(){route();}
+window.addEventListener("hashchange",route);
+calcPer();decodeTLE();renderPy();calcLB();renderRes();route();
+connect();
+</script>
