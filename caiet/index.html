@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caiet</title>
+<meta name="theme-color" content="#1e1e22">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- Bara de unelte din stânga (ribbon) -->
+  <nav id="ribbon">
+    <button data-cmd="toggle-sidebar" title="Arată/ascunde panoul (Ctrl+\)">☰</button>
+    <button data-cmd="quick-switcher" title="Deschide rapid (Ctrl+O)">⌕</button>
+    <button data-cmd="graph" title="Graf (Ctrl+G)">◎</button>
+    <button data-cmd="daily" title="Nota zilei (Alt+D)">▣</button>
+    <button data-cmd="palette" title="Comenzi (Ctrl+P)">⌘</button>
+    <span class="grow"></span>
+    <button data-cmd="theme" title="Temă deschisă/închisă">◐</button>
+    <button data-cmd="vault" title="Seif / setări">⚙</button>
+  </nav>
+
+  <!-- Panoul lateral -->
+  <aside id="sidebar">
+    <div class="side-tabs">
+      <button data-pane="files" class="active" title="Fișiere">Fișiere</button>
+      <button data-pane="search" title="Căutare (Ctrl+Shift+F)">Căutare</button>
+      <button data-pane="tags" title="Etichete">Etichete</button>
+    </div>
+    <section id="pane-files" class="pane active">
+      <div class="pane-actions">
+        <span id="vault-name" class="vault-name"></span>
+        <span class="grow"></span>
+        <button data-cmd="new-note" title="Notă nouă (Ctrl+N)">＋</button>
+        <button data-cmd="new-folder" title="Dosar nou">🗀</button>
+        <button data-cmd="collapse-all" title="Restrânge tot">⇡</button>
+      </div>
+      <div id="tree" class="tree" tabindex="0"></div>
+    </section>
+    <section id="pane-search" class="pane">
+      <input id="search-input" type="search" placeholder="Caută… (tag:#idee, path:dosar)" autocomplete="off">
+      <div id="search-results" class="results"></div>
+    </section>
+    <section id="pane-tags" class="pane">
+      <div id="tag-list" class="results"></div>
+    </section>
+  </aside>
+  <div id="sidebar-resizer" class="resizer"></div>
+
+  <!-- Zona principală -->
+  <main id="main">
+    <header id="titlebar">
+      <button data-cmd="back" title="Înapoi (Alt+←)">‹</button>
+      <button data-cmd="forward" title="Înainte (Alt+→)">›</button>
+      <input id="note-title" spellcheck="false" placeholder="Fără titlu">
+      <span id="save-state" class="muted"></span>
+      <span class="grow"></span>
+      <div class="seg" id="mode-switch">
+        <button data-mode="edit" title="Editare">Editare</button>
+        <button data-mode="split" title="Împărțit">Împărțit</button>
+        <button data-mode="preview" title="Citire (Ctrl+E)">Citire</button>
+      </div>
+      <button data-cmd="toggle-right" title="Arată/ascunde legăturile">⇆</button>
+    </header>
+    <div id="content" class="mode-split">
+      <div id="editor-wrap">
+        <textarea id="editor" spellcheck="false" placeholder="Începe să scrii… Folosește [[ pentru legături."></textarea>
+      </div>
+      <article id="preview" class="markdown"></article>
+      <div id="empty" class="empty">
+        <h2>Nicio notă deschisă</h2>
+        <p><kbd>Ctrl</kbd>+<kbd>O</kbd> deschide rapid · <kbd>Ctrl</kbd>+<kbd>N</kbd> notă nouă · <kbd>Ctrl</kbd>+<kbd>P</kbd> comenzi</p>
+      </div>
+    </div>
+    <footer id="statusbar">
+      <span id="status-backlinks"></span>
+      <span class="grow"></span>
+      <span id="status-words"></span>
+      <span id="status-storage"></span>
+    </footer>
+  </main>
+
+  <!-- Panoul din dreapta: legături -->
+  <aside id="rightbar">
+    <h4>Legături către această notă <span id="bl-count" class="badge"></span></h4>
+    <div id="backlinks" class="results"></div>
+    <h4>Mențiuni fără legătură <span id="um-count" class="badge"></span></h4>
+    <div id="unlinked" class="results"></div>
+    <h4>Legături din această notă</h4>
+    <div id="outlinks" class="results"></div>
+    <h4>Cuprins</h4>
+    <div id="outline" class="results"></div>
+  </aside>
+</div>
+
+<!-- Graf -->
+<div id="graph-view" class="overlay hidden">
+  <div class="graph-bar">
+    <strong>Graf</strong>
+    <label><input type="checkbox" id="graph-local"> doar vecinii notei curente</label>
+    <label><input type="checkbox" id="graph-orphans" checked> arată notele izolate</label>
+    <label><input type="checkbox" id="graph-tags"> arată etichetele</label>
+    <span class="grow"></span>
+    <button data-cmd="graph-close" title="Închide (Esc)">✕</button>
+  </div>
+  <canvas id="graph-canvas"></canvas>
+</div>
+
+<!-- Palete / dialoguri -->
+<div id="palette" class="overlay hidden">
+  <div class="palette-box">
+    <input id="palette-input" autocomplete="off" spellcheck="false">
+    <div id="palette-list" class="palette-list"></div>
+    <div class="palette-hint" id="palette-hint"></div>
+  </div>
+</div>
+
+<div id="suggest" class="suggest hidden"></div>
+<div id="ctxmenu" class="ctxmenu hidden"></div>
+<div id="toast" class="toast hidden"></div>
+<div id="hover-preview" class="hover-preview markdown hidden"></div>
+
+<dialog id="vault-dialog">
+  <form method="dialog">
+    <h3>Seif</h3>
+    <p class="muted" id="vault-desc"></p>
+    <div class="dialog-actions column">
+      <button type="button" id="btn-open-folder">📂 Deschide un dosar de pe disc ca seif</button>
+      <button type="button" id="btn-use-browser">🌐 Folosește stocarea din browser</button>
+      <button type="button" id="btn-export">⬇ Exportă toate notele (.json)</button>
+      <label class="filebtn">⬆ Importă (.json sau fișiere .md)<input type="file" id="import-file" accept=".json,.md,.markdown,.txt" multiple hidden></label>
+    </div>
+    <p class="muted small">Dosarul de pe disc funcționează în Chrome / Edge (File System Access API). Notele rămân fișiere .md obișnuite, compatibile cu orice editor.</p>
+    <div class="dialog-actions"><span class="grow"></span><button value="close">Închide</button></div>
+  </form>
+</dialog>
+
+<script src="vendor/marked.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
