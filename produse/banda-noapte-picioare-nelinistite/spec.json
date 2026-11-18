@@ -1,0 +1,132 @@
+{
+  "handle": "banda-noapte-picioare-nelinistite",
+  "source": {
+    "url": "https://nightlegs.com/products/nightlegs-support-pair",
+    "kind": "competitor",
+    "competitor_price": "44.99 USD / pereche (59.99 tăiat)"
+  },
+  "product": {
+    "title": "Bandă de noapte pentru picioarele neliniștite (pereche)",
+    "type": "Somn",
+    "tags": ["somn", "picioare nelinistite", "noapte"],
+    "price": 139.99,
+    "compare_at_price": 229.99,
+    "sku": "BANDA-NOAPTE-PER",
+    "grams": 150,
+    "body_html": "<p>O pernuță fermă care apasă pe mijlocul tălpii toată noaptea. Același truc ca șoseta înnodată sub talpă, doar că nu se desface când te întorci în pat.</p><ul><li>Pernuță fermă fix sub arcul tălpii</li><li>Bareta reglabilă, mărime unică</li><li>Fără pastile, fără baterii, fără zgomot</li><li>Se spală ușor</li></ul><p><em>Produs de confort, nu dispozitiv medical.</em></p>",
+    "options": [{ "name": "Culoare", "values": ["Negru"] }],
+    "variants": [
+      { "options": ["Negru"], "price": 139.99, "compare_at_price": 229.99, "sku": "BANDA-NOAPTE-PER-NEGRU" }
+    ],
+    "images": [
+      { "src": "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260722_060343_08e382c3-8fae-47aa-8342-1aa3363dcaad.webp?v=1784700749", "alt": "Bandă de noapte pentru picioarele neliniștite" },
+      { "src": "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260720_212329_0fe177d9-ac27-4075-8b84-6ccbe6288e24.webp?v=1784582834", "alt": "Bandă de noapte purtată pe talpă" },
+      { "src": "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260722_232142_e75cc97a-2fb5-4810-a316-d6a52f6f8213.webp?v=1784762864", "alt": "Bandă de noapte – pernuța fermă sub arc" },
+      { "src": "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260716_064600_455b5f25-3e18-4ca3-afee-2ba49f36cee4.webp?v=1784184551", "alt": "Bandă de noapte în pat" },
+      { "src": "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/archband-fix-04-morning-stretch_d87be9fd-dcd0-4be3-89e4-ee9eef07620b.webp?v=1789065203", "alt": "Dimineața, după o noapte liniștită" },
+      { "src": "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260716_071205_63bd6661-126b-4560-bb2c-985ddbfc1ad5.webp?v=1784186141", "alt": "Bandă de noapte – pereche" }
+    ],
+    "seo_title": "Bandă de noapte pentru picioarele neliniștite | Plata la livrare",
+    "seo_description": "Pernuță fermă sub talpă, toată noaptea. Fără pastile, fără baterii. Livrare în 24–48h, plata ramburs, retur 30 de zile."
+  },
+  "page": {
+    "offers_heading": "Alege câte perechi vrei",
+    "offers": [
+      { "quantity": 1, "label": "1 pereche", "caption": "Pentru tine" },
+      { "quantity": 2, "label": "2 perechi", "badge": "CEL MAI ALES", "badge_style": "accent_2", "benefit": "Economisești 20%", "caption": "Una pentru tine, una pentru partener", "discount_percent": 20 },
+      { "quantity": 3, "label": "3 perechi", "badge": "Cel mai rentabil", "badge_style": "savings", "benefit": "Economisești 30%", "caption": "Una acasă, una la mama, una de rezervă", "discount_percent": 30 }
+    ],
+    "benefits": [
+      "😴 Picioare liniștite până dimineața",
+      "👣 Presiune fermă fix sub talpă, toată noaptea",
+      "💊 Fără pastile, fără baterii, fără zgomot",
+      "⏱️ O pui în 10 secunde și gata"
+    ],
+    "guarantee_note": "<p><strong>Retur gratuit 30 de zile.</strong> Cumperi, testezi, iar dacă nu-ți place îți dăm banii înapoi.</p>",
+    "delivery_days": [1, 3],
+    "tabs": [
+      { "heading": "Ce primești în colet", "icon": "box", "content": "<ul><li>2 benzi (câte una pentru fiecare picior)</li><li>Pernuță fermă cusută în fiecare bandă</li><li>Bareta reglabilă, mărime unică</li></ul>" },
+      { "heading": "Livrare și plată", "icon": "truck", "content": "<p>Livrare prin curier în 24–48 de ore lucrătoare. Plătești ramburs, la primirea coletului, sau online cu cardul.</p>" },
+      { "heading": "Retur și garanție", "icon": "return", "content": "<p>Ai 30 de zile pentru retur gratuit. Dacă nu-ți place, îți dăm banii înapoi.</p>" }
+    ],
+    "ticker": [
+      { "emoji": "😴", "text": "Picioare liniștite până dimineața" },
+      { "emoji": "🚚", "text": "Livrare în 24–48h" },
+      { "emoji": "💵", "text": "Plata ramburs" },
+      { "emoji": "↩️", "text": "Retur gratuit 30 de zile" }
+    ],
+    "why": {
+      "subheading": "Trucul cu șoseta, făcut ca lumea",
+      "heading": "Presiune fermă, <em>fix</em> unde trebuie",
+      "cards": [
+        { "emoji": "👣", "title": "Un singur punct", "text": "Pernuța apasă pe mijlocul tălpii, ca degetul mare apăsat pe arc." },
+        { "emoji": "🌙", "title": "Toată noaptea", "text": "Nu se desface când te întorci. Ține până dimineața." },
+        { "emoji": "🔇", "title": "Fără nimic de încărcat", "text": "Fără baterii, fără cablu, fără timer care se oprește după 20 de minute." }
+      ]
+    },
+    "inside": {
+      "subheading": "Cum funcționează",
+      "heading": "Ca o pătură grea, <em>doar pentru tălpi</em>",
+      "text": "Mulți își leagă noaptea o șosetă sub talpă, cu nodul pe arc. Merge, până se desface. Banda face același lucru și rămâne pe loc până dimineața.",
+      "checklist": ["Pernuță fermă, nu burete", "Degetele și călcâiul rămân libere", "Merge pe spate, pe o parte sau pe burtă"],
+      "sticker": "-39%",
+      "button_label": "Vreau banda"
+    },
+    "problem_solution": {
+      "subheading": "Aceeași noapte, alt final",
+      "heading": "Fără bandă vs. <em>cu bandă</em>",
+      "bad_title": "Fără bandă",
+      "bad_list": ["Te ridici din pat la 3 noaptea", "Plimbări pe hol până obosești", "Partenerul doarme în altă cameră"],
+      "good_title": "Cu banda de noapte",
+      "good_list": ["Rămâi în pat", "Picioare liniștite până dimineața", "Te trezești la alarmă, nu la 3"],
+      "good_badge": "Recomandat",
+      "button_label": "Vreau și eu"
+    },
+    "compare": {
+      "heading": "Ce folosești acum vs. <em>banda de noapte</em>",
+      "brand_name": "Banda de noapte",
+      "competitor_1": "Ciorapi compresivi",
+      "competitor_2": "Aparat de masaj",
+      "button_label": "Comandă acum",
+      "rows": [
+        { "feature": "Apasă fix pe arcul tălpii", "us": "yes", "comp_1": "no", "comp_2": "partial" },
+        { "feature": "Se poartă toată noaptea", "us": "yes", "comp_1": "no", "comp_2": "no" },
+        { "feature": "Fără baterii și fără zgomot", "us": "yes", "comp_1": "yes", "comp_2": "no" },
+        { "feature": "Plata ramburs și retur 30 de zile", "us": "yes", "comp_1": "partial", "comp_2": "partial" }
+      ]
+    },
+    "steps": {
+      "subheading": "Simplu",
+      "heading": "De la comandă la <em>noapte liniștită</em>",
+      "steps": [
+        { "emoji": "📦", "title": "Comanzi în 30 de secunde", "text": "Plătești la curier, când primești coletul." },
+        { "emoji": "👣", "title": "O pui în 10 secunde", "text": "Pernuța sub talpă, bareta peste picior și gata." },
+        { "emoji": "😴", "title": "Dormi liniștit", "text": "Iar dacă nu-ți place, ai retur gratuit 30 de zile." }
+      ]
+    },
+    "guarantee": {
+      "subheading": "Zero riscuri",
+      "heading": "Testezi <em>30 de nopți</em>",
+      "text": "Cumperi, testezi, iar dacă nu-ți place îți dăm banii înapoi. Fără întrebări.",
+      "seal_number": "30",
+      "seal_label": "nopți",
+      "points": [
+        { "icon": "return", "text": "Retur gratuit, fără întrebări" },
+        { "icon": "cash", "text": "Plata ramburs, la livrare" },
+        { "icon": "support", "text": "Suport rapid pe WhatsApp și email" }
+      ]
+    },
+    "faq": {
+      "heading": "Întrebări frecvente",
+      "items": [
+        { "q": "E greu de pus?", "a": "Nu. Pui pernuța sub mijlocul tălpii, tragi bareta peste picior și gata. Trebuie să fie fermă, nu strânsă: simți presiunea, dar fără furnicături.", "icon": "question_mark" },
+        { "q": "Ce mărime iau?", "a": "Mărime unică. Bareta se reglează, așa că se potrivește pe majoritatea picioarelor.", "icon": "ruler" },
+        { "q": "Pot dormi cu ea pe o parte sau pe burtă?", "a": "Da. E ușoară, iar degetele și călcâiul rămân libere, așa că nu te încurcă în nicio poziție.", "icon": "heart" },
+        { "q": "Pot să o folosesc dacă sunt însărcinată?", "a": "E doar o bandă textilă pe exterior: fără pastile, fără căldură, fără curent. Dacă ai nelămuriri, întreabă-ți medicul.", "icon": "check_mark" },
+        { "q": "Mă vindecă de sindromul picioarelor neliniștite?", "a": "Nu. Este un produs de confort, nu un dispozitiv medical. Mulți oameni simt însă că presiunea fermă sub talpă îi ajută să stea liniștiți în pat.", "icon": "question_mark" },
+        { "q": "Cum știu că primesc exact produsul din poze?", "a": "Suntem magazin românesc, livrăm prin curier și plătești doar după ce primești coletul. Dacă nu e ce te așteptai, ai retur gratuit 30 de zile.", "icon": "lock" },
+        { "q": "Se spală?", "a": "Da, de mână sau la mașină, la program delicat.", "icon": "washing" }
+      ]
+    }
+  }
+}

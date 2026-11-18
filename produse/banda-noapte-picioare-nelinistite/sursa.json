@@ -1,0 +1,50 @@
+{
+  "platform": "shopify",
+  "title": "NightLegs Support Pair",
+  "description": "A   soft   fabric   foot   wrap   with   an   adjustable   strap,   shaped   to   sit   under   the   arch.   Designed   to   be   worn   in   bed   while   you   sleep.   Sold   as   a   pair.   One   adjustable   size   fits   most.   Machine w ashable.",
+  "description_html": "<p><meta charset=\"utf-8\"><span class=\"_wordAnimating_yu34g_11\">A<span> </span></span><span class=\"_wordAnimating_yu34g_11\">soft<span> </span></span><span class=\"_wordAnimating_yu34g_11\">fabric<span> </span></span><span class=\"_wordAnimating_yu34g_11\">foot<span> </span></span><span class=\"_wordAnimating_yu34g_11\">wrap<span> </span></span><span class=\"_wordAnimating_yu34g_11\">with<span> </span></span><span class=\"_wordAnimating_yu34g_11\">an<span> </span></span><span class=\"_wordAnimating_yu34g_11\">adjustable<span> </span></span><span class=\"_wordAnimating_yu34g_11\">strap,<span> </span></span><span class=\"_wordAnimating_yu34g_11\">shaped<span> </span></span><span class=\"_wordAnimating_yu34g_11\">to<span> </span></span><span class=\"_wordAnimating_yu34g_11\">sit<span> </span></span><span class=\"_wordAnimating_yu34g_11\">under<span> </span></span><span class=\"_wordAnimating_yu34g_11\">the<span> </span></span><span class=\"_wordAnimating_yu34g_11\">arch.<span> </span></span><span class=\"_wordAnimating_yu34g_11\">Designed<span> </span></span><span class=\"_wordAnimating_yu34g_11\">to<span> </span></span><span class=\"_wordAnimating_yu34g_11\">be<span> </span></span><span class=\"_wordAnimating_yu34g_11\">worn<span> </span></span><span class=\"_wordAnimating_yu34g_11\">in<span> </span></span><span class=\"_wordAnimating_yu34g_11\">bed<span> </span></span><span class=\"_wordAnimating_yu34g_11\">while<span> </span></span><span class=\"_wordAnimating_yu34g_11\">you<span> </span></span><span class=\"_wordAnimating_yu34g_11\">sleep.<span> </span></span><span class=\"_wordAnimating_yu34g_11\">Sold<span> </span></span><span class=\"_wordAnimating_yu34g_11\">as<span> </span></span><span class=\"_wordAnimating_yu34g_11\">a<span> </span></span><span class=\"_wordAnimating_yu34g_11\">pair.<span> </span></span><span class=\"_wordAnimating_yu34g_11\">One<span> </span></span><span class=\"_wordAnimating_yu34g_11\">adjustable<span> </span></span><span class=\"_wordAnimating_yu34g_11\">size<span> </span></span><span class=\"_wordAnimating_yu34g_11\">fits<span> </span></span><span class=\"_wordAnimating_yu34g_11\">most.<span> </span></span><span class=\"_wordAnimating_yu34g_11\">Machine w</span><span class=\"_wordAnimating_yu34g_11\">ashable.</span></p>",
+  "vendor": "NightLegs",
+  "type": "",
+  "tags": [],
+  "price": 44.99,
+  "compare_at_price": 59.99,
+  "images": [
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260722_060343_08e382c3-8fae-47aa-8342-1aa3363dcaad.webp?v=1784700749",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260720_212329_0fe177d9-ac27-4075-8b84-6ccbe6288e24.webp?v=1784582834",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260722_232142_e75cc97a-2fb5-4810-a316-d6a52f6f8213.webp?v=1784762864",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260716_064600_455b5f25-3e18-4ca3-afee-2ba49f36cee4.webp?v=1784184551",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/archband-fix-04-morning-stretch_d87be9fd-dcd0-4be3-89e4-ee9eef07620b.webp?v=1789065203",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/hf_20260716_071205_63bd6661-126b-4560-bb2c-985ddbfc1ad5.webp?v=1784186141",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/card-10-linda-morning-three_07c90a0f-f405-4e71-a927-2ef358691976.jpg?v=1794026173",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/card-01-jeanine-night-one_8673e885-8741-4696-827a-bd762b61c933.jpg?v=1794026142",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/card-02-laura-two-weeks_38ef319a-457b-4609-9a6d-814b52ab58a6.jpg?v=1794026157",
+    "https://cdn.shopify.com/s/files/1/1007/8597/9690/files/card-11-natisha-not-a-scam_60e6ae83-5eb2-4ed5-acd7-4764188f3a93.jpg?v=1794026184"
+  ],
+  "options": [
+    {
+      "name": "Color",
+      "values": [
+        "Black"
+      ]
+    },
+    {
+      "name": "Size",
+      "values": [
+        "a pair"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "options": [
+        "Black",
+        "a pair"
+      ],
+      "price": 44.99,
+      "compare_at_price": 59.99,
+      "sku": "2U2BQQ4TJ",
+      "image": null
+    }
+  ],
+  "source_url": "https://nightlegs.com/products/nightlegs-support-pair"
+}
