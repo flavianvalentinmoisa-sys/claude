@@ -1,0 +1,114 @@
+{
+  "handle": "pompa-mini-anvelope",
+  "source": {
+    "url": "https://www.flextail.com/products/tiny-tire-pump-asc",
+    "kind": "competitor",
+    "competitor_price": "70.99 USD (99.99 tăiat); 2 buc 140.99 USD"
+  },
+  "product": {
+    "title": "Pompă electrică mini pentru bicicletă, cu manometru și stop",
+    "type": "Bicicletă",
+    "tags": ["bicicleta", "pompa", "ciclism"],
+    "price": 189.99,
+    "compare_at_price": 299.99,
+    "body_html": "<p>Pompă electrică de buzunar: o pui pe valvă, apeși butonul și se oprește singură la presiunea setată. Pe drum îți ține loc și de stop.</p><ul><li>Până la 130 PSI, pentru cursieră, MTB și motocicletă</li><li>Ecran cu presiunea în timp real</li><li>Stop roșu cu 3 moduri de lumină</li><li>Doar 130 g, se prinde pe cadru</li><li>Se încarcă pe USB-C</li></ul>",
+    "images": []
+  },
+  "page": {
+    "offers_heading": "Alege câte pompe vrei",
+    "offers": [
+      { "quantity": 1, "label": "1 pompă", "caption": "Pentru bicicleta ta" },
+      { "quantity": 2, "label": "2 pompe", "badge": "CEL MAI ALES", "badge_style": "accent_2", "benefit": "Economisești 15%", "caption": "Una pentru tine, una pentru partenerul de tură", "discount_percent": 15 }
+    ],
+    "offers_preselected": 1,
+    "benefits": [
+      "🚴 Roata umflată în câteva secunde, fără efort",
+      "🎯 Se oprește singură la presiunea setată",
+      "🔴 Stop roșu inclus, 3 moduri de lumină",
+      "🎒 Doar 130 g, încape în buzunar"
+    ],
+    "guarantee_note": "<p><strong>Retur gratuit 30 de zile.</strong> Cumperi, testezi, iar dacă nu-ți place îți dăm banii înapoi.</p>",
+    "delivery_days": [1, 3],
+    "tabs": [
+      { "heading": "Specificații", "icon": "ruler", "content": "<ul><li>Presiune maximă: 130 PSI (896 kPa)</li><li>Dimensiuni: 52 × 29 × 67 mm</li><li>Greutate: 130 g</li><li>Baterie: 2 × 500 mAh (3,7 Wh)</li><li>Încărcare: USB-C</li></ul>" },
+      { "heading": "Livrare și plată", "icon": "truck", "content": "<p>Livrare prin curier în 24–48 de ore lucrătoare. Plătești ramburs, la primirea coletului, sau online cu cardul.</p>" },
+      { "heading": "Retur și garanție", "icon": "return", "content": "<p>Ai 30 de zile pentru retur gratuit. Toate produsele au garanție 2 ani.</p>" }
+    ],
+    "ticker": [
+      { "emoji": "🚴", "text": "Fără pompat de mână" },
+      { "emoji": "🚚", "text": "Livrare în 24–48h" },
+      { "emoji": "💵", "text": "Plata ramburs" },
+      { "emoji": "↩️", "text": "Retur gratuit 30 de zile" }
+    ],
+    "why": {
+      "subheading": "Mică, dar serioasă",
+      "heading": "Pana nu-ți mai strică <em>tura</em>",
+      "cards": [
+        { "emoji": "⚡", "title": "Fără efort", "text": "Apeși un buton și pompa face treaba. Fără pompat de mână pe marginea drumului." },
+        { "emoji": "🎯", "title": "Presiunea exactă", "text": "Setezi presiunea pe ecran și se oprește singură când ajunge acolo." },
+        { "emoji": "🔴", "title": "Și stop, și pompă", "text": "Se prinde pe tija șeii și te face vizibil seara. Un singur lucru de cărat, nu două." }
+      ]
+    },
+    "inside": {
+      "subheading": "Cât un pachet de șervețele",
+      "heading": "130 g. Încape <em>oriunde</em>",
+      "text": "O ții în buzunarul tricoului, în borsetă sau prinsă pe cadru cu suportul inclus. Când faci pană, e acolo.",
+      "checklist": ["Până la 130 PSI, merge și la cursieră", "Ecran cu presiunea în timp real", "Se încarcă pe USB-C, ca telefonul"],
+      "sticker": "-36%",
+      "button_label": "Vreau pompa"
+    },
+    "problem_solution": {
+      "subheading": "Aceeași pană, alt final",
+      "heading": "Pompa de mână vs. <em>pompa electrică</em>",
+      "bad_title": "Cu pompa de mână",
+      "bad_list": ["Minute întregi de pompat", "Nu știi ce presiune ai pus", "Ajungi transpirat la destinație"],
+      "good_title": "Cu pompa electrică mini",
+      "good_list": ["Apeși un buton și gata", "Presiunea exactă, pe ecran", "Te întorci în șa imediat"],
+      "good_badge": "Recomandat",
+      "button_label": "Vreau și eu"
+    },
+    "compare": {
+      "heading": "Ce cari acum vs. <em>pompa mini</em>",
+      "brand_name": "Pompa mini",
+      "competitor_1": "Pompă de mână",
+      "competitor_2": "Compresor auto",
+      "button_label": "Comandă acum",
+      "rows": [
+        { "feature": "Umflă fără efort", "us": "yes", "comp_1": "no", "comp_2": "yes" },
+        { "feature": "Încape în buzunar", "us": "yes", "comp_1": "partial", "comp_2": "no" },
+        { "feature": "Arată presiunea pe ecran", "us": "yes", "comp_1": "no", "comp_2": "yes" },
+        { "feature": "Funcționează și ca stop", "us": "yes", "comp_1": "no", "comp_2": "no" }
+      ]
+    },
+    "steps": {
+      "subheading": "Simplu",
+      "heading": "De la pană la <em>drum</em>",
+      "steps": [
+        { "emoji": "🔩", "title": "O pui pe valvă", "text": "Înșurubezi furtunul și gata." },
+        { "emoji": "🎯", "title": "Alegi presiunea", "text": "Apeși butonul, pompa se oprește singură." },
+        { "emoji": "🚴", "title": "Pleci mai departe", "text": "Iar seara îți ține loc și de stop." }
+      ]
+    },
+    "guarantee": {
+      "subheading": "Zero riscuri",
+      "heading": "Retur gratuit <em>30 de zile</em>",
+      "text": "Cumperi, testezi, iar dacă nu-ți place îți dăm banii înapoi. Fără întrebări.",
+      "points": [
+        { "icon": "return", "text": "Retur gratuit, fără întrebări" },
+        { "icon": "cash", "text": "Plata ramburs, la livrare" },
+        { "icon": "shield", "text": "Garanție 2 ani" }
+      ]
+    },
+    "faq": {
+      "heading": "Întrebări frecvente",
+      "items": [
+        { "q": "Merge pe valva bicicletei mele?", "a": "Pompa vine cu adaptoare pentru valvele obișnuite de bicicletă și motocicletă. Dacă nu ești sigur, scrie-ne modelul și îți spunem.", "icon": "question_mark" },
+        { "q": "Câte roți umflu cu o încărcare?", "a": "Depinde de cât de dezumflată e roata și de presiunea dorită. E gândită pentru pana de pe drum: o încărcare ajunge pentru o roată și o seară de stop. Acasă o pui la încărcat pe USB-C, ca pe telefon.", "icon": "lightning_bolt" },
+        { "q": "Pot umfla și roțile de la mașină?", "a": "E făcută pentru bicicletă și motocicletă. Pentru mașină îți recomandăm un compresor auto.", "icon": "question_mark" },
+        { "q": "Se încălzește?", "a": "Are sistem de răcire, așa că o poți ține în mână cât umflă.", "icon": "fire" },
+        { "q": "Cum știu că primesc exact produsul din poze?", "a": "Suntem magazin românesc, livrăm prin curier și plătești doar după ce primești coletul. Dacă nu e ce te așteptai, ai retur gratuit 30 de zile.", "icon": "lock" },
+        { "q": "Cât durează livrarea?", "a": "24–48 de ore lucrătoare de la plasarea comenzii.", "icon": "truck" }
+      ]
+    }
+  }
+}

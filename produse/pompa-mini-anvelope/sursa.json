@@ -1,0 +1,73 @@
+{
+  "platform": "shopify",
+  "title": "TINY TIRE PUMP 200- 130PSI Mini Electric Gauge Pump with Cool Taillight",
+  "description": "Flextail TINY TIRE PUMP ACS GEN II a smart, ultra-portable electric bike pump built for modern cyclists. Suitable for bikes and motorcycles \n 500mAh*2 battery powers a full night ride, plus inflates 1 tire \n Size: 2.0*1.1*2.6 inches（51*29*67 mm）\n Weight: 4.6 oz（130g）\n Air Pressure: 130 PSI (896.3 kPa)\n Charging Mode: USB Type-C\n Battery Capacity: 3.7 Wh（500mAh*2）",
+  "description_html": "<p><strong>Flextail TINY TIRE PUMP ACS GEN II a smart, ultra-portable electric bike pump built for modern cyclists. Suitable for bikes and motorcycles</strong></p>\n<p><strong>500mAh*2 battery powers a full night ride, plus inflates 1 tire</strong></p>\n<p><strong>Size: </strong>2.0*1.1*2.6 inches（51*29*67 mm）</p>\n<p><span><strong>Weight:</strong> </span>4.6 oz（130g）</p>\n<p><span><strong>Air Pressure:</strong> </span>130 PSI (896.3 kPa)</p>\n<p><strong>Charging Mode: </strong>USB Type-C</p>\n<p><span><strong>Battery Capacity: </strong>3.7 Wh（500mAh*2）</span></p>",
+  "vendor": "FLEXTAIL",
+  "type": "",
+  "tags": [
+    "Air pumps",
+    "compare-pump",
+    "feed",
+    "interest-cycling"
+  ],
+  "price": 66.99,
+  "compare_at_price": 99.99,
+  "images": [
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/b58ce7b99582c961375527c3c6b27ebb_1c15a04e-9573-4ac3-91cd-57a42fadb830.png?v=1793008731",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/5_6a725a37-18f0-45fc-bf2e-17f03e89429f.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/7_ea91448e-bc1d-486d-948c-90e8734091fe.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/8_a48875fe-c315-4767-a1b1-a3c345d0d197.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/9_25d43b79-40dd-40fa-aae9-1601cc6779dc.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/10_9e987dd9-04bc-4a6f-8bae-a6c027b8eeda.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/14_bf24c02b-38ea-4a65-a273-ce2f1aab86ef.gif?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/4_a3481e24-8753-45fb-9374-30a669ef43a0.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/11_a7fd070d-f19f-44cd-a656-28acbc6903b9.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/12_354657dd-6491-4970-913f-442170b9db80.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/13_8a502294-961f-4626-a50b-35affa78d896.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/3_9595b871-7457-4a66-822c-5798fecdd283.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/ACS.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/8_1x_8126b2b8-63bd-40b4-812e-1b5450349e49.png?v=1771988394",
+    "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/1_f2644667-17f1-4751-8ad5-7cbb57186df7.png?v=1771988394"
+  ],
+  "options": [
+    {
+      "name": "Perk",
+      "values": [
+        "1 pcs",
+        "2 pcs",
+        "1 pcs tire pump GEN 1 - 120PSI"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "options": [
+        "1 pcs"
+      ],
+      "price": 70.99,
+      "compare_at_price": 99.99,
+      "sku": "TTPA500-DGY-i",
+      "image": "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/1_f2644667-17f1-4751-8ad5-7cbb57186df7.png?v=1771988394"
+    },
+    {
+      "options": [
+        "2 pcs"
+      ],
+      "price": 140.99,
+      "compare_at_price": 199.98,
+      "sku": "2*TTPA500-DGY-i",
+      "image": "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/1_f2644667-17f1-4751-8ad5-7cbb57186df7.png?v=1771988394"
+    },
+    {
+      "options": [
+        "1 pcs tire pump GEN 1 - 120PSI"
+      ],
+      "price": 66.99,
+      "compare_at_price": 99.99,
+      "sku": "TTPA500-DGY-i",
+      "image": "https://cdn.shopify.com/s/files/1/0257/2304/3945/files/ACS.png?v=1771988394"
+    }
+  ],
+  "source_url": "https://www.flextail.com/products/tiny-tire-pump-asc"
+}

@@ -1,0 +1,561 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_size": "h2",
+            "show_tag_badges": true
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_savings": "amount",
+            "price_size": "medium"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_breaks": {
+          "type": "quantity_breaks",
+          "settings": {
+            "heading": "Alege câte pompe vrei",
+            "preselected": "1",
+            "compare_price": "compare_at",
+            "option_1_quantity": 1,
+            "option_1_label": "1 pompă",
+            "option_1_badge": "",
+            "option_1_benefit": "",
+            "option_1_caption": "Pentru bicicleta ta",
+            "option_1_discount_percent": 0,
+            "option_2_quantity": 2,
+            "option_2_label": "2 pompe",
+            "option_2_badge": "CEL MAI ALES",
+            "option_2_badge_style": "accent_2",
+            "option_2_benefit": "Economisești 15%",
+            "option_2_caption": "Una pentru tine, una pentru partenerul de tură",
+            "option_2_discount_percent": 15,
+            "option_3_quantity": 0,
+            "option_4_quantity": 0
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "urgency": {
+          "type": "urgency",
+          "settings": {
+            "only_low_stock": true,
+            "threshold": 10
+          }
+        },
+        "eta": {
+          "type": "estimated_shipping",
+          "settings": {
+            "min_days": 1,
+            "max_days": 3
+          }
+        },
+        "benefits": {
+          "type": "emoji_benefits",
+          "settings": {
+            "benefits": "🚴 Roata umflată în câteva secunde, fără efort\n🎯 Se oprește singură la presiunea setată\n🔴 Stop roșu inclus, 3 moduri de lumină\n🎒 Doar 130 g, încape în buzunar"
+          }
+        },
+        "guarantee": {
+          "type": "text_with_icon",
+          "settings": {
+            "text": "<p><strong>Retur gratuit 30 de zile.</strong> Cumperi, testezi, iar dacă nu-ți place îți dăm banii înapoi.</p>"
+          }
+        },
+        "payments": {
+          "type": "payment_badges",
+          "settings": {
+            "alignment": "center",
+            "text": "Plată 100% sigură"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "sticky": {
+          "type": "sticky_atc",
+          "settings": {
+            "rating_text": "",
+            "desktop_show_rating": false,
+            "mobile_show_rating": false
+          }
+        },
+        "tab_0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Specificații",
+            "icon": "ruler",
+            "content": "<ul><li>Presiune maximă: 130 PSI (896 kPa)</li><li>Dimensiuni: 52 × 29 × 67 mm</li><li>Greutate: 130 g</li><li>Baterie: 2 × 500 mAh (3,7 Wh)</li><li>Încărcare: USB-C</li></ul>"
+          }
+        },
+        "tab_1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Livrare și plată",
+            "icon": "truck",
+            "content": "<p>Livrare prin curier în 24–48 de ore lucrătoare. Plătești ramburs, la primirea coletului, sau online cu cardul.</p>"
+          }
+        },
+        "tab_2": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Retur și garanție",
+            "icon": "return",
+            "content": "<p>Ai 30 de zile pentru retur gratuit. Toate produsele au garanție 2 ani.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_breaks",
+        "quantity_selector",
+        "buy_buttons",
+        "urgency",
+        "eta",
+        "benefits",
+        "guarantee",
+        "payments",
+        "description",
+        "tab_0",
+        "tab_1",
+        "tab_2",
+        "sticky"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Ți-ar putea plăcea și",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-2",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "compare": {
+      "type": "c-comparison-table",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "heading": "Ce cari acum vs. <em>pompa mini</em>",
+        "brand_name": "Pompa mini",
+        "competitor_1": "Pompă de mână",
+        "competitor_2": "Compresor auto",
+        "button_label": "Comandă acum"
+      },
+      "blocks": {
+        "row_0": {
+          "type": "row",
+          "settings": {
+            "feature": "Umflă fără efort",
+            "us": "yes",
+            "comp_1": "no",
+            "comp_2": "yes"
+          }
+        },
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature": "Încape în buzunar",
+            "us": "yes",
+            "comp_1": "partial",
+            "comp_2": "no"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature": "Arată presiunea pe ecran",
+            "us": "yes",
+            "comp_1": "no",
+            "comp_2": "yes"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature": "Funcționează și ca stop",
+            "us": "yes",
+            "comp_1": "no",
+            "comp_2": "no"
+          }
+        }
+      },
+      "block_order": [
+        "row_0",
+        "row_1",
+        "row_2",
+        "row_3"
+      ]
+    },
+    "problem_solution": {
+      "type": "c-problem-solution",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "good_color_scheme": "scheme-3",
+        "subheading": "Aceeași pană, alt final",
+        "heading": "Pompa de mână vs. <em>pompa electrică</em>",
+        "bad_title": "Cu pompa de mână",
+        "bad_list": "Minute întregi de pompat\nNu știi ce presiune ai pus\nAjungi transpirat la destinație",
+        "good_title": "Cu pompa electrică mini",
+        "good_list": "Apeși un buton și gata\nPresiunea exactă, pe ecran\nTe întorci în șa imediat",
+        "good_badge": "Recomandat",
+        "button_label_1": "Vreau și eu"
+      }
+    },
+    "steps": {
+      "type": "c-steps",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-2",
+        "button_label_1": "",
+        "subheading": "Simplu",
+        "heading": "De la pană la <em>drum</em>"
+      },
+      "blocks": {
+        "step_0": {
+          "type": "step",
+          "settings": {
+            "emoji": "🔩",
+            "accent": "#6B7F5E",
+            "title": "O pui pe valvă",
+            "text": "<p>Înșurubezi furtunul și gata.</p>"
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "emoji": "🎯",
+            "accent": "#C8664A",
+            "title": "Alegi presiunea",
+            "text": "<p>Apeși butonul, pompa se oprește singură.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "emoji": "🚴",
+            "accent": "#55684A",
+            "title": "Pleci mai departe",
+            "text": "<p>Iar seara îți ține loc și de stop.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_0",
+        "step_1",
+        "step_2"
+      ]
+    },
+    "guarantee": {
+      "type": "c-guarantee",
+      "settings": {
+        "button_label_1": "Comandă fără griji",
+        "color_scheme": "scheme-2",
+        "box_color_scheme": "scheme-1",
+        "subheading": "Zero riscuri",
+        "heading": "Retur gratuit <em>30 de zile</em>",
+        "text": "<p>Cumperi, testezi, iar dacă nu-ți place îți dăm banii înapoi. Fără întrebări.</p>"
+      },
+      "blocks": {
+        "point_0": {
+          "type": "point",
+          "settings": {
+            "icon": "return",
+            "text": "Retur gratuit, fără întrebări"
+          }
+        },
+        "point_1": {
+          "type": "point",
+          "settings": {
+            "icon": "cash",
+            "text": "Plata ramburs, la livrare"
+          }
+        },
+        "point_2": {
+          "type": "point",
+          "settings": {
+            "icon": "shield",
+            "text": "Garanție 2 ani"
+          }
+        }
+      },
+      "block_order": [
+        "point_0",
+        "point_1",
+        "point_2"
+      ]
+    },
+    "benefits_band": {
+      "type": "c-ticker",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": {
+        "t_0": {
+          "type": "text",
+          "settings": {
+            "text": "Fără pompat de mână",
+            "icon_emoji": "🚴"
+          }
+        },
+        "t_1": {
+          "type": "text",
+          "settings": {
+            "text": "Livrare în 24–48h",
+            "icon_emoji": "🚚"
+          }
+        },
+        "t_2": {
+          "type": "text",
+          "settings": {
+            "text": "Plata ramburs",
+            "icon_emoji": "💵"
+          }
+        },
+        "t_3": {
+          "type": "text",
+          "settings": {
+            "text": "Retur gratuit 30 de zile",
+            "icon_emoji": "↩️"
+          }
+        }
+      },
+      "block_order": [
+        "t_0",
+        "t_1",
+        "t_2",
+        "t_3"
+      ]
+    },
+    "why": {
+      "type": "c-benefit-cards",
+      "settings": {
+        "subheading": "Mică, dar serioasă",
+        "heading": "Pana nu-ți mai strică <em>tura</em>",
+        "color_scheme": "scheme-1",
+        "style": "soft",
+        "columns_desktop": 3
+      },
+      "blocks": {
+        "c_0": {
+          "type": "card",
+          "settings": {
+            "background": "#E6EBDF",
+            "emoji": "⚡",
+            "title": "Fără efort",
+            "text": "<p>Apeși un buton și pompa face treaba. Fără pompat de mână pe marginea drumului.</p>"
+          }
+        },
+        "c_1": {
+          "type": "card",
+          "settings": {
+            "background": "#F6E1D8",
+            "emoji": "🎯",
+            "title": "Presiunea exactă",
+            "text": "<p>Setezi presiunea pe ecran și se oprește singură când ajunge acolo.</p>"
+          }
+        },
+        "c_2": {
+          "type": "card",
+          "settings": {
+            "background": "#F3EADD",
+            "emoji": "🔴",
+            "title": "Și stop, și pompă",
+            "text": "<p>Se prinde pe tija șeii și te face vizibil seara. Un singur lucru de cărat, nu două.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c_0",
+        "c_1",
+        "c_2"
+      ]
+    },
+    "inside": {
+      "type": "c-media-text",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "media_style": "blob",
+        "sticker": "-36%",
+        "use_product_image": true
+      },
+      "blocks": {
+        "m_0": {
+          "type": "subheading",
+          "settings": {
+            "text": "Cât un pachet de șervețele"
+          }
+        },
+        "m_1": {
+          "type": "heading",
+          "settings": {
+            "heading": "130 g. Încape <em>oriunde</em>",
+            "heading_size": "h2"
+          }
+        },
+        "m_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>O ții în buzunarul tricoului, în borsetă sau prinsă pe cadru cu suportul inclus. Când faci pană, e acolo.</p>"
+          }
+        },
+        "m_3": {
+          "type": "checklist",
+          "settings": {
+            "items": "Până la 130 PSI, merge și la cursieră\nEcran cu presiunea în timp real\nSe încarcă pe USB-C, ca telefonul"
+          }
+        },
+        "m_4": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Vreau pompa"
+          }
+        }
+      },
+      "block_order": [
+        "m_0",
+        "m_1",
+        "m_2",
+        "m_3",
+        "m_4"
+      ]
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "settings": {
+        "caption": "",
+        "heading": "Întrebări frecvente",
+        "color_scheme": "scheme-2",
+        "container_color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "q_0": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Merge pe valva bicicletei mele?",
+            "icon": "question_mark",
+            "row_content": "<p>Pompa vine cu adaptoare pentru valvele obișnuite de bicicletă și motocicletă. Dacă nu ești sigur, scrie-ne modelul și îți spunem.</p>"
+          }
+        },
+        "q_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Câte roți umflu cu o încărcare?",
+            "icon": "lightning_bolt",
+            "row_content": "<p>Depinde de cât de dezumflată e roata și de presiunea dorită. E gândită pentru pana de pe drum: o încărcare ajunge pentru o roată și o seară de stop. Acasă o pui la încărcat pe USB-C, ca pe telefon.</p>"
+          }
+        },
+        "q_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Pot umfla și roțile de la mașină?",
+            "icon": "question_mark",
+            "row_content": "<p>E făcută pentru bicicletă și motocicletă. Pentru mașină îți recomandăm un compresor auto.</p>"
+          }
+        },
+        "q_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Se încălzește?",
+            "icon": "fire",
+            "row_content": "<p>Are sistem de răcire, așa că o poți ține în mână cât umflă.</p>"
+          }
+        },
+        "q_4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Cum știu că primesc exact produsul din poze?",
+            "icon": "lock",
+            "row_content": "<p>Suntem magazin românesc, livrăm prin curier și plătești doar după ce primești coletul. Dacă nu e ce te așteptai, ai retur gratuit 30 de zile.</p>"
+          }
+        },
+        "q_5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Cât durează livrarea?",
+            "icon": "truck",
+            "row_content": "<p>24–48 de ore lucrătoare de la plasarea comenzii.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_0",
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "benefits_band",
+    "why",
+    "inside",
+    "problem_solution",
+    "compare",
+    "steps",
+    "guarantee",
+    "faq",
+    "related-products",
+    "disclosures"
+  ]
+}
