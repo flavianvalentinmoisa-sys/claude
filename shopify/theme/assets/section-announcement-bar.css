@@ -1,0 +1,105 @@
+.c-announcement {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  margin: 0;
+  font-size: var(--c-ann-size, 1.3rem);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.c-announcement--uppercase .c-announcement {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.announcement-bar__message.c-announcement {
+  padding: 0.9rem 0;
+}
+
+.c-announcement p {
+  display: inline;
+  margin: 0;
+}
+
+.c-announcement a {
+  color: inherit;
+}
+
+.c-announcement__timer {
+  display: inline-flex;
+  padding: 0.1rem 0.7rem;
+  border-radius: 0.5rem;
+  background: rgba(var(--color-foreground), 0.12);
+  font-weight: 700;
+}
+
+.c-announcement__code {
+  padding: 0.1rem 0.7rem;
+  font-size: inherit;
+}
+
+.c-announcement__code .c-copy__feedback:empty {
+  display: none;
+}
+
+/* Bandă derulantă */
+.c-announcement-marquee {
+  overflow: hidden;
+  width: 100%;
+  grid-column: 1 / -1;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.utility-bar__grid--3-col .c-announcement-marquee,
+.utility-bar__grid--2-col .c-announcement-marquee {
+  grid-column: auto;
+}
+
+.c-announcement-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: c-marquee var(--c-marquee-speed, 30s) linear infinite;
+}
+
+.c-announcement-marquee:hover .c-announcement-marquee__track {
+  animation-play-state: paused;
+}
+
+.c-announcement-marquee__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.c-announcement-marquee__item {
+  padding: 0 1.6rem;
+  white-space: nowrap;
+}
+
+.c-announcement-marquee__item .c-announcement {
+  flex-wrap: nowrap;
+}
+
+.c-announcement-marquee__sep {
+  opacity: 0.6;
+}
+
+@keyframes c-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-announcement-marquee__track {
+    animation: none;
+  }
+}

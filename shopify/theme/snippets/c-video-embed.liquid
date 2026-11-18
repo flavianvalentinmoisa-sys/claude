@@ -1,0 +1,36 @@
+{% comment %}
+  Video YouTube/Vimeo încorporat, încărcat doar la click (sau automat, fără sonor).
+  Parametri: video_url (obiect video_url), autoplay (bool), cover (imagine, opțional)
+{% endcomment %}
+{%- liquid
+  assign autoplay_param = ''
+  if autoplay
+    if video_url.type == 'youtube'
+      assign autoplay_param = '&autoplay=1&mute=1&loop=1&playlist=' | append: video_url.id
+    else
+      assign autoplay_param = '&autoplay=1&muted=1&loop=1&background=1'
+    endif
+  endif
+-%}
+<deferred-media class="c-video-embed deferred-media" data-media-id="{{ video_url.id }}"{% if autoplay %} data-autoplay="true"{% endif %}>
+  <button type="button" id="Deferred-Poster-c-{{ video_url.id }}-{{ "now" | date: "%N" }}" class="c-video-embed__poster deferred-media__poster">
+    <span class="c-visually-hidden">{{ 'products.product.media.play_video' | t }}</span>
+    {%- if cover != blank -%}
+      {{ cover | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '375, 750, 1100, 1500', sizes: '100vw' }}
+    {%- elsif video_url.type == 'youtube' -%}
+      {% # theme-check-disable RemoteAsset %}
+      <img src="https://i.ytimg.com/vi/{{ video_url.id }}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+      {% # theme-check-enable RemoteAsset %}
+    {%- endif -%}
+    <span class="deferred-media__poster-button motion-reduce">
+      <span class="svg-wrapper">{{- 'icon-play.svg' | inline_asset_content -}}</span>
+    </span>
+  </button>
+  <template>
+    {%- if video_url.type == 'youtube' -%}
+      <iframe src="https://www.youtube.com/embed/{{ video_url.id }}?enablejsapi=1&rel=0&playsinline=1{{ autoplay_param }}" class="js-youtube" allow="autoplay; encrypted-media" allowfullscreen title="YouTube"></iframe>
+    {%- else -%}
+      <iframe src="https://player.vimeo.com/video/{{ video_url.id }}?{{ autoplay_param | remove_first: '&' }}" class="js-vimeo" allow="autoplay; encrypted-media" allowfullscreen title="Vimeo"></iframe>
+    {%- endif -%}
+  </template>
+</deferred-media>

@@ -1,0 +1,887 @@
+# Secțiunile temei folosite de pagina de produs
+
+Generat automat din schema fiecărei secțiuni (`theme_schema.py`). Nu edita de mână.
+
+## `main-product` — Informații produs
+- `enable_sticky_info` checkbox = true
+- `color_scheme` color_scheme = "scheme-1"
+- `media_size` select [small|medium|large] = "large"
+- `constrain_to_viewport` checkbox = true
+- `media_fit` select [contain|cover] = "contain"
+- `gallery_layout` select [stacked|columns|thumbnail|thumbnail_slider] = "stacked"
+- `mobile_thumbnails` select [columns|show|hide] = "hide"
+- `media_position` select [left|right] = "left"
+- `image_zoom` select [lightbox|hover|none] = "lightbox"
+- `hide_variants` checkbox = false
+- `enable_video_looping` checkbox = false
+- `padding_top` range (0–100) = 36
+- `padding_bottom` range (0–100) = 36
+- **bloc `text`**
+  - `text` inline_richtext = "Bloc de text"
+  - `text_style` select [body|subtitle|uppercase] = "body"
+- **bloc `title`** (max 1)
+  - `title_size` select [h3|h2|default] = "h2"
+  - `show_tag_badges` checkbox = true
+- **bloc `price`** (max 1)
+  - `show_savings` select [none|amount|percent|both] = "amount"
+  - `price_size` select [small|medium|large] = "medium"
+- **bloc `sku`** (max 1)
+  - `text_style` select [body|subtitle|uppercase] = "body"
+- **bloc `inventory`** (max 1)
+  - `text_style` select [body|subtitle|uppercase] = "body"
+  - `inventory_threshold` range (0–100) = 10
+  - `show_inventory_quantity` checkbox = true
+- **bloc `quantity_selector`** (max 1)
+- **bloc `variant_picker`** (max 1)
+  - `picker_type` select [dropdown|button] = "button"
+  - `swatch_shape` select [circle|square|none] = "circle"
+- **bloc `buy_buttons`** (max 1)
+  - `show_dynamic_checkout` checkbox = true
+  - `show_gift_card_recipient` checkbox = true
+- **bloc `description`** (max 1)
+- **bloc `share`** (max 1)
+  - `share_label` text = "Distribuie"
+- **bloc `custom_liquid`**
+  - `custom_liquid` liquid
+- **bloc `disclosures`** (max 1)
+  - `heading` text = "Avertizări"
+  - `heading_size` select [h2|h1|h0] = "h2"
+  - `open_by_default` checkbox = false
+- **bloc `collapsible_tab`**
+  - `heading` text = "Rând pliabil"
+  - `icon` select [44 opțiuni, ex: none|apple|banana|bottle|box|carrot|chat_bubble|check_mark|clipboard|dairy…] = "check_mark"
+  - `content` richtext
+  - `page` page
+- **bloc `popup`**
+  - `text` text = "Text link pop-up"
+  - `page` page
+- **bloc `rating`** (max 1)
+- **bloc `complementary`** (max 1)
+  - `block_heading` text = "Se potrivește cu"
+  - `make_collapsible_row` checkbox = false
+  - `icon` select [44 opțiuni, ex: none|apple|banana|bottle|box|carrot|chat_bubble|check_mark|clipboard|dairy…] = "price_tag"
+  - `product_list_limit` range (1–10) = 10
+  - `products_per_page` range (1–4) = 3
+  - `pagination_style` select [dots|counter|numbers] = "counter"
+  - `image_ratio` select [portrait|square] = "square"
+  - `enable_quick_add` checkbox = false
+- **bloc `icon-with-text`**
+  - `layout` select [horizontal|vertical] = "horizontal"
+  - `icon_1` select [44 opțiuni, ex: none|apple|banana|bottle|box|carrot|chat_bubble|check_mark|clipboard|dairy…] = "heart"
+  - `image_1` image_picker
+  - `heading_1` inline_richtext = "Titlu"
+  - `icon_2` select [44 opțiuni, ex: none|apple|banana|bottle|box|carrot|chat_bubble|check_mark|clipboard|dairy…] = "return"
+  - `image_2` image_picker
+  - `heading_2` inline_richtext = "Titlu"
+  - `icon_3` select [44 opțiuni, ex: none|apple|banana|bottle|box|carrot|chat_bubble|check_mark|clipboard|dairy…] = "truck"
+  - `image_3` image_picker
+  - `heading_3` inline_richtext = "Titlu"
+- **bloc `quantity_breaks`** (max 1)
+  - `heading` inline_richtext = "Alege oferta potrivită"
+  - `style` select [normal|compact|horizontal] = "normal"
+  - `preselected` select [1|2|3|4] = "2"
+  - `show_radio` checkbox = true
+  - `show_savings` checkbox = true
+  - `compare_price` select [price|compare_at] = "compare_at"
+  - `border_radius` range (0–24) = 12
+  - `image_width` range (32–96) = 56
+  - `enable_variant_selectors` checkbox = false
+  - `skip_unavailable` checkbox = true
+  - `option_1_quantity` range (0–10) = 1
+  - `option_1_label` text = "1 bucată"
+  - `option_1_badge` text
+  - `option_1_badge_style` select [accent|accent_2|savings|urgency|dark] = "accent"
+  - `option_1_benefit` text
+  - `option_1_caption` inline_richtext = "Preț standard"
+  - `option_1_image` image_picker
+  - `option_1_discount_percent` range (0–90) = 0
+  - `option_1_discount_amount` number
+  - `option_1_price_text` text
+  - `option_2_quantity` range (0–10) = 2
+  - `option_2_label` text = "2 bucăți"
+  - `option_2_badge` text = "CEL MAI ALES"
+  - `option_2_badge_style` select [accent|accent_2|savings|urgency|dark] = "accent_2"
+  - `option_2_benefit` text = "Economisești 15%"
+  - `option_2_caption` inline_richtext = "Livrare gratuită inclusă"
+  - `option_2_image` image_picker
+  - `option_2_discount_percent` range (0–90) = 15
+  - `option_2_discount_amount` number
+  - `option_2_price_text` text
+  - `option_3_quantity` range (0–10) = 3
+  - `option_3_label` text = "3 bucăți"
+  - `option_3_badge` text = "Cea mai bună ofertă"
+  - `option_3_badge_style` select [accent|accent_2|savings|urgency|dark] = "savings"
+  - `option_3_benefit` text = "Economisești 25%"
+  - `option_3_caption` inline_richtext = "Livrare gratuită + cadou"
+  - `option_3_image` image_picker
+  - `option_3_discount_percent` range (0–90) = 25
+  - `option_3_discount_amount` number
+  - `option_3_price_text` text
+  - `option_4_quantity` range (0–10) = 0
+  - `option_4_label` text = "4 bucăți"
+  - `option_4_badge` text
+  - `option_4_badge_style` select [accent|accent_2|savings|urgency|dark] = "accent"
+  - `option_4_benefit` text
+  - `option_4_caption` inline_richtext
+  - `option_4_image` image_picker
+  - `option_4_discount_percent` range (0–90) = 30
+  - `option_4_discount_amount` number
+  - `option_4_price_text` text
+  - `margin_top` range (0–60) = 12
+  - `margin_bottom` range (0–60) = 16
+- **bloc `bundle_offer`** (max 1)
+  - `title` inline_richtext = "Cumpărate frecvent împreună"
+  - `main_label` text = "Acest produs"
+  - `main_discount_percent` range (0–90) = 0
+  - `show_images` checkbox = true
+  - `title_link` checkbox = false
+  - `use_compare_at` checkbox = true
+  - `show_savings` checkbox = true
+  - `total_label` text = "Total pachet:"
+  - `button_label` text = "Adaugă pachetul în coș"
+  - `color_scheme` color_scheme = "scheme-1"
+  - `product_1` product
+  - `product_1_desc` inline_richtext
+  - `product_1_discount` range (0–100) = 10
+  - `product_2` product
+  - `product_2_desc` inline_richtext
+  - `product_2_discount` range (0–100) = 0
+  - `product_3` product
+  - `product_3_desc` inline_richtext
+  - `product_3_discount` range (0–100) = 0
+  - `margin_top` range (0–60) = 12
+  - `margin_bottom` range (0–60) = 16
+- **bloc `product_upsell`**
+  - `heading` inline_richtext = "Adaugă la comandă"
+  - `products` product_list
+  - `layout` select [list|grid] = "list"
+  - `show_images` checkbox = true
+  - `show_variant_picker` checkbox = true
+  - `hide_compare_price` checkbox = false
+  - `color_scheme` color_scheme = "scheme-1"
+  - `product_1_preselected` checkbox = false
+  - `product_1_desc` inline_richtext
+  - `product_1_discount` range (0–100) = 0
+  - `product_2_preselected` checkbox = false
+  - `product_2_desc` inline_richtext
+  - `product_2_discount` range (0–100) = 0
+  - `product_3_preselected` checkbox = false
+  - `product_3_desc` inline_richtext
+  - `product_3_discount` range (0–100) = 0
+  - `margin_top` range (0–60) = 12
+  - `margin_bottom` range (0–60) = 16
+- **bloc `quantity_gifts`** (max 1)
+  - `heading` inline_richtext = "🎁 Cadouri incluse în comandă"
+  - `locked_text` text = "De la [quantity] buc."
+  - `gift_1` product
+  - `gift_1_quantity` number = 2
+  - `gift_1_image` image_picker
+  - `gift_1_label` inline_richtext
+  - `gift_2` product
+  - `gift_2_quantity` number = 3
+  - `gift_2_image` image_picker
+  - `gift_2_label` inline_richtext
+  - `gift_3` product
+  - `gift_3_quantity` number = 4
+  - `gift_3_image` image_picker
+  - `gift_3_label` inline_richtext
+  - `gift_4` product
+  - `gift_4_quantity` number = 5
+  - `gift_4_image` image_picker
+  - `gift_4_label` inline_richtext
+  - `margin_top` range (0–60) = 12
+  - `margin_bottom` range (0–60) = 16
+- **bloc `sticky_atc`** (max 1)
+  - `function` select [add|scroll] = "add"
+  - `display_when` select [after|always] = "after"
+  - `button_label` text
+  - `price_in_button` checkbox = false
+  - `button_color` color
+  - `color_scheme` color_scheme = "scheme-1"
+  - `rating` range (3–5) = 4.9
+  - `rating_text` inline_richtext
+  - `desktop_show_image` checkbox = true
+  - `desktop_show_title` checkbox = true
+  - `desktop_show_price` checkbox = true
+  - `desktop_show_rating` checkbox = true
+  - `desktop_show_variants` checkbox = true
+  - `mobile_show_image` checkbox = true
+  - `mobile_show_title` checkbox = true
+  - `mobile_show_price` checkbox = true
+  - `mobile_show_rating` checkbox = false
+  - `mobile_show_variants` checkbox = false
+  - `mobile_full_button` checkbox = false
+- **bloc `rating_stars`** (max 1)
+  - `rating` range (1–5) = 4.8
+  - `text` inline_richtext = "<strong>4.8</strong> (2.341 recenzii)"
+  - `use_metafield` checkbox = false
+  - `star_size` range (12–32) = 18
+  - `star_color` color
+  - `link_to` text
+  - `alignment` select [left|center|right] = "left"
+  - `margin_top` range (0–60) = 0
+  - `margin_bottom` range (0–60) = 10
+- **bloc `trustpilot_stars`** (max 1)
+  - `rating` range (1–5) = 4.8
+  - `text` inline_richtext = "Excelent pe <strong>Trustpilot</strong>"
+  - `use_metafield` checkbox = false
+  - `star_size` range (12–32) = 20
+  - `link_to` text
+  - `alignment` select [left|center|right] = "left"
+  - `margin_top` range (0–60) = 0
+  - `margin_bottom` range (0–60) = 10
+- **bloc `clickable_discount`** (max 1)
+  - `code` text = "BINE10"
+  - `text` inline_richtext = "Click aici pentru a aplica <strong>10% reducere</strong>"
+  - `applied_text` inline_richtext = "Codul <strong>[code]</strong> a fost aplicat! Reducerea apare la f…
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "percent"
+  - `icon_emoji` text
+  - `bg_color` color
+  - `text_color` color
+  - `bg_color_applied` color
+  - `text_color_applied` color
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `urgency`** (max 1)
+  - `text` inline_richtext = "🔥 Doar <strong>[stock]</strong> bucăți rămase în stoc"
+  - `style` select [plain|boxed] = "plain"
+  - `color` select [accent|savings|urgency] = "urgency"
+  - `show_pulse` checkbox = true
+  - `only_low_stock` checkbox = true
+  - `threshold` range (1–50) = 10
+  - `show_bar` checkbox = false
+  - `bar_max` range (10–100) = 30
+  - `margin_top` range (0–60) = 4
+  - `margin_bottom` range (0–60) = 12
+- **bloc `emoji_benefits`** (max 1)
+  - `benefits` textarea = "✅ Livrare în 24–48 de ore\n💵 Plata ramburs la curier\n↩️ Retur gra…
+  - `layout` select [one-column|two-columns] = "one-column"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `payment_badges`** (max 1)
+  - `text` inline_richtext = "Plată 100% sigură"
+  - `show_cod` checkbox = true
+  - `cod_label` text = "Ramburs"
+  - `alignment` select [left|center|right] = "left"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `estimated_shipping`** (max 1)
+  - `text` inline_richtext = "Comanzi azi și primești între [min_date] și [max_date]"
+  - `min_days` number = 1
+  - `max_days` number = 3
+  - `skip_weekends` checkbox = true
+  - `cutoff_hour` range (0–23) = 0
+  - `date_format` select [weekday_day_month|weekday_short_day_month|day_month|day_month_short|numeric|numeric_year] = "weekday_day_month"
+  - `style` select [plain|boxed] = "boxed"
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "truck"
+  - `icon_emoji` text
+  - `icon_image` image_picker
+  - `icon_size` range (12–64) = 24
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `shipping_checkpoints`** (max 1)
+  - `heading` inline_richtext
+  - `date_format` select [weekday_day_month|weekday_short_day_month|day_month|day_month_short|numeric|numeric_year] = "day_month_short"
+  - `skip_weekends` checkbox = true
+  - `cutoff_hour` range (0–23) = 0
+  - `accent` select [accent|savings|urgency] = "accent"
+  - `step_1_label` text = "Comandat"
+  - `step_1_days` number = 0
+  - `step_1_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "check"
+  - `step_2_label` text = "Expediat"
+  - `step_2_days` number = 1
+  - `step_2_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "package"
+  - `step_3_label` text = "Livrat"
+  - `step_3_days` number = 3
+  - `step_3_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "home"
+  - `step_4_label` text
+  - `step_4_days` number = 0
+  - `step_4_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "check"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `scroll_buttons`**
+  - `layout` select [inline|grid] = "inline"
+  - `button_1_label` text = "Recenzii"
+  - `button_1_target` text = "#recenzii"
+  - `button_1_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "star"
+  - `button_2_label` text = "Detalii"
+  - `button_2_target` text = "#detalii"
+  - `button_2_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "info"
+  - `button_3_label` text
+  - `button_3_target` text
+  - `button_3_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "check"
+  - `button_4_label` text
+  - `button_4_target` text
+  - `button_4_icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "check"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `review_avatars`**
+  - `text` inline_richtext = "Peste <strong>10.000</strong> de clienți mulțumiți"
+  - `show_stars` checkbox = true
+  - `rating` range (3–5) = 4.9
+  - `avatar_size` range (24–64) = 36
+  - `alignment` select [left|center|right] = "left"
+  - `avatar_1` image_picker
+  - `avatar_2` image_picker
+  - `avatar_3` image_picker
+  - `avatar_4` image_picker
+  - `avatar_5` image_picker
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `text_with_icon`**
+  - `text` richtext = "<p><strong>Garanție 2 ani.</strong> Îți înlocuim produsul gratuit …
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "shield"
+  - `icon_emoji` text
+  - `icon_image` image_picker
+  - `icon_size` range (12–64) = 24
+  - `icon_color` color
+  - `show_background` checkbox = true
+  - `background` color
+  - `text_color` color
+  - `alignment` select [left|center|right] = "left"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `image`**
+  - `image` image_picker
+  - `link` url
+  - `width` range (20–100) = 100
+  - `radius` range (0–40) = 12
+  - `alignment` select [left|center|right] = "center"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `video`**
+  - `video` video
+  - `video_url` video_url
+  - `autoplay` checkbox = true
+  - `controls` checkbox = false
+  - `radius` range (0–40) = 12
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `divider`**
+  - `text` text
+  - `thickness` range (1–6) = 1
+  - `opacity` range (5–100) = 15
+  - `margin_top` range (0–60) = 12
+  - `margin_bottom` range (0–60) = 12
+- **bloc `link_button`**
+  - `label` text = "Vezi detaliile"
+  - `link` url
+  - `style` select [primary|secondary|link] = "secondary"
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "none"
+  - `full_width` checkbox = true
+  - `new_tab` checkbox = false
+  - `alignment` select [left|center|right] = "left"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+- **bloc `reviews`** (max 2)
+  - `heading` inline_richtext = "Ce spun clienții"
+  - `layout` select [slider|list] = "slider"
+  - `autoplay` checkbox = true
+  - `show_verified` checkbox = true
+  - `card_color_scheme` color_scheme = "scheme-1"
+  - `review_1_name` text = "Andreea M."
+  - `review_1_text` richtext = "<p>Calitate excelentă, a ajuns în 2 zile. Recomand cu încredere!</…
+  - `review_1_rating` range (1–5) = 5
+  - `review_1_image` image_picker
+  - `review_2_name` text = "Mihai P."
+  - `review_2_text` richtext = "<p>Exact ca în poze. Am plătit ramburs, totul a mers perfect.</p>"
+  - `review_2_rating` range (1–5) = 5
+  - `review_2_image` image_picker
+  - `review_3_name` text = "Ioana D."
+  - `review_3_text` richtext = "<p>Al doilea comandat, de data asta pentru mama. Mulțumim!</p>"
+  - `review_3_rating` range (1–5) = 5
+  - `review_3_image` image_picker
+  - `review_4_name` text
+  - `review_4_text` richtext
+  - `review_4_rating` range (1–5) = 5
+  - `review_4_image` image_picker
+  - `review_5_name` text
+  - `review_5_text` richtext
+  - `review_5_rating` range (1–5) = 5
+  - `review_5_image` image_picker
+  - `review_6_name` text
+  - `review_6_text` richtext
+  - `review_6_rating` range (1–5) = 5
+  - `review_6_image` image_picker
+  - `margin_top` range (0–60) = 12
+  - `margin_bottom` range (0–60) = 16
+- **bloc `size_chart`**
+  - `label` text = "Ghid mărimi"
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "ruler"
+  - `heading` inline_richtext = "Ghid mărimi"
+  - `image` image_picker
+  - `content` richtext = "<p>Măsoară-te și alege mărimea potrivită. Dacă ești între două măr…
+  - `page` page
+  - `alignment` select [left|center|right] = "left"
+  - `margin_top` range (0–60) = 4
+  - `margin_bottom` range (0–60) = 12
+- **bloc `custom_field`**
+  - `type` select [text|textarea|number|select|swatches] = "text"
+  - `field_name` text = "Personalizare"
+  - `label` inline_richtext = "Text pentru gravură"
+  - `placeholder` text = "Ex: Andrei & Maria"
+  - `info` inline_richtext
+  - `required` checkbox = false
+  - `error_message` text = "Te rugăm să completezi acest câmp"
+  - `full_width` checkbox = false
+  - `max_characters` number = 30
+  - `rows` range (2–8) = 3
+  - `number_min` number
+  - `number_max` number
+  - `options` text = "Opțiunea 1, Opțiunea 2"
+  - `margin_top` range (0–60) = 8
+  - `margin_bottom` range (0–60) = 12
+
+## `c-ticker` — Bandă derulantă
+- `subheading` text
+- `heading` inline_richtext
+- `heading_size` select [h4|h3|h2|h1|h0] = "h3"
+- `header_alignment` select [left|center|right] = "center"
+- `direction` select [left|right] = "left"
+- `speed` range (10–120) = 40
+- `text_size` range (12–60) = 18
+- `gap` range (8–120) = 40
+- `image_height` range (16–120) = 40
+- `icon_size` range (12–48) = 20
+- `separator` text = "✦"
+- `uppercase` checkbox = true
+- `pause_on_hover` checkbox = true
+- `rotate` range (-5–5) = 0
+- `card_color_scheme` color_scheme = "scheme-1"
+- `color_scheme` color_scheme = "scheme-4"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 16
+- `padding_bottom` range (0–120) = 16
+- **bloc `text`**
+  - `text` inline_richtext = "Livrare gratuită peste 200 lei"
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "none"
+  - `icon_emoji` text
+- **bloc `image`**
+  - `image` image_picker
+- **bloc `review`**
+  - `rating` range (1–5) = 5
+  - `text` text = "Cel mai bun cadou pe care l-am făcut!"
+  - `author` text = "Ana"
+
+## `c-benefit-cards` — Carduri colorate
+- `subheading` text = "De ce să ne alegi"
+- `heading` inline_richtext = "Beneficii pe care le <em>simți</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `columns_desktop` range (1–4) = 3
+- `style` select [pop|soft|outline] = "pop"
+- `mobile_slider` checkbox = true
+- `button_label_1` text
+- `button_link_1` url
+- `button_style_1` select [primary|secondary|white] = "primary"
+- `button_label_2` text
+- `button_link_2` url
+- `button_style_2` select [primary|secondary|white] = "secondary"
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `card`**
+  - `background` color = "#F6E1D8"
+  - `text_color` color = "#000000"
+  - `image` image_picker
+  - `video` video
+  - `media_style` select [cover|icon] = "icon"
+  - `emoji` text = "⚡"
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "none"
+  - `stat` text
+  - `title` inline_richtext = "Efect rapid"
+  - `text` richtext = "<p>Simți diferența din primele zile de utilizare.</p>"
+  - `link` url
+  - `link_label` text = "Află mai multe"
+
+## `c-media-text` — Media cu text (GIF/video)
+- `image` image_picker
+- `video` video
+- `gif_url` url
+- `use_product_image` checkbox = true
+- `media_position` select [left|right] = "left"
+- `media_style` select [rounded|blob|tilt|circle] = "tilt"
+- `media_width` range (30–70) = 50
+- `sticker` text = "-40%"
+- `above_fold` checkbox = false
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `rating`** (max 1)
+  - `rating` range (1–5) = 5
+  - `text` inline_richtext = "<strong>4.9/5</strong> din 2.000+ recenzii"
+- **bloc `subheading`**
+  - `text` text = "Nou"
+- **bloc `heading`**
+  - `heading` inline_richtext = "Rezultate pe care le <em>vezi</em>"
+  - `heading_size` select [h4|h3|h2|h1|h0] = "h1"
+- **bloc `text`**
+  - `text` richtext = "<p>Spune pe scurt ce problemă rezolvă produsul și de ce e diferit.…
+- **bloc `checklist`**
+  - `items` textarea = "Livrare în 24–48h\nPlata ramburs\nRetur gratuit 30 de zile"
+- **bloc `buttons`**
+  - `button_label_1` text = "Cumpără acum"
+  - `button_link_1` url
+  - `button_style_1` select [primary|secondary|white] = "primary"
+  - `button_label_2` text
+  - `button_link_2` url
+  - `button_style_2` select [primary|secondary|white] = "secondary"
+- **bloc `custom_liquid`**
+  - `custom_liquid` liquid
+
+## `c-problem-solution` — Problemă vs soluție
+- `subheading` text = "Diferența se vede"
+- `heading` inline_richtext = "Fără noi vs. <em>cu noi</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `vs_text` text = "VS"
+- `bad_image` image_picker
+- `bad_video` video
+- `bad_title` inline_richtext = "Fără [produs]"
+- `bad_list` textarea = "Nopți agitate\nOboseală dimineața\nSoluții scumpe care nu țin"
+- `good_badge` text = "Recomandat"
+- `good_image` image_picker
+- `good_video` video
+- `use_product_image` checkbox = true
+- `good_title` inline_richtext = "Cu [produs]"
+- `good_list` textarea = "Somn liniștit din prima noapte\nEnergie toată ziua\nO investiție c…
+- `good_color_scheme` color_scheme = "scheme-4"
+- `button_label_1` text = "Vreau și eu"
+- `button_link_1` url
+- `button_style_1` select [primary|secondary|white] = "primary"
+- `button_label_2` text
+- `button_link_2` url
+- `button_style_2` select [primary|secondary|white] = "secondary"
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+
+## `c-results` — Rezultate
+- `subheading` text = "Studiu pe 500 de clienți"
+- `heading` inline_richtext = "Rezultate <em>dovedite</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "left"
+- `style` select [bars|cards|circles] = "bars"
+- `accent` select [accent|savings|urgency] = "accent"
+- `bar_style` select [gradient|striped|solid] = "striped"
+- `show_tip` checkbox = true
+- `bar_height` range (6–24) = 12
+- `duration` range (8–40) = 20
+- `stagger` range (0–600) = 250
+- `replay` checkbox = false
+- `image` image_picker
+- `image_position` select [left|right] = "left"
+- `footnote` inline_richtext = "*Rezultate raportate de clienți după 30 de zile de utilizare."
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `result`**
+  - `percent` range (0–100) = 94
+  - `suffix` text = "%"
+  - `emoji` text = "😴"
+  - `text` inline_richtext = "au dormit mai bine încă din prima săptămână"
+  - `color` color
+
+## `c-comparison-table` — Tabel comparativ
+- `subheading` text
+- `heading` inline_richtext = "De ce să ne <em>alegi</em> pe noi?"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `feature_label` text = "Caracteristici"
+- `brand_name` text = "Noi"
+- `logo` image_picker
+- `competitor_1` text = "Alții"
+- `competitor_2` text
+- `accent` select [accent|savings] = "accent"
+- `button_label` text = "Comandă acum"
+- `button_link` url
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `row`**
+  - `feature` inline_richtext = "Livrare în 24–48 de ore"
+  - `us` text = "yes"
+  - `comp_1` text = "no"
+  - `comp_2` text = "no"
+
+## `c-steps` — Cum funcționează (pași)
+- `subheading` text = "Simplu și rapid"
+- `heading` inline_richtext = "Cum <em>funcționează</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `layout` select [cards|timeline] = "cards"
+- `show_line` checkbox = true
+- `show_step_label` checkbox = true
+- `step_label` text = "Pasul"
+- `card_color_scheme` color_scheme = "scheme-1"
+- `button_label_1` text = "Încearcă acum"
+- `button_link_1` url
+- `button_style_1` select [primary|secondary|white] = "primary"
+- `button_label_2` text
+- `button_link_2` url
+- `button_style_2` select [primary|secondary|white] = "secondary"
+- `color_scheme` color_scheme = "scheme-2"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `step`**
+  - `image` image_picker
+  - `video` video
+  - `emoji` text
+  - `accent` color
+  - `title` inline_richtext = "Comanzi online"
+  - `text` richtext = "<p>Alegi produsul și plătești ramburs, la curier.</p>"
+
+## `c-photo-reviews` — Recenzii cu poze
+- `subheading` text = "Recenzii reale"
+- `heading` inline_richtext = "Peste 2.000 de clienți <em>fericiți</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `show_summary` checkbox = true
+- `rating_value` text = "4.9"
+- `rating_count` text = "din 2.143 de recenzii verificate"
+- `show_bars` checkbox = true
+- `bar_5` number = 89
+- `bar_4` number = 8
+- `bar_3` number = 2
+- `bar_2` number = 1
+- `bar_1` number = 0
+- `summary_button_label` text
+- `summary_button_link` url
+- `layout` select [masonry|grid] = "masonry"
+- `columns_desktop` range (1–5) = 4
+- `columns_mobile` range (1–2) = 2
+- `initial_count` range (2–24) = 8
+- `load_more_label` text = "Vezi mai multe recenzii"
+- `show_verified` checkbox = true
+- `verified_text` text = "Cumpărător verificat"
+- `show_date` checkbox = true
+- `card_color_scheme` color_scheme = "scheme-1"
+- `color_scheme` color_scheme = "scheme-2"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `review`**
+  - `image` image_picker
+  - `image_2` image_picker
+  - `video` video
+  - `rating` range (1–5) = 5
+  - `title` text = "Exact ce căutam!"
+  - `text` richtext = "<p>Am primit coletul în 2 zile, calitatea e peste așteptări. Recom…
+  - `name` text = "Andreea M."
+  - `city` text = "Cluj-Napoca"
+  - `review_time` text = "acum 3 zile"
+  - `avatar` image_picker
+  - `verified` checkbox = true
+  - `product_name` text
+
+## `c-guarantee` — Garanție
+- `subheading` text = "Zero riscuri"
+- `heading` inline_richtext = "Garanție <em>banii înapoi</em> 30 de zile"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext = "<p>Încearcă produsul liniștit. Dacă nu ești mulțumit, ni-l trimiți…
+- `seal_image` image_picker
+- `seal_number` text = "30"
+- `seal_label` text = "zile"
+- `ring_text` text = "GARANȚIE BANII ÎNAPOI"
+- `rotate` checkbox = true
+- `box_color_scheme` color_scheme = "scheme-5"
+- `button_label_1` text = "Comandă fără griji"
+- `button_link_1` url
+- `button_style_1` select [primary|secondary|white] = "primary"
+- `button_label_2` text
+- `button_link_2` url
+- `button_style_2` select [primary|secondary|white] = "secondary"
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `point`**
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "check_circle"
+  - `icon_emoji` text
+  - `icon_image` image_picker
+  - `text` inline_richtext = "Retur gratuit, fără întrebări"
+
+## `collapsible-content` — Conținut pliabil
+- `caption` text
+- `heading` inline_richtext = "Conținut pliabil"
+- `heading_size` select [h2|h1|h0|hxl|hxxl] = "h1"
+- `heading_alignment` select [left|center|right] = "center"
+- `layout` select [none|row|section] = "none"
+- `container_color_scheme` color_scheme = "scheme-2"
+- `color_scheme` color_scheme = "scheme-1"
+- `open_first_collapsible_row` checkbox = false
+- `image` image_picker
+- `image_ratio` select [adapt|small|large] = "adapt"
+- `desktop_layout` select [image_first|image_second] = "image_second"
+- `padding_top` range (0–100) = 36
+- `padding_bottom` range (0–100) = 36
+- `faq_schema` checkbox = true
+- **bloc `collapsible_row`**
+  - `heading` text = "Rând pliabil"
+  - `icon` select [44 opțiuni, ex: none|apple|banana|bottle|box|carrot|chat_bubble|check_mark|clipboard|dairy…] = "check_mark"
+  - `row_content` richtext
+  - `page` page
+
+## `related-products` — Produse similare
+- `heading` inline_richtext = "Ți-ar putea plăcea și"
+- `heading_size` select [h2|h1|h0|hxl|hxxl] = "h1"
+- `products_to_show` range (2–10) = 4
+- `columns_desktop` range (1–6) = 4
+- `columns_mobile` select [1|2] = "2"
+- `color_scheme` color_scheme = "scheme-1"
+- `image_ratio` select [adapt|portrait|square] = "adapt"
+- `image_shape` select [default|arch|blob|chevronleft|chevronright|diamond|parallelogram|round] = "default"
+- `show_secondary_image` checkbox = false
+- `show_vendor` checkbox = false
+- `show_rating` checkbox = false
+- `padding_top` range (0–100) = 36
+- `padding_bottom` range (0–100) = 36
+
+## `c-before-after` — Înainte și după
+- `subheading` text = "Rezultate reale"
+- `heading` inline_richtext = "Vezi <em>diferența</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext = "<p>Trage de bara din mijloc pentru a compara.</p>"
+- `header_alignment` select [left|center|right] = "left"
+- `button_label` text
+- `button_link` url
+- `layout` select [image-right|image-left|stacked] = "image-right"
+- `image_before` image_picker
+- `image_after` image_picker
+- `label_before` text = "Înainte"
+- `label_after` text = "După"
+- `start_position` range (10–90) = 50
+- `aspect_ratio` select [1|4 / 5|4 / 3|16 / 9] = "1"
+- `radius` range (0–40) = 16
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+
+## `c-product-features` — Caracteristici produs
+- `subheading` text
+- `heading` inline_richtext = "Gândită pentru <em>confortul</em> tău"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `image` image_picker
+- `layout` select [three|right] = "three"
+- `radius` range (0–40) = 16
+- `button_label_1` text
+- `button_link_1` url
+- `button_style_1` select [primary|secondary|white] = "primary"
+- `button_label_2` text
+- `button_link_2` url
+- `button_style_2` select [primary|secondary|white] = "secondary"
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `bullet`**
+  - `side` select [left|right] = "left"
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "leaf"
+  - `icon_emoji` text
+  - `icon_image` image_picker
+  - `title` inline_richtext = "Materiale naturale"
+  - `text` inline_richtext = "Bumbac organic, fără substanțe iritante."
+- **bloc `hotspot`**
+  - `title` text = "Spumă cu memorie"
+  - `text` richtext
+  - `x` range (0–100) = 50
+  - `y` range (0–100) = 50
+
+## `c-icons-with-content` — Iconițe în jurul imaginii
+- `subheading` text
+- `heading` inline_richtext = "De ce o să-ți <em>placă</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `image` image_picker
+- `video` video
+- `radius` range (0–40) = 16
+- `button_label_1` text
+- `button_link_1` url
+- `button_style_1` select [primary|secondary|white] = "primary"
+- `button_label_2` text
+- `button_link_2` url
+- `button_style_2` select [primary|secondary|white] = "secondary"
+- `atc_product` product
+- `atc_label` text = "Adaugă în coș"
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `icon`**
+  - `icon` select [53 opțiuni, ex: none|check|check_circle|truck|truck_fast|package|box_open|return|shield|lock…] = "check_circle"
+  - `icon_emoji` text
+  - `icon_image` image_picker
+  - `title` inline_richtext = "Ușor de folosit"
+  - `text` inline_richtext = "Gata de folosire din prima zi."
+
+## `c-review-marquee` — Bandă cu recenzii
+- `subheading` text
+- `heading` inline_richtext = "Iubit de <em>mii</em> de români"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `header_alignment` select [left|center|right] = "center"
+- `rows` select [1|2] = "2"
+- `speed` range (20–120) = 50
+- `card_color_scheme` color_scheme = "scheme-1"
+- `color_scheme` color_scheme = "scheme-2"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `review`**
+  - `image` image_picker
+  - `rating` range (1–5) = 5
+  - `text` textarea = "Super calitate, a ajuns super repede!"
+  - `name` text = "Mihai T."
+  - `verified` checkbox = true
+
+## `c-video-reviews` — Recenzii video
+- `subheading` text = "Văzut pe TikTok"
+- `heading` inline_richtext = "Clienții ne arată <em>rezultatele</em>"
+- `heading_size` select [h4|h3|h2|h1|h0] = "h2"
+- `text` richtext
+- `header_alignment` select [left|center|right] = "center"
+- `columns_desktop` range (1–6) = 4
+- `show_dots` checkbox = true
+- `color_scheme` color_scheme = "scheme-1"
+- `visibility` select [all|desktop|mobile] = "all"
+- `anchor` text
+- `padding_top` range (0–120) = 48
+- `padding_bottom` range (0–120) = 48
+- **bloc `video_review`**
+  - `video` video
+  - `cover` image_picker
+  - `badge` text = "⭐ Top recenzie"
+  - `rating` range (1–5) = 5
+  - `text` text = "Cel mai bun produs cumpărat anul ăsta!"
+  - `name` text = "Ioana P."
+  - `verified` checkbox = true
+  - `product_name` text
+  - `product_price` text

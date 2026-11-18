@@ -1,0 +1,52 @@
+{% comment %}
+  Bloc „Recenzii”: până la 6 recenzii scrise manual, afișate în slider sau listă.
+  Parametri: block, product, section
+{% endcomment %}
+{%- assign bs = block.settings -%}
+<div class="c-pb-reviews c-block-spacing" style="--c-mt: {{ bs.margin_top }}px; --c-mb: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+  {%- if bs.heading != blank -%}
+    <p class="c-pb-reviews__heading h4">{{ bs.heading }}</p>
+  {%- endif -%}
+  {%- capture slides -%}
+    {%- for i in (1..6) -%}
+      {%- liquid
+        assign text_key = 'review_' | append: i | append: '_text'
+        assign name_key = 'review_' | append: i | append: '_name'
+        assign img_key = 'review_' | append: i | append: '_image'
+        assign rating_key = 'review_' | append: i | append: '_rating'
+        if bs[text_key] == blank
+          continue
+        endif
+      -%}
+      <li class="c-slider__slide">
+        <figure class="c-review-card color-{{ bs.card_color_scheme }}">
+          <div class="c-review-card__top">
+            {%- if bs[img_key] != blank -%}
+              <span class="c-review-card__avatar">{{ bs[img_key] | image_url: width: 120 | image_tag: loading: 'lazy', alt: bs[name_key], widths: '60, 120', sizes: '48px' }}</span>
+            {%- endif -%}
+            <span class="c-review-card__meta">
+              <span class="c-review-card__name">{{ bs[name_key] | escape }}</span>
+              {%- if bs.show_verified -%}
+                <span class="c-review-card__verified c-text-savings">{% render 'c-icon', name: 'check_circle', size: 14 %}{{ 'carpatica.product.verified_buyer' | t }}</span>
+              {%- endif -%}
+            </span>
+          </div>
+          {%- render 'c-stars', rating: bs[rating_key], size: 15 -%}
+          <blockquote class="c-review-card__text rte">{{ bs[text_key] }}</blockquote>
+        </figure>
+      </li>
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if bs.layout == 'slider' -%}
+    <c-slider data-autoplay="{% if bs.autoplay %}6{% endif %}" style="--c-per-view: 1; --c-per-view-mobile: 1; --c-slider-gap: 1.2rem;">
+      <ul class="c-slider__track" role="list">{{ slides }}</ul>
+      <div class="c-slider__controls">
+        <button type="button" class="c-slider__arrow c-slider__arrow--prev" data-slider-prev aria-label="{{ 'carpatica.general.previous' | t }}">{{- 'icon-arrow.svg' | inline_asset_content -}}</button>
+        <ol class="c-slider__dots"></ol>
+        <button type="button" class="c-slider__arrow c-slider__arrow--next" data-slider-next aria-label="{{ 'carpatica.general.next' | t }}">{{- 'icon-arrow.svg' | inline_asset_content -}}</button>
+      </div>
+    </c-slider>
+  {%- else -%}
+    <ul class="c-pb-reviews__list" role="list">{{ slides | replace: 'c-slider__slide', 'c-pb-reviews__item' }}</ul>
+  {%- endif -%}
+</div>

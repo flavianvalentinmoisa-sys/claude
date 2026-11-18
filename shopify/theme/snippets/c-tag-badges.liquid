@@ -1,0 +1,15 @@
+{% comment %}
+  Etichete personalizate din tag-urile produsului (ex: tag „badge:Nou” → eticheta „Nou”).
+  Parametri: product, class (opțional)
+{% endcomment %}
+{%- if settings.tag_badges -%}
+  {%- for tag in product.tags -%}
+    {%- assign tag_lower = tag | downcase -%}
+    {%- if tag_lower contains 'badge:' -%}
+      {%- assign label = tag | split: ':' | last | strip -%}
+      {%- if label != blank -%}
+        <span class="badge c-tag-badge {{ class }}">{{ label | escape }}</span>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}

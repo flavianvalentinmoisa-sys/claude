@@ -1,0 +1,101 @@
+{% comment %}
+  Bloc „Produse upsell”: produse suplimentare bifabile, adăugate în coș împreună
+  cu produsul principal la apăsarea butonului „Adaugă în coș”.
+
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- assign bs = block.settings -%}
+{%- if bs.products != blank -%}
+  <product-upsell
+    class="c-upsell c-upsell--{{ bs.layout }} c-block-spacing color-{{ bs.color_scheme }}"
+    style="--c-mt: {{ bs.margin_top }}px; --c-mb: {{ bs.margin_bottom }}px;"
+    data-form-id="{{ product_form_id }}"
+    data-cart-extension
+    {{ block.shopify_attributes }}
+  >
+    {%- if bs.heading != blank -%}
+      <p class="c-upsell__heading">{{ bs.heading }}</p>
+    {%- endif -%}
+    <ul class="c-upsell__list" role="list">
+      {%- for up in bs.products -%}
+        {%- liquid
+          if up.id == product.id
+            continue
+          endif
+          assign idx = forloop.index
+          assign pct_key = 'product_' | append: idx | append: '_discount'
+          assign desc_key = 'product_' | append: idx | append: '_desc'
+          assign pre_key = 'product_' | append: idx | append: '_preselected'
+          assign pct = bs[pct_key] | plus: 0
+          assign uv = up.selected_or_first_available_variant
+          assign price = uv.price
+          if pct > 0
+            assign price = 100 | minus: pct | times: uv.price | divided_by: 100
+          endif
+          assign cmp = uv.price
+          if uv.compare_at_price > uv.price
+            assign cmp = uv.compare_at_price
+          endif
+        -%}
+        <li class="c-upsell__item{% unless uv.available %} is-unavailable{% endunless %}" data-upsell-item data-percent="{{ pct }}">
+          <label class="c-upsell__card">
+            <input
+              type="checkbox"
+              class="c-upsell__input"
+              data-upsell-toggle
+              {% if bs[pre_key] and uv.available %}
+                checked
+              {% endif %}
+              {% unless uv.available %}
+                disabled
+              {% endunless %}
+            >
+            <span class="c-upsell__checkbox" aria-hidden="true">{% render 'c-icon', name: 'check', size: 14 %}</span>
+            {%- if bs.show_images and up.featured_media -%}
+              <span class="c-upsell__image">
+                {{- up.featured_media | image_url: width: 160 | image_tag: loading: 'lazy', sizes: '64px', widths: '80, 160', alt: up.title -}}
+              </span>
+            {%- endif -%}
+            <span class="c-upsell__info">
+              <span class="c-upsell__title">{{ up.title | escape }}</span>
+              {%- if bs[desc_key] != blank -%}
+                <span class="c-upsell__desc">{{ bs[desc_key] }}</span>
+              {%- endif -%}
+              {%- if up.has_only_default_variant == false and bs.show_variant_picker -%}
+                <select class="c-upsell__select select__select" data-upsell-variant aria-label="{{ up.title | escape }}">
+                  {%- for v in up.variants -%}
+                    <option
+                      value="{{ v.id }}"
+                      data-price="{{ v.price }}"
+                      data-compare="{{ v.compare_at_price | default: v.price }}"
+                      {% if v.id == uv.id %}
+                        selected
+                      {% endif %}
+                      {% unless v.available %}
+                        disabled
+                      {% endunless %}
+                    >
+                      {{ v.title | escape }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              {%- else -%}
+                <input type="hidden" data-upsell-variant value="{{ uv.id }}" data-price="{{ uv.price }}" data-compare="{{ uv.compare_at_price | default: uv.price }}">
+              {%- endif -%}
+            </span>
+            <span class="c-upsell__prices">
+              <strong data-upsell-price>
+                {%- if price == 0 -%}{{ 'carpatica.general.free' | t }}{%- else -%}{{ price | money }}{%- endif -%}
+              </strong>
+              {%- unless bs.hide_compare_price -%}
+                <s data-upsell-compare{% if cmp <= price %} class="c-hidden"{% endif %}>{{ cmp | money }}</s>
+              {%- endunless -%}
+            </span>
+          </label>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </product-upsell>
+{%- elsif request.design_mode -%}
+  <p class="c-editor-note" {{ block.shopify_attributes }}>Alege produsele pentru blocul de upsell.</p>
+{%- endif -%}

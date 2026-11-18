@@ -1,0 +1,46 @@
+{% comment %}
+  Date structurate BreadcrumbList (SEO): Acasă › Colecție › Produs / Articol / Pagină.
+  Randat în <head> din layout/theme.liquid.
+{% endcomment %}
+{%- liquid
+  assign home_url = request.origin | append: routes.root_url
+  assign crumb_collection = collection
+  if request.page_type == 'product' and crumb_collection == blank
+    assign crumb_collection = product.collections.first
+  endif
+-%}
+{%- if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'article' or request.page_type == 'page' or request.page_type == 'blog' -%}
+  {%- assign position = 1 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Acasă",
+          "item": {{ home_url | json }}
+        }
+        {%- case request.page_type -%}
+          {%- when 'product' -%}
+            {%- if crumb_collection != blank -%}
+              {%- assign position = position | plus: 1 -%}
+              ,{"@type": "ListItem", "position": {{ position }}, "name": {{ crumb_collection.title | json }}, "item": {{ request.origin | append: crumb_collection.url | json }}}
+            {%- endif -%}
+            {%- assign position = position | plus: 1 -%}
+            ,{"@type": "ListItem", "position": {{ position }}, "name": {{ product.title | json }}, "item": {{ request.origin | append: product.url | json }}}
+          {%- when 'collection' -%}
+            ,{"@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ request.origin | append: collection.url | json }}}
+          {%- when 'blog' -%}
+            ,{"@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ request.origin | append: blog.url | json }}}
+          {%- when 'article' -%}
+            ,{"@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ request.origin | append: blog.url | json }}}
+            ,{"@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ request.origin | append: article.url | json }}}
+          {%- when 'page' -%}
+            ,{"@type": "ListItem", "position": 2, "name": {{ page.title | json }}, "item": {{ request.origin | append: page.url | json }}}
+        {%- endcase %}
+      ]
+    }
+  </script>
+{%- endif -%}

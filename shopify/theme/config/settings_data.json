@@ -1,0 +1,331 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "logo_width": 90,
+      "customer_account_menu": "customer-account-main-menu",
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FBF6EE",
+            "background_gradient": "",
+            "text": "#000000",
+            "button": "#C8664A",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#6B7F5E",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#F3EADD",
+            "background_gradient": "",
+            "text": "#000000",
+            "button": "#C8664A",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#6B7F5E",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#6B7F5E",
+            "background_gradient": "",
+            "text": "#FBF6EE",
+            "button": "#C8664A",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#FBF6EE",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#C8664A",
+            "background_gradient": "",
+            "text": "#FFFFFF",
+            "button": "#FBF6EE",
+            "button_label": "#000000",
+            "secondary_button_label": "#FFFFFF",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-5": {
+          "settings": {
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "text": "#000000",
+            "button": "#C8664A",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#6B7F5E",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-6": {
+          "settings": {
+            "background": "#55684A",
+            "background_gradient": "",
+            "text": "#FBF6EE",
+            "button": "#C8664A",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#FBF6EE",
+            "shadow": "#000000"
+          }
+        },
+        "scheme-7": {
+          "settings": {
+            "background": "#C8664A",
+            "background_gradient": "",
+            "text": "#FFFFFF",
+            "button": "#FFFFFF",
+            "button_label": "#C8664A",
+            "secondary_button_label": "#FFFFFF",
+            "shadow": "#000000"
+          }
+        }
+      },
+      "type_header_font": "assistant_n7",
+      "heading_scale": 100,
+      "type_body_font": "assistant_n4",
+      "body_scale": 100,
+      "page_width": 1300,
+      "spacing_sections": 0,
+      "spacing_grid_horizontal": 16,
+      "spacing_grid_vertical": 16,
+      "animations_reveal_on_scroll": true,
+      "animations_hover_elements": "vertical-lift",
+      "buttons_border_thickness": 1,
+      "buttons_border_opacity": 100,
+      "buttons_radius": 40,
+      "buttons_shadow_opacity": 0,
+      "buttons_shadow_horizontal_offset": 0,
+      "buttons_shadow_vertical_offset": 6,
+      "buttons_shadow_blur": 15,
+      "variant_pills_border_thickness": 1,
+      "variant_pills_border_opacity": 55,
+      "variant_pills_radius": 40,
+      "variant_pills_shadow_opacity": 0,
+      "variant_pills_shadow_horizontal_offset": 0,
+      "variant_pills_shadow_vertical_offset": 4,
+      "variant_pills_shadow_blur": 5,
+      "inputs_border_thickness": 1,
+      "inputs_border_opacity": 55,
+      "inputs_radius": 24,
+      "inputs_shadow_opacity": 0,
+      "inputs_shadow_horizontal_offset": 0,
+      "inputs_shadow_vertical_offset": 4,
+      "inputs_shadow_blur": 5,
+      "card_style": "standard",
+      "card_image_padding": 0,
+      "card_text_alignment": "left",
+      "card_color_scheme": "scheme-2",
+      "card_border_thickness": 0,
+      "card_border_opacity": 10,
+      "card_corner_radius": 24,
+      "card_shadow_opacity": 0,
+      "card_shadow_horizontal_offset": 0,
+      "card_shadow_vertical_offset": 4,
+      "card_shadow_blur": 5,
+      "collection_card_style": "standard",
+      "collection_card_image_padding": 0,
+      "collection_card_text_alignment": "left",
+      "collection_card_color_scheme": "scheme-2",
+      "collection_card_border_thickness": 0,
+      "collection_card_border_opacity": 10,
+      "collection_card_corner_radius": 24,
+      "collection_card_shadow_opacity": 0,
+      "collection_card_shadow_horizontal_offset": 0,
+      "collection_card_shadow_vertical_offset": 4,
+      "collection_card_shadow_blur": 5,
+      "blog_card_style": "standard",
+      "blog_card_image_padding": 0,
+      "blog_card_text_alignment": "left",
+      "blog_card_color_scheme": "scheme-2",
+      "blog_card_border_thickness": 0,
+      "blog_card_border_opacity": 10,
+      "blog_card_corner_radius": 24,
+      "blog_card_shadow_opacity": 0,
+      "blog_card_shadow_horizontal_offset": 0,
+      "blog_card_shadow_vertical_offset": 4,
+      "blog_card_shadow_blur": 5,
+      "text_boxes_border_thickness": 0,
+      "text_boxes_border_opacity": 10,
+      "text_boxes_radius": 24,
+      "text_boxes_shadow_opacity": 0,
+      "text_boxes_shadow_horizontal_offset": 0,
+      "text_boxes_shadow_vertical_offset": 4,
+      "text_boxes_shadow_blur": 5,
+      "media_border_thickness": 0,
+      "media_border_opacity": 5,
+      "media_radius": 24,
+      "media_shadow_opacity": 0,
+      "media_shadow_horizontal_offset": 0,
+      "media_shadow_vertical_offset": 4,
+      "media_shadow_blur": 5,
+      "popup_border_thickness": 1,
+      "popup_border_opacity": 10,
+      "popup_corner_radius": 24,
+      "popup_shadow_opacity": 5,
+      "popup_shadow_horizontal_offset": 0,
+      "popup_shadow_vertical_offset": 4,
+      "popup_shadow_blur": 5,
+      "drawer_border_thickness": 1,
+      "drawer_border_opacity": 10,
+      "drawer_shadow_opacity": 0,
+      "drawer_shadow_horizontal_offset": 0,
+      "drawer_shadow_vertical_offset": 4,
+      "drawer_shadow_blur": 5,
+      "badge_position": "top left",
+      "badge_corner_radius": 40,
+      "sale_badge_color_scheme": "scheme-7",
+      "sold_out_badge_color_scheme": "scheme-6",
+      "brand_headline": "",
+      "brand_description": "<p></p>",
+      "brand_image_width": 100,
+      "social_twitter_link": "",
+      "social_facebook_link": "",
+      "social_pinterest_link": "",
+      "social_instagram_link": "",
+      "social_tiktok_link": "",
+      "social_tumblr_link": "",
+      "social_snapchat_link": "",
+      "social_youtube_link": "",
+      "social_vimeo_link": "",
+      "predictive_search_enabled": true,
+      "predictive_search_show_vendor": false,
+      "predictive_search_show_price": true,
+      "currency_code_enabled": false,
+      "cart_type": "drawer",
+      "show_vendor": false,
+      "show_cart_note": false,
+      "cart_drawer_collection": "",
+      "sections": {
+        "main-password-header": {
+          "type": "main-password-header",
+          "settings": {
+            "color_scheme": "scheme-1"
+          }
+        },
+        "main-password-footer": {
+          "type": "main-password-footer",
+          "settings": {
+            "color_scheme": "scheme-1"
+          }
+        },
+        "cart-drawer": {
+          "type": "cart-drawer",
+          "settings": {
+            "heading": "Coșul tău",
+            "show_count": true,
+            "width": 440,
+            "color_scheme": "scheme-1",
+            "show_vendor": false,
+            "show_compare_price": true,
+            "show_line_savings": true,
+            "empty_heading": "Coșul tău este gol",
+            "empty_text": "<p>Descoperă produsele noastre preferate.</p>",
+            "show_login": false
+          },
+          "blocks": {
+            "progress": {
+              "type": "progress_bar",
+              "settings": {
+                "goal_type": "amount",
+                "goal": 200,
+                "progress_message": "Mai adaugă <strong>[remaining]</strong> pentru <strong>livrare gratuită</strong>",
+                "success_message": "🎉 Felicitări! Ai <strong>livrare gratuită</strong>",
+                "icon": "truck",
+                "accent": "accent"
+              }
+            },
+            "upsells": {
+              "type": "product_upsells",
+              "settings": {
+                "position": "body",
+                "heading": "Ți-ar mai putea plăcea",
+                "layout": "slider",
+                "button_label": "Adaugă",
+                "hide_in_cart": true,
+                "display": "all"
+              }
+            },
+            "cod": {
+              "type": "text_with_icon",
+              "settings": {
+                "position": "body",
+                "text": "<p><strong>Plata ramburs</strong> la curier – plătești doar când primești coletul.</p>",
+                "icon": "cash",
+                "boxed": true
+              }
+            },
+            "discount": {
+              "type": "discount_field",
+              "settings": {
+                "placeholder": "Cod de reducere",
+                "button_label": "Aplică"
+              }
+            },
+            "totals": {
+              "type": "subtotals",
+              "settings": {
+                "show_subtotal": true,
+                "subtotal_label": "Preț inițial",
+                "show_savings": true,
+                "savings_label": "Ai economisit",
+                "total_label": "Total",
+                "show_tax_note": false
+              }
+            },
+            "checkout": {
+              "type": "checkout_button",
+              "settings": {
+                "label": "Finalizează comanda",
+                "show_lock": true,
+                "price_in_button": false,
+                "show_continue": false,
+                "continue_label": "Continuă cumpărăturile",
+                "show_dynamic_checkout": false
+              }
+            },
+            "icons": {
+              "type": "icons_with_text",
+              "settings": {
+                "position": "footer",
+                "icon_1": "truck",
+                "text_1": "Livrare 24–48h",
+                "icon_2": "return",
+                "text_2": "Retur 30 de zile",
+                "icon_3": "lock",
+                "text_3": "Plată sigură"
+              }
+            }
+          },
+          "block_order": [
+            "progress",
+            "upsells",
+            "cod",
+            "discount",
+            "totals",
+            "checkout",
+            "icons"
+          ]
+        }
+      },
+      "use_theme_fonts": true,
+      "font_pair": "prietenos",
+      "heading_font_weight": 900,
+      "color_accent": "#6B7F5E",
+      "color_savings": "#4F6B3E",
+      "color_urgency": "#B5462B",
+      "color_stars": "#D99A2B",
+      "color_highlight_bg": "#EEF0E6",
+      "scrollbar_thumb": "#6B7F5E",
+      "color_accent_text": "#FBF6EE",
+      "color_accent_2": "#C8664A",
+      "color_accent_2_text": "#FFFFFF",
+      "headings_colored": true,
+      "color_headings": "#6B7F5E",
+      "heading_em_style": "accent_2",
+      "scrollbar_track": "#F3EADD"
+    }
+  }
+}

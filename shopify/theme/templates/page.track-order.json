@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "track": {
+      "type": "c-track-order",
+      "settings": {}
+    }
+  },
+  "order": [
+    "track"
+  ]
+}

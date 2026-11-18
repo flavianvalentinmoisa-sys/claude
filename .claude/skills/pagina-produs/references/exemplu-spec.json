@@ -1,0 +1,124 @@
+{
+  "handle": "perna-cervicala-ergonomica",
+  "source": {
+    "url": "https://www.aliexpress.com/item/EXEMPLU.html",
+    "kind": "furnizor",
+    "cost": 38.5,
+    "currency": "RON"
+  },
+  "product": {
+    "title": "Pernă cervicală ergonomică din memory foam",
+    "vendor": "Magazinul meu",
+    "type": "Somn",
+    "tags": ["somn", "perna", "cervical"],
+    "price": 149.99,
+    "compare_at_price": 249.99,
+    "sku": "PERNA-CERV-01",
+    "grams": 1100,
+    "body_html": "<p>Perna cervicală ergonomică îți ține gâtul aliniat cu coloana toată noaptea, așa că dimineața nu te mai trezești înțepenit.</p><ul><li>Memory foam care se mulează pe forma gâtului</li><li>Două înălțimi: alegi partea care ți se potrivește</li><li>Husă detașabilă, se spală la mașină</li></ul>",
+    "options": [{ "name": "Culoare", "values": ["Gri", "Alb"] }],
+    "variants": [
+      { "options": ["Gri"], "price": 149.99, "compare_at_price": 249.99, "sku": "PERNA-CERV-GRI" },
+      { "options": ["Alb"], "price": 149.99, "compare_at_price": 249.99, "sku": "PERNA-CERV-ALB" }
+    ],
+    "images": [
+      { "src": "https://ae01.alicdn.com/kf/EXEMPLU-1.jpg", "alt": "Pernă cervicală ergonomică gri" },
+      { "src": "https://ae01.alicdn.com/kf/EXEMPLU-2.jpg", "alt": "Pernă cervicală – secțiune memory foam" }
+    ],
+    "seo_title": "Pernă cervicală ergonomică memory foam | Plata la livrare",
+    "seo_description": "Pernă cervicală din memory foam care îți susține gâtul în poziția corectă. Livrare în 24–48h, plata ramburs, retur 30 de zile."
+  },
+  "page": {
+    "offers": [
+      { "quantity": 1, "label": "1 pernă", "caption": "Preț standard" },
+      { "quantity": 2, "label": "2 perne", "badge": "CEL MAI ALES", "badge_style": "accent_2", "benefit": "Economisești 15%", "caption": "Una pentru tine, una pentru partener", "discount_percent": 15 },
+      { "quantity": 3, "label": "3 perne", "badge": "Cea mai bună ofertă", "badge_style": "savings", "benefit": "Economisești 25%", "caption": "Pentru toată familia", "discount_percent": 25 }
+    ],
+    "benefits": [
+      "✅ Livrare în 24–48 de ore",
+      "💵 Plata ramburs la curier",
+      "↩️ Retur gratuit în 30 de zile",
+      "🧼 Husă detașabilă, lavabilă"
+    ],
+    "guarantee_note": "<p><strong>Testezi 30 de nopți.</strong> Dacă nu dormi mai bine, ne-o trimiți înapoi și îți dăm banii.</p>",
+    "delivery_days": [1, 3],
+    "tabs": [
+      { "heading": "Specificații", "icon": "ruler", "content": "<ul><li>Dimensiuni: 60 × 35 × 11/9 cm</li><li>Material: memory foam</li><li>Husă: poliester, lavabilă la 30°C</li></ul>" },
+      { "heading": "Livrare și plată", "icon": "truck", "content": "<p>Livrare prin curier în 24–48 de ore lucrătoare. Plătești ramburs, la primirea coletului, sau online cu cardul.</p>" },
+      { "heading": "Retur", "icon": "return", "content": "<p>Ai 30 de zile pentru retur gratuit.</p>" }
+    ],
+    "ticker": [
+      { "emoji": "😴", "text": "Te trezești fără gât înțepenit" },
+      { "emoji": "🚚", "text": "Livrare în 24–48h" },
+      { "emoji": "💵", "text": "Plata ramburs" },
+      { "emoji": "↩️", "text": "Retur gratuit 30 de zile" }
+    ],
+    "why": {
+      "subheading": "De ce să o alegi",
+      "heading": "Gândită pentru gâtul <em>tău</em>",
+      "cards": [
+        { "emoji": "🧠", "title": "Se mulează pe tine", "text": "Memory foam-ul ia forma gâtului și a capului, fără puncte de presiune." },
+        { "emoji": "↕️", "title": "Două înălțimi", "text": "O parte mai înaltă pentru somnul pe o parte, una mai joasă pentru somnul pe spate." },
+        { "emoji": "🧼", "title": "Ușor de întreținut", "text": "Scoți husa cu fermoar și o speli la mașină." }
+      ]
+    },
+    "inside": {
+      "subheading": "Cum te ajută",
+      "heading": "Coloana dreaptă, <em>toată noaptea</em>",
+      "text": "O pernă obișnuită se turtește și îți lasă gâtul să cadă. Perna cervicală are o curbă care umple golul dintre umăr și cap.",
+      "checklist": ["Gâtul stă aliniat cu coloana", "Nu se turtește în timp", "Potrivită pentru somnul pe spate și pe o parte"],
+      "sticker": "-40%",
+      "button_label": "Vreau perna"
+    },
+    "problem_solution": {
+      "subheading": "Diferența se simte dimineața",
+      "heading": "Perna obișnuită vs. <em>perna cervicală</em>",
+      "bad_title": "Cu o pernă obișnuită",
+      "bad_list": ["Gâtul cade într-o parte", "Te întorci des în somn", "Dimineața te doare ceafa"],
+      "good_title": "Cu [produs]",
+      "good_list": ["Gâtul e susținut", "Stai în aceeași poziție mai mult", "Te trezești fără înțepeneală"],
+      "good_badge": "Recomandat"
+    },
+    "compare": {
+      "heading": "De ce să o iei de la <em>noi</em>?",
+      "brand_name": "Noi",
+      "competitor_1": "Alții",
+      "rows": [
+        { "feature": "Memory foam cu două înălțimi", "us": "yes", "comp_1": "partial" },
+        { "feature": "Plata ramburs la curier", "us": "yes", "comp_1": "partial" },
+        { "feature": "Retur gratuit 30 de zile", "us": "yes", "comp_1": "no" },
+        { "feature": "Suport clienți în română", "us": "yes", "comp_1": "no" }
+      ]
+    },
+    "steps": {
+      "subheading": "Cum se folosește",
+      "heading": "Simplu, din <em>prima noapte</em>",
+      "steps": [
+        { "emoji": "📦", "title": "Scoate perna din ambalaj", "text": "Las-o 24 de ore să-și recapete forma." },
+        { "emoji": "↕️", "title": "Alege înălțimea", "text": "Partea înaltă dacă dormi pe o parte, cea joasă dacă dormi pe spate." },
+        { "emoji": "😴", "title": "Dormi liniștit", "text": "Corpul se obișnuiește în 3–7 nopți." }
+      ]
+    },
+    "guarantee": {
+      "subheading": "Zero riscuri",
+      "heading": "Testezi <em>30 de nopți</em>",
+      "text": "Dacă nu dormi mai bine, ne trimiți perna înapoi și îți dăm banii. Fără întrebări.",
+      "seal_number": "30",
+      "seal_label": "nopți",
+      "points": [
+        { "icon": "return", "text": "Retur gratuit, fără întrebări" },
+        { "icon": "cash", "text": "Plata ramburs, la livrare" },
+        { "icon": "support", "text": "Suport rapid pe WhatsApp și email" }
+      ]
+    },
+    "faq": {
+      "heading": "Întrebări frecvente",
+      "items": [
+        { "q": "E potrivită dacă dorm pe burtă?", "a": "Nu o recomandăm pentru somnul pe burtă. E gândită pentru somnul pe spate și pe o parte.", "icon": "question_mark" },
+        { "q": "Miroase când o scot din ambalaj?", "a": "Poate avea un miros ușor de nou, care dispare în 1–2 zile la aer.", "icon": "eye" },
+        { "q": "Pot plăti la livrare (ramburs)?", "a": "Da. Plătești curierului când primești coletul.", "icon": "price_tag" },
+        { "q": "Cât durează livrarea?", "a": "24–48 de ore lucrătoare de la plasarea comenzii.", "icon": "truck" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{% comment %}
+  Textul etichetei de reducere, conform Setări temă > Etichete.
+  Parametri: price, compare_at_price
+{% endcomment %}
+{%- liquid
+  assign savings = compare_at_price | minus: price
+  case settings.sale_badge_type
+    when 'percent'
+      if compare_at_price > 0 and savings > 0
+        assign percent = savings | times: 100.0 | divided_by: compare_at_price | round
+        echo '-' | append: percent | append: '%'
+      elsif settings.sale_badge_text != blank
+        echo settings.sale_badge_text | escape
+      else
+        echo 'products.product.on_sale' | t
+      endif
+    when 'amount'
+      if savings > 0
+        assign savings_money = savings | money_without_trailing_zeros
+        echo '-' | append: savings_money
+      endif
+    else
+      if settings.sale_badge_text != blank
+        echo settings.sale_badge_text | escape
+      else
+        echo 'products.product.on_sale' | t
+      endif
+  endcase
+-%}

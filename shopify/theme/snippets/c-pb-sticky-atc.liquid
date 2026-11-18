@@ -1,0 +1,120 @@
+{% comment %}
+  Bloc „Adaugă în coș fix”: bară care apare jos când butonul principal iese din ecran.
+  Apasă butonul principal (păstrând toate opțiunile alese) sau derulează la formular.
+
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- liquid
+  assign bs = block.settings
+  assign variant = product.selected_or_first_available_variant
+  capture classes
+    echo 'c-sticky-atc color-' | append: bs.color_scheme
+    if bs.desktop_show_image == false
+      echo ' c-sticky-atc--no-image-desktop'
+    endif
+    if bs.mobile_show_image == false
+      echo ' c-sticky-atc--no-image-mobile'
+    endif
+    if bs.desktop_show_title == false
+      echo ' c-sticky-atc--no-title-desktop'
+    endif
+    if bs.mobile_show_title == false
+      echo ' c-sticky-atc--no-title-mobile'
+    endif
+    if bs.desktop_show_price == false
+      echo ' c-sticky-atc--no-price-desktop'
+    endif
+    if bs.mobile_show_price == false
+      echo ' c-sticky-atc--no-price-mobile'
+    endif
+    if bs.desktop_show_variants == false
+      echo ' c-sticky-atc--no-variants-desktop'
+    endif
+    if bs.mobile_show_variants == false
+      echo ' c-sticky-atc--no-variants-mobile'
+    endif
+    if bs.desktop_show_rating == false
+      echo ' c-sticky-atc--no-rating-desktop'
+    endif
+    if bs.mobile_show_rating == false
+      echo ' c-sticky-atc--no-rating-mobile'
+    endif
+    if bs.mobile_full_button
+      echo ' c-sticky-atc--full-button-mobile'
+    endif
+  endcapture
+-%}
+<sticky-atc
+  class="{{ classes | strip }}"
+  data-section-id="{{ section.id }}"
+  data-form-id="{{ product_form_id }}"
+  data-function="{{ bs.function }}"
+  data-display="{{ bs.display_when }}"
+  {{ block.shopify_attributes }}
+  {% if bs.button_color != blank %}
+    style="--c-sticky-btn: {{ bs.button_color.red }}, {{ bs.button_color.green }}, {{ bs.button_color.blue }};"
+  {% endif %}
+  hidden
+>
+  <div class="c-sticky-atc__inner page-width">
+    <div class="c-sticky-atc__product">
+      {%- if product.featured_media -%}
+        <span class="c-sticky-atc__image">
+          {{- product.featured_media | image_url: width: 120 | image_tag: loading: 'lazy', sizes: '56px', widths: '60, 120', alt: product.title -}}
+        </span>
+      {%- endif -%}
+      <span class="c-sticky-atc__text">
+        <span class="c-sticky-atc__title">{{ product.title | escape }}</span>
+        {%- if bs.rating_text != blank -%}
+          <span class="c-sticky-atc__rating">
+            {%- render 'c-stars', rating: bs.rating, text: bs.rating_text, size: 14 -%}
+          </span>
+        {%- endif -%}
+        <span class="c-sticky-atc__price" data-sticky-price>
+          {%- if variant.compare_at_price > variant.price -%}
+            <s>{{ variant.compare_at_price | money }}</s>
+          {%- endif -%}
+          <strong>{{ variant.price | money }}</strong>
+        </span>
+      </span>
+    </div>
+    <div class="c-sticky-atc__actions">
+      {%- unless product.has_only_default_variant -%}
+        <div class="c-sticky-atc__variants select">
+          <select class="select__select" data-sticky-variant aria-label="{{ 'products.product.product_variants' | t }}">
+            {%- for v in product.variants -%}
+              <option
+                value="{{ v.id }}"
+                data-options="{{ v.options | join: '|' | escape }}"
+                data-price="{{ v.price | money | escape }}"
+                data-compare="{% if v.compare_at_price > v.price %}{{ v.compare_at_price | money | escape }}{% endif %}"
+                {% if v.id == variant.id %}
+                  selected
+                {% endif %}
+                {% unless v.available %}
+                  disabled
+                {% endunless %}
+              >
+                {{ v.title | escape }}
+                {%- unless v.available %} – {{ 'products.product.sold_out' | t }}{% endunless -%}
+              </option>
+            {%- endfor -%}
+          </select>
+          <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+        </div>
+      {%- endunless -%}
+      <button type="button" class="button c-sticky-atc__button" data-sticky-button {% unless variant.available %}disabled{% endunless %}>
+        <span data-sticky-label>
+          {%- if variant.available -%}
+            {%- if bs.button_label != blank -%}{{ bs.button_label | escape }}{%- else -%}{{ 'products.product.add_to_cart' | t }}{%- endif -%}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </span>
+        {%- if bs.price_in_button -%}
+          <span class="c-sticky-atc__button-price" data-sticky-button-price>· {{ variant.price | money }}</span>
+        {%- endif -%}
+      </button>
+    </div>
+  </div>
+</sticky-atc>

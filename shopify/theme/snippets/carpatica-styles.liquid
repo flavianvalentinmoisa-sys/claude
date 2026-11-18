@@ -1,0 +1,232 @@
+{% comment %}
+  Stiluri globale Carpatica: fonturi incluse în temă, variabile de tipografie,
+  culori de conversie, controale slider, scrollbar și cursor.
+  Randat în <head> din layout/theme.liquid.
+{% endcomment %}
+{%- liquid
+  assign heading_family = settings.type_header_font.family | append: ', ' | append: settings.type_header_font.fallback_families
+  assign body_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+  assign heading_weight = settings.type_header_font.weight
+  assign body_weight = settings.type_body_font.weight
+  assign body_weight_bold = settings.type_body_font.weight | plus: 300 | at_most: 1000
+
+  if settings.use_theme_fonts
+    assign sans_fallback = "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"
+    case settings.font_pair
+      when 'prietenos'
+        assign heading_name = 'Nunito'
+        assign body_name = 'Nunito'
+      when 'modern'
+        assign heading_name = 'Outfit'
+        assign body_name = 'Inter'
+      when 'clasic'
+        assign heading_name = 'Plus Jakarta Sans'
+        assign body_name = 'Inter'
+      else
+        assign heading_name = 'Bricolage Grotesque'
+        assign body_name = 'Plus Jakarta Sans'
+    endcase
+    assign heading_family = "'" | append: heading_name | append: "', " | append: sans_fallback
+    assign body_family = "'" | append: body_name | append: "', " | append: sans_fallback
+    assign heading_weight = settings.heading_font_weight
+    assign body_weight = settings.body_font_weight
+    assign body_weight_bold = settings.body_font_weight | plus: 200 | at_most: 900
+  endif
+
+  if settings.custom_heading_font_url != blank and settings.custom_heading_font_name != blank
+    assign heading_family = "'" | append: settings.custom_heading_font_name | append: "', " | append: heading_family
+  endif
+  if settings.custom_body_font_url != blank and settings.custom_body_font_name != blank
+    assign body_family = "'" | append: settings.custom_body_font_name | append: "', " | append: body_family
+  endif
+-%}
+{%- if settings.use_theme_fonts and preload_fonts -%}
+  {%- liquid
+    assign font_files = ''
+    case heading_name
+      when 'Bricolage Grotesque'
+        assign font_files = 'carpatica-bricolage.woff2'
+      when 'Nunito'
+        assign font_files = 'carpatica-nunito.woff2'
+      when 'Outfit'
+        assign font_files = 'carpatica-outfit.woff2'
+      else
+        assign font_files = 'carpatica-jakarta.woff2'
+    endcase
+    case body_name
+      when 'Inter'
+        assign font_files = font_files | append: ',carpatica-inter.woff2'
+      when 'Plus Jakarta Sans'
+        assign font_files = font_files | append: ',carpatica-jakarta.woff2'
+    endcase
+    assign font_files = font_files | split: ',' | uniq
+  -%}
+  {%- for file in font_files -%}
+    {{ file | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  {%- endfor -%}
+{%- endif -%}
+{% style %}
+  {%- if settings.use_theme_fonts -%}
+    {%- assign used_fonts = heading_name | append: '|' | append: body_name -%}
+    {%- if used_fonts contains 'Inter' %}
+      @font-face { font-family: 'Inter'; src: url('{{ 'carpatica-inter.woff2' | asset_url }}') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Inter'; src: url('{{ 'carpatica-inter-italic.woff2' | asset_url }}') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Plus Jakarta Sans' %}
+      @font-face { font-family: 'Plus Jakarta Sans'; src: url('{{ 'carpatica-jakarta.woff2' | asset_url }}') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Plus Jakarta Sans'; src: url('{{ 'carpatica-jakarta-italic.woff2' | asset_url }}') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Nunito' %}
+      @font-face { font-family: 'Nunito'; src: url('{{ 'carpatica-nunito.woff2' | asset_url }}') format('woff2'); font-weight: 200 1000; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Nunito'; src: url('{{ 'carpatica-nunito-italic.woff2' | asset_url }}') format('woff2'); font-weight: 200 1000; font-style: italic; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Bricolage' %}
+      @font-face { font-family: 'Bricolage Grotesque'; src: url('{{ 'carpatica-bricolage.woff2' | asset_url }}') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+    {%- endif -%}
+    {%- if used_fonts contains 'Outfit' %}
+      @font-face { font-family: 'Outfit'; src: url('{{ 'carpatica-outfit.woff2' | asset_url }}') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+    {%- endif -%}
+  {%- endif -%}
+  {%- if settings.custom_heading_font_url != blank and settings.custom_heading_font_name != blank -%}
+    @font-face {
+      font-family: '{{ settings.custom_heading_font_name }}';
+      src: url('{{ settings.custom_heading_font_url }}');
+      font-display: swap;
+    }
+  {%- endif -%}
+  {%- if settings.custom_body_font_url != blank and settings.custom_body_font_name != blank -%}
+    @font-face {
+      font-family: '{{ settings.custom_body_font_name }}';
+      src: url('{{ settings.custom_body_font_url }}');
+      font-display: swap;
+    }
+  {%- endif -%}
+
+  :root {
+    --font-body-family: {{ body_family }};
+    --font-body-weight: {{ body_weight }};
+    --font-body-weight-bold: {{ body_weight_bold }};
+    --font-heading-family: {{ heading_family }};
+    --font-heading-weight: {{ heading_weight }};
+    {%- if settings.use_theme_fonts %}
+      --font-body-style: normal;
+      --font-heading-style: normal;
+    {%- endif %}
+
+    --heading-line-height: {{ settings.heading_line_height | divided_by: 100.0 }};
+    --heading-letter-spacing: {{ settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    --body-line-height: {{ settings.body_line_height | divided_by: 100.0 }};
+    --body-letter-spacing: {{ settings.body_letter_spacing | divided_by: 100.0 }}em;
+
+    --color-accent: {{ settings.color_accent.red }}, {{ settings.color_accent.green }}, {{ settings.color_accent.blue }};
+    --color-accent-text: {{ settings.color_accent_text.red }}, {{ settings.color_accent_text.green }}, {{ settings.color_accent_text.blue }};
+    --color-accent-2: {{ settings.color_accent_2.red }}, {{ settings.color_accent_2.green }}, {{ settings.color_accent_2.blue }};
+    --color-accent-2-text: {{ settings.color_accent_2_text.red }}, {{ settings.color_accent_2_text.green }}, {{ settings.color_accent_2_text.blue }};
+    --color-savings: {{ settings.color_savings.red }}, {{ settings.color_savings.green }}, {{ settings.color_savings.blue }};
+    --color-urgency: {{ settings.color_urgency.red }}, {{ settings.color_urgency.green }}, {{ settings.color_urgency.blue }};
+    --color-stars: {{ settings.color_stars.red }}, {{ settings.color_stars.green }}, {{ settings.color_stars.blue }};
+    --color-highlight-bg: {{ settings.color_highlight_bg.red }}, {{ settings.color_highlight_bg.green }}, {{ settings.color_highlight_bg.blue }};
+
+    --slider-arrow-size: {{ settings.slider_arrow_size }}px;
+    --slider-arrow-radius: {{ settings.slider_arrow_radius }}px;
+    --slider-dot-size: {{ settings.slider_dot_size }}px;
+    --slider-dot-active-width: {{ settings.slider_dot_active_width }}px;
+    --slider-dot-spacing: {{ settings.slider_dot_spacing }}px;
+
+    --swatch-radius: {{ settings.swatch_radius }}%;
+    --card-title-lines: {{ settings.card_title_lines }};
+
+    --duration-extra-long: {{ settings.animation_duration }}ms;
+    --animation-distance: {{ settings.animation_distance | divided_by: 10.0 }}rem;
+  }
+
+  {%- comment -%} Culoarea de evidențiere se deschide automat pe fundaluri închise {%- endcomment -%}
+  {%- assign accent_light = settings.color_accent | color_lighten: 28 -%}
+  {%- for scheme in settings.color_schemes %}
+    {%- assign bg_brightness = scheme.settings.background | color_brightness -%}
+    {%- assign accent_bg_diff = scheme.settings.background | color_difference: settings.color_accent -%}
+    .color-{{ scheme.id }} {
+      --c-highlight: {% if bg_brightness < 110 %}{{ accent_light }}{% elsif accent_bg_diff < 150 %}{{ scheme.settings.text }}{% else %}{{ settings.color_accent }}{% endif %};
+      {%- liquid
+        if bg_brightness < 110 or accent_bg_diff < 150
+          assign em_fill = scheme.settings.text
+        else
+          case settings.heading_em_style
+            when 'accent'
+              assign em_fill = settings.color_accent
+            when 'gradient'
+              assign em_fill = 'linear-gradient(100deg, ' | append: settings.color_accent | append: ' 10%, ' | append: settings.color_accent_2 | append: ' 90%)'
+            else
+              assign em_fill = settings.color_accent_2
+          endcase
+        endif
+        assign em_fill = em_fill | append: ''
+        unless em_fill contains 'gradient'
+          assign em_fill = 'linear-gradient(' | append: em_fill | append: ', ' | append: em_fill | append: ')'
+        endunless
+      -%}
+      --c-em-gradient: {{ em_fill }};
+      {%- if settings.headings_colored and bg_brightness >= 180 %}
+        {%- assign heading_bg_diff = scheme.settings.background | color_difference: settings.color_headings -%}
+        {%- if heading_bg_diff > 150 %}
+          --c-heading-color: {{ settings.color_headings }};
+        {%- endif %}
+      {%- endif %}
+    }
+  {%- endfor %}
+
+  {%- if settings.scrollbar_style == 'custom' %}
+    @media (pointer: fine) {
+      html {
+        scrollbar-color: {{ settings.scrollbar_thumb }} {{ settings.scrollbar_track }};
+      }
+      ::-webkit-scrollbar {
+        width: {{ settings.scrollbar_width }}px;
+        height: {{ settings.scrollbar_width }}px;
+      }
+      ::-webkit-scrollbar-track {
+        background: {{ settings.scrollbar_track }};
+      }
+      ::-webkit-scrollbar-thumb {
+        background: {{ settings.scrollbar_thumb }};
+        border-radius: {{ settings.scrollbar_width }}px;
+      }
+    }
+  {%- elsif settings.scrollbar_style == 'hidden' %}
+    @media (pointer: fine) {
+      html {
+        scrollbar-width: none;
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  {%- endif %}
+
+  {%- if settings.use_theme_fonts %}
+    body {
+      font-synthesis-weight: none;
+    }
+  {%- endif %}
+
+  {%- if settings.card_title_lines != '0' %}
+    .card__heading a,
+    .card__heading .full-unstyled-link {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: {{ settings.card_title_lines }};
+      line-clamp: {{ settings.card_title_lines }};
+      overflow: hidden;
+      line-height: 1.35;
+      padding-top: 0.08em;
+    }
+  {%- endif %}
+
+  {%- if settings.custom_cursor != blank %}
+    @media (pointer: fine) {
+      body {
+        cursor: url('{{ settings.custom_cursor | image_url: width: 32, height: 32 }}') 4 4, auto;
+      }
+    }
+  {%- endif %}
+{% endstyle %}

@@ -1,0 +1,40 @@
+{% comment %}
+  Renders a swatch component.
+  Accepts:
+  - swatch: {Object} a swatch object
+  - shape: {String} swatch shape. Accepts 'square', defaults to circle.
+  - fallback_name: {String} numele opțiunii, căutat în culorile predefinite din setările temei (opțional)
+
+  Usage:
+  {% render 'swatch',
+    swatch: value.swatch
+    shape: 'square'
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign swatch_value = null
+  if swatch.image
+    assign image_url = swatch.image | image_url: width: 50
+    assign swatch_value = 'url(' | append: image_url | append: ')'
+    assign swatch_focal_point = swatch.image.presentation.focal_point
+  elsif swatch.color
+    assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
+  endif
+-%}
+{%- if swatch_value == null and fallback_name != blank -%}
+  {%- capture fallback_color -%}{% render 'c-swatch-color', name: fallback_name %}{%- endcapture -%}
+  {%- assign fallback_color = fallback_color | strip -%}
+  {%- if fallback_color != blank -%}
+    {%- assign swatch_value = fallback_color -%}
+  {%- endif -%}
+{%- endif -%}
+
+<span
+  {% if swatch_value %}
+    class="swatch{% if shape == 'square' %} swatch--square{% endif %}"
+    style="--swatch--background: {{ swatch_value }};{% if swatch_focal_point %} --swatch-focal-point: {{ swatch_focal_point }};{% endif %}"
+  {% else %}
+    class="swatch swatch--unavailable{% if shape == 'square' %} swatch--square{% endif %}"
+  {% endif %}
+></span>

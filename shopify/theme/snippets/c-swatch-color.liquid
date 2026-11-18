@@ -1,0 +1,20 @@
+{% comment %}
+  Caută culoarea unei opțiuni (ex: „Roșu”) în Setări temă > Mostre de culoare.
+  Afișează codul culorii sau nimic. Folosire cu capture:
+  {%- capture color -%}{% render 'c-swatch-color', name: value %}{%- endcapture -%}
+{% endcomment %}
+{%- liquid
+  assign needle = name | downcase | strip
+  assign lines = settings.swatch_colors | newline_to_br | split: '<br />'
+  for line in lines
+    assign parts = line | split: ':'
+    if parts.size < 2
+      continue
+    endif
+    assign key = parts.first | downcase | strip
+    if key == needle
+      echo parts.last | strip
+      break
+    endif
+  endfor
+-%}

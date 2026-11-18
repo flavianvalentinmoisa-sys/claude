@@ -1,0 +1,24 @@
+{% comment %}
+  Butoane standard pentru secțiuni.
+  Parametri: s (setări: button_label_1, button_link_1, button_style_1, button_label_2...), atc_product (opțional)
+{% endcomment %}
+{%- if s.button_label_1 != blank or s.button_label_2 != blank -%}
+  <div class="c-buttons">
+    {%- for i in (1..2) -%}
+      {%- assign lk = 'button_label_' | append: i -%}
+      {%- assign ln = 'button_link_' | append: i -%}
+      {%- assign st = 'button_style_' | append: i -%}
+      {%- if s[lk] != blank -%}
+        <a
+          href="{{ s[ln] | default: '#' }}"
+          class="button{% if s[st] == 'secondary' %} button--secondary{% elsif s[st] == 'white' %} c-button--white{% endif %}"
+          {% if s[ln] contains '#' %}
+            data-scroll-to="{{ s[ln] | split: '#' | last | prepend: '#' }}"
+          {% endif %}
+        >
+          {{- s[lk] | escape -}}
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

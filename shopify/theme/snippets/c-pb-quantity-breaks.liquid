@@ -1,0 +1,175 @@
+{% comment %}
+  Bloc „Reduceri la cantitate” (quantity breaks): până la 4 oferte (ex: 1 / 2 / 3 bucăți)
+  cu etichetă, imagine, beneficiu, preț calculat și opțional selectoare de variantă per bucată.
+
+  Reducerile afișate sunt vizuale: creează reducerea automată corespunzătoare în
+  Shopify > Reduceri (ex: „Cumpără 2, primești 15%”).
+
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign bs = block.settings
+  assign preselected = bs.preselected | plus: 0
+  assign has_variants = false
+  unless product.has_only_default_variant
+    assign has_variants = true
+  endunless
+-%}
+<quantity-breaks
+  class="c-qb c-qb--{{ bs.style }} c-block-spacing"
+  style="--c-mt: {{ bs.margin_top }}px; --c-mb: {{ bs.margin_bottom }}px; --c-qb-radius: {{ bs.border_radius }}px; --c-qb-image: {{ bs.image_width }}px;"
+  data-form-id="{{ product_form_id }}"
+  data-section-id="{{ section.id }}"
+  data-cart-extension
+  data-hide-quantity="{{ bs.hide_quantity_selector }}"
+  data-compare-mode="{{ bs.compare_price }}"
+  data-update-prices="true"
+  data-variant-selectors="{{ bs.enable_variant_selectors }}"
+  {{ block.shopify_attributes }}
+>
+  {%- if bs.heading != blank -%}
+    <div class="c-qb__heading">
+      <span class="c-qb__heading-line" aria-hidden="true"></span>
+      <span class="c-qb__heading-text">{{ bs.heading }}</span>
+      <span class="c-qb__heading-line" aria-hidden="true"></span>
+    </div>
+  {%- endif -%}
+
+  <input type="hidden" name="quantity" value="1" form="{{ product_form_id }}" data-qb-quantity>
+
+  <div class="c-qb__options" role="radiogroup" aria-label="{{ bs.heading | strip_html | escape }}">
+    {%- for i in (1..4) -%}
+      {%- liquid
+        assign q_key = 'option_' | append: i | append: '_quantity'
+        assign q = bs[q_key] | plus: 0
+        if q == 0
+          continue
+        endif
+        assign label_key = 'option_' | append: i | append: '_label'
+        assign badge_key = 'option_' | append: i | append: '_badge'
+        assign badge_style_key = 'option_' | append: i | append: '_badge_style'
+        assign benefit_key = 'option_' | append: i | append: '_benefit'
+        assign caption_key = 'option_' | append: i | append: '_caption'
+        assign image_key = 'option_' | append: i | append: '_image'
+        assign pct_key = 'option_' | append: i | append: '_discount_percent'
+        assign amt_key = 'option_' | append: i | append: '_discount_amount'
+        assign price_text_key = 'option_' | append: i | append: '_price_text'
+
+        assign pct = bs[pct_key] | plus: 0
+        assign amount_off = bs[amt_key] | times: 100 | round
+        assign base_total = variant.price | times: q
+        assign total = base_total
+        if pct > 0
+          assign total = 100 | minus: pct | times: base_total | divided_by: 100
+        elsif amount_off > 0
+          assign total = base_total | minus: amount_off | at_least: 0
+        endif
+        assign compare_total = base_total
+        if bs.compare_price == 'compare_at' and variant.compare_at_price > variant.price
+          assign compare_total = variant.compare_at_price | times: q
+        endif
+        assign savings = compare_total | minus: total
+        assign unit_price = total | divided_by: q
+        assign total_money = total | money
+        assign unit_money = unit_price | money
+        assign savings_money = savings | money
+        assign is_selected = false
+        if preselected == i
+          assign is_selected = true
+        endif
+      -%}
+      <label
+        class="c-qb__option{% if is_selected %} is-selected{% endif %}"
+        data-quantity="{{ q }}"
+        data-percent="{{ pct }}"
+        data-amount="{{ amount_off }}"
+        data-price-text="{{ bs[price_text_key] | escape }}"
+      >
+        <input
+          type="radio"
+          class="c-visually-hidden"
+          name="qb-{{ section.id }}-{{ block.id }}"
+          value="{{ q }}"
+          {% if is_selected %}
+            checked
+          {% endif %}
+        >
+        {%- if bs[badge_key] != blank -%}
+          <span class="c-qb__badge c-qb__badge--{{ bs[badge_style_key] }}">{{ bs[badge_key] | escape }}</span>
+        {%- endif -%}
+        <span class="c-qb__row">
+          {%- if bs.show_radio -%}
+            <span class="c-qb__radio" aria-hidden="true"></span>
+          {%- endif -%}
+          {%- if bs[image_key] != blank -%}
+            <span class="c-qb__image">
+              {{- bs[image_key] | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '100px', widths: '100, 200', alt: '' -}}
+            </span>
+          {%- endif -%}
+          <span class="c-qb__content">
+            <span class="c-qb__title-row">
+              <span class="c-qb__label">{{ bs[label_key] | default: q }}</span>
+              {%- if bs[benefit_key] != blank -%}
+                <span class="c-qb__benefit c-pill c-pill--soft">{{ bs[benefit_key] | escape }}</span>
+              {%- endif -%}
+            </span>
+            {%- if bs[caption_key] != blank -%}
+              <span class="c-qb__caption">{{ bs[caption_key] }}</span>
+            {%- endif -%}
+          </span>
+          <span class="c-qb__prices">
+            <span class="c-qb__price" data-qb-price>
+              {%- if bs[price_text_key] != blank -%}
+                {{ bs[price_text_key] | replace: '[price]', total_money | replace: '[unit_price]', unit_money }}
+              {%- else -%}
+                {{ total | money }}
+              {%- endif -%}
+            </span>
+            <s class="c-qb__compare{% if compare_total <= total %} c-hidden{% endif %}" data-qb-compare>
+              {{- compare_total | money -}}
+            </s>
+            {%- if bs.show_savings -%}
+              <span class="c-qb__savings c-text-savings{% if savings <= 0 %} c-hidden{% endif %}" data-qb-savings>
+                {{- 'carpatica.general.you_save' | t: amount: savings_money -}}
+              </span>
+            {%- endif -%}
+          </span>
+        </span>
+        {%- if bs.enable_variant_selectors and has_variants and q > 1 -%}
+          <span class="c-qb__variants">
+            {%- for n in (1..q) -%}
+              <span class="c-qb__variant">
+                <span class="c-qb__variant-index">#{{ n }}</span>
+                <select class="c-qb__variant-select select__select" data-qb-variant aria-label="{{ product.title | escape }} #{{ n }}">
+                  {%- for v in product.variants -%}
+                    {%- if bs.skip_unavailable and v.available == false -%}
+                      {%- continue -%}
+                    {%- endif -%}
+                    <option
+                      value="{{ v.id }}"
+                      data-price="{{ v.price }}"
+                      {% if v.id == variant.id %}
+                        selected
+                      {% endif %}
+                      {% unless v.available %}
+                        disabled
+                      {% endunless %}
+                    >
+                      {{ v.title | escape }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </span>
+            {%- endfor -%}
+          </span>
+        {%- endif -%}
+      </label>
+    {%- endfor -%}
+  </div>
+  <script type="application/json" data-qb-strings>
+    {
+      "youSave": {{ 'carpatica.general.you_save' | t: amount: '[amount]' | json }}
+    }
+  </script>
+</quantity-breaks>

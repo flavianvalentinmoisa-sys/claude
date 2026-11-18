@@ -1,0 +1,13 @@
+{% comment %}
+  Date pentru blocarea pe țări (vezi Setări temă > Securitate).
+  Logica rulează în assets/carpatica.js.
+{% endcomment %}
+{%- if settings.country_block_mode != 'off' and settings.country_block_list != blank -%}
+  <template
+    id="c-country-blocker"
+    data-mode="{{ settings.country_block_mode }}"
+    data-countries="{{ settings.country_block_list | escape }}"
+  >
+    <div class="rte">{{ settings.country_block_message }}</div>
+  </template>
+{%- endif -%}

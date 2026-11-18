@@ -1,0 +1,67 @@
+{% comment %}
+  Media flexibilă: video Shopify (redat ca un GIF, fără sunet, în buclă), GIF animat sau imagine optimizată.
+  Prioritate: video → imagine (GIF-urile își păstrează animația).
+
+  @param {object} [image] - Imagine sau GIF
+  @param {object} [video] - Video încărcat în Shopify
+  @param {number} [width] - Lățimea maximă a imaginii (implicit 1400)
+  @param {string} [widths] - Lățimi srcset
+  @param {string} [sizes] - Atribut sizes
+  @param {string} [alt] - Text alternativ
+  @param {string} [class] - Clase CSS
+  @param {boolean} [eager] - true pentru imaginile din primul ecran (LCP)
+{% endcomment %}
+{%- liquid
+  assign media_width = width | default: 1400
+  assign media_widths = widths | default: '400, 700, 1000, 1400'
+  assign media_sizes = sizes | default: '(min-width: 990px) 50vw, 100vw'
+  assign media_alt = alt | default: image.alt | default: ''
+  if eager
+    assign media_loading = 'eager'
+    assign media_priority = 'high'
+  else
+    assign media_loading = 'lazy'
+    assign media_priority = 'auto'
+  endif
+-%}
+{%- if video != blank -%}
+  {%- assign poster = image | default: video.preview_image -%}
+  <video
+    class="c-media__video{% if class != blank %} {{ class }}{% endif %}"
+    data-inview-play
+    muted
+    loop
+    playsinline
+    preload="none"
+    {% if poster != blank %}
+      poster="{{ poster | image_url: width: 1000 }}"
+    {% endif %}
+    width="{{ video.preview_image.width | default: 1080 }}"
+    height="{{ video.preview_image.height | default: 1920 }}"
+    aria-label="{{ media_alt | default: video.alt | escape }}"
+  >
+    {%- for source in video.sources -%}
+      {%- if source.format == 'mp4' -%}
+        <source data-src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </video>
+{%- elsif image != blank -%}
+  {%- assign src_lower = image.src | downcase -%}
+  {%- if src_lower contains '.gif' -%}
+    {%- render 'c-gif', image: image, alt: media_alt, class: class, loading: media_loading -%}
+  {%- else -%}
+    {{
+      image
+      | image_url: width: media_width
+      | image_tag:
+        loading: media_loading,
+        fetchpriority: media_priority,
+        widths: media_widths,
+        sizes: media_sizes,
+        alt: media_alt,
+        class: class
+    }}
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,8 @@
+{%- assign b = block.settings -%}
+<li class="c-feature" {{ block.shopify_attributes }}>
+  <span class="c-feature__icon">{%- render 'c-icon', name: b.icon, emoji: b.icon_emoji, image: b.icon_image, size: 26 -%}</span>
+  <span class="c-feature__body">
+    <span class="c-feature__title">{{ b.title }}</span>
+    {%- if b.text != blank -%}<span class="c-feature__text">{{ b.text }}</span>{%- endif -%}
+  </span>
+</li>
