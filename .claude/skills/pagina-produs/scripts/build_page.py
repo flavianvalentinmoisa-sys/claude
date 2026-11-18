@@ -1,9 +1,8 @@
 """Build a Shopify product page from a product spec (JSON).
 
 Produces, in --out (default: produse/<handle>/):
-  - product.<handle>.json  : template-ul paginii (se pune în templates/ în temă)
-  - import-produs.csv      : produsul, pentru Shopify Admin → Produse → Import
-  - checklist.md           : ce mai trebuie făcut manual în Shopify
+  - product.<handle>.json  : template-ul paginii (singurul livrabil implicit)
+With --extras, also import-produs.csv + checklist.md.
 With --install, also copies the template into <theme>/templates/.
 With --zip, also writes the whole theme (with the new template) as an upload-ready zip.
 
@@ -361,6 +360,7 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--install", action="store_true", help="copiază template-ul în <theme>/templates")
     ap.add_argument("--zip", action="store_true", help="scrie și tema completă ca zip")
+    ap.add_argument("--extras", action="store_true", help="scrie și CSV de import + checklist (doar la cerere)")
     a = ap.parse_args()
 
     with open(a.spec, encoding="utf-8") as f:
@@ -385,8 +385,9 @@ def main():
     tpl_file = f"product.{handle}.json"
     with open(os.path.join(out, tpl_file), "w", encoding="utf-8") as f:
         json.dump(t, f, ensure_ascii=False, indent=2)
-    write_csv(os.path.join(out, "import-produs.csv"), spec)
-    write_checklist(os.path.join(out, "checklist.md"), spec, handle)
+    if a.extras:
+        write_csv(os.path.join(out, "import-produs.csv"), spec)
+        write_checklist(os.path.join(out, "checklist.md"), spec, handle)
 
     if a.install or a.zip:
         with open(os.path.join(a.theme, "templates", tpl_file), "w", encoding="utf-8") as f:

@@ -1,20 +1,21 @@
 ---
 name: pagina-produs
-description: Creează pagina de produs Shopify (template JSON pe tema default a magazinului + CSV de import + checklist) pentru orice produs primit ca link — competitor (alt magazin, Shopify sau nu), AliExpress, Alibaba, 1688, Temu, Amazon, eMAG. Folosește ori de câte ori utilizatorul dă un link de produs și cere pagină de produs / landing / „bagă-l pe site”, inclusiv pentru mai multe linkuri odată.
+description: Creează fișierul JSON al paginii de produs (template product.<handle>.json pe tema standard a magazinului) pentru orice produs primit ca link — competitor (alt magazin, Shopify sau nu), AliExpress, Alibaba, 1688, Temu, Amazon, eMAG. Folosește ori de câte ori utilizatorul dă un link de produs și cere pagină de produs / landing / „bagă-l pe site”, inclusiv pentru mai multe linkuri odată.
 ---
 
 # Pagină de produs din link
 
 Tema magazinului e în `shopify/theme/` (tema Carpatica, română, piață RO, plata ramburs).
 Pagina de pornire e `shopify/theme/templates/product.json`. Pentru fiecare produs se generează
-un template nou `product.<handle>.json` cu textele produsului, plus CSV-ul de import.
+un template nou `product.<handle>.json` cu textele produsului.
 
-Rezultat pentru fiecare link, în `produse/<handle>/`:
-- `spec.json` — sursa de adevăr (date produs + texte), scrisă de tine
-- `product.<handle>.json` — template-ul paginii, validat față de schema temei
-- `import-produs.csv` — pentru Shopify Admin → Produse → Import (intră ca draft)
-- `checklist.md` — pașii manuali rămași în Shopify
-- `sursa.json` — datele brute extrase din link
+**Livrabilul este DOAR `product.<handle>.json`.** Tema e standard și utilizatorul o are deja în
+Shopify: nu livra zip de temă, CSV sau checklist și nu modifica `shopify/theme/` (tema din repo e
+doar referință pentru schema secțiunilor). CSV-ul de import (`--extras`) sau zip-ul (`--zip`) doar
+dacă sunt cerute explicit.
+
+Fișiere de lucru în `produse/<handle>/`: `sursa.json` (date brute din link), `spec.json` (texte +
+date produs, scris de tine) și livrabilul `product.<handle>.json`.
 
 ## Pași
 
@@ -91,17 +92,19 @@ HTML (`<p>`, `<ul>`). Iconițe și opțiuni permise: `references/sectiuni-tema.m
 ### 6. Generează și validează
 ```bash
 python3 .claude/skills/pagina-produs/scripts/build_page.py produse/<handle>/spec.json \
-  --theme shopify/theme --out produse/<handle> --install
+  --theme shopify/theme --out produse/<handle>
 ```
 Scriptul verifică fiecare setare față de schema secțiunilor din temă (id-uri, opțiuni, intervale,
 richtext). La eroare: corectezi `spec.json` și rulezi din nou — nu edita template-ul generat de mână.
-`--install` pune template-ul și în `shopify/theme/templates/`; `--zip` scoate și tema completă,
-gata de urcat în Shopify (Online Store → Teme → Adaugă temă → Încarcă zip).
+Nu folosi `--install` / `--zip` / `--extras` decât la cerere.
 
 ### 7. Predare
-- Commit + push pe branch-ul de lucru (`produse/<handle>/` și template-ul din temă).
-- Răspuns scurt, în română: numele produsului, prețul (propus sau dat), ce secțiuni are pagina, ce a
-  rămas de făcut (din `checklist.md`), și orice informație care lipsea din sursă.
+- Commit + push pe branch-ul de lucru (`produse/<handle>/`).
+- Trimite utilizatorului doar `product.<handle>.json` (SendUserFile).
+- Răspuns scurt, în română: numele produsului, prețul propus (titlu, preț, preț tăiat, descriere
+  scurtă le pune el pe produs în Admin — dă-le în răspuns, gata de copiat), ce secțiuni are pagina,
+  ce a fost scos (recenzii/rezultate fără date reale) și informațiile care lipseau din sursă.
+  Ofertele pe cantitate sunt doar afișate: amintește în 1 rând de reducerea din Shopify.
 - Mai multe linkuri: repetă pașii 1–6 pentru fiecare, apoi un singur rezumat la final (tabel:
   produs · preț · handle · probleme).
 
