@@ -1,0 +1,14 @@
+{
+  "template_suffix": "exemplu",
+  "rating": {"value": 4.8, "text": "<strong>4.8</strong> din recenziile clienților", "short": "<strong>4.8</strong>"},
+  "avatars_text": null,
+  "benefits_list": ["✅ Livrare în 24–48 de ore", "💵 Plata ramburs la curier", "↩️ Retur gratuit în 30 de zile"],
+  "ticker": [{"emoji": "🚚", "text": "Livrare în 24–48h"}, {"emoji": "💵", "text": "Plata ramburs"}, {"emoji": "↩️", "text": "Retur gratuit 30 de zile"}],
+  "why": {"heading": "De ce îți va plăcea <em>[produs]</em>", "cards": [
+    {"emoji": "⚡", "title": "Beneficiul 1", "text": "<p>Descriere scurtă.</p>"},
+    {"emoji": "🛡️", "title": "Beneficiul 2", "text": "<p>Descriere scurtă.</p>"},
+    {"emoji": "🤍", "title": "Beneficiul 3", "text": "<p>Descriere scurtă.</p>"}]},
+  "problem_solution": {"bad_title": "Fără [produs]", "bad_list": ["Problema 1", "Problema 2"], "good_title": "Cu [produs]", "good_list": ["Soluția 1", "Soluția 2"]},
+  "results": null,
+  "faq": [{"q": "Cât durează livrarea?", "a": "<p>24–48 de ore lucrătoare.</p>", "icon": "truck"}]
+}
