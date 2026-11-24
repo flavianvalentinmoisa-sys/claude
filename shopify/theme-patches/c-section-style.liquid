@@ -1,0 +1,73 @@
+{% comment %}
+  Spațierea standard a unei secțiuni Carpatica (75% pe mobil), vizibilitatea pe dispozitive
+  și alinierea textului (desktop / mobil).
+  Parametri: section
+{% endcomment %}
+{%- liquid
+  assign c_ta = section.settings.text_align | default: 'default'
+  assign c_tam = section.settings.text_align_mobile | default: 'same'
+  if c_tam == 'same'
+    assign c_tam = c_ta
+  endif
+-%}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  {%- if section.settings.visibility == 'desktop' %}
+    @media screen and (max-width: 749px) { #shopify-section-{{ section.id }} { display: none; } }
+  {%- elsif section.settings.visibility == 'mobile' %}
+    @media screen and (min-width: 750px) { #shopify-section-{{ section.id }} { display: none; } }
+  {%- endif %}
+  {%- for c_bp in (1..2) -%}
+    {%- if c_bp == 1 -%}
+      {%- assign c_al = c_ta -%}
+      {%- assign c_mq = 'screen and (min-width: 750px)' -%}
+    {%- else -%}
+      {%- assign c_al = c_tam -%}
+      {%- assign c_mq = 'screen and (max-width: 749px)' -%}
+    {%- endif -%}
+    {%- if c_al == 'left' or c_al == 'center' or c_al == 'right' -%}
+      {%- case c_al -%}
+        {%- when 'left' -%}
+          {%- assign c_jc = 'flex-start' -%}
+          {%- assign c_ml = '0' -%}
+          {%- assign c_mr = 'auto' -%}
+        {%- when 'center' -%}
+          {%- assign c_jc = 'center' -%}
+          {%- assign c_ml = 'auto' -%}
+          {%- assign c_mr = 'auto' -%}
+        {%- else -%}
+          {%- assign c_jc = 'flex-end' -%}
+          {%- assign c_ml = 'auto' -%}
+          {%- assign c_mr = '0' -%}
+      {%- endcase %}
+    @media {{ c_mq }} {
+      #shopify-section-{{ section.id }} :is(h1, h2, h3, h4, h5, h6, p, li, blockquote, .c-subheading, .c-heading, .c-section-header, .rte, .c-text) {
+        text-align: {{ c_al }} !important;
+      }
+      #shopify-section-{{ section.id }} :is(.c-buttons, .c-stars) {
+        justify-content: {{ c_jc }} !important;
+      }
+      #shopify-section-{{ section.id }} :is(.c-mt__checks, .c-parallax__benefits, .c-guar__points, .c-ps__list, .c-plan__features) > li,
+      #shopify-section-{{ section.id }} .c-mt__rating {
+        justify-content: {{ c_jc }} !important;
+      }
+      #shopify-section-{{ section.id }} :is(.c-section-header, [class*='__box']) {
+        align-items: {{ c_jc }} !important;
+      }
+      #shopify-section-{{ section.id }} .c-section-header .c-text {
+        margin-left: {{ c_ml }} !important;
+        margin-right: {{ c_mr }} !important;
+      }
+    }
+    {%- endif -%}
+  {%- endfor %}
+{%- endstyle -%}
