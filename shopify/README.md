@@ -1,6 +1,6 @@
 # Shopify – tema FLV
 
-- `templates/index.json` – homepage general (hero parallax, bandă derulantă, produse, beneficii, poveste, pași, recenzii, comparație, garanție, FAQ). Copia care e pe tema „flvs-template-default-shopify”.
+- Homepage-ul îl gestionezi direct din editorul Shopify.
 - `base/product.base.json` – template-ul complet de produs din temă (folosește secțiunea `base/c-photo-reviews.liquid`, care trebuie urcată în temă).
 - `products/<sufix>.json` – conținutul scurt pentru fiecare produs (vezi `products/exemplu.json`).
 - `tools/make_product_template.py` – generează `templates/product.<sufix>.json`:
