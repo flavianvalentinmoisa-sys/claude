@@ -17,3 +17,43 @@
 .c-qb__content {
   overflow-wrap: anywhere;
 }
+
+/* Ofertele se adaptează la lățimea coloanei (tabletă, desktop mic): sub ~350px prețurile trec sub denumire */
+.c-qb {
+  container-type: inline-size;
+}
+
+@container (max-width: 350px) {
+  .c-qb:not(.c-qb--horizontal) .c-qb__row {
+    flex-wrap: wrap;
+  }
+
+  .c-qb:not(.c-qb--horizontal) .c-qb__content {
+    flex: 1 1 calc(100% - 3.2rem);
+  }
+
+  .c-qb:not(.c-qb--horizontal) .c-qb__prices {
+    flex: 1 0 calc(100% - 3.2rem);
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-start;
+    margin: 0.4rem 0 0 3.2rem !important;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .c-qb:not(.c-qb--horizontal) .c-qb__prices > * {
+    margin-right: 0.8rem !important;
+    white-space: nowrap;
+  }
+}
+
+/* Tabelele din descrierea produsului nu ies din ecran: se derulează orizontal pe ecrane mici */
+.product__description table,
+.product .rte table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
