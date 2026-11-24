@@ -1,0 +1,19 @@
+/* Adăugat la finalul assets/carpatica-product.css */
+/* Ofertele de cantitate rămân în lățimea ecranului: textele se rup pe rânduri, nu împing prețurile afară */
+.c-qb__options {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.c-qb--horizontal .c-qb__options {
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+}
+
+.c-qb__option,
+.c-qb__row {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.c-qb__content {
+  overflow-wrap: anywhere;
+}
