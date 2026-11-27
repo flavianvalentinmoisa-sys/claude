@@ -1,6 +1,6 @@
     {
       "type": "cod_form",
-      "name": "Formular COD (plata la livrare)",
+      "name": "Formular COD",
       "limit": 1,
       "settings": [
         {

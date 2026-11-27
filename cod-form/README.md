@@ -18,7 +18,7 @@ Pagina de produs (tema)  ──►  Server (Cloudflare Worker)  ──►  Shopi
    formularul COD               recalculează prețurile          creează comanda
 ```
 
-- **Tema** (`theme/`): blocul „Formular COD (plata la livrare)” din secțiunea produsului. Preia oferta aleasă la „Alege oferta”, cadourile și upsell-urile, la fel ca butonul de coș.
+- **Tema** (`theme/`): blocul „Formular COD” din secțiunea produsului. Preia oferta aleasă la „Alege oferta”, cadourile și upsell-urile, la fel ca butonul de coș.
 - **Serverul** (`worker/`): prețurile vin **din Shopify**, nu din browser, deci nimeni nu poate trimite o comandă cu alt preț. Reducerea din ofertă e acceptată doar până la `MAX_DISCOUNT_PERCENT` (40%). Serverul are și:
   - verificarea telefonului românesc (07xx…, +40…, 0040…, fixe 02x/03x);
   - un câmp ascuns, care oprește roboții;
@@ -75,7 +75,7 @@ Primești o adresă de forma `https://formular-cod.<cont>.workers.dev`. Verific�
 ### 3. Pornește formularul în temă
 
 1. **Magazin online → Teme → Personalizează** pe pagina produsului.
-2. În secțiunea produsului, blocul **„Formular COD (plata la livrare)”** (e deja adăugat).
+2. În secțiunea produsului, blocul **„Formular COD”** (e deja adăugat).
 3. La **Adresa serverului** pune adresa de la pasul 2 și salvează.
 4. Fă o comandă de test de pe telefon, apoi șterge-o din **Comenzi**.
 
