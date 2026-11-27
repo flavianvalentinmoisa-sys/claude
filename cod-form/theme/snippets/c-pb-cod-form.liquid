@@ -1,0 +1,167 @@
+{% comment %}
+  Bloc „Formular COD”: în loc de coș + checkout Shopify, butonul de cumpărare deschide
+  un formular de comandă cu plata la livrare. Comanda e creată de serverul din setarea
+  „Adresa serverului” (vezi cod-form/README.md).
+
+  Dacă adresa serverului e goală, blocul nu face nimic și butonul merge ca înainte (în coș).
+
+  Parametri: block, product, section, product_form_id
+{% endcomment %}
+{%- liquid
+  assign bs = block.settings
+  assign endpoint = bs.endpoint | strip | remove_last: '/'
+-%}
+{%- if endpoint != blank -%}
+  {{ 'c-cod-form.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'c-cod-form.js' | asset_url }}" defer="defer"></script>
+
+  <cod-form
+    class="c-cod color-{{ bs.color_scheme }}"
+    data-endpoint="{{ endpoint | escape }}"
+    data-form-id="{{ product_form_id }}"
+    data-section-id="{{ section.id }}"
+    data-currency="{{ cart.currency.iso_code }}"
+    {{ block.shopify_attributes }}
+    hidden
+  >
+    <div class="c-cod__overlay" data-cod-close></div>
+    <div
+      class="c-cod__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="CodTitle-{{ section.id }}"
+      tabindex="-1"
+    >
+      <div class="c-cod__header">
+        <p class="c-cod__title h4" id="CodTitle-{{ section.id }}">{{ bs.heading | escape }}</p>
+        <button type="button" class="c-cod__close" data-cod-close aria-label="{{ 'accessibility.close' | t }}">
+          <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+        </button>
+      </div>
+
+      {%- comment -%} Pasul 1: formularul {%- endcomment -%}
+      <form class="c-cod__body" data-cod-step="form" novalidate>
+        <div class="c-cod__summary" data-cod-summary aria-live="polite">
+          <div class="c-cod__lines" data-cod-lines>
+            <div class="c-cod__line c-cod__line--loading">
+              <span class="c-cod__line-image"></span>
+              <span class="c-cod__skeleton"></span>
+            </div>
+          </div>
+          <dl class="c-cod__totals">
+            <div><dt>{{ bs.subtotal_label | escape }}</dt><dd data-cod-subtotal>–</dd></div>
+            <div><dt>{{ bs.shipping_label | escape }}</dt><dd data-cod-shipping>–</dd></div>
+            <div class="c-cod__total"><dt>{{ bs.total_label | escape }}</dt><dd data-cod-total>–</dd></div>
+          </dl>
+          <p class="c-cod__savings" data-cod-savings hidden></p>
+        </div>
+
+        <fieldset class="c-cod__fields">
+          <legend class="c-cod__legend">{{ bs.address_heading | escape }}</legend>
+
+          <div class="c-cod__field">
+            <label for="CodName-{{ section.id }}">Nume și prenume</label>
+            <input id="CodName-{{ section.id }}" name="name" type="text" autocomplete="name" required maxlength="80" placeholder="Ex: Ion Popescu">
+            <p class="c-cod__error" data-error-for="name"></p>
+          </div>
+
+          <div class="c-cod__field">
+            <label for="CodPhone-{{ section.id }}">Telefon</label>
+            <input id="CodPhone-{{ section.id }}" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="07xx xxx xxx">
+            <p class="c-cod__hint">Curierul te sună pe acest număr înainte de livrare.</p>
+            <p class="c-cod__error" data-error-for="phone"></p>
+          </div>
+
+          <div class="c-cod__row">
+            <div class="c-cod__field">
+              <label for="CodCounty-{{ section.id }}">Județ</label>
+              <div class="c-cod__select">
+                <select id="CodCounty-{{ section.id }}" name="county" autocomplete="address-level1" required>
+                  <option value="" selected disabled>Alege județul</option>
+                  {%- liquid
+                    assign counties = 'AB:Alba|AR:Arad|AG:Argeș|BC:Bacău|BH:Bihor|BN:Bistrița-Năsăud|BT:Botoșani|BR:Brăila|BV:Brașov|B:București|BZ:Buzău|CL:Călărași|CS:Caraș-Severin|CJ:Cluj|CT:Constanța|CV:Covasna|DB:Dâmbovița|DJ:Dolj|GL:Galați|GR:Giurgiu|GJ:Gorj|HR:Harghita|HD:Hunedoara|IL:Ialomița|IS:Iași|IF:Ilfov|MM:Maramureș|MH:Mehedinți|MS:Mureș|NT:Neamț|OT:Olt|PH:Prahova|SJ:Sălaj|SM:Satu Mare|SB:Sibiu|SV:Suceava|TR:Teleorman|TM:Timiș|TL:Tulcea|VL:Vâlcea|VS:Vaslui|VN:Vrancea' | split: '|'
+                    for county in counties
+                      assign pair = county | split: ':'
+                      echo '<option value="' | append: pair[0] | append: '">' | append: pair[1] | append: '</option>'
+                    endfor
+                  -%}
+                </select>
+                <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+              </div>
+              <p class="c-cod__error" data-error-for="county"></p>
+            </div>
+
+            <div class="c-cod__field">
+              <label for="CodCity-{{ section.id }}">Localitate</label>
+              <input id="CodCity-{{ section.id }}" name="city" type="text" autocomplete="address-level2" required maxlength="80" placeholder="Oraș, comună sau sat">
+              <p class="c-cod__error" data-error-for="city"></p>
+            </div>
+          </div>
+
+          <div class="c-cod__field">
+            <label for="CodAddress-{{ section.id }}">Adresa</label>
+            <input id="CodAddress-{{ section.id }}" name="address" type="text" autocomplete="street-address" required maxlength="200" placeholder="Strada, numărul, bloc, scară, apartament">
+            <p class="c-cod__error" data-error-for="address"></p>
+          </div>
+
+          {%- if bs.show_email -%}
+            <div class="c-cod__field">
+              <label for="CodEmail-{{ section.id }}">E-mail <span class="c-cod__optional">(opțional)</span></label>
+              <input id="CodEmail-{{ section.id }}" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="Pentru confirmarea comenzii">
+              <p class="c-cod__error" data-error-for="email"></p>
+            </div>
+          {%- endif -%}
+
+          {%- if bs.show_note -%}
+            <div class="c-cod__field">
+              <label for="CodNote-{{ section.id }}">Observații <span class="c-cod__optional">(opțional)</span></label>
+              <textarea id="CodNote-{{ section.id }}" name="note" rows="2" maxlength="500" placeholder="Ex: sunați înainte, interfon 12"></textarea>
+            </div>
+          {%- endif -%}
+
+          <div class="c-cod__hp" aria-hidden="true">
+            <label for="CodWebsite-{{ section.id }}">Website</label>
+            <input id="CodWebsite-{{ section.id }}" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+        </fieldset>
+
+        <div class="c-cod__payment">
+          <span class="c-cod__payment-radio" aria-hidden="true"></span>
+          <span>
+            <strong>{{ bs.payment_title | escape }}</strong>
+            <span class="c-cod__payment-text">{{ bs.payment_text | escape }}</span>
+          </span>
+        </div>
+
+        <p class="c-cod__form-error" data-cod-error role="alert" hidden></p>
+
+        <button type="submit" class="button button--full-width c-cod__submit" data-cod-submit>
+          <span data-cod-submit-label>{{ bs.submit_label | escape }}</span>
+          <span class="c-cod__submit-total" data-cod-submit-total></span>
+          <span class="c-cod__spinner" aria-hidden="true"></span>
+        </button>
+
+        {%- if bs.trust_text != blank -%}
+          <p class="c-cod__trust">{{ bs.trust_text | escape }}</p>
+        {%- endif -%}
+      </form>
+
+      {%- comment -%} Pasul 2: confirmarea {%- endcomment -%}
+      <div class="c-cod__body c-cod__success" data-cod-step="success" hidden tabindex="-1">
+        <span class="c-cod__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </span>
+        <p class="c-cod__success-title h3" data-cod-success-title data-template="{{ bs.success_heading | escape }}"></p>
+        <p class="c-cod__success-order" data-cod-success-order></p>
+        <p class="c-cod__success-text" data-cod-success-text data-template="{{ bs.success_text | escape }}"></p>
+        <div class="c-cod__success-box">
+          <p class="c-cod__success-label">Livrăm la:</p>
+          <p data-cod-success-address></p>
+        </div>
+        <button type="button" class="button button--secondary button--full-width" data-cod-close>
+          {{ bs.continue_label | escape }}
+        </button>
+      </div>
+    </div>
+  </cod-form>
+{%- endif -%}

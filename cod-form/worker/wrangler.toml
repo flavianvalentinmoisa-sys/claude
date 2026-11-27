@@ -1,0 +1,20 @@
+name = "formular-cod"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+# Magazinul Shopify (domeniul .myshopify.com)
+SHOP = "qyxgje-xz.myshopify.com"
+# Site-urile care au voie să trimită comenzi (domeniul magazinului + domeniul propriu, separate prin virgulă)
+ALLOWED_ORIGINS = "https://qyxgje-xz.myshopify.com"
+API_VERSION = "2026-10"
+CURRENCY = "RON"
+SHIPPING_PRICE = "19.99"
+SHIPPING_TITLE = "Livrare prin curier"
+# Reducerea maximă acceptată din oferta „Alege oferta” (protecție împotriva prețurilor modificate)
+MAX_DISCOUNT_PERCENT = "40"
+MAX_ORDERS_PER_IP = "5"
+
+# Secrete (NU le scrie aici). Le setezi cu:
+#   npx wrangler secret put SHOPIFY_CLIENT_ID
+#   npx wrangler secret put SHOPIFY_CLIENT_SECRET
