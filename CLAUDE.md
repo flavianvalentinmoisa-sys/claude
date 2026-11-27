@@ -31,3 +31,9 @@ Limba: română, direct, fără umplutură.
 - **Ritual proporțional**: task trivial = execuție directă. Întrebări doar dacă răspunsul schimbă rezultatul.
 - **Task-uri de noapte**: brief complet seara, apoi execuție fără întrebări; commit/push des; ordonate după prioritate.
 - **Ce NU se taie**: definiția lui „gata”, verificarea efectivă și căutarea de buguri rămân mereu.
+
+## Rutare pe sesiuni (reduce costul fix al uneltelor)
+- **Un task = o sesiune.** Dacă userul cere ceva diferit de taskul curent, spune-i să deschidă sesiune nouă (nu continua în același chat).
+- **Sesiune Shopify** (pagini de produs, magazin, comenzi): singura care are nevoie de conectorul Shopify. Notion/Cloudflare doar dacă taskul le cere explicit.
+- **Sesiune fără conectori** (research, scripturi de reclame, cod, audit repo): lucrează doar cu fișiere din repo; nu atinge Shopify/Notion/Cloudflare.
+- Dacă într-o sesiune ușoară apare nevoia unui conector, spune-o și propune sesiune dedicată în loc să amesteci.
