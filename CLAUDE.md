@@ -19,3 +19,15 @@ Limba: română, direct, fără umplutură.
 - **Caută buguri și erori** (cazuri limită, copy greșit, link-uri, regresii).
 - **Caută loc de îmbunătățiri** și semnalează-le, separat de ce a fost cerut.
 - Raportează onest: ce e făcut și verificat, ce nu, ce a eșuat.
+
+## Eficiență (consum de tokeni) — fără a scădea calitatea
+- **Răspunsuri scurte**: concluzia întâi, fără recapitulări și fără liste de opțiuni pe care nu le urmez. O singură recomandare.
+- **Nu repeta** ce s-a stabilit deja în conversație și nu reciti fișiere pe care le știu.
+- **Citește țintit**: grep/glob și intervale de linii, nu fișiere întregi. Output-uri de comenzi limitate (head, tail, filtre).
+- **Apeluri independente în paralel**, într-un singur pas.
+- **Fără subagenți/sesiuni noi** decât când e nevoie reală (task independent sau lung): fiecare pornește de la zero și costă mai mult.
+- **Chat scurt per task**: contextul lung se re-citește la fiecare mesaj. Task nou = sesiune nouă. La task-uri lungi, rezumă și continuă în sesiune curată.
+- **Nu verifica de două ori** același lucru; o verificare bună, țintită pe criteriile „gata” convenite.
+- **Ritual proporțional**: task trivial = execuție directă. Întrebări doar dacă răspunsul schimbă rezultatul.
+- **Task-uri de noapte**: brief complet seara, apoi execuție fără întrebări; commit/push des; ordonate după prioritate.
+- **Ce NU se taie**: definiția lui „gata”, verificarea efectivă și căutarea de buguri rămân mereu.
